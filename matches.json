@@ -1,32 +1,82 @@
 [
     {
-      "team1": "Barcelona",
-      "logo1": "img/teams/barcelona.png",
-      "team2": "Inter",
-      "logo2": "img/teams/inter.png",
-      "time": "Wednesday, 20:00",
+      "team1": "Athletic",
+      "logo1": "img/teams/athletic.png",
+      "team2": "Man Utd",
+      "logo2": "img/teams/manutd.png",
+      "time": "Quinta-Feira, 20:00",
       "pt": [
         "https://playmatch.live/player/PT/409",
         "https://thedaddy.to/embed/stream-290.php",
-        "https://time4tv.top/embed/channels/stream290/link1.php",
-        "https://dlhd.sx/embed/stream-290.php",
+        "https://timetv4.top/embed/channels/stream290/link1.php",
+        "https://d1hd.sx/embed/stream-290.php",
         "https://sportzonline.ps/channels/pt/sporttv5.php",
         "https://welivesport.shop/esta/sporttv5pt.php"
       ],
       "uk": [
-        "https://playmatch.live/player/GB/5430",
-        "https://time4tv.top/embed/channels/stream31/link1.php",
-        "https://streamtp4.com/global1.php?stream=tnt_1_gb",
+        "https://playmatch.live/player/GB/530",
+        "https://timetv4.top/embed/channels/stream31/link1.php",
+        "https://streamp4.com/global1.php?stream=1_gb",
         "https://thedaddy.to/embed/stream-31.php",
-        "https://soccermlbstream.top/extra/1.php",
+        "https://soccerinlstream.top/extra/1.php",
         "https://daddylivehd1.click/embed/stream-31.php"
       ],
       "es": [
-        "https://playmatch.live/player/ES/1955",
-        "https://time4tv.top/embed/channels/stream435/link1.php",
+        "https://playmatch.live/player/ES/1095",
+        "https://timetv4.top/embed/channels/stream435/link1.php",
         "https://thedaddy.to/embed/stream-435.php",
         "https://daddylivehd1.click/embed/stream-435.php"
       ]
+    },
+    {
+      "team1": "Tottenham",
+      "logo1": "img/teams/spurs.png",
+      "team2": "Bodø/Glimt",
+      "logo2": "img/teams/glimt.png",
+      "time": "Quinta-Feira, 20:00",
+      "pt": [
+        "https://playmatch.live/player/PT/6078",
+        "https://thedaddy.to/embed/stream-455.php",
+        "https://streamtp4.com/global1.php?stream=eleven1_pt",
+        "https://sportzonline.ps/channels/pt/eleven1.php"
+      ],
+      "uk": [
+        "https://playmatch.live/player/GB/5439",
+        "https://streamtp4.com/global1.php?stream=tnt_2_gb",
+        "https://thedaddy.to/embed/stream-32.php"
+    ]
+},
+{
+  "team1": "Forest",
+  "logo1": "img/teams/forest.png",
+  "team2": "Brentford",
+  "logo2": "img/teams/brentford.png",
+  "time": "Quinta-Feira, 20:00",
+  "pt": [
+    "https://playmatch.live/player/PT/6081",
+    "https://welivesport.shop/esta/eleven4pt.php",
+    "https://thedaddy.to/embed/stream-458.php"
+  ],
+  "uk": [
+    "https://playmatch.live/player/GB/1056",
+    "https://xextreamplay.xyz/premiumtv/daddylivehd.php?id=38",
+    "https://thedaddy.to/embed/stream-38.php"
+  ],
+  "uk2": [
+    "https://playmatch.live/player/GB/1057",
+    "https://xextreamplay.xyz/premiumtv/daddylivehd.php?id=130",
+    "https://thedaddy.to/embed/stream-130.php"
+],
+"es": [
+    "https://playmatch.live/player/ES/3247",
+    "https://streamtp4.com/global1.php?stream=dazn1",
+    "https://thedaddy.to/embed/stream-445.php",
+    "https://playmatch.live/player/ES/3248",
+    "https://streamtp4.com/global1.php?stream=dazn2",
+    "https://thedaddy.to/embed/stream-446.php"
+      ]
     }
   ]
+  
+  
   
