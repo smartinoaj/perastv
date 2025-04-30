@@ -186,6 +186,15 @@ fetch(dataURL)
     console.error("Failed to load channel data:", error);
   });
 
+fetch("matches.json")
+  .then(res => res.json())
+  .then(matchData => {
+    renderMatchChannels(matchData);
+  })
+  .catch(error => {
+    console.error("Failed to load match data:", error);
+  });
+
 
 function renderChannels(tab, channels) {
   const grid = document.getElementById(tab);
