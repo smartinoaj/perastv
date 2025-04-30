@@ -4,31 +4,30 @@
         "name": "Sport TV 1",
         "srcs": [
           "https://playmatch.live/player/PT/406",
-          "https://welivesport.shop/esta/sporttv1pt.php",
           "https://thedaddy.to/embed/stream-74.php",
-          "https://xextreamplay.xyz/premiumtv/daddylivehd.php?id=49",
-          "https://sportsonline.si/channels/pt/sporttv1.php",
+          "https://time4tv.top/embed/channels/stream49/link1.php",
           "https://popcdn.day/go.php?stream=SPT1",
-          "https://time4tv.top/embed/channels/stream49/link1.php"
+          "https://sportsonline.si/channels/pt/sporttv1.php",
+          "https://welivesport.shop/esta/sporttv1pt.php"
         ]
       },
       {
         "name": "Sport TV 2",
         "srcs": [
           "https://playmatch.live/player/PT/407",
-          "https://thedaddy.to/embed/stream-74",
-          "https://welivesport.shop/esta/sporttv2pt.php",
+          "https://thedaddy.to/embed/stream-74.php",
+          "https://time4tv.top/embed/channels/stream74/link1.php",
           "https://sportzonline.ps/channels/pt/sporttv2.php",
-          "https://xextreamplay.xyz/premiumtv/daddylivehd.php?id=74",
-          "https://weblivehdplay.ru/premiumtv/daddylivehd.php?id=74"
+          "https://welivesport.shop/esta/sporttv2pt.php"
         ]
       },
       {
         "name": "Sport TV 3",
         "srcs": [
           "https://playmatch.live/player/PT/408",
-          "https://streamtp4.com/global1.php?stream=sportv_3pt",
           "https://thedaddy.to/embed/stream-454.php",
+          "https://time4tv.top/embed/channels/stream454/link1.php",
+          "https://streamtp4.com/global1.php?stream=sportv_3pt",
           "https://sportzonline.ps/channels/pt/sporttv3.php"
         ]
       },
@@ -36,8 +35,8 @@
         "name": "Sport TV 4",
         "srcs": [
           "https://playmatch.live/player/PT/1138",
-          "https://streamtp4.com/global1.php?stream=sportv_4pt",
-          "https://thedaddy.to/embed/stream-289.php"
+          "https://thedaddy.to/embed/stream-289.php",
+          "https://streamtp4.com/global1.php?stream=sportv_4pt"
         ]
       },
       {
@@ -45,34 +44,32 @@
         "srcs": [
           "https://playmatch.live/player/PT/409",
           "https://thedaddy.to/embed/stream-290.php",
-          "https://welivesport.shop/esta/sporttv5pt.php",
           "https://time4tv.top/embed/channels/stream290/link1.php",
           "https://dlhd.sx/embed/stream-290.php",
-          "https://sportzonline.ps/channels/pt/sporttv5.php"
+          "https://sportzonline.ps/channels/pt/sporttv5.php",
+          "https://welivesport.shop/esta/sporttv5pt.php"
         ]
       },
       {
         "name": "Sport TV 6",
         "srcs": [
           "https://playmatch.live/player/PT/3294",
-          "https://streamtp4.com/global1.php?stream=sportv_6pt",
-          "https://thedaddy.to/embed/stream-291.php"
+          "https://thedaddy.to/embed/stream-291.php",
+          "https://streamtp4.com/global1.php?stream=sportv_6pt"
         ]
       },
       {
         "name": "Sport TV 7",
         "srcs": [
-          "https://playmatch.live/player/PT/6381",
-          "https://alt1.com/sporttv7",
-          "https://alt2.com/sporttv7"
+          "https://playmatch.live/player/PT/6381"
         ]
       },
       {
         "name": "DAZN 1",
         "srcs": [
           "https://playmatch.live/player/PT/6078",
-          "https://streamtp4.com/global1.php?stream=eleven1_pt",
           "https://thedaddy.to/embed/stream-455.php",
+          "https://streamtp4.com/global1.php?stream=eleven1_pt",
           "https://sportzonline.ps/channels/pt/eleven1.php"
         ]
       },
@@ -123,7 +120,8 @@
       {
         "name": "Canal 11",
         "srcs": [
-          "https://playmatch.live/player/PT/2717"
+          "https://playmatch.live/player/PT/2717",
+          "https://dzeko11.pro/source/64"
         ]
       }
     ],
