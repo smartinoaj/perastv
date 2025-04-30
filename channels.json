@@ -9,10 +9,7 @@
           "https://xextreamplay.xyz/premiumtv/daddylivehd.php?id=49",
           "https://sportsonline.si/channels/pt/sporttv1.php",
           "https://popcdn.day/go.php?stream=SPT1",
-          "https://time4tv.top/embed/channels/stream49/link1.php",
-          "#8",
-          "#9",
-          "#10"
+          "https://time4tv.top/embed/channels/stream49/link1.php"
         ]
       },
       {
@@ -23,11 +20,7 @@
           "https://welivesport.shop/esta/sporttv2pt.php",
           "https://sportzonline.ps/channels/pt/sporttv2.php",
           "https://xextreamplay.xyz/premiumtv/daddylivehd.php?id=74",
-          "https://weblivehdplay.ru/premiumtv/daddylivehd.php?id=74",
-          "#7",
-          "#8",
-          "#9",
-          "#10"
+          "https://weblivehdplay.ru/premiumtv/daddylivehd.php?id=74"
         ]
       },
       {
@@ -36,13 +29,7 @@
           "https://playmatch.live/player/PT/408",
           "https://streamtp4.com/global1.php?stream=sportv_3pt",
           "https://thedaddy.to/embed/stream-454.php",
-          "https://sportzonline.ps/channels/pt/sporttv3.php",
-          "#5",
-          "#6",
-          "#7",
-          "#8",
-          "#9",
-          "#10"
+          "https://sportzonline.ps/channels/pt/sporttv3.php"
         ]
       },
       {
@@ -50,14 +37,7 @@
         "srcs": [
           "https://playmatch.live/player/PT/1138",
           "https://streamtp4.com/global1.php?stream=sportv_4pt",
-          "https://thedaddy.to/embed/stream-289.php",
-          "#4",
-          "#5",
-          "#6",
-          "#7",
-          "#8",
-          "#9",
-          "#10"
+          "https://thedaddy.to/embed/stream-289.php"
         ]
       },
       {
@@ -68,11 +48,7 @@
           "https://welivesport.shop/esta/sporttv5pt.php",
           "https://time4tv.top/embed/channels/stream290/link1.php",
           "https://dlhd.sx/embed/stream-290.php",
-          "https://sportzonline.ps/channels/pt/sporttv5.php",
-          "#7",
-          "#8",
-          "#9",
-          "#10"
+          "https://sportzonline.ps/channels/pt/sporttv5.php"
         ]
       },
       {
@@ -80,14 +56,7 @@
         "srcs": [
           "https://playmatch.live/player/PT/3294",
           "https://streamtp4.com/global1.php?stream=sportv_6pt",
-          "https://thedaddy.to/embed/stream-291.php",
-          "#4",
-          "#5",
-          "#6",
-          "#7",
-          "#8",
-          "#9",
-          "#10"
+          "https://thedaddy.to/embed/stream-291.php"
         ]
       },
       {
@@ -95,14 +64,7 @@
         "srcs": [
           "https://playmatch.live/player/PT/6381",
           "https://alt1.com/sporttv7",
-          "https://alt2.com/sporttv7",
-          "#4",
-          "#5",
-          "#6",
-          "#7",
-          "#8",
-          "#9",
-          "#10"
+          "https://alt2.com/sporttv7"
         ]
       },
       {
@@ -111,13 +73,7 @@
           "https://playmatch.live/player/PT/6078",
           "https://streamtp4.com/global1.php?stream=eleven1_pt",
           "https://thedaddy.to/embed/stream-455.php",
-          "https://sportzonline.ps/channels/pt/eleven1.php",
-          "#5",
-          "#6",
-          "#7",
-          "#8",
-          "#9",
-          "#10"
+          "https://sportzonline.ps/channels/pt/eleven1.php"
         ]
       },
       {
@@ -125,14 +81,7 @@
         "srcs": [
           "https://playmatch.live/player/PT/6079",
           "https://streamtp4.com/global1.php?stream=eleven2_pt",
-          "https://thedaddy.to/embed/stream-456.php",
-          "#4",
-          "#5",
-          "#6",
-          "#7",
-          "#8",
-          "#9",
-          "#10"
+          "https://thedaddy.to/embed/stream-456.php"
         ]
       },
       {
@@ -140,14 +89,7 @@
         "srcs": [
           "https://playmatch.live/player/PT/6080",
           "https://welivesport.shop/esta/eleven3pt.php",
-          "https://thedaddy.to/embed/stream-457.php",
-          "#4",
-          "#5",
-          "#6",
-          "#7",
-          "#8",
-          "#9",
-          "#10"
+          "https://thedaddy.to/embed/stream-457.php"
         ]
       },
       {
@@ -155,73 +97,32 @@
         "srcs": [
           "https://playmatch.live/player/PT/6081",
           "https://welivesport.shop/esta/eleven4pt.php",
-          "https://thedaddy.to/embed/stream-458.php",
-          "#4",
-          "#5",
-          "#6",
-          "#7",
-          "#8",
-          "#9",
-          "#10"
+          "https://thedaddy.to/embed/stream-458.php"
         ]
       },
       {
         "name": "DAZN 5",
         "srcs": [
           "https://playmatch.live/player/PT/6082",
-          "https://thedaddy.to/embed/stream-459.php",
-          "#3",
-          "#4",
-          "#5",
-          "#6",
-          "#7",
-          "#8",
-          "#9",
-          "#10"
+          "https://thedaddy.to/embed/stream-459.php"
         ]
       },
       {
         "name": "DAZN 6",
         "srcs": [
-          "https://playmatch.live/player/PT/6088",
-          "#2",
-          "#3",
-          "#4",
-          "#5",
-          "#6",
-          "#7",
-          "#8",
-          "#9",
-          "#10"
+          "https://playmatch.live/player/PT/6088"
           ]
       },
       {
         "name": "Benfica TV",
         "srcs": [
           "https://playmatch.live/player/PT/403",
-          "https://thedaddy.to/embed/stream-380.php",
-          "#3",
-          "#4",
-          "#5",
-          "#6",
-          "#7",
-          "#8",
-          "#9",
-          "#10"
+          "https://thedaddy.to/embed/stream-380.php"
           ]
       },
       {
         "name": "Canal 11",
         "srcs": [
-          "#1",
-          "#2",
-          "#3",
-          "#4",
-          "#5",
-          "#6",
-          "#7",
-          "#8",
-          "#9",
           "https://playmatch.live/player/PT/2717"
         ]
       }
@@ -232,9 +133,7 @@
     "srcs": [
           "https://playmatch.live/player/GB/1056",
           "https://xextreamplay.xyz/premiumtv/daddylivehd.php?id=38",
-          "https://thedaddy.to/embed/stream-38.php",
-          "#4",
-          "#5"
+          "https://thedaddy.to/embed/stream-38.php"
         ]
       },
       {
@@ -242,9 +141,7 @@
     "srcs": [
           "https://playmatch.live/player/GB/1057",
           "https://xextreamplay.xyz/premiumtv/daddylivehd.php?id=130",
-          "https://thedaddy.to/embed/stream-130.php",
-          "#4",
-          "#5"
+          "https://thedaddy.to/embed/stream-130.php"
         ]
       },
       {
@@ -262,9 +159,7 @@
     "srcs": [
           "https://playmatch.live/player/GB/5439",
           "https://streamtp4.com/global1.php?stream=tnt_2_gb",
-          "https://thedaddy.to/embed/stream-32.php",
-          "#4",
-          "#5"
+          "https://thedaddy.to/embed/stream-32.php"
         ]
       },
       {
@@ -272,9 +167,7 @@
     "srcs": [
           "https://playmatch.live/player/GB/1057",
           "https://xextreamplay.xyz/premiumtv/daddylivehd.php?id=130",
-          "https://thedaddy.to/embed/stream-130.php",
-          "#4",
-          "#5"
+          "https://thedaddy.to/embed/stream-130.php"
         ]
       },
       {
@@ -282,29 +175,20 @@
     "srcs": [
           "https://playmatch.live/player/GB/5497",
           "https://streamtp4.com/global1.php?stream=tnt_4_gb",
-          "https://thedaddy.to/embed/stream-34.php",
-          "#4",
-          "#5"
+          "https://thedaddy.to/embed/stream-34.php"
         ]
       },
       {
         "name": "Premier Sports 1",
     "srcs": [
           "https://thedaddy.to/embed/stream-771.php",
-          "https://xextreamplay.xyz/premiumtv/daddylivehd.php?id=771",
-          "#3",
-          "#4",
-          "#5"
+          "https://xextreamplay.xyz/premiumtv/daddylivehd.php?id=771"
         ]
       },
       {
         "name": "Premier Sports 2",
     "srcs": [
-          "https://caq21harderv991gpluralplay.xyz/premiumtv/daddylivehd.php?id=31",
-          "#2",
-          "#3",
-          "#4",
-          "#5"
+          "https://caq21harderv991gpluralplay.xyz/premiumtv/daddylivehd.php?id=31"
     ]
   }
   ],
@@ -314,9 +198,7 @@
     "srcs": [
           "https://playmatch.live/player/ES/3247",
           "https://streamtp4.com/global1.php?stream=dazn1",
-          "https://thedaddy.to/embed/stream-445.php",
-          "#4",
-          "#5"
+          "https://thedaddy.to/embed/stream-445.php"
         ]
       },
       {
@@ -324,9 +206,7 @@
     "srcs": [
           "https://playmatch.live/player/ES/3248",
           "https://streamtp4.com/global1.php?stream=dazn2",
-          "https://thedaddy.to/embed/stream-446.php",
-          "#4",
-          "#5"
+          "https://thedaddy.to/embed/stream-446.php"
         ]
       },
       {
@@ -334,9 +214,7 @@
     "srcs": [
           "https://playmatch.live/player/ES/340",
           "https://xextreamplay.xyz/premiumtv/daddylivehd.php?id=537",
-          "https://thedaddy.to/embed/stream-537.php",
-          "#4",
-          "#5"
+          "https://thedaddy.to/embed/stream-537.php"
         ]
       },
       {
@@ -344,29 +222,19 @@
     "srcs": [
           "https://playmatch.live/player/ES/5496",
           "https://streamtp4.com/global1.php?stream=laligahypermotion",
-          "https://thedaddy.to/embed/stream-539.php",
-          "#4",
-          "#5"
+          "https://thedaddy.to/embed/stream-539.php"
         ]
       },
       {
         "name": "LaLiga TV Hypermotion 2",
     "srcs": [
-          "https://playmatch.live/player/ES/5506",
-          "#2",
-          "#3",
-          "#4",
-          "#5"
+          "https://playmatch.live/player/ES/5506"
         ]
       },
       {
         "name": "LaLiga TV Hypermotion 3",
     "srcs": [
-          "https://playmatch.live/player/ES/5643",
-          "#2",
-          "#3",
-          "#4",
-          "#5"
+          "https://playmatch.live/player/ES/5643"
         ]
       },
       {
@@ -374,9 +242,7 @@
     "srcs": [
           "https://playmatch.live/player/ES/985",
           "https://xextreamplay.xyz/premiumtv/daddylivehd.php?id=436",
-          "https://thedaddy.to/embed/stream-436.php",
-          "#4",
-          "#5"
+          "https://thedaddy.to/embed/stream-436.php"
         ]
       },
       {
@@ -384,9 +250,7 @@
     "srcs": [
           "https://playmatch.live/player/ES/986",
           "https://xextreamplay.xyz/premiumtv/daddylivehd.php?id=438",
-          "https://thedaddy.to/embed/stream-438.php",
-          "#4",
-          "#5"
+          "https://thedaddy.to/embed/stream-438.php"
         ]
       },
       {
@@ -394,9 +258,7 @@
     "srcs": [
           "https://playmatch.live/player/ES/5427",
           "https://xextreamplay.xyz/premiumtv/daddylivehd.php?id=84",
-          "https://thedaddy.to/embed/stream-84.php",
-          "#4",
-          "#5"
+          "https://thedaddy.to/embed/stream-84.php"
         ]
       },
       {
@@ -405,38 +267,27 @@
           "https://playmatch.live/player/ES/1955",
           "https://time4tv.top/embed/channels/stream435/link1.php",
           "https://thedaddy.to/embed/stream-435.php",
-          "https://daddylivehd1.click/embed/stream-435.php",
-          "#5"
+          "https://daddylivehd1.click/embed/stream-435.php"
         ]
       },
       {
         "name": "M+ Liga de Campeones 2",
     "srcs": [
-          "https://playmatch.live/player/ES/1956",
-          "#2",
-          "#3",
-          "#4",
-          "#5"
+          "https://playmatch.live/player/ES/1956"
         ]
       },
       {
         "name": "TVE La 1",
     "srcs": [
           "https://thedaddy.to/embed/stream-533.php",
-          "https://xextreamplay.xyz/premiumtv/daddylivehd.php?id=533",
-          "#3",
-          "#4",
-          "#5"
+          "https://xextreamplay.xyz/premiumtv/daddylivehd.php?id=533"
         ]
       },
       {
         "name": "TVE La 2",
     "srcs": [
           "https://thedaddy.to/embed/stream-536.php",
-          "https://xextreamplay.xyz/premiumtv/daddylivehd.php?id=536",
-          "#3",
-          "#4",
-          "#5"
+          "https://xextreamplay.xyz/premiumtv/daddylivehd.php?id=536"
         ]
       }
     ],
