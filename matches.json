@@ -44,39 +44,37 @@
         "https://playmatch.live/player/GB/5439",
         "https://streamtp4.com/global1.php?stream=tnt_2_gb",
         "https://thedaddy.to/embed/stream-32.php"
-    ]
-},
-{
-  "team1": "Forest",
-  "logo1": "img/teams/forest.png",
-  "team2": "Brentford",
-  "logo2": "img/teams/brentford.png",
-  "time": "Quinta-Feira, 20:00",
-  "pt": [
-    "https://playmatch.live/player/PT/6081",
-    "https://welivesport.shop/esta/eleven4pt.php",
-    "https://thedaddy.to/embed/stream-458.php"
-  ],
-  "uk": [
-    "https://playmatch.live/player/GB/1056",
-    "https://xextreamplay.xyz/premiumtv/daddylivehd.php?id=38",
-    "https://thedaddy.to/embed/stream-38.php"
-  ],
-  "uk2": [
-    "https://playmatch.live/player/GB/1057",
-    "https://xextreamplay.xyz/premiumtv/daddylivehd.php?id=130",
-    "https://thedaddy.to/embed/stream-130.php"
-],
-"es": [
-    "https://playmatch.live/player/ES/3247",
-    "https://streamtp4.com/global1.php?stream=dazn1",
-    "https://thedaddy.to/embed/stream-445.php",
-    "https://playmatch.live/player/ES/3248",
-    "https://streamtp4.com/global1.php?stream=dazn2",
-    "https://thedaddy.to/embed/stream-446.php"
+      ]
+    },
+    {
+      "team1": "Forest",
+      "logo1": "img/teams/forest.png",
+      "team2": "Brentford",
+      "logo2": "img/teams/brentford.png",
+      "time": "Quinta-Feira, 20:00",
+      "pt": [
+        "https://playmatch.live/player/PT/6081",
+        "https://welivesport.shop/esta/eleven4pt.php",
+        "https://thedaddy.to/embed/stream-458.php"
+      ],
+      "uk": [
+        "https://playmatch.live/player/GB/1056",
+        "https://xextreamplay.xyz/premiumtv/daddylivehd.php?id=38",
+        "https://thedaddy.to/embed/stream-38.php"
+      ],
+      "uk2": [
+        "https://playmatch.live/player/GB/1057",
+        "https://xextreamplay.xyz/premiumtv/daddylivehd.php?id=130",
+        "https://thedaddy.to/embed/stream-130.php"
+      ],
+      "es": [
+        "https://playmatch.live/player/ES/3247",
+        "https://streamtp4.com/global1.php?stream=dazn1",
+        "https://thedaddy.to/embed/stream-445.php",
+        "https://playmatch.live/player/ES/3248",
+        "https://streamtp4.com/global1.php?stream=dazn2",
+        "https://thedaddy.to/embed/stream-446.php"
       ]
     }
   ]
-  
-  
   
