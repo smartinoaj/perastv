@@ -213,7 +213,7 @@
       {
         "name": "Canal 11",
         "srcs": [
-          "https://playmatch.live/player/PT/2717",
+          "#1",
           "#2",
           "#3",
           "#4",
@@ -222,7 +222,7 @@
           "#7",
           "#8",
           "#9",
-          "#10"
+          "https://playmatch.live/player/PT/2717"
         ]
       }
     ],
