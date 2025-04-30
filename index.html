@@ -185,8 +185,13 @@ fetch("channels.json")
 
     // ✅ Now it's safe to render admin tools
     if (sessionStorage.getItem('admin') === 'true') {
-      renderAdminTools();
-    }
+  renderAdminTools({
+    PT: ptChannels,
+    UK: ukChannels,
+    ES: esChannels
+  });
+}
+
   })
   .catch(error => {
     console.error("Failed to load channel data:", error);
