@@ -186,7 +186,12 @@ renderChannels('UK', ukChannels);
 renderChannels('ES', esChannels);
 
 if (sessionStorage.getItem('admin') === 'true') {
-  renderAdminTools();
+  renderAdminTools({
+  PT: ptChannels,
+  UK: ukChannels,
+  ES: esChannels
+});
+
 }
   })
   .catch(error => {
