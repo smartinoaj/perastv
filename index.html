@@ -164,23 +164,30 @@
 
 <script>
 
+let ptChannels = [];
+let ukChannels = [];
+let esChannels = [];
+
 const dataURL = "channels.json";
 
 fetch(dataURL)
   .then(res => res.json())
   .then(data => {
     const { PT, UK, ES } = data;
-    renderChannels('PT', PT);
-    renderChannels('UK', UK);
-    renderChannels('ES', ES);
+ptChannels = PT;
+ukChannels = UK;
+esChannels = ES;
+ptChannels = PT;
+ukChannels = UK;
+esChannels = ES;
 
-    // Optional: update admin tools if admin is active
-    if (sessionStorage.getItem('admin') === 'true') {
-      ptChannels = PT;
-      ukChannels = UK;
-      esChannels = ES;
-      renderAdminTools();
-    }
+renderChannels('PT', ptChannels);
+renderChannels('UK', ukChannels);
+renderChannels('ES', esChannels);
+
+if (sessionStorage.getItem('admin') === 'true') {
+  renderAdminTools();
+}
   })
   .catch(error => {
     console.error("Failed to load channel data:", error);
@@ -405,8 +412,13 @@ function verifyPassword() {
   }
 }
 
+const lastUpdatedEl = document.getElementById('lastUpdated');
+const now = new Date();
+lastUpdatedEl.textContent = `Last updated: ${now.toLocaleDateString()} ${now.toLocaleTimeString()}`;
+
 
 </script>
 
+<p id="lastUpdated" style="text-align:center; color:#888; font-size:0.85em; margin-top:30px;"></p>
 </body>
 </html>
