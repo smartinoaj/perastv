@@ -104,10 +104,20 @@ function renderChannels(tab, channels) {
     grid.appendChild(box);
   });
 }
-function renderMatchChannels(matches) {
+function renderMatchChannels(matchChannels) {
   const grid = document.getElementById('Matches');
   grid.innerHTML = '';
-  matches.forEach(({ team1, team2, logo1, logo2, pt, uk, es, time }) => {
+  matchChannels.forEach(match => {
+    const {
+      team1 = "Team 1",
+      team2 = "Team 2",
+      logo1 = "",
+      logo2 = "",
+      time = "",
+      pt = [],
+      uk = [],
+      es = []
+    } = match;
     const box = document.createElement('div');
     box.className = 'channel-box';
     box.innerHTML = `
@@ -120,9 +130,9 @@ function renderMatchChannels(matches) {
       <div class="iframe-container">
         <iframe allow="autoplay; fullscreen" allowfullscreen></iframe>
         <div class="stream-buttons">
-          <div><strong>PT:</strong> ${pt.map((src, i) => `<button onclick="changeStream(event, this, '${src}')">${i+1}</button>`).join('')}</div>
-          <div style="margin-top:5px;"><strong>UK:</strong> ${uk.map((src, i) => `<button onclick="changeStream(event, this, '${src}')">${i+1}</button>`).join('')}</div>
-          <div style="margin-top:5px;"><strong>ES:</strong> ${es.map((src, i) => `<button onclick="changeStream(event, this, '${src}')">${i+1}</button>`).join('')}</div>
+          ${pt.length ? `<div><strong>PT:</strong> ${pt.map((src, i) => `<button onclick="changeStream(event, this, '${src}')">${i + 1}</button>`).join('')}</div>` : ''}
+          ${uk.length ? `<div style="margin-top:5px;"><strong>UK:</strong> ${uk.map((src, i) => `<button onclick="changeStream(event, this, '${src}')">${i + 1}</button>`).join('')}</div>` : ''}
+          ${es.length ? `<div style="margin-top:5px;"><strong>ES:</strong> ${es.map((src, i) => `<button onclick="changeStream(event, this, '${src}')">${i + 1}</button>`).join('')}</div>` : ''}
         </div>
       </div>`;
     box.onclick = () => toggleIframe(box);
@@ -175,7 +185,6 @@ const passwordInput = document.getElementById('passwordInput');
 const passwordButton = passwordScreen.querySelector('button');
 const errorMessage = document.getElementById('errorMessage');
 const userPassword = "ptv123";
-
 if (sessionStorage.getItem('authenticated') === 'true') {
   passwordScreen.style.display = 'none';
   document.body.style.overflow = '';
