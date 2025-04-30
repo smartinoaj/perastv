@@ -170,33 +170,28 @@ let esChannels = [];
 
 const dataURL = "channels.json";
 
-fetch(dataURL)
+fetch("channels.json")
   .then(res => res.json())
   .then(data => {
     const { PT, UK, ES } = data;
-ptChannels = PT;
-ukChannels = UK;
-esChannels = ES;
-ptChannels = PT;
-ukChannels = UK;
-esChannels = ES;
 
-renderChannels('PT', ptChannels);
-renderChannels('UK', ukChannels);
-renderChannels('ES', esChannels);
+    ptChannels = PT;
+    ukChannels = UK;
+    esChannels = ES;
 
-if (sessionStorage.getItem('admin') === 'true') {
-  renderAdminTools({
-  PT: ptChannels,
-  UK: ukChannels,
-  ES: esChannels
-});
+    renderChannels('PT', ptChannels);
+    renderChannels('UK', ukChannels);
+    renderChannels('ES', esChannels);
 
-}
+    // ✅ Now it's safe to render admin tools
+    if (sessionStorage.getItem('admin') === 'true') {
+      renderAdminTools();
+    }
   })
   .catch(error => {
     console.error("Failed to load channel data:", error);
   });
+
 
 fetch("matches.json")
   .then(res => res.json())
