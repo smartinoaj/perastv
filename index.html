@@ -104,11 +104,9 @@
         @media (min-width: 1024px) { .channel-grid:not(#Matches) { grid-template-columns: repeat(3, 1fr); } }
         @media (min-width: 1366px) { .channel-grid:not(#Matches) { grid-template-columns: repeat(4, 1fr); } }
         .channel-grid.active { display: grid; }
-
-        /* --- Matches Grid Specific Width --- */
         #Matches.channel-grid {
              grid-template-columns: 1fr; /* Still single column */
-             max-width: none; /* Remove max-width to allow full width */
+             max-width: none; /* Remove max-width */
              margin: 0; /* Remove auto margin */
         }
         #Matches.channel-grid.active { display: grid; }
@@ -130,14 +128,14 @@
             justify-content: center; /* Center channel name by default */
             gap: 10px; text-align: center; min-height: 35px; cursor: pointer;
         }
-         /* --- Matches Header Layout --- */
+         /* --- Matches Header Layout V2 --- */
         #Matches .channel-header {
-             justify-content: flex-start; /* Align items to the start */
-             gap: 15px; /* Increase gap */
-             text-align: left; /* Align text left */
+             justify-content: space-evenly; /* Distribute space evenly */
+             gap: 15px; /* Gap between items */
+             text-align: center; /* Keep text centered */
         }
         .match-logo { /* Styles only for match logos */
-            height: 36px; width: 36px; /* Increased size */
+            height: 40px; width: 40px; /* Increased size */
             object-fit: contain; flex-shrink: 0;
             background-color: var(--bg-tertiary);
             border-radius: 4px;
@@ -145,36 +143,32 @@
             vertical-align: middle;
         }
 
-        .channel-header .logos { /* Container for match logos */
+        .channel-header .logos { /* Container for match logos - no longer needed for positioning */
             display: flex;
             align-items: center;
-            gap: 10px; /* Gap between the two logos */
+            gap: 0; /* Remove gap here, handled by justify-content */
             flex-shrink: 0;
         }
         .channel-header img.match-logo { /* Target only match logos */
-             height: 36px; /* Increased size */
+             height: 40px; /* Increased size */
              width: auto;
              object-fit: contain;
         }
         .channel-header h3 {
-            font-size: 1.1em; /* Slightly larger title for matches */
+            font-size: 1.1em; /* Title size */
             font-weight: 600; margin: 0;
             word-break: break-word;
-            text-align: left; /* Align text left for matches */
-            flex-grow: 1; /* Allow title to take space */
+            text-align: center; /* Center all titles */
+            flex-grow: 0; /* Don't allow title to push logos too far */
+            flex-shrink: 1; /* Allow title to shrink if needed */
         }
-        /* Keep centering for non-match titles */
-        .channel-grid:not(#Matches) .channel-header h3 {
-             text-align: center;
-        }
-
 
         .channel-info {
-            font-size: 0.8em; /* Slightly larger info text */
+            font-size: 0.8em;
             color: var(--text-secondary);
-            text-align: left; /* Align info left */
-            margin-top: 5px; /* Reduced top margin */
-            margin-left: calc(36px + 10px + 36px + 15px); /* Align with start of title (logo1 width + gap + logo2 width + header gap) */
+            text-align: center; /* Center info text */
+            margin-top: 8px; /* Space below header */
+            margin-left: 0; /* Remove previous left margin */
             margin-bottom: 0;
             font-weight: 500; cursor: pointer;
         }
@@ -275,8 +269,8 @@
              .tab-button { padding: 8px 20px; font-size: 0.85em; }
              #Matches.channel-grid { max-width: 100%; } /* Ensure matches grid is full width */
              #Matches .channel-header { gap: 10px; } /* Reduce gap on smaller screens */
-             .match-logo, #Matches .channel-header img.match-logo { height: 30px; width: 30px; } /* Slightly smaller logos on mobile */
-             .channel-info { margin-left: calc(30px + 10px + 30px + 10px); font-size: 0.75em;} /* Adjust info margin */
+             .match-logo, #Matches .channel-header img.match-logo { height: 32px; width: 32px; } /* Slightly smaller logos on mobile */
+             .channel-info { font-size: 0.75em;}
         }
         @media (max-width: 480px) { /* Further adjustments for very small screens */
             .container { padding: 0 10px; }
@@ -285,11 +279,11 @@
             .tab-button { padding: 7px 15px; }
             .channel-box { padding: 12px; }
             .channel-header h3 { font-size: 1em; }
-            .match-logo, #Matches .channel-header img.match-logo { height: 28px; width: 28px; }
+            .match-logo, #Matches .channel-header img.match-logo { height: 30px; width: 30px; }
             .stream-buttons strong { display: block; margin-bottom: 5px; }
             .player-area { min-height: 200px; }
             #search-input { padding: 10px 15px; font-size: 0.95em; }
-             .channel-info { margin-left: calc(28px + 10px + 28px + 10px); font-size: 0.7em;} /* Adjust info margin */
+             .channel-info { font-size: 0.7em;}
         }
 
     </style>
@@ -489,14 +483,12 @@
         box.dataset.sources = JSON.stringify(allSources);
         box.id = uniqueId;
 
+        // *** Updated HTML structure for match header ***
         box.innerHTML = `
             <div class="channel-header" id="${uniqueId}-header" aria-expanded="false" aria-controls="${uniqueId}-player-container">
-                 <div class="logos"> {/* Wrap logos */}
-                    ${logo1 ? `<img src="${logo1}" alt="" class="match-logo">` : '<span class="match-logo"></span>'}
-                    ${logo2 ? `<img src="${logo2}" alt="" class="match-logo">` : '<span class="match-logo"></span>'}
-                 </div>
-                <h3>${matchTitle}</h3>
-                 {/* Removed duplicate logo container */}
+                 ${logo1 ? `<img src="${logo1}" alt="" class="match-logo">` : '<span class="match-logo"></span>'}
+                 <h3>${matchTitle}</h3>
+                 ${logo2 ? `<img src="${logo2}" alt="" class="match-logo">` : '<span class="match-logo"></span>'}
             </div>
             <div class="channel-info">
                 ${league ? `<span>${league}</span>` : ''}
