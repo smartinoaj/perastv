@@ -107,45 +107,40 @@
         }
         .channel-header {
             display: flex; align-items: center;
-            /* Use justify-content: flex-start for regular channels to keep logo left */
             justify-content: flex-start;
             gap: 10px; text-align: left; min-height: 35px; cursor: pointer;
         }
-         /* Specific centering for match headers */
-        #Matches .channel-header {
-             justify-content: space-between;
-        }
-        .channel-logo, .match-logo { /* Combined styles for logos */
+         #Matches .channel-header { justify-content: space-between; }
+        .channel-logo, .match-logo {
             height: 28px; width: 28px; object-fit: contain; flex-shrink: 0;
-            background-color: var(--bg-tertiary); /* Placeholder color */
+            background-color: var(--bg-tertiary);
             border-radius: 4px;
             display: inline-block;
             vertical-align: middle;
         }
-        .channel-logo { margin-right: 8px; } /* Only regular channels need right margin */
+        .channel-logo { margin-right: 8px; }
 
         .channel-header .logos { display: flex; align-items: center; gap: 8px; flex-shrink: 0; }
         .channel-header img { height: 28px; width: auto; object-fit: contain; }
         .channel-header h3 {
             font-size: 1em; font-weight: 600; margin: 0; flex-grow: 1;
             word-break: break-word;
-            /* Text align left for regular channels, center for matches */
             text-align: left;
         }
          #Matches .channel-header h3 { text-align: center; }
 
-        .channel-info { /* Container for league/time */
+        .channel-info {
             font-size: 0.75em; color: var(--text-secondary); text-align: center;
             margin-top: 8px; margin-bottom: 0; font-weight: 500; cursor: pointer;
         }
-        .channel-info span { margin: 0 5px; } /* Separator for league/time */
+        .channel-info span { margin: 0 5px; }
 
         /* --- Expanded Channel Box --- */
         .channel-box.expanded {
             grid-column: 1 / -1; cursor: default;
             background: var(--bg-tertiary); padding-bottom: 20px; z-index: 10;
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
-            border: 2px solid var(--accent-color); /* Thicker border when expanded */
+            border: 2px solid var(--accent-color);
             overflow: visible;
         }
         .channel-box.expanded .channel-header,
@@ -158,30 +153,26 @@
             position: relative; width: 100%; aspect-ratio: 16 / 9;
             background-color: #000; border-radius: 8px; overflow: hidden;
             margin-bottom: 18px; min-height: 200px;
-            display: flex; /* For centering messages/spinner */
-            justify-content: center;
-            align-items: center;
+            display: flex; justify-content: center; align-items: center;
         }
         .player-area iframe, .player-area video {
             position: absolute; top: 0; left: 0; width: 100%; height: 100%;
             border: none; display: none; object-fit: contain;
         }
         .player-area iframe.active, .player-area video.active { display: block; }
-        /* Player Messages (Loading/Error) */
         .player-message {
             color: var(--text-secondary); font-size: 0.9em; padding: 20px;
-            text-align: center; display: none; /* Hidden by default */
+            text-align: center; display: none;
         }
         .player-message.visible { display: block; }
         .player-message strong { color: var(--text-primary); display: block; margin-bottom: 5px; }
-        .player-message button { margin-top: 15px; } /* Spacing for Try Next button */
-        /* Loading Spinner */
+        .player-message button { margin-top: 15px; }
         .loader {
             width: 40px; height: 40px; border-radius: 50%;
             border: 4px solid var(--border-color);
             border-top-color: var(--accent-color);
             animation: spin 1s linear infinite;
-            display: none; /* Hidden by default */
+            display: none;
         }
         .loader.visible { display: block; }
         @keyframes spin { to { transform: rotate(360deg); } }
@@ -192,39 +183,30 @@
 
         /* --- Stream Buttons --- */
         .stream-buttons { text-align: center; margin-top: 15px; }
-        .stream-buttons div { margin-bottom: 10px; } /* Group spacing */
-        .stream-buttons strong { /* Language label (PT, UK, ES) */
+        .stream-buttons div { margin-bottom: 10px; }
+        .stream-buttons strong {
             color: var(--text-secondary); font-size: 0.85em; margin-right: 8px;
             font-weight: 600; text-transform: uppercase;
         }
-        .stream-button-wrapper { /* Wrapper for button + report icon */
-            display: inline-flex; /* Align items inline */
-            align-items: center;
-            margin: 4px;
-        }
+        .stream-button-wrapper { display: inline-flex; align-items: center; margin: 4px; }
         .stream-button {
             background: var(--bg-secondary); color: var(--text-primary);
             border: 1px solid var(--border-color); padding: 7px 18px;
             border-radius: 20px; cursor: pointer; font-size: 0.85em;
-            font-weight: 500; transition: all 0.2s ease;
-            flex-grow: 1; /* Button takes available space */
+            font-weight: 500; transition: all 0.2s ease; flex-grow: 1;
         }
         .stream-button:hover { background: #4a4a4a; border-color: #5a5a5a; }
         .stream-button.active {
             background: var(--accent-color); color: white;
             border-color: var(--accent-color); font-weight: 600;
         }
-        /* Report Button */
         .report-button {
             background: none; border: none; color: var(--text-secondary);
-            cursor: pointer; font-size: 1.1em; padding: 0 5px; /* Adjust padding */
-            margin-left: 5px; /* Space from stream button */
-            line-height: 1;
-            opacity: 0.6;
+            cursor: pointer; font-size: 1.1em; padding: 0 5px;
+            margin-left: 5px; line-height: 1; opacity: 0.6;
             transition: opacity 0.2s ease, color 0.2s ease;
         }
         .report-button:hover { opacity: 1; color: var(--error-color); }
-        /* Try Next Button */
         .try-next-button {
             background: var(--accent-color); color: white;
             border: none; padding: 8px 15px; border-radius: 6px;
@@ -300,12 +282,11 @@
 
     // --- Configuration ---
     const CONFIG = {
-        // password: "ptv123", // Removed
         channelsUrl: "channels.json",
         matchesUrl: "matches.json",
         placeholderImage: 'data:image/svg+xml;charset=UTF-8,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="9" viewBox="0 0 16 9"><rect width="16" height="9" fill="%23000000"/></svg>',
-        searchDebounceMs: 300, // Delay for search filtering
-        lastTabKey: 'perasTvLastTab' // localStorage key
+        searchDebounceMs: 300,
+        lastTabKey: 'perasTvLastTab'
     };
 
     // --- DOM Elements ---
@@ -320,7 +301,7 @@
     let hlsInstance = null;
     let channelsData = {};
     let matchesData = [];
-    let currentlyExpandedBox = null; // Track the currently expanded box
+    let currentlyExpandedBox = null;
     let searchDebounceTimer = null;
 
     // --- Initialization ---
@@ -351,7 +332,7 @@
         // Close expanded box with Escape key
         document.addEventListener('keydown', (event) => {
             if (event.key === 'Escape' && currentlyExpandedBox) {
-                 toggleExpansion(currentlyExpandedBox); // Collapse the current box
+                 toggleExpansion(currentlyExpandedBox);
             }
         });
     }
@@ -377,10 +358,8 @@
             renderAllChannels();
             loadingMessage.style.display = 'none';
 
-            // Restore last tab preference
-            const lastTab = localStorage.getItem(CONFIG.lastTabKey) || 'PT'; // Default to PT
+            const lastTab = localStorage.getItem(CONFIG.lastTabKey) || 'PT';
             showTab(lastTab);
-
 
         } catch (error) {
             console.error("Failed to load channel or match data:", error);
@@ -429,17 +408,17 @@
 
     // --- Element Creation ---
     function createChannelBoxElement(channel, uniqueId) {
-        // *** MODIFIED HERE ***
-        const { name, srcs = [], logo = null } = channel; // Expect optional logo property
+        const { name, srcs = [], logo = null } = channel;
         const box = document.createElement('div');
         box.className = 'channel-box';
         box.dataset.channelName = name;
         box.dataset.sources = JSON.stringify(srcs);
         box.id = uniqueId;
 
+        // *** REMOVED COMMENT HERE ***
         box.innerHTML = `
             <div class="channel-header" id="${uniqueId}-header" aria-expanded="false" aria-controls="${uniqueId}-player-container">
-                ${logo ? `<img src="${logo}" alt="" class="channel-logo">` : '<span class="channel-logo"></span>'} {/* Display logo or placeholder */}
+                ${logo ? `<img src="${logo}" alt="" class="channel-logo">` : '<span class="channel-logo"></span>'}
                 <h3>${name}</h3>
             </div>
             <div class="iframe-container" id="${uniqueId}-player-container" role="region" aria-labelledby="${uniqueId}-header">
@@ -452,9 +431,19 @@
                 <div class="stream-buttons"></div>
             </div>
         `;
+        const imgElement = box.querySelector('img.channel-logo');
+        if (imgElement) {
+            imgElement.onerror = () => {
+                console.warn(`Logo failed to load: ${imgElement.src}`);
+                imgElement.style.display = 'none';
+                 const placeholder = box.querySelector('span.channel-logo');
+                 if(placeholder) placeholder.style.display = 'inline-block';
+            }
+             const placeholder = box.querySelector('span.channel-logo');
+             if(placeholder) placeholder.style.display = 'none';
+        }
         return box;
     }
-
      function createMatchBoxElement(match, uniqueId) {
         const { team1, team2, logo1 = '', logo2 = '', time = '', league = '', pt = [], uk = [], es = [] } = match;
         const box = document.createElement('div');
@@ -466,6 +455,7 @@
         box.dataset.sources = JSON.stringify(allSources);
         box.id = uniqueId;
 
+        // *** REMOVED COMMENT HERE ***
         box.innerHTML = `
             <div class="channel-header" id="${uniqueId}-header" aria-expanded="false" aria-controls="${uniqueId}-player-container">
                  <div class="logos">
@@ -491,9 +481,8 @@
                 <div class="stream-buttons"></div>
             </div>
         `;
-        // Add error handling for team logos
         box.querySelectorAll('img.match-logo').forEach(img => {
-            img.onerror = () => { img.style.display = 'none'; img.nextElementSibling?.classList.remove('hidden'); }; // Hide broken image, show placeholder if needed
+            img.onerror = () => { img.style.display = 'none'; img.nextElementSibling?.classList.remove('hidden'); };
         });
         return box;
     }
@@ -598,7 +587,6 @@
              box.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
              const firstButton = box.querySelector('.stream-button');
              if (firstButton) {
-                 // Delay focus slightly more to ensure it's ready
                  setTimeout(() => firstButton.focus({ preventScroll: true }), 50);
              }
         }, 150);
@@ -614,7 +602,6 @@
         const header = box.querySelector('.channel-header');
         if(header) {
             header.setAttribute('aria-expanded', 'false');
-            // Focus after slight delay
             setTimeout(() => header.focus({ preventScroll: true }), 0);
         }
     }
@@ -632,7 +619,6 @@
             if (Array.isArray(sources)) {
                 if (sources.length > 0) {
                     sources.forEach((src, idx) => {
-                        // *** MODIFIED HERE: Check for label in source object ***
                         const url = typeof src === 'object' && src.url ? src.url : src;
                         const label = typeof src === 'object' && src.label ? src.label : `Source ${idx + 1}`;
                         if (!firstUrl) firstUrl = url;
@@ -650,7 +636,6 @@
                         strong.textContent = `${lang.toUpperCase()}:`;
                         langDiv.appendChild(strong);
                         langSources.forEach((src, idx) => {
-                            // *** MODIFIED HERE: Check for label in source object ***
                             const url = typeof src === 'object' && src.url ? src.url : src;
                             const label = typeof src === 'object' && src.label ? src.label : `${idx + 1}`;
                             if (!firstUrl) firstUrl = url;
@@ -678,6 +663,7 @@
      function noStreamsAvailable(container) {
          container.innerHTML = '<p style="color: var(--text-secondary); font-size: 0.9em;">No streams available.</p>';
     }
+
 
     // --- Stream Handling ---
     function changeStream(clickedButton, url, contextBox) {
