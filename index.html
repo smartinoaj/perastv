@@ -73,7 +73,8 @@
         .tab-button {
             background: transparent; color: var(--text-secondary);
             border: 1px solid var(--border-color); padding: 10px 25px; cursor: pointer;
-            border-radius: 20px; font-size: 0.9em; font-weight: 600;
+            border-radius: 20px; /* Pill shape */
+            font-size: 0.9em; font-weight: 600;
             transition: all 0.2s ease; text-transform: uppercase; letter-spacing: 0.5px;
         }
         .tab-button:hover { background: var(--bg-tertiary); color: var(--text-primary); border-color: var(--bg-tertiary); }
@@ -81,12 +82,32 @@
 
         /* Channel Grid */
         .channel-grid {
-            display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            display: grid;
+            /* Default: Auto-fill for smaller screens */
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
             gap: 25px; padding: 0 10px 50px; display: none;
         }
+        /* --- Grid Column Change --- */
+        /* 2 columns for medium screens */
+        @media (min-width: 768px) {
+            .channel-grid:not(#Matches) { /* Exclude Matches grid */
+                 grid-template-columns: repeat(2, 1fr);
+            }
+        }
+        /* 3 columns for large screens */
+         @media (min-width: 1024px) {
+             .channel-grid:not(#Matches) { /* Exclude Matches grid */
+                 grid-template-columns: repeat(3, 1fr);
+            }
+        }
+        /* --- End Grid Column Change --- */
+
         .channel-grid.active { display: grid; }
-        #Matches.channel-grid { grid-template-columns: 1fr; max-width: 950px; margin: 0 auto; }
+        #Matches.channel-grid { /* Matches always stay single column */
+             grid-template-columns: 1fr; max-width: 950px; margin: 0 auto;
+        }
         #Matches.channel-grid.active { display: grid; }
+
 
         /* Channel Box */
         .channel-box {
@@ -172,9 +193,13 @@
         .stream-button {
             background: var(--bg-secondary); /* Use darker bg for buttons inside */
             color: var(--text-primary); border: 1px solid var(--border-color);
-            padding: 7px 15px; margin: 4px; border-radius: 6px; cursor: pointer;
-            font-size: 0.85em; font-weight: 500; transition: all 0.2s ease;
-            display: inline-block;
+            padding: 7px 18px; /* Adjusted padding for rounded look */
+            margin: 4px;
+            /* --- Button Shape Change --- */
+            border-radius: 20px; /* Pill shape like tabs */
+            /* --- End Button Shape Change --- */
+            cursor: pointer; font-size: 0.85em; font-weight: 500;
+            transition: all 0.2s ease; display: inline-block;
         }
         .stream-button:hover { background: #4a4a4a; border-color: #5a5a5a; }
         .stream-button.active {
@@ -189,25 +214,22 @@
         .loading-message, .error-message { text-align: center; padding: 50px 20px; color: var(--text-secondary); font-size: 1em; font-weight: 500; }
 
         /* Responsive Adjustments */
-        @media (max-width: 992px) {
-            .container { padding: 0 15px; }
-            .channel-grid { grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 20px; }
-        }
-        @media (max-width: 768px) {
-            header img { max-width: 160px; }
+        @media (max-width: 767px) { /* Adjusted breakpoint for 1 column */
+             .channel-grid:not(#Matches) {
+                 grid-template-columns: 1fr; /* Single column on small screens */
+            }
+            .channel-box { padding: 15px; }
+            .stream-button { padding: 6px 15px; font-size: 0.8em; }
+             header img { max-width: 160px; }
             .tabs { gap: 10px; margin-bottom: 30px; }
             .tab-button { padding: 8px 20px; font-size: 0.85em; }
-            .channel-grid { grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 18px; }
             #Matches.channel-grid { max-width: 100%; }
-            .channel-box { padding: 15px; }
-            .stream-button { padding: 6px 12px; font-size: 0.8em; }
         }
         @media (max-width: 480px) {
             .container { padding: 0 10px; }
             header img { max-width: 140px; }
             .tabs { gap: 8px; }
             .tab-button { padding: 7px 15px; }
-            .channel-grid { grid-template-columns: 1fr; gap: 15px; }
             .channel-box { padding: 12px; }
             .channel-header h3 { font-size: 1em; }
             .channel-header img { height: 26px; }
