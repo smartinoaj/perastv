@@ -137,24 +137,35 @@
             background: var(--bg-secondary); border-radius: 10px; padding: 15px;
             cursor: pointer; transition: all 0.3s ease;
             border: 1px solid var(--bg-secondary); position: relative; overflow: hidden;
-            /* Default state: visible unless hidden by JS */
-            display: block;
+            display: block; /* Default state */
         }
 
-        /* --- Wider & Consistent Match Box (Not Expanded) --- */
-        /* Apply this only to match boxes within the #Matches grid */
-        #Matches .channel-box:not(.expanded) {
-            width: 95%;      /* Use percentage for width relative to the centered grid */
-            max-width: 1000px; /* Optional: Ensure it doesn't exceed grid max-width */
-            margin-left: auto; /* Center the box within the column */
+        /* --- Styling for MATCH boxes within the MATCHES grid (NOT Expanded) --- */
+        #Matches .channel-box[id^="match-"]:not(.expanded) {
+            grid-column: 1 / -1; /* Span all columns (of the 1-column grid) */
+            width: 95%;
+            max-width: 1000px;
+            margin-left: auto;
             margin-right: auto;
         }
-        /* Match boxes within the #ALL grid should behave like normal channel boxes */
-        #ALL .channel-box[id^="match-"] {
-             width: auto;
-             max-width: none;
-             margin-left: 0;
-             margin-right: 0;
+
+        /* --- MODIFIED: Styling for MATCH boxes within the ALL grid (NOT Expanded) --- */
+        #ALL .channel-box[id^="match-"]:not(.expanded) {
+            grid-column: 1 / -1; /* Force span all columns of the multi-column grid */
+            width: 95%;          /* Set width relative to the full grid width */
+            max-width: 1000px;    /* Apply the same max-width as in #Matches */
+            margin-left: auto;   /* Center it */
+            margin-right: auto;
+        }
+
+        /* --- Styling for CHANNEL boxes within the ALL grid (NOT Expanded) --- */
+        /* Ensure they flow naturally in the multi-column grid */
+        #ALL .channel-box:not([id^="match-"]):not(.expanded) {
+            grid-column: auto / span 1; /* Explicitly take one cell */
+            width: auto; /* Reset any potential overrides */
+            max-width: none;
+            margin-left: 0;
+            margin-right: 0;
         }
 
 
@@ -176,7 +187,7 @@
             justify-content: center; /* Center channel name by default */
             gap: 10px; text-align: center; min-height: 35px; cursor: pointer;
         }
-         /* --- Matches Header Layout (Applies in ALL and Matches tabs) --- */
+         /* --- Matches Header Layout (Applies to match boxes everywhere) --- */
         .channel-box[id^="match-"] .channel-header {
              justify-content: center; /* Center team names/logos */
              gap: 0; /* Remove gap, use margins on h3 */
@@ -212,9 +223,7 @@
             margin-right: 25px;
         }
         /* Reset margins for non-match titles */
-         .channel-grid:not(#Matches):not(#ALL) .channel-header h3, /* Specific tabs */
-         #ALL .channel-box:not([id^="match-"]) .channel-header h3 /* Non-matches in ALL tab */
-         {
+         .channel-box:not([id^="match-"]) .channel-header h3 {
              margin-left: 0;
              margin-right: 0;
          }
@@ -228,6 +237,7 @@
             margin-left: 0; /* Reset potential inherited margins */
             margin-bottom: 0;
             font-weight: 500; cursor: pointer; /* Make clickable to toggle */
+            display: block; /* Default for matches */
         }
         /* Hide info section for non-match boxes */
         .channel-box:not([id^="match-"]) .channel-info {
@@ -235,45 +245,49 @@
         }
         .channel-info span { margin: 0 5px; } /* Spacing around separator */
 
-        /* --- Expanded Channel Box Styling --- */
+        /* --- Expanded Channel Box Styling (General) --- */
         .channel-box.expanded {
-            /* Span full grid width - Adjusted for different grid layouts */
-            /* grid-column: 1 / -1; <-- This might not work well with auto-fill, rely on width/max-width */
-            width: 100%; /* Take full width of its grid cell */
-            max-width: 1200px; /* Set a max-width for expanded view */
+            width: 100%; /* Take full width of its grid cell(s) */
+            max-width: 1200px; /* Max width for expanded view */
             margin-left: auto; /* Center if grid column is wider */
             margin-right: auto;
-
-            position: relative; /* Ensure it stays within flow for centering */
+            position: relative; /* Keep in flow for centering */
             grid-column: auto / span 1; /* Default span */
-
-            cursor: default; /* Not clickable anymore */
-            background: var(--bg-tertiary); /* Slightly lighter background */
-            padding-bottom: 20px; z-index: 10; /* Bring to front */
+            cursor: default;
+            background: var(--bg-tertiary);
+            padding-bottom: 20px; z-index: 10;
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
-            border: 2px solid var(--accent-color); /* Highlight border */
-            overflow: visible; /* Allow potential dropdowns/tooltips */
-            display: block !important; /* Ensure expanded box is always visible, overriding .hidden */
+            border: 2px solid var(--accent-color);
+            overflow: visible;
+            display: block !important; /* Override .hidden */
         }
-        /* Force expanded box to span multiple columns on larger grids */
+        /* Override column span for expanded boxes in multi-column grids (excluding #Matches) */
         @media (min-width: 768px) {
-            .channel-grid.active .channel-box.expanded {
-                grid-column: auto / span 2; /* Span 2 columns */
-            }
-            /* Ensure single-column grids don't span */
-            #Matches.channel-grid.active .channel-box.expanded {
-                 grid-column: auto / span 1;
+            .channel-grid.active:not(#Matches) .channel-box.expanded {
+                grid-column: auto / span 2;
             }
         }
         @media (min-width: 1024px) {
-             .channel-grid.active .channel-box.expanded {
-                grid-column: auto / span 3; /* Span 3 columns */
-            }
-             /* Ensure single-column grids don't span */
-             #Matches.channel-grid.active .channel-box.expanded {
-                 grid-column: auto / span 1;
+             .channel-grid.active:not(#Matches) .channel-box.expanded {
+                grid-column: auto / span 3;
             }
         }
+
+        /* --- MODIFIED: Specific Styling for EXPANDED MATCH boxes within the ALL grid --- */
+        /* Ensure they also span fully and remain centered */
+        #ALL .channel-box[id^="match-"].expanded {
+             grid-column: 1 / -1; /* Force full span */
+             max-width: 1200px; /* Consistent max-width */
+             margin-left: auto;
+             margin-right: auto;
+        }
+        /* Ensure expanded matches in the #Matches grid don't try to span multiple columns */
+         #Matches .channel-box[id^="match-"].expanded {
+             grid-column: 1 / -1; /* Stay in the single column */
+             max-width: 1200px; /* Consistent max-width */
+             margin-left: auto;
+             margin-right: auto;
+         }
 
 
         /* Make header/info non-clickable when expanded */
@@ -433,7 +447,7 @@
     <p id="lastUpdated"></p> </footer>
 
 <script>
-    /* --- JavaScript --- */
+    /* --- JavaScript (No changes needed from previous version) --- */
 
     // --- Configuration Constants ---
     const CONFIG = {
@@ -527,39 +541,32 @@
     }
 
     // --- Rendering Functions ---
-    // MODIFIED: Now also populates the "ALL" grid
     function renderAllChannels() {
         const allGrid = document.getElementById('ALL');
-        if (!allGrid) return; // Should not happen
+        if (!allGrid) return;
 
         allGrid.innerHTML = ''; // Clear ALL grid initially
 
         // 1. Render Matches to ALL grid and Matches grid
         const matches = matchesData || [];
-        renderMatchChannels(matches); // Renders to #Matches grid
+        renderMatchChannels(matches); // Renders only to #Matches grid now
 
         // Append match boxes to ALL grid
         if (matches.length > 0) {
             matches.forEach((match, index) => {
-                const uniqueId = `match-${index}`; // Use the same ID as in #Matches
+                const uniqueId = `match-${index}`;
                 const box = createMatchBoxElement(match, uniqueId);
-                 // Add a data attribute to easily identify matches vs channels if needed later
-                 box.dataset.itemType = 'match';
+                box.dataset.itemType = 'match';
                 allGrid.appendChild(box);
             });
-        } else {
-            // Optionally add a "No matches" message specifically to the ALL grid part if needed
         }
-
 
         // 2. Render PT Channels to ALL grid and PT grid
         const ptChannels = channelsData.PT || [];
         renderChannels('PT', ptChannels); // Renders to #PT grid
-
-        // Append PT channel boxes to ALL grid
         if (ptChannels.length > 0) {
              ptChannels.forEach((channel, index) => {
-                const uniqueId = `PT-channel-${index}`; // Use the same ID as in #PT
+                const uniqueId = `PT-channel-${index}`;
                 const box = createChannelBoxElement(channel, uniqueId);
                 box.dataset.itemType = 'channel';
                 allGrid.appendChild(box);
@@ -569,11 +576,9 @@
         // 3. Render UK Channels to ALL grid and UK grid
         const ukChannels = channelsData.UK || [];
         renderChannels('UK', ukChannels); // Renders to #UK grid
-
-        // Append UK channel boxes to ALL grid
          if (ukChannels.length > 0) {
              ukChannels.forEach((channel, index) => {
-                const uniqueId = `UK-channel-${index}`; // Use the same ID as in #UK
+                const uniqueId = `UK-channel-${index}`;
                 const box = createChannelBoxElement(channel, uniqueId);
                  box.dataset.itemType = 'channel';
                 allGrid.appendChild(box);
@@ -583,19 +588,16 @@
         // 4. Render ES Channels to ALL grid and ES grid
         const esChannels = channelsData.ES || [];
         renderChannels('ES', esChannels); // Renders to #ES grid
-
-         // Append ES channel boxes to ALL grid
          if (esChannels.length > 0) {
              esChannels.forEach((channel, index) => {
-                const uniqueId = `ES-channel-${index}`; // Use the same ID as in #ES
+                const uniqueId = `ES-channel-${index}`;
                 const box = createChannelBoxElement(channel, uniqueId);
                 box.dataset.itemType = 'channel';
                 allGrid.appendChild(box);
             });
         }
 
-        // Add event listeners to ALL boxes created (including those in the ALL grid)
-        addChannelBoxEventListeners();
+        addChannelBoxEventListeners(); // Add listeners after all boxes are in DOM
     }
 
     // Renders channel boxes for a specific language tab (PT, UK, ES)
@@ -643,8 +645,7 @@
             <div class="channel-header" id="${uniqueId}-header" aria-expanded="false" aria-controls="${uniqueId}-player-container">
                 <h3>${name}</h3>
             </div>
-            <div class="channel-info"></div>
-            <div class="iframe-container" id="${uniqueId}-player-container" role="region" aria-labelledby="${uniqueId}-header">
+            <div class="channel-info"></div> <div class="iframe-container" id="${uniqueId}-player-container" role="region" aria-labelledby="${uniqueId}-header">
                 <div class="player-area">
                     <div class="loader"></div>
                     <div class="player-message"></div>
@@ -659,13 +660,13 @@
      function createMatchBoxElement(match, uniqueId) {
         const { team1, team2, logo1 = '', logo2 = '', time = '', league = '', pt = [], uk = [], es = [] } = match;
         const box = document.createElement('div');
-        box.className = 'channel-box'; // Keep same base class
+        box.className = 'channel-box';
         const allSources = { pt, uk, es };
         const matchTitle = `${team1} vs ${team2}`;
         box.dataset.channelName = matchTitle;
         box.dataset.searchTerms = `${team1} ${team2} ${league}`.toLowerCase();
         box.dataset.sources = JSON.stringify(allSources);
-        box.id = uniqueId; // Use match-specific ID prefix
+        box.id = uniqueId;
 
         box.innerHTML = `
             <div class="channel-header" id="${uniqueId}-header" aria-expanded="false" aria-controls="${uniqueId}-player-container">
@@ -673,8 +674,7 @@
                  <h3>${matchTitle}</h3>
                  ${logo2 ? `<img src="${logo2}" alt="${team2} logo" class="match-logo">` : '<span class="match-logo"></span>'}
             </div>
-            <div class="channel-info">
-                ${league ? `<span>${league}</span>` : ''}
+            <div class="channel-info"> ${league ? `<span>${league}</span>` : ''}
                 ${league && time ? '<span>|</span>' : ''}
                 ${time ? `<span>${time}</span>` : ''}
             </div>
@@ -707,10 +707,8 @@
 
 
     // --- Event Listener Setup for Channel Boxes ---
-    // Needs to be called *after* all boxes (including those in ALL grid) are created
     function addChannelBoxEventListeners() {
          document.querySelectorAll('.channel-box').forEach(box => {
-            // Check if listener already added to prevent duplicates if renderAllChannels is called multiple times
             if (box.dataset.listenerAdded === 'true') return;
 
             const header = box.querySelector('.channel-header');
@@ -723,11 +721,10 @@
             };
 
             if (header) header.addEventListener('click', toggleHandler);
-            // Only add listener to info if it's visible (i.e., for matches)
-            if (info && info.offsetParent !== null) { // Check if info is actually displayed
+            // Add listener only if info is visible (matches)
+            if (info && getComputedStyle(info).display !== 'none') {
                  info.addEventListener('click', toggleHandler);
             }
-
 
             box.addEventListener('click', (event) => {
                 const isExpanded = box.classList.contains('expanded');
@@ -735,86 +732,74 @@
                 const isClickOnHeaderOrInfo = event.target.closest('.channel-header') || event.target.closest('.channel-info');
 
                 if (!isExpanded && !isClickOnPlayerArea && !isClickOnHeaderOrInfo) {
-                   // Potentially toggle here if needed, but header/info clicks handle it
+                   // Potentially toggle here if needed
                 }
             });
-            box.dataset.listenerAdded = 'true'; // Mark listener as added
+            box.dataset.listenerAdded = 'true';
         });
     }
 
     // --- Tab Management ---
     function showTab(tabId) {
-        activeTabId = tabId; // Store the active tab ID
+        activeTabId = tabId;
 
-        // Update tab button active state
         tabsContainer.querySelectorAll('.tab-button').forEach(btn => {
             btn.classList.toggle('active', btn.dataset.tab === tabId);
         });
 
-        // Toggle grid visibility based on the selected tab
         channelGrids.forEach(grid => {
             grid.classList.toggle('active', grid.id === tabId);
         });
 
-        // Collapse any expanded box when switching tabs
         if (currentlyExpandedBox) {
             collapseBox(currentlyExpandedBox);
         }
 
-        // Save the last tab preference
         localStorage.setItem(CONFIG.lastTabKey, tabId);
-
-        // Re-apply the current search filter (or clear it if search is empty)
-        filterChannels(searchInput.value);
+        filterChannels(searchInput.value); // Re-apply filter after tab switch
     }
 
-    // --- Search Filtering (Handles Global Search and ALL Tab) ---
+    // --- Search Filtering ---
     function filterChannels(searchTerm) {
         const term = searchTerm.toLowerCase().trim();
 
-        // Iterate through ALL channel boxes in the document
         document.querySelectorAll('.channel-box').forEach(box => {
-            // Check if the box matches the search term
             const channelName = box.dataset.channelName?.toLowerCase() || '';
-            const searchTerms = box.dataset.searchTerms?.toLowerCase() || ''; // For matches
+            const searchTerms = box.dataset.searchTerms?.toLowerCase() || '';
             const isMatch = channelName.includes(term) || searchTerms.includes(term);
 
-            // Determine if the box should be visible based on search term and active tab
             let isVisible = false;
             if (term === '') {
-                // If search is empty, visibility depends ONLY on the active tab
+                // No search: visibility depends on active tab
                 const parentGrid = box.closest('.channel-grid');
                 isVisible = parentGrid && parentGrid.id === activeTabId;
             } else {
-                // If actively searching, visibility depends ONLY on matching the term
+                // Search active: visibility depends on matching term
                 isVisible = isMatch;
             }
 
-            // Toggle the 'hidden' class
-            // Exception: Don't hide an already expanded box during an active search
+            // Hide or show box
             if (box.classList.contains('expanded') && term !== '') {
-                 box.classList.remove('hidden');
+                 box.classList.remove('hidden'); // Keep expanded box visible
             } else {
                  box.classList.toggle('hidden', !isVisible);
             }
 
-            // Collapse box if it's now hidden and was expanded (only if search is cleared)
+            // Collapse box if hidden (only when search is cleared)
             if (!isVisible && box.classList.contains('expanded') && term === '') {
                  collapseBox(box);
             }
         });
 
-         // Show/Hide grids based on whether they contain any visible boxes *during active search*
+         // Show/Hide grids based on visible children during active search
          channelGrids.forEach(grid => {
-            if (term !== '') { // Only adjust grid visibility if actively searching
-                // Check direct children, excluding the player container within an expanded box
+            if (term !== '') {
                 const hasVisibleChildren = Array.from(grid.children).some(child =>
                     child.classList.contains('channel-box') && !child.classList.contains('hidden')
                 );
-                grid.classList.toggle('active', hasVisibleChildren); // Show grid if it has visible items
+                grid.classList.toggle('active', hasVisibleChildren);
             } else {
-                // If search is cleared, revert to standard tab visibility
-                 grid.classList.toggle('active', grid.id === activeTabId);
+                 grid.classList.toggle('active', grid.id === activeTabId); // Standard tab visibility
             }
          });
     }
@@ -838,30 +823,13 @@
         }
     }
     function expandBox(box) {
-        // Find the parent grid
-        const parentGrid = box.closest('.channel-grid');
-
         box.classList.add('expanded');
-        // Ensure the box is not hidden when expanded
-        box.classList.remove('hidden');
+        box.classList.remove('hidden'); // Ensure visible
         currentlyExpandedBox = box;
         populateAndLoadFirstStream(box);
 
-        // Adjust grid column span for expanded box based on parent grid
-        if (parentGrid) {
-            const gridStyles = window.getComputedStyle(parentGrid);
-            const gridCols = gridStyles.getPropertyValue('grid-template-columns').split(' ').length;
-
-            if (gridCols > 1 && parentGrid.id !== 'Matches') { // Don't span on single-col Matches grid
-                 // Calculate span based on available columns
-                 const desiredSpan = window.innerWidth >= 1024 ? 3 : (window.innerWidth >= 768 ? 2 : 1);
-                 const actualSpan = Math.min(desiredSpan, gridCols); // Don't span more than available columns
-                 box.style.gridColumn = `auto / span ${actualSpan}`;
-            } else {
-                 box.style.gridColumn = `auto / span 1`; // Default to 1 span if single column
-            }
-        }
-
+        // Reset grid-column style (CSS rules will handle spanning)
+        box.style.gridColumn = '';
 
         setTimeout(() => {
              box.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
@@ -885,8 +853,7 @@
         if(header) {
             header.setAttribute('aria-expanded', 'false');
         }
-        // Re-apply filter to potentially hide the collapsed box if it doesn't match search/tab
-        filterChannels(searchInput.value);
+        filterChannels(searchInput.value); // Re-apply filter
     }
 
     function populateAndLoadFirstStream(box) {
