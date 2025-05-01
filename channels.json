@@ -4,14 +4,11 @@
       "name": "Sport TV 1",
       "srcs": [
         "https://playmatch.live/player/PT/406",
-        "https://welivesport.shop/esta/sporttv1pt.php",
         "https://thedaddy.to/embed/stream-74.php",
-        "https://xextreamplay.xyz/premiumtv/daddylivehd.php?id=49",
-        "https://sportsonline.si/channels/pt/sporttv1.php",
+        "https://time4tv.top/embed/channels/stream49/link1.php",
         "https://popcdn.day/go.php?stream=SPT1",
-        "https://time4tv.top/embed/channels/stream49/link1.php"
-      ],
-      "m3u8": [
+        "https://sportsonline.si/channels/pt/sporttv1.php",
+        "https://welivesport.shop/esta/sporttv1pt.php",
         "https://c58bx6vat7sxiexj.freshsoup.shop/v3/director/VE1ZDhiZTEzYzVmZDEzLTZiZTgtYzFhNC03NjBkLTk1MzliNzc5/master.m3u8?md5=0OInlIelShJwUqlO7XRZjA&expires=1746110732"
       ]
     },
