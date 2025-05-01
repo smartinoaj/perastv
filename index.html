@@ -27,12 +27,21 @@
 
         /* Basic Reset & Body Styling */
         *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+        html, body {
+             height: 100%; /* Ensure html takes full height */
+        }
         html { scroll-behavior: smooth; }
         body {
             background-color: var(--bg-primary); color: var(--text-primary);
             font-family: var(--font-sans); line-height: 1.6;
             overscroll-behavior-y: contain;
             -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale;
+            display: flex; /* Use flexbox for footer */
+            flex-direction: column;
+            min-height: 100vh; /* Ensure body takes at least full viewport height */
+        }
+        .container {
+             flex-grow: 1; /* Allow container to grow and push footer down */
         }
 
         /* --- Main Layout --- */
@@ -57,6 +66,7 @@
             width: 100%;
             max-width: 500px;
             transition: all 0.2s ease;
+            text-align: center; /* Center the text */
         }
         #search-input:focus {
             outline: none;
@@ -65,7 +75,14 @@
         }
         #search-input::placeholder {
             color: var(--text-secondary);
+            text-align: center; /* Center placeholder too */
         }
+        /* Adjust placeholder centering for different browsers if needed */
+         #search-input::-webkit-input-placeholder { text-align: center; }
+         #search-input:-moz-placeholder { text-align: center; }
+         #search-input::-moz-placeholder { text-align: center; }
+         #search-input:-ms-input-placeholder { text-align: center; }
+
 
         /* --- Tabs --- */
         .tabs {
@@ -214,7 +231,12 @@
         .try-next-button:hover { background-color: #b80710; }
 
         /* --- Footer --- */
-        footer { text-align: center; color: var(--text-secondary); font-size: 0.8em; margin-top: 40px; padding-bottom: 25px; }
+        footer {
+            text-align: center; color: var(--text-secondary); font-size: 0.8em;
+            margin-top: 40px; /* Pushes footer down */
+            padding: 20px 0; /* Add padding */
+            width: 100%; /* Ensure footer spans width */
+        }
 
         /* --- Loading/Error States (General) --- */
         .loading-message, .error-message { text-align: center; padding: 50px 20px; color: var(--text-secondary); font-size: 1em; font-weight: 500; }
@@ -270,10 +292,9 @@
     <div id="ES" class="channel-grid"></div>
     <div id="Matches" class="channel-grid"></div>
 
-    <footer>
-        <p id="lastUpdated"></p>
-    </footer>
-</div>
+</div> <footer>
+    <p id="lastUpdated"></p>
+</footer>
 
 <script>
     /* --- JavaScript --- */
@@ -406,7 +427,6 @@
 
     // --- Element Creation ---
     function createChannelBoxElement(channel, uniqueId) {
-        // *** Reverted: No logo handling needed here ***
         const { name, srcs = [] } = channel;
         const box = document.createElement('div');
         box.className = 'channel-box';
@@ -431,7 +451,6 @@
         return box;
     }
      function createMatchBoxElement(match, uniqueId) {
-        // Match box creation remains the same
         const { team1, team2, logo1 = '', logo2 = '', time = '', league = '', pt = [], uk = [], es = [] } = match;
         const box = document.createElement('div');
         box.className = 'channel-box';
