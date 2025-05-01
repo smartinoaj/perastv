@@ -1,78 +1,81 @@
 [
-    {
-      "team1": "Athletic",
-      "logo1": "img/teams/athletic.png",
-      "team2": "Man Utd",
-      "logo2": "img/teams/manutd.png",
-      "time": "Quinta-Feira, 20:00",
-      "pt": [
-        "https://playmatch.live/player/PT/409",
-        "https://thedaddy.to/embed/stream-290.php",
-        "https://timetv4.top/embed/channels/stream290/link1.php",
-        "https://d1hd.sx/embed/stream-290.php",
-        "https://sportzonline.ps/channels/pt/sporttv5.php",
-        "https://welivesport.shop/esta/sporttv5pt.php"
-      ],
-      "uk": [
-        "https://playmatch.live/player/GB/530",
-        "https://timetv4.top/embed/channels/stream31/link1.php",
-        "https://streamp4.com/global1.php?stream=1_gb",
-        "https://thedaddy.to/embed/stream-31.php",
-        "https://soccerinlstream.top/extra/1.php",
-        "https://daddylivehd1.click/embed/stream-31.php"
-      ],
-      "es": [
-        "https://playmatch.live/player/ES/1095",
-        "https://timetv4.top/embed/channels/stream435/link1.php",
-        "https://thedaddy.to/embed/stream-435.php",
-        "https://daddylivehd1.click/embed/stream-435.php"
-      ]
-    },
-    {
-      "team1": "Tottenham",
-      "logo1": "img/teams/spurs.png",
-      "team2": "Bodø/Glimt",
-      "logo2": "img/teams/glimt.png",
-      "time": "Quinta-Feira, 20:00",
-      "pt": [
-        "https://playmatch.live/player/PT/6078",
-        "https://thedaddy.to/embed/stream-455.php",
-        "https://streamtp4.com/global1.php?stream=eleven1_pt",
-        "https://sportzonline.ps/channels/pt/eleven1.php"
-      ],
-      "uk": [
-        "https://playmatch.live/player/GB/5439",
-        "https://streamtp4.com/global1.php?stream=tnt_2_gb",
-        "https://thedaddy.to/embed/stream-32.php"
-      ]
-    },
-    {
-      "team1": "Forest",
-      "logo1": "img/teams/forest.png",
-      "team2": "Brentford",
-      "logo2": "img/teams/brentford.png",
-      "time": "Quinta-Feira, 19:30",
-      "pt": [
-        "https://playmatch.live/player/PT/6081",
-        "https://welivesport.shop/esta/eleven4pt.php",
-        "https://thedaddy.to/embed/stream-458.php"
-      ],
-      "uk": [
-        "https://playmatch.live/player/GB/1056",
-        "https://xextreamplay.xyz/premiumtv/daddylivehd.php?id=38",
-        "https://thedaddy.to/embed/stream-38.php",
-        "https://playmatch.live/player/GB/1057",
-        "https://xextreamplay.xyz/premiumtv/daddylivehd.php?id=130",
-        "https://thedaddy.to/embed/stream-130.php"
-      ],
-      "es": [
-        "https://playmatch.live/player/ES/3247",
-        "https://streamtp4.com/global1.php?stream=dazn1",
-        "https://thedaddy.to/embed/stream-445.php",
-        "https://playmatch.live/player/ES/3248",
-        "https://streamtp4.com/global1.php?stream=dazn2",
-        "https://thedaddy.to/embed/stream-446.php"
-      ]
-    }
-  ]
-  
+  {
+    "team1": "Athletic",
+    "logo1": "img/teams/athletic.png",
+    "team2": "Man Utd",
+    "logo2": "img/teams/manutd.png",
+    "time": "Quinta-Feira, 20:00",
+    "league": "Example League", 
+    "pt": [
+      { "label": "Stream 1 (PM)", "url": "https://playmatch.live/player/PT/409" },
+      { "label": "Stream 2 (Daddy)", "url": "https://thedaddy.to/embed/stream-290.php" },
+      { "label": "Stream 3 (Time)", "url": "https://timetv4.top/embed/channels/stream290/link1.php" },
+      { "label": "Stream 4 (DLHD)", "url": "https://d1hd.sx/embed/stream-290.php" },
+      { "label": "Stream 5 (Online)", "url": "https://sportzonline.ps/channels/pt/sporttv5.php" },
+      { "label": "Stream 6 (WeLive)", "url": "https://welivesport.shop/esta/sporttv5pt.php" }
+    ],
+    "uk": [
+      { "label": "Stream 1 (PM)", "url": "https://playmatch.live/player/GB/530" },
+      { "label": "Stream 2 (Time)", "url": "https://timetv4.top/embed/channels/stream31/link1.php" },
+      { "label": "Stream 3 (P4)", "url": "https://streamp4.com/global1.php?stream=1_gb" },
+      { "label": "Stream 4 (Daddy)", "url": "https://thedaddy.to/embed/stream-31.php" },
+      { "label": "Stream 5 (Soccer)", "url": "https://soccerinlstream.top/extra/1.php" },
+      { "label": "Stream 6 (Daddy Alt)", "url": "https://daddylivehd1.click/embed/stream-31.php" }
+    ],
+    "es": [
+      { "label": "Stream 1 (PM)", "url": "https://playmatch.live/player/ES/1095" },
+      { "label": "Stream 2 (Time)", "url": "https://timetv4.top/embed/channels/stream435/link1.php" },
+      { "label": "Stream 3 (Daddy)", "url": "https://thedaddy.to/embed/stream-435.php" },
+      { "label": "Stream 4 (Daddy Alt)", "url": "https://daddylivehd1.click/embed/stream-435.php" }
+    ]
+  },
+  {
+    "team1": "Tottenham",
+    "logo1": "img/teams/spurs.png",
+    "team2": "Bodø/Glimt",
+    "logo2": "img/teams/glimt.png",
+    "time": "Quinta-Feira, 20:00",
+    "league": "Example League 2", 
+    "pt": [
+      { "label": "Stream 1 (PM)", "url": "https://playmatch.live/player/PT/6078" },
+      { "label": "Stream 2 (Daddy)", "url": "https://thedaddy.to/embed/stream-455.php" },
+      { "label": "Stream 3 (TP4)", "url": "https://streamtp4.com/global1.php?stream=eleven1_pt" },
+      { "label": "Stream 4 (Online)", "url": "https://sportzonline.ps/channels/pt/eleven1.php" }
+    ],
+    "uk": [
+      { "label": "Stream 1 (PM)", "url": "https://playmatch.live/player/GB/5439" },
+      { "label": "Stream 2 (TP4)", "url": "https://streamtp4.com/global1.php?stream=tnt_2_gb" },
+      { "label": "Stream 3 (Daddy)", "url": "https://thedaddy.to/embed/stream-32.php" }
+    ]
+    
+  },
+  {
+    "team1": "Forest",
+    "logo1": "img/teams/forest.png",
+    "team2": "Brentford",
+    "logo2": "img/teams/brentford.png",
+    "time": "Quinta-Feira, 19:30",
+    "league": "Premier League", 
+    "pt": [
+      { "label": "Stream 1 (PM)", "url": "https://playmatch.live/player/PT/6081" },
+      { "label": "Stream 2 (WeLive)", "url": "https://welivesport.shop/esta/eleven4pt.php" },
+      { "label": "Stream 3 (Daddy)", "url": "https://thedaddy.to/embed/stream-458.php" }
+    ],
+    "uk": [
+      { "label": "Stream 1 (PM)", "url": "https://playmatch.live/player/GB/1056" },
+      { "label": "Stream 2 (X)", "url": "https://xextreamplay.xyz/premiumtv/daddylivehd.php?id=38" },
+      { "label": "Stream 3 (Daddy)", "url": "https://thedaddy.to/embed/stream-38.php" },
+      { "label": "Stream 4 (PM Alt)", "url": "https://playmatch.live/player/GB/1057" },
+      { "label": "Stream 5 (X Alt)", "url": "https://xextreamplay.xyz/premiumtv/daddylivehd.php?id=130" },
+      { "label": "Stream 6 (Daddy Alt)", "url": "https://thedaddy.to/embed/stream-130.php" }
+    ],
+    "es": [
+      { "label": "Stream 1 (PM)", "url": "https://playmatch.live/player/ES/3247" },
+      { "label": "Stream 2 (TP4)", "url": "https://streamtp4.com/global1.php?stream=dazn1" },
+      { "label": "Stream 3 (Daddy)", "url": "https://thedaddy.to/embed/stream-445.php" },
+      { "label": "Stream 4 (PM Alt)", "url": "https://playmatch.live/player/ES/3248" },
+      { "label": "Stream 5 (TP4 Alt)", "url": "https://streamtp4.com/global1.php?stream=dazn2" },
+      { "label": "Stream 6 (Daddy Alt)", "url": "https://thedaddy.to/embed/stream-446.php" }
+    ]
+  }
+]
