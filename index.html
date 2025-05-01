@@ -94,33 +94,25 @@
         .tab-button:hover { background: var(--bg-tertiary); color: var(--text-primary); border-color: var(--bg-tertiary); }
         .tab-button.active { background: var(--accent-color); color: white; border-color: var(--accent-color); }
 
-        /* --- Channel Grid --- */
+        /* --- Channel Grid (Applies to ALL grids now) --- */
         .channel-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+            grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); /* Base column setup */
             gap: 20px; padding: 0 10px 50px; display: none;
         }
-        /* --- Grid Column Change (Back to 3 Max) --- */
+        /* Responsive Columns for ALL grids */
         @media (min-width: 768px) {
-            .channel-grid:not(#Matches) {
-                 grid-template-columns: repeat(2, 1fr); /* 2 columns medium */
-            }
+            .channel-grid { grid-template-columns: repeat(2, 1fr); }
         }
         @media (min-width: 1024px) {
-             .channel-grid:not(#Matches) {
-                 grid-template-columns: repeat(3, 1fr); /* 3 columns large */
-            }
+            .channel-grid { grid-template-columns: repeat(3, 1fr); }
         }
-        /* Removed the 4-column rule */
-        /* --- End Grid Column Change --- */
-
+        @media (min-width: 1366px) {
+            .channel-grid { grid-template-columns: repeat(4, 1fr); }
+        }
         .channel-grid.active { display: grid; }
-        #Matches.channel-grid {
-             grid-template-columns: 1fr;
-             max-width: 1000px;
-             margin: 0 auto;
-        }
-        #Matches.channel-grid.active { display: grid; }
+
+        /* *** REMOVED Specific rules for #Matches.channel-grid *** */
 
 
         /* --- Channel Box --- */
@@ -129,11 +121,8 @@
             cursor: pointer; transition: all 0.3s ease;
             border: 1px solid var(--bg-secondary); position: relative; overflow: hidden;
         }
-        #Matches .channel-box:not(.expanded) {
-            max-width: 950px;
-            margin-left: auto;
-            margin-right: auto;
-        }
+        /* *** REMOVED specific width rule for non-expanded match boxes *** */
+        /* #Matches .channel-box:not(.expanded) { ... } */
 
         .channel-box.hidden { display: none; }
         .channel-box:not(.expanded):hover {
@@ -142,16 +131,17 @@
         }
         .channel-header {
             display: flex; align-items: center;
-            justify-content: center;
+            justify-content: center; /* Center content by default */
             gap: 10px; text-align: center; min-height: 35px; cursor: pointer;
         }
-         #Matches .channel-header {
-             justify-content: center;
-             gap: 0;
+         /* --- Matches Header Layout (Keep specific centering) --- */
+        #Matches .channel-header {
+             justify-content: center; /* Center items */
+             gap: 0; /* Remove gap, use margins on h3 */
              text-align: center;
         }
         .match-logo {
-            height: 40px; width: 40px;
+            height: 40px; width: 40px; /* Keep increased size */
             object-fit: contain; flex-shrink: 0;
             border-radius: 4px;
             display: inline-block;
@@ -182,7 +172,7 @@
         .channel-info {
             font-size: 0.8em;
             color: var(--text-secondary);
-            text-align: center;
+            text-align: center; /* Center info text */
             margin-top: 8px;
             margin-left: 0;
             margin-bottom: 0;
@@ -192,14 +182,12 @@
 
         /* --- Expanded Channel Box --- */
         .channel-box.expanded {
-            grid-column: 1 / -1; cursor: default;
+            grid-column: 1 / -1; cursor: default; /* Span full grid */
             background: var(--bg-tertiary); padding-bottom: 20px; z-index: 10;
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
             border: 2px solid var(--accent-color);
             overflow: visible;
-            max-width: none;
-            margin-left: 0;
-            margin-right: 0;
+            /* No max-width or margin overrides needed now */
         }
         .channel-box.expanded .channel-header,
         .channel-box.expanded .channel-info { cursor: default; }
@@ -279,23 +267,17 @@
         .loading-message, .error-message { text-align: center; padding: 50px 20px; color: var(--text-secondary); font-size: 1em; font-weight: 500; }
 
         /* --- Responsive Adjustments --- */
-        @media (max-width: 1023px) { /* Adjust max-width for tablets */
-             #Matches .channel-box:not(.expanded) {
-                 max-width: 90%; /* Use percentage for better fit */
-            }
-        }
-        @media (max-width: 767px) { /* 1 column */
-             .channel-grid:not(#Matches) { grid-template-columns: 1fr; }
+        @media (max-width: 767px) { /* 1 column for ALL grids */
+             .channel-grid { grid-template-columns: 1fr; } /* Apply to all */
              .channel-box { padding: 15px; }
              .stream-button { padding: 6px 15px; font-size: 0.8em; }
              header img { max-width: 160px; }
              .tabs { gap: 10px; margin-bottom: 30px; }
              .tab-button { padding: 8px 20px; font-size: 0.85em; }
-             #Matches.channel-grid { max-width: 100%; } /* Full width */
+             /* Removed #Matches.channel-grid max-width override */
              #Matches .channel-header { gap: 10px; }
              .match-logo, #Matches .channel-header img.match-logo { height: 32px; width: 32px; }
              .channel-info { font-size: 0.75em;}
-             #Matches .channel-box:not(.expanded) { max-width: 100%; } /* Full width on mobile */
              #Matches .channel-header h3 { margin: 0 15px; } /* Adjust margin */
         }
         @media (max-width: 480px) { /* Further adjustments for very small screens */
@@ -345,7 +327,7 @@
 </footer>
 
 <script>
-    /* --- JavaScript --- */
+    /* --- JavaScript (No changes needed here for this layout fix) --- */
 
     // --- Configuration ---
     const CONFIG = {
