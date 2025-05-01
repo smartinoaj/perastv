@@ -94,25 +94,23 @@
         .tab-button:hover { background: var(--bg-tertiary); color: var(--text-primary); border-color: var(--bg-tertiary); }
         .tab-button.active { background: var(--accent-color); color: white; border-color: var(--accent-color); }
 
-        /* --- Channel Grid (Applies to ALL grids now) --- */
+        /* --- Channel Grid --- */
         .channel-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); /* Base column setup */
+            grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
             gap: 20px; padding: 0 10px 50px; display: none;
         }
-        /* Responsive Columns for ALL grids */
-        @media (min-width: 768px) {
-            .channel-grid { grid-template-columns: repeat(2, 1fr); }
-        }
-        @media (min-width: 1024px) {
-            .channel-grid { grid-template-columns: repeat(3, 1fr); }
-        }
-        @media (min-width: 1366px) {
-            .channel-grid { grid-template-columns: repeat(4, 1fr); }
-        }
+        @media (min-width: 768px) { .channel-grid:not(#Matches) { grid-template-columns: repeat(2, 1fr); } }
+        @media (min-width: 1024px) { .channel-grid:not(#Matches) { grid-template-columns: repeat(3, 1fr); } }
+        @media (min-width: 1366px) { .channel-grid:not(#Matches) { grid-template-columns: repeat(4, 1fr); } }
         .channel-grid.active { display: grid; }
 
-        /* *** REMOVED Specific rules for #Matches.channel-grid *** */
+        /* --- Matches Grid Specific Width --- */
+        #Matches.channel-grid {
+             grid-template-columns: 1fr; /* Single column */
+             /* Removed max-width and margin:auto from the grid itself */
+        }
+        #Matches.channel-grid.active { display: grid; }
 
 
         /* --- Channel Box --- */
@@ -121,8 +119,12 @@
             cursor: pointer; transition: all 0.3s ease;
             border: 1px solid var(--bg-secondary); position: relative; overflow: hidden;
         }
-        /* *** REMOVED specific width rule for non-expanded match boxes *** */
-        /* #Matches .channel-box:not(.expanded) { ... } */
+        /* --- Narrower Initial Match Box (Re-added) --- */
+        #Matches .channel-box:not(.expanded) {
+            max-width: 950px; /* Adjust as needed */
+            margin-left: auto;
+            margin-right: auto;
+        }
 
         .channel-box.hidden { display: none; }
         .channel-box:not(.expanded):hover {
@@ -131,10 +133,10 @@
         }
         .channel-header {
             display: flex; align-items: center;
-            justify-content: center; /* Center content by default */
+            justify-content: center; /* Center channel name by default */
             gap: 10px; text-align: center; min-height: 35px; cursor: pointer;
         }
-         /* --- Matches Header Layout (Keep specific centering) --- */
+         /* --- Matches Header Layout V4 --- */
         #Matches .channel-header {
              justify-content: center; /* Center items */
              gap: 0; /* Remove gap, use margins on h3 */
@@ -160,8 +162,9 @@
             text-align: center;
             flex-grow: 0;
             flex-shrink: 1;
-            margin-left: 25px;
-            margin-right: 25px;
+            /* Add margin to space out from logos */
+            margin-left: 25px; /* Increased margin */
+            margin-right: 25px; /* Increased margin */
         }
         /* Center non-match titles */
          .channel-grid:not(#Matches) .channel-header h3 {
@@ -187,7 +190,9 @@
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
             border: 2px solid var(--accent-color);
             overflow: visible;
-            /* No max-width or margin overrides needed now */
+            max-width: none; /* Override initial max-width */
+            margin-left: 0; /* Override initial margin */
+            margin-right: 0; /* Override initial margin */
         }
         .channel-box.expanded .channel-header,
         .channel-box.expanded .channel-info { cursor: default; }
@@ -267,17 +272,23 @@
         .loading-message, .error-message { text-align: center; padding: 50px 20px; color: var(--text-secondary); font-size: 1em; font-weight: 500; }
 
         /* --- Responsive Adjustments --- */
-        @media (max-width: 767px) { /* 1 column for ALL grids */
+        @media (max-width: 1023px) { /* Adjust max-width for tablets */
+             #Matches .channel-box:not(.expanded) {
+                 max-width: 90%; /* Use percentage for better fit */
+            }
+        }
+        @media (max-width: 767px) { /* 1 column */
              .channel-grid { grid-template-columns: 1fr; } /* Apply to all */
              .channel-box { padding: 15px; }
              .stream-button { padding: 6px 15px; font-size: 0.8em; }
              header img { max-width: 160px; }
              .tabs { gap: 10px; margin-bottom: 30px; }
              .tab-button { padding: 8px 20px; font-size: 0.85em; }
-             /* Removed #Matches.channel-grid max-width override */
+             #Matches.channel-grid { max-width: 100%; } /* Full width */
              #Matches .channel-header { gap: 10px; }
              .match-logo, #Matches .channel-header img.match-logo { height: 32px; width: 32px; }
              .channel-info { font-size: 0.75em;}
+             #Matches .channel-box:not(.expanded) { max-width: 100%; } /* Full width on mobile */
              #Matches .channel-header h3 { margin: 0 15px; } /* Adjust margin */
         }
         @media (max-width: 480px) { /* Further adjustments for very small screens */
