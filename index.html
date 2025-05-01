@@ -11,13 +11,14 @@
     <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
     <style>
         :root {
-            --bg-primary: #0f172a; /* Dark blue-gray */
-            --bg-secondary: #1e293b; /* Slightly lighter blue-gray */
-            --bg-tertiary: #334155; /* Even lighter */
-            --accent-color: #e11d48; /* Vibrant red */
-            --text-primary: #f1f5f9; /* Off-white */
-            --text-secondary: #94a3b8; /* Gray */
-            --border-color: #334155;
+            /* Grayish-black color scheme */
+            --bg-primary: #111827; /* Very dark gray */
+            --bg-secondary: #1f2937; /* Dark gray */
+            --bg-tertiary: #374151; /* Medium gray */
+            --accent-color: #dc2626; /* Red accent */
+            --text-primary: #f3f4f6; /* Light gray (near white) */
+            --text-secondary: #9ca3af; /* Medium gray */
+            --border-color: #374151;
             --font-sans: 'Inter', sans-serif;
         }
 
@@ -28,240 +29,131 @@
             padding: 0;
         }
 
+        html {
+            scroll-behavior: smooth; /* Smooth scroll for jumping to expanded item */
+        }
+
         body {
             background-color: var(--bg-primary);
             color: var(--text-primary);
             font-family: var(--font-sans);
             line-height: 1.6;
-            overscroll-behavior-y: contain; /* Prevent pull-to-refresh issues */
+            overscroll-behavior-y: contain;
         }
 
         /* Password Screen */
         #passwordScreen {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: var(--bg-primary);
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            z-index: 10000;
-            padding: 20px;
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: var(--bg-primary); display: flex; flex-direction: column;
+            justify-content: center; align-items: center; z-index: 10000; padding: 20px;
         }
-        #passwordScreen h2 {
-            color: var(--text-primary);
-            margin-bottom: 15px;
-            font-weight: 600;
-        }
+        #passwordScreen h2 { color: var(--text-primary); margin-bottom: 15px; font-weight: 600; }
         #passwordInput {
-            padding: 12px 15px;
-            font-size: 1em;
-            border-radius: 8px;
-            border: 1px solid var(--border-color);
-            background-color: var(--bg-secondary);
-            color: var(--text-primary);
-            margin: 10px 0;
-            width: 100%;
-            max-width: 300px;
-            text-align: center;
+            padding: 12px 15px; font-size: 1em; border-radius: 8px;
+            border: 1px solid var(--border-color); background-color: var(--bg-secondary);
+            color: var(--text-primary); margin: 10px 0; width: 100%;
+            max-width: 300px; text-align: center;
         }
         #passwordScreen button {
-            padding: 12px 30px;
-            font-size: 1em;
-            border: none;
-            background-color: var(--accent-color);
-            color: white;
-            border-radius: 8px;
-            cursor: pointer;
-            font-weight: 600;
-            transition: background-color 0.2s ease;
+            padding: 12px 30px; font-size: 1em; border: none;
+            background-color: var(--accent-color); color: white; border-radius: 8px;
+            cursor: pointer; font-weight: 600; transition: background-color 0.2s ease;
         }
-        #passwordScreen button:hover {
-            background-color: #be123c; /* Darker red */
-        }
-        #errorMessage {
-            color: #f87171; /* Lighter red for error */
-            margin-top: 15px;
-            display: none;
-            font-weight: 600;
-        }
+        #passwordScreen button:hover { background-color: #b91c1c; /* Darker red */ }
+        #errorMessage { color: #f87171; margin-top: 15px; display: none; font-weight: 600; }
         @keyframes shake {
-            0%, 100% { transform: translateX(0); }
-            25% { transform: translateX(-6px); }
-            50% { transform: translateX(6px); }
-            75% { transform: translateX(-6px); }
+            0%, 100% { transform: translateX(0); } 25% { transform: translateX(-6px); }
+            50% { transform: translateX(6px); } 75% { transform: translateX(-6px); }
         }
-        .shake {
-            animation: shake 0.4s ease-in-out;
-        }
+        .shake { animation: shake 0.4s ease-in-out; }
 
         /* Main Container & Header */
-        .container {
-            max-width: 1400px;
-            margin: 0 auto;
-            padding: 0 15px; /* Add some horizontal padding */
-        }
-
-        header {
-            text-align: center;
-            padding: 25px 0 15px;
-        }
-        header img {
-            max-width: 220px;
-            height: auto;
-        }
+        .container { max-width: 1400px; margin: 0 auto; padding: 0 15px; }
+        header { text-align: center; padding: 25px 0 15px; }
+        header img { max-width: 220px; height: auto; }
 
         /* Tabs */
         .tabs {
-            display: flex;
-            justify-content: center;
-            gap: 10px;
-            margin-bottom: 30px;
-            flex-wrap: wrap;
-            padding: 0 10px;
+            display: flex; justify-content: center; gap: 10px;
+            margin-bottom: 30px; flex-wrap: wrap; padding: 0 10px;
         }
         .tab-button {
-            background: var(--bg-secondary);
-            color: var(--text-secondary);
-            border: 1px solid var(--border-color);
-            padding: 10px 20px;
-            cursor: pointer;
-            border-radius: 8px;
-            font-size: 0.95em;
-            font-weight: 600;
-            transition: all 0.2s ease;
+            background: var(--bg-secondary); color: var(--text-secondary);
+            border: 1px solid var(--border-color); padding: 10px 20px; cursor: pointer;
+            border-radius: 8px; font-size: 0.95em; font-weight: 600; transition: all 0.2s ease;
         }
-        .tab-button:hover {
-            background: var(--bg-tertiary);
-            color: var(--text-primary);
-        }
+        .tab-button:hover { background: var(--bg-tertiary); color: var(--text-primary); }
         .tab-button.active {
-            background: var(--accent-color);
-            color: white;
-            border-color: var(--accent-color);
+            background: var(--accent-color); color: white; border-color: var(--accent-color);
         }
 
         /* Channel Grid */
         .channel-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-            gap: 20px;
-            padding: 0 10px 40px;
-            display: none; /* Hidden by default */
+            display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 20px; padding: 0 10px 40px; display: none; /* Hidden by default */
         }
-        .channel-grid.active {
-            display: grid;
-        }
-        /* Special layout for Matches tab */
+        .channel-grid.active { display: grid; }
         #Matches.channel-grid {
-            grid-template-columns: 1fr; /* Single column */
-            max-width: 900px; /* Limit width */
-            margin: 0 auto; /* Center */
+            grid-template-columns: 1fr; max-width: 900px; margin: 0 auto;
         }
-        #Matches.channel-grid.active {
-            display: grid; /* Use grid here too */
-        }
+         #Matches.channel-grid.active { display: grid; }
 
         /* Channel Box */
         .channel-box {
-            background: var(--bg-secondary);
-            border-radius: 12px;
-            padding: 15px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            border: 1px solid var(--border-color);
-            position: relative; /* Needed for potential future elements */
-            overflow: hidden; /* Hide overflowing content initially */
+            background: var(--bg-secondary); border-radius: 12px;
+            padding: 15px; cursor: pointer; transition: all 0.3s ease;
+            border: 1px solid var(--border-color); position: relative;
+            overflow: hidden; /* Important for initial state */
         }
-        .channel-box:hover {
+        .channel-box:not(.expanded):hover { /* Hover effect only when not expanded */
             transform: translateY(-3px);
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
             border-color: var(--text-secondary);
         }
         .channel-header {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
-            text-align: center;
-            min-height: 50px; /* Ensure consistent height */
-            flex-wrap: wrap; /* Allow wrapping if names are long */
+            display: flex; align-items: center; justify-content: center;
+            gap: 10px; text-align: center; min-height: 50px; flex-wrap: wrap;
         }
-        .channel-header img {
-            height: 28px;
-            width: auto;
-            object-fit: contain; /* Prevent distortion */
-            flex-shrink: 0; /* Prevent logos from shrinking too much */
-        }
-        .channel-header h3 {
-            font-size: 1.1em;
-            font-weight: 600;
-            margin: 0;
-            flex-grow: 1; /* Allow title to take space */
-            word-break: break-word; /* Break long words */
-        }
-        .match-time {
-            font-size: 0.85em;
-            color: var(--text-secondary);
-            text-align: center;
-            margin-top: 8px;
-            margin-bottom: 5px;
+        .channel-header img { height: 28px; width: auto; object-fit: contain; flex-shrink: 0; }
+        .channel-header h3 { font-size: 1.1em; font-weight: 600; margin: 0; flex-grow: 1; word-break: break-word; }
+        .match-time { font-size: 0.85em; color: var(--text-secondary); text-align: center; margin-top: 8px; margin-bottom: 5px; }
+
+        /* Expanded Channel Box Styling */
+        .channel-box.expanded {
+            grid-column: 1 / -1; /* Span full width of the grid */
+            cursor: default; /* Not clickable when expanded */
+            background: var(--bg-tertiary); /* Slightly lighter background when expanded */
+            padding-bottom: 20px; /* More space at the bottom */
+            z-index: 10;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
+            border-color: var(--accent-color);
+            /* Ensure header stays visible */
+            overflow: visible;
         }
 
-        /* Player Overlay (for expanded view) */
-        .player-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.85); /* Dark semi-transparent background */
+        /* Iframe/Video Container inside the box */
+        .iframe-container {
+            margin-top: 15px;
             display: none; /* Hidden by default */
-            justify-content: center;
-            align-items: center;
-            z-index: 1000;
-            padding: 20px; /* Padding around the player */
-            opacity: 0;
-            transition: opacity 0.3s ease-in-out;
-        }
-        .player-overlay.visible {
-            display: flex;
-            opacity: 1;
-        }
-        .player-container {
-            background-color: var(--bg-secondary);
-            border-radius: 12px;
-            padding: 20px;
             width: 100%;
-            max-width: 1200px; /* Max width for the player */
-            max-height: 90vh; /* Max height */
-            display: flex;
-            flex-direction: column;
-            overflow: hidden; /* Prevent content overflow */
-            position: relative; /* For close button */
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
-            transform: scale(0.95);
-            transition: transform 0.3s ease-in-out;
         }
-        .player-overlay.visible .player-container {
-            transform: scale(1);
+        .channel-box.expanded .iframe-container {
+            display: block; /* Show when box is expanded */
         }
-        .player-content {
-            flex-grow: 1; /* Take available space */
+
+        .player-area {
             position: relative;
             width: 100%;
-            /* Aspect ratio for the video/iframe area */
-            aspect-ratio: 16 / 9;
-            background-color: #000; /* Black background for player area */
+            aspect-ratio: 16 / 9; /* Maintain aspect ratio */
+            background-color: #000; /* Black background */
             border-radius: 8px;
-            overflow: hidden; /* Clip content */
+            overflow: hidden; /* Clip iframe/video */
             margin-bottom: 15px;
+            min-height: 200px; /* Minimum height */
         }
-        .player-content iframe,
-        .player-content video {
+        /* Make iframe/video fill the player area */
+        .player-area iframe,
+        .player-area video {
             position: absolute;
             top: 0;
             left: 0;
@@ -269,91 +161,52 @@
             height: 100%;
             border: none;
             display: none; /* Hide both initially */
-            object-fit: contain; /* Important for M3U8 video */
+            object-fit: contain; /* Fit video within bounds */
         }
-        .player-content iframe.active,
-        .player-content video.active {
+        .player-area iframe.active,
+        .player-area video.active {
             display: block; /* Show the active one */
         }
-
-        /* Close Button for Overlay */
-        .close-player-btn {
-            position: absolute;
-            top: 10px;
-            right: 15px;
-            background: rgba(0, 0, 0, 0.5);
-            color: white;
-            border: none;
-            border-radius: 50%;
-            width: 30px;
-            height: 30px;
-            font-size: 1.5em;
-            line-height: 28px; /* Center the 'X' */
-            text-align: center;
-            cursor: pointer;
-            z-index: 1001;
-            transition: background-color 0.2s ease;
+        /* Increase height on larger screens when expanded */
+        @media (min-width: 768px) {
+            .channel-box.expanded .player-area {
+                 min-height: 400px; /* Larger minimum height */
+                 max-height: 70vh; /* Limit max height */
+            }
         }
-        .close-player-btn:hover {
-            background: rgba(255, 255, 255, 0.3);
+         @media (min-width: 1024px) {
+            .channel-box.expanded .player-area {
+                 min-height: 500px;
+            }
         }
 
-        /* Stream Buttons */
-        .stream-buttons-container {
+
+        /* Stream Buttons inside the box */
+        .stream-buttons {
             text-align: center;
-            margin-top: auto; /* Push buttons to the bottom in flex container */
-            padding-top: 10px; /* Space above buttons */
-            max-height: 15vh; /* Limit height */
-            overflow-y: auto; /* Allow scrolling if many buttons */
+            margin-top: 10px; /* Spacing below player */
         }
-        .stream-buttons-container div {
-            margin-bottom: 8px; /* Space between language groups */
-        }
-        .stream-buttons-container strong {
-            color: var(--text-secondary);
-            font-size: 0.9em;
-            margin-right: 5px;
-        }
+        .stream-buttons div { margin-bottom: 8px; }
+        .stream-buttons strong { color: var(--text-secondary); font-size: 0.9em; margin-right: 5px; }
         .stream-button {
-            background: var(--bg-tertiary);
+            background: var(--bg-secondary); /* Darker buttons inside expanded */
             color: var(--text-primary);
             border: 1px solid var(--border-color);
-            padding: 6px 12px;
-            margin: 3px;
-            border-radius: 6px;
-            cursor: pointer;
-            font-size: 0.85em;
-            font-weight: 500;
-            transition: all 0.2s ease;
-            display: inline-block; /* Prevent wrapping inside buttons */
+            padding: 6px 12px; margin: 3px; border-radius: 6px; cursor: pointer;
+            font-size: 0.85em; font-weight: 500; transition: all 0.2s ease;
+            display: inline-block;
         }
-        .stream-button:hover {
-            background: #475569; /* Slightly lighter hover */
-            border-color: #64748b;
-        }
+        .stream-button:hover { background: #4b5563; border-color: #6b7280; }
         .stream-button.active {
-            background: var(--accent-color);
-            color: white;
-            border-color: var(--accent-color);
-            font-weight: 600;
+            background: var(--accent-color); color: white;
+            border-color: var(--accent-color); font-weight: 600;
         }
 
         /* Footer */
-        footer {
-            text-align: center;
-            color: var(--text-secondary);
-            font-size: 0.85em;
-            margin-top: 30px;
-            padding-bottom: 20px;
-        }
+        footer { text-align: center; color: var(--text-secondary); font-size: 0.85em; margin-top: 30px; padding-bottom: 20px; }
 
         /* Loading/Error States */
-        .loading-message, .error-message {
-            text-align: center;
-            padding: 40px 20px;
-            color: var(--text-secondary);
-            font-size: 1.1em;
-        }
+        .loading-message, .error-message { text-align: center; padding: 40px 20px; color: var(--text-secondary); font-size: 1.1em; }
 
         /* Responsive Adjustments */
         @media (max-width: 768px) {
@@ -362,22 +215,17 @@
             .tabs { gap: 8px; margin-bottom: 20px; }
             .tab-button { padding: 8px 15px; font-size: 0.9em; }
             .channel-grid { grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 15px; }
-            #Matches.channel-grid { max-width: 100%; } /* Full width on mobile */
-            .player-container { padding: 15px; max-height: 85vh; }
-            .player-content { margin-bottom: 10px; }
-            .close-player-btn { top: 8px; right: 10px; width: 28px; height: 28px; font-size: 1.3em; line-height: 26px; }
+            #Matches.channel-grid { max-width: 100%; }
             .stream-button { padding: 5px 10px; font-size: 0.8em; }
         }
-
         @media (max-width: 480px) {
             header img { max-width: 150px; }
-            .channel-grid { grid-template-columns: 1fr; /* Single column on very small screens */ gap: 12px; }
+            .channel-grid { grid-template-columns: 1fr; gap: 12px; }
             .channel-box { padding: 12px; }
             .channel-header h3 { font-size: 1em; }
             .channel-header img { height: 24px; }
-            .player-overlay { padding: 10px; }
-            .player-container { padding: 10px; }
-            .stream-buttons-container strong { display: block; margin-bottom: 3px; } /* Stack labels */
+            .stream-buttons strong { display: block; margin-bottom: 3px; }
+            .player-area { min-height: 180px; } /* Adjust min height for small screens */
         }
 
     </style>
@@ -416,25 +264,13 @@
     </footer>
 </div>
 
-<div id="playerOverlay" class="player-overlay">
-    <div class="player-container">
-        <button id="closePlayerBtn" class="close-player-btn">&times;</button>
-        <div id="playerContent" class="player-content">
-            <iframe allow="autoplay; fullscreen" allowfullscreen></iframe>
-            <video controls autoplay muted playsinline></video>
-        </div>
-        <div id="streamButtonsContainer" class="stream-buttons-container">
-            </div>
-    </div>
-</div>
-
 <script>
     // --- Configuration ---
     const CONFIG = {
-        password: "ptv123", // The password
+        password: "ptv123",
         channelsUrl: "channels.json",
         matchesUrl: "matches.json",
-        placeholderImage: 'data:image/svg+xml;charset=UTF-8,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="9" viewBox="0 0 16 9"><rect width="16" height="9" fill="%23000"/></svg>' // Simple black placeholder
+        placeholderImage: 'data:image/svg+xml;charset=UTF-8,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="9" viewBox="0 0 16 9"><rect width="16" height="9" fill="%23000"/></svg>'
     };
 
     // --- DOM Elements ---
@@ -445,20 +281,14 @@
     const tabsContainer = document.querySelector('.tabs');
     const channelGrids = document.querySelectorAll('.channel-grid');
     const lastUpdatedEl = document.getElementById('lastUpdated');
-    const playerOverlay = document.getElementById('playerOverlay');
-    const playerContainer = document.querySelector('.player-container');
-    const playerContent = document.getElementById('playerContent');
-    const playerIframe = playerContent.querySelector('iframe');
-    const playerVideo = playerContent.querySelector('video');
-    const streamButtonsContainer = document.getElementById('streamButtonsContainer');
-    const closePlayerBtn = document.getElementById('closePlayerBtn');
     const loadingMessage = document.getElementById('loadingMessage');
     const fetchErrorMessage = document.getElementById('fetchErrorMessage');
 
     // --- State ---
-    let hlsInstance = null; // Global HLS.js instance
-    let channelsData = {}; // To store fetched channels { PT: [], UK: [], ES: [] }
-    let matchesData = []; // To store fetched matches
+    let hlsInstance = null;
+    let channelsData = {};
+    let matchesData = [];
+    let currentlyExpandedBox = null; // Track the currently expanded box
 
     // --- Initialization ---
     document.addEventListener('DOMContentLoaded', () => {
@@ -473,9 +303,9 @@
         if (sessionStorage.getItem('authenticated') === 'true') {
             hidePasswordScreen();
         } else {
-            document.body.style.overflow = 'hidden'; // Prevent scrolling behind overlay
+            document.body.style.overflow = 'hidden';
             passwordScreen.style.display = 'flex';
-            passwordInput.focus(); // Focus input on load
+            passwordInput.focus();
         }
     }
 
@@ -488,14 +318,13 @@
             passwordInput.classList.add('shake');
             passwordInput.value = '';
             passwordInput.focus();
-            // Remove shake animation after it finishes
             setTimeout(() => passwordInput.classList.remove('shake'), 500);
         }
     }
 
     function hidePasswordScreen() {
         passwordScreen.style.display = 'none';
-        document.body.style.overflow = ''; // Restore scrolling
+        document.body.style.overflow = '';
     }
 
     // --- Event Listeners ---
@@ -503,10 +332,8 @@
         // Password
         passwordButton.addEventListener('click', verifyPassword);
         passwordInput.addEventListener('keydown', (e) => {
-            if (e.key === 'Enter') {
-                verifyPassword();
-            }
-             passwordErrorMessage.style.display = 'none'; // Hide error on input
+            if (e.key === 'Enter') verifyPassword();
+            passwordErrorMessage.style.display = 'none';
         });
 
         // Tabs
@@ -516,19 +343,10 @@
             }
         });
 
-        // Player Overlay Close
-        closePlayerBtn.addEventListener('click', closePlayer);
-        playerOverlay.addEventListener('click', (event) => {
-            // Close if clicking outside the player container
-            if (event.target === playerOverlay) {
-                closePlayer();
-            }
-        });
-
-        // Close player with Escape key
+        // Close expanded box with Escape key (if one is open)
         document.addEventListener('keydown', (event) => {
-            if (event.key === 'Escape' && playerOverlay.classList.contains('visible')) {
-                closePlayer();
+            if (event.key === 'Escape' && currentlyExpandedBox) {
+                 toggleExpansion(currentlyExpandedBox); // Collapse the current box
             }
         });
     }
@@ -566,16 +384,15 @@
         renderChannels('UK', channelsData.UK || []);
         renderChannels('ES', channelsData.ES || []);
         renderMatchChannels(matchesData || []);
-        // Add click listeners after rendering
-        addChannelBoxEventListeners();
+        addChannelBoxEventListeners(); // Add listeners *after* elements are in the DOM
     }
 
     function renderChannels(tabId, channels) {
         const grid = document.getElementById(tabId);
         if (!grid) return;
-        grid.innerHTML = ''; // Clear previous content
+        grid.innerHTML = '';
         if (!channels || channels.length === 0) {
-            grid.innerHTML = '<p class="loading-message">No channels available for this category.</p>';
+            grid.innerHTML = '<p class="loading-message">No channels available.</p>';
             return;
         }
         channels.forEach((channel, index) => {
@@ -587,9 +404,9 @@
     function renderMatchChannels(matches) {
         const grid = document.getElementById('Matches');
         if (!grid) return;
-        grid.innerHTML = ''; // Clear previous content
+        grid.innerHTML = '';
          if (!matches || matches.length === 0) {
-            grid.innerHTML = '<p class="loading-message">No matches available currently.</p>';
+            grid.innerHTML = '<p class="loading-message">No matches available.</p>';
             return;
         }
         matches.forEach((match, index) => {
@@ -598,16 +415,26 @@
         });
     }
 
+    // --- Element Creation ---
     function createChannelBoxElement(channel, tabId, index) {
         const { name, srcs = [] } = channel;
         const box = document.createElement('div');
         box.className = 'channel-box';
+        // Store data needed for expansion
         box.dataset.channelName = name;
-        box.dataset.sources = JSON.stringify(srcs); // Store sources data
+        box.dataset.sources = JSON.stringify(srcs);
 
         box.innerHTML = `
             <div class="channel-header">
                 <h3>${name}</h3>
+            </div>
+            <div class="iframe-container">
+                <div class="player-area">
+                    <iframe allow="autoplay; fullscreen" allowfullscreen></iframe>
+                    <video controls autoplay muted playsinline></video>
+                </div>
+                <div class="stream-buttons">
+                    </div>
             </div>
         `;
         return box;
@@ -617,10 +444,9 @@
         const { team1, team2, logo1 = '', logo2 = '', time = '', pt = [], uk = [], es = [] } = match;
         const box = document.createElement('div');
         box.className = 'channel-box';
-        // Store all sources together for simplicity in the handler
         const allSources = { pt, uk, es };
         box.dataset.channelName = `${team1} vs ${team2}`;
-        box.dataset.sources = JSON.stringify(allSources); // Store sources data as an object
+        box.dataset.sources = JSON.stringify(allSources);
 
         box.innerHTML = `
             <div class="channel-header">
@@ -629,155 +455,198 @@
                  ${logo2 ? `<img src="${logo2}" alt="${team2} logo">` : ''}
             </div>
             ${time ? `<p class="match-time">${time}</p>` : ''}
+             <div class="iframe-container">
+                 <div class="player-area">
+                    <iframe allow="autoplay; fullscreen" allowfullscreen></iframe>
+                    <video controls autoplay muted playsinline></video>
+                </div>
+                <div class="stream-buttons">
+                    </div>
+            </div>
         `;
         return box;
     }
 
+    // --- Event Listener Setup for Channel Boxes ---
     function addChannelBoxEventListeners() {
          document.querySelectorAll('.channel-box').forEach(box => {
-            box.addEventListener('click', () => {
-                const sourcesData = box.dataset.sources;
-                const channelName = box.dataset.channelName;
-                if (sourcesData) {
-                    try {
-                        const sources = JSON.parse(sourcesData);
-                        openPlayer(channelName, sources);
-                    } catch (e) {
-                        console.error("Failed to parse sources data:", e);
-                        alert("Could not load streams for this channel.");
-                    }
-                } else {
-                     alert("No stream sources found for this channel.");
-                }
-            });
+             // Use event delegation on the header part for clicking to expand/collapse
+            const header = box.querySelector('.channel-header');
+            if (header) {
+                 header.addEventListener('click', (event) => {
+                     // Prevent clicks on internal elements within header if needed
+                     // if (event.target !== header && !header.contains(event.target)) return;
+                     toggleExpansion(box);
+                 });
+            }
+
+            // Prevent clicks inside the iframe-container from bubbling up and collapsing
+            const iframeContainer = box.querySelector('.iframe-container');
+            if (iframeContainer) {
+                 iframeContainer.addEventListener('click', (event) => {
+                     event.stopPropagation();
+                 });
+            }
         });
     }
-
 
     // --- Tab Management ---
     function showTab(tabId) {
-        // Update button active states
         tabsContainer.querySelectorAll('.tab-button').forEach(btn => {
             btn.classList.toggle('active', btn.dataset.tab === tabId);
         });
-        // Show/hide grids
         channelGrids.forEach(grid => {
             grid.classList.toggle('active', grid.id === tabId);
         });
+        // Collapse any open channel when switching tabs
+        if (currentlyExpandedBox) {
+            collapseBox(currentlyExpandedBox);
+        }
     }
 
-    // --- Player Overlay Management ---
-    function openPlayer(channelName, sources) {
-        // Populate stream buttons
-        streamButtonsContainer.innerHTML = ''; // Clear existing buttons
+    // --- Channel Box Expansion ---
+    function toggleExpansion(boxToToggle) {
+        const isExpanding = !boxToToggle.classList.contains('expanded');
 
-        let firstUrl = null; // To auto-select the first stream
+        // If another box is already expanded, collapse it first
+        if (isExpanding && currentlyExpandedBox && currentlyExpandedBox !== boxToToggle) {
+            collapseBox(currentlyExpandedBox);
+        }
 
-        // Check if sources is an array (regular channels) or object (matches)
-        if (Array.isArray(sources)) {
-            // Regular channel sources
-            if (sources.length === 0) {
-                 streamButtonsContainer.innerHTML = '<p>No streams available.</p>';
-            } else {
-                 sources.forEach((src, idx) => {
-                    const url = typeof src === 'object' ? src.url : src; // Handle potential object format later
-                    const label = typeof src === 'object' ? src.label : `Stream ${idx + 1}`;
-                    if (!firstUrl) firstUrl = url;
-                    const button = createStreamButton(label, url);
-                    streamButtonsContainer.appendChild(button);
-                });
-            }
+        // Toggle the target box
+        if (isExpanding) {
+            expandBox(boxToToggle);
         } else {
-            // Match sources (object with pt, uk, es arrays)
-            let streamCount = 0;
-            Object.entries(sources).forEach(([lang, langSources]) => {
-                if (langSources && langSources.length > 0) {
-                    const langDiv = document.createElement('div');
-                    const strong = document.createElement('strong');
-                    strong.textContent = `${lang.toUpperCase()}:`;
-                    langDiv.appendChild(strong);
-                    langSources.forEach((src, idx) => {
-                         const url = typeof src === 'object' ? src.url : src;
-                         const label = typeof src === 'object' ? src.label : `${idx + 1}`;
-                         if (!firstUrl) firstUrl = url;
-                         const button = createStreamButton(label, url);
-                         langDiv.appendChild(button);
-                         streamCount++;
+            collapseBox(boxToToggle);
+        }
+    }
+
+    function expandBox(box) {
+        box.classList.add('expanded');
+        currentlyExpandedBox = box;
+
+        // Populate buttons and load first stream
+        populateAndLoadFirstStream(box);
+
+        // Scroll the box into view smoothly
+        box.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    }
+
+    function collapseBox(box) {
+        box.classList.remove('expanded');
+        if (currentlyExpandedBox === box) {
+            currentlyExpandedBox = null;
+        }
+        // Clear player when collapsing
+        clearPlayerInBox(box);
+        // Clear buttons
+        const streamButtonsDiv = box.querySelector('.stream-buttons');
+        if (streamButtonsDiv) {
+            streamButtonsDiv.innerHTML = '';
+        }
+    }
+
+    function populateAndLoadFirstStream(box) {
+        const sourcesData = box.dataset.sources;
+        const streamButtonsDiv = box.querySelector('.stream-buttons');
+        if (!sourcesData || !streamButtonsDiv) return;
+
+        streamButtonsDiv.innerHTML = ''; // Clear previous buttons
+        let firstUrl = null;
+
+        try {
+            const sources = JSON.parse(sourcesData);
+
+            if (Array.isArray(sources)) { // Regular channels
+                if (sources.length > 0) {
+                    sources.forEach((src, idx) => {
+                        const url = typeof src === 'object' ? src.url : src;
+                        const label = typeof src === 'object' ? src.label : `Stream ${idx + 1}`;
+                        if (!firstUrl) firstUrl = url;
+                        const button = createStreamButton(label, url, box); // Pass box context
+                        streamButtonsDiv.appendChild(button);
                     });
-                    streamButtonsContainer.appendChild(langDiv);
+                } else {
+                     streamButtonsDiv.innerHTML = '<p>No streams available.</p>';
                 }
-            });
-             if (streamCount === 0) {
-                 streamButtonsContainer.innerHTML = '<p>No streams available for this match.</p>';
+            } else { // Match sources (object)
+                let streamCount = 0;
+                Object.entries(sources).forEach(([lang, langSources]) => {
+                    if (langSources && langSources.length > 0) {
+                        const langDiv = document.createElement('div');
+                        const strong = document.createElement('strong');
+                        strong.textContent = `${lang.toUpperCase()}:`;
+                        langDiv.appendChild(strong);
+                        langSources.forEach((src, idx) => {
+                            const url = typeof src === 'object' ? src.url : src;
+                            const label = typeof src === 'object' ? src.label : `${idx + 1}`;
+                            if (!firstUrl) firstUrl = url;
+                            const button = createStreamButton(label, url, box); // Pass box context
+                            langDiv.appendChild(button);
+                            streamCount++;
+                        });
+                        streamButtonsDiv.appendChild(langDiv);
+                    }
+                });
+                 if (streamCount === 0) {
+                     streamButtonsDiv.innerHTML = '<p>No streams available.</p>';
+                }
             }
-        }
 
-        // Show the overlay
-        playerOverlay.classList.add('visible');
-        document.body.style.overflow = 'hidden'; // Prevent background scrolling
-
-        // Load the first stream if available
-        if (firstUrl) {
-            const firstButton = streamButtonsContainer.querySelector('.stream-button');
-            if (firstButton) {
-                changeStream(firstButton, firstUrl);
+            // Load the first stream if found
+            if (firstUrl) {
+                 const firstButton = streamButtonsDiv.querySelector('.stream-button');
+                 if (firstButton) {
+                     changeStream(firstButton, firstUrl, box);
+                 }
+            } else {
+                clearPlayerInBox(box); // No streams, ensure player is cleared
             }
-        } else {
-            // No streams, clear player
-             clearPlayer();
+
+        } catch (e) {
+            console.error("Failed to parse sources data for box:", e);
+            streamButtonsDiv.innerHTML = '<p>Error loading stream data.</p>';
         }
     }
 
-    function createStreamButton(label, url) {
+    function createStreamButton(label, url, contextBox) {
         const button = document.createElement('button');
         button.className = 'stream-button';
         button.textContent = label;
         button.onclick = (event) => {
-            event.stopPropagation(); // Prevent overlay click
-            changeStream(button, url);
+            event.stopPropagation(); // Prevent collapse
+            changeStream(button, url, contextBox);
         };
         return button;
     }
 
-    function closePlayer() {
-        playerOverlay.classList.remove('visible');
-        document.body.style.overflow = ''; // Restore scrolling
-        clearPlayer(); // Stop video/iframe loading
-    }
+    // --- Stream Handling (within a specific box) ---
+    function changeStream(clickedButton, url, contextBox) {
+        console.log(`Attempting to load stream in box: ${url}`);
+        clearPlayerInBox(contextBox); // Clear previous stream in this box
 
-     function clearPlayer() {
-        // Stop HLS playback
-        if (hlsInstance) {
-            hlsInstance.destroy();
-            hlsInstance = null;
+        // Activate the clicked button within this box
+        const streamButtonsDiv = contextBox.querySelector('.stream-buttons');
+        if (streamButtonsDiv) {
+             streamButtonsDiv.querySelectorAll('.stream-button').forEach(b => b.classList.remove('active'));
         }
-        // Clear iframe src
-        playerIframe.src = 'about:blank'; // More reliable than empty string
-        playerIframe.classList.remove('active');
-        // Clear video src and stop
-        playerVideo.pause();
-        playerVideo.removeAttribute('src'); // remove the source
-        playerVideo.load(); // Request loading empty source
-        playerVideo.classList.remove('active');
-        // Remove active class from buttons
-        streamButtonsContainer.querySelectorAll('.stream-button').forEach(b => b.classList.remove('active'));
-    }
-
-
-    // --- Stream Handling ---
-    function changeStream(clickedButton, url) {
-        console.log(`Attempting to load stream: ${url}`);
-        clearPlayer(); // Clear previous stream first
-
-        // Activate the clicked button
         clickedButton.classList.add('active');
+
+        // Get player elements specific to this box
+        const iframe = contextBox.querySelector('.player-area iframe');
+        const video = contextBox.querySelector('.player-area video');
+
+        if (!iframe || !video) {
+            console.error("Could not find player elements in context box.");
+            return;
+        }
 
         // Determine stream type and load
         if (url && typeof url === 'string') {
              if (url.toLowerCase().endsWith('.m3u8')) {
-                loadHlsStream(url);
+                loadHlsStream(url, video); // Pass the specific video element
             } else {
-                loadIframeStream(url);
+                loadIframeStream(url, iframe); // Pass the specific iframe element
             }
         } else {
             console.error("Invalid stream URL:", url);
@@ -785,79 +654,82 @@
         }
     }
 
-    function loadHlsStream(url) {
-        playerVideo.poster = CONFIG.placeholderImage; // Show placeholder while loading
-        playerVideo.classList.add('active');
-
-        if (Hls.isSupported()) {
-            console.log("HLS.js is supported. Initializing...");
-            hlsInstance = new Hls({
-                 // Optional HLS config here
-                 // Example: enableWorker: false // if you suspect worker issues
-            });
-
-            // --- HLS Error Handling ---
-            hlsInstance.on(Hls.Events.ERROR, function (event, data) {
-                console.error('HLS.js Error:', event, data);
-                 if (data.fatal) {
-                    switch(data.type) {
-                        case Hls.ErrorTypes.NETWORK_ERROR:
-                            console.error('Fatal network error encountered', data);
-                            alert(`Network error loading stream: ${data.details}. Please try another source.`);
-                            // Optionally try next source automatically
-                            hlsInstance.destroy(); // Clean up failed instance
-                            break;
-                        case Hls.ErrorTypes.MEDIA_ERROR:
-                            console.error('Fatal media error encountered', data);
-                             alert(`Media error loading stream: ${data.details}. Please try another source.`);
-                            hlsInstance.recoverMediaError(); // Attempt recovery
-                            break;
-                        default:
-                            // Unrecoverable error - destroy instance
-                             alert(`An unrecoverable error occurred: ${data.details}. Please try another source.`);
-                            hlsInstance.destroy();
-                            break;
-                    }
-                } else {
-                     console.warn('Non-fatal HLS.js error:', data.details);
-                }
-            });
-
-            hlsInstance.loadSource(url);
-            hlsInstance.attachMedia(playerVideo);
-            hlsInstance.on(Hls.Events.MANIFEST_PARSED, function() {
-                console.log("HLS Manifest parsed, attempting to play...");
-                playerVideo.play().catch(e => console.error("Video play failed:", e));
-            });
-             hlsInstance.on(Hls.Events.LEVEL_LOADED, function(event, data) {
-                 console.log(`HLS Level ${data.level} loaded.`);
-             });
-
-
-        } else if (playerVideo.canPlayType('application/vnd.apple.mpegurl')) {
-            // Native HLS support (e.g., Safari)
-            console.log("Using native HLS support.");
-            playerVideo.src = url;
-             playerVideo.play().catch(e => console.error("Video play failed:", e));
-        } else {
-            console.error("HLS is not supported by this browser.");
-            alert("HLS playback is not supported in your browser.");
-             playerVideo.classList.remove('active'); // Hide video element
+     function clearPlayerInBox(box) {
+         // Stop HLS playback if it belongs to this box
+        if (hlsInstance && currentlyExpandedBox === box) {
+            hlsInstance.destroy();
+            hlsInstance = null;
+        }
+        // Clear iframe src
+        const iframe = box.querySelector('.player-area iframe');
+        if (iframe) {
+             iframe.src = 'about:blank';
+             iframe.classList.remove('active');
+        }
+        // Clear video src and stop
+        const video = box.querySelector('.player-area video');
+        if (video) {
+             video.pause();
+             video.removeAttribute('src');
+             video.load();
+             video.classList.remove('active');
+        }
+        // Deactivate buttons in this box
+        const streamButtonsDiv = box.querySelector('.stream-buttons');
+        if (streamButtonsDiv) {
+            streamButtonsDiv.querySelectorAll('.stream-button').forEach(b => b.classList.remove('active'));
         }
     }
 
-    function loadIframeStream(url) {
-         // NOTE: We cannot control the content *inside* the iframe if it has a fixed size.
-         // We can only make the iframe element itself responsive.
+    function loadHlsStream(url, videoElement) {
+        videoElement.poster = CONFIG.placeholderImage;
+        videoElement.classList.add('active');
+
+        if (Hls.isSupported()) {
+            console.log("HLS.js is supported. Initializing...");
+            // Ensure previous instance related to this box is destroyed
+            if (hlsInstance) hlsInstance.destroy();
+
+            hlsInstance = new Hls({ /* Optional config */ });
+
+            hlsInstance.on(Hls.Events.ERROR, function (event, data) {
+                console.error('HLS.js Error:', event, data);
+                 if (data.fatal) {
+                    alert(`Stream Error: ${data.details}. Try another source.`);
+                    // Clean up on fatal error
+                    if(hlsInstance) hlsInstance.destroy();
+                    hlsInstance = null;
+                    videoElement.classList.remove('active'); // Hide player on error
+                 }
+            });
+
+            hlsInstance.loadSource(url);
+            hlsInstance.attachMedia(videoElement);
+            hlsInstance.on(Hls.Events.MANIFEST_PARSED, function() {
+                console.log("HLS Manifest parsed, attempting to play...");
+                videoElement.play().catch(e => console.error("Video play failed:", e));
+            });
+
+        } else if (videoElement.canPlayType('application/vnd.apple.mpegurl')) {
+            console.log("Using native HLS support.");
+            videoElement.src = url;
+            videoElement.play().catch(e => console.error("Video play failed:", e));
+        } else {
+            console.error("HLS is not supported by this browser.");
+            alert("HLS playback is not supported in your browser.");
+            videoElement.classList.remove('active');
+        }
+    }
+
+    function loadIframeStream(url, iframeElement) {
         console.log("Loading iframe stream...");
-        playerIframe.src = url;
-        playerIframe.classList.add('active');
-        // Basic load check (doesn't guarantee content works)
-        playerIframe.onload = () => console.log("Iframe onload event fired.");
-        playerIframe.onerror = () => {
+        iframeElement.src = url;
+        iframeElement.classList.add('active');
+        iframeElement.onload = () => console.log("Iframe onload event fired.");
+        iframeElement.onerror = () => {
              console.error("Iframe onerror event fired.");
              alert("Failed to load the iframe source. It might be blocked or unavailable.");
-             playerIframe.classList.remove('active');
+             iframeElement.classList.remove('active');
         };
     }
 
