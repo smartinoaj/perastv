@@ -13,222 +13,220 @@
     .tabs { display:flex; justify-content:center; gap:10px; margin-bottom:20px; flex-wrap:wrap; }
     .tab-button { background:#1e1e22; color:white; border:none; padding:10px 20px; cursor:pointer; border-radius:8px; font-size:1em; }
     .tab-button.active { background:#cc2e2e; }
-    .channel-grid { display:grid; grid-template-columns:repeat(auto-fill, minmax(300px, 1fr)); gap:20px; padding:0 20px 40px; max-width:1200px; margin:0 auto; }
-    .channel-box { background:#1e1e22; border-radius:10px; padding:15px; cursor:pointer; transition:all 0.3s ease; text-align:center; display:flex; align-items:center; justify-content:center; min-height:80px; flex-direction:column; }
-    .channel-box h3 { font-size: 1.2em; margin: 0; font-weight: 600; }
-    .iframe-container { margin-top:10px; display:none; }
-    .iframe-container iframe, .iframe-container video {
-      width: 100%; height: auto; aspect-ratio: 16/9; border: none; border-radius: 10px;
-      object-fit: contain; display: block; max-width: 100%; min-height: 180px; box-sizing: border-box;
-    }
-    .stream-buttons { margin-top:10px; }
-    .stream-buttons button { background:#333; color:white; border:none; padding:5px 10px; margin:0 3px; border-radius:5px; cursor:pointer; font-size:0.9em; }
-    .stream-buttons button:hover { background:#555; }
-    .stream-buttons button.active { background:#cc2e2e; color:white; }
-    .site-list { max-width:800px; margin:40px auto; padding:0 20px; }
-    .site-list a { display:block; background:#1e1e22; padding:15px; margin:10px 0; border-radius:8px; text-decoration:none; color:#cc2e2e; transition:background 0.3s ease; }
-    .site-list a:hover { background:#2c2c31; }
-    @keyframes shake {
-      0% { transform: translateX(0); } 25% { transform: translateX(-5px); } 50% { transform: translateX(5px); } 75% { transform: translateX(-5px); } 100% { transform: translateX(0); }
-    }
-    .shake { animation: shake 0.3s; }
-    .channel-box.expanded { grid-column: 1 / -1; z-index: 2; background: #2a2a2f; position: relative; box-shadow: 0 0 20px rgba(0,0,0,0.5); }
-    .channel-box.expanded .iframe-container iframe, .channel-box.expanded .iframe-container video { min-height: 480px; }
-    .match-time { margin: 5px 0 10px; font-size: 0.95em; color: #ccc; text-align: center; }
-    #Matches.channel-grid { display: flex !important; flex-direction: column; align-items: center; gap: 25px; padding: 0 20px 40px; max-width: 1000px; margin: 0 auto; }
-    #Matches .channel-box { width: 100%; max-width: 900px; }
-    .channel-box img { transition: transform 0.2s ease; }
-    .channel-box img:hover { transform: scale(1.1); }
-    @media (max-width: 600px) {
-      .channel-box.expanded .iframe-container iframe, .channel-box.expanded .iframe-container video { min-height: 220px; }
-      .stream-buttons { flex-wrap: wrap; justify-content: center; }
-      .stream-buttons button { margin: 4px 6px; }
-    }
+    .channel-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(200px,1fr)); gap:20px; padding:0 20px 40px; max-width:1200px; margin:0 auto; }
+    .channel-box { background:#1e1e22; padding:15px; border-radius:8px; cursor:pointer; position:relative; }
+    .iframe-container { display:none; position:absolute; top:0; left:0; width:100%; height:100%; background:#000; padding:10px; box-sizing:border-box; }
+    .iframe-container iframe, .iframe-container video { width:100%; height:100%; border:none; border-radius:8px; }
+    .stream-buttons { margin-top:10px; display:flex; flex-wrap:wrap; gap:5px; }
+    .stream-btn { background:#cc2e2e; color:#fff; border:none; padding:5px 10px; border-radius:4px; cursor:pointer; }
+    .stream-btn.active { background:#ffffff; color:#000; }
+    #passwordScreen { position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.9); display:flex; flex-direction:column; justify-content:center; align-items:center; }
+    #passwordScreen input { padding:10px; border:none; border-radius:4px; margin-bottom:10px; }
+    #passwordScreen button { padding:10px 20px; border:none; border-radius:4px; background:#cc2e2e; color:white; cursor:pointer; }
+    .shake { animation:shake 0.5s; }
+    @keyframes shake { 0%,100%{transform:translateX(0);} 20%,80%{transform:translateX(-10px);} 40%,60%{transform:translateX(10px);} }
   </style>
 </head>
 <body>
-<div id="passwordScreen" style="position:fixed;top:0;left:0;width:100%;height:100%;background:#0e0e11;display:flex;flex-direction:column;justify-content:center;align-items:center;z-index:9999;">
-  <h2 style="color:white;font-family:'Nunito',sans-serif;">Enter Password</h2>
-  <input type="password" id="passwordInput" style="padding:10px;font-size:1em;border-radius:5px;border:none;margin:10px;">
-  <button style="padding:10px 20px;font-size:1em;border:none;background-color:#cc2e2e;color:white;border-radius:5px;cursor:pointer;">Enter</button>
-  <p id="errorMessage" style="color:red;margin-top:10px;display:none;">Incorrect Password!</p>
-</div>
-<h1><img src="ptvlogo.png" alt="PERAS TV" style="max-width:250px;height:auto;"></h1>
-<div class="tabs">
-  <button class="tab-button active" onclick="showTab(event, 'PT')">PT</button>
-  <button class="tab-button" onclick="showTab(event, 'UK')">UK</button>
-  <button class="tab-button" onclick="showTab(event, 'ES')">ES</button>
-  <button class="tab-button" onclick="showTab(event, 'Matches')">Matches</button>
-</div>
-<div id="PT" class="channel-grid"></div>
-<div id="UK" class="channel-grid" style="display:none;"></div>
-<div id="ES" class="channel-grid" style="display:none;"></div>
-<div id="Matches" class="channel-grid" style="display:none;"></div>
-<script>
-let ptChannels = [], ukChannels = [], esChannels = [];
-fetch("channels.json")
-  .then(res => res.json())
-  .then(data => {
-    const { PT, UK, ES } = data;
-    ptChannels = PT; ukChannels = UK; esChannels = ES;
-    renderChannels('PT', ptChannels);
-    renderChannels('UK', ukChannels);
-    renderChannels('ES', esChannels);
-  })
-  .catch(err => console.error("Failed to load channel data:", err));
+  <div id="passwordScreen">
+    <input id="passwordInput" type="password" placeholder="Enter password" />
+    <button>Enter</button>
+    <p id="errorMessage" style="display:none; color:#ff4c4c;">Incorrect password</p>
+  </div>
+  <h1>Peras TV</h1>
+  <div class="tabs">
+    <button class="tab-button active" onclick="showTab(event,'PT')">Portugal</button>
+    <button class="tab-button" onclick="showTab(event,'UK')">UK</button>
+    <button class="tab-button" onclick="showTab(event,'ES')">Spain</button>
+    <button class="tab-button" onclick="showTab(event,'Matches')">Matches</button>
+  </div>
+  <div id="PT" class="channel-grid"></div>
+  <div id="UK" class="channel-grid" style="display:none;"></div>
+  <div id="ES" class="channel-grid" style="display:none;"></div>
+  <div id="Matches" class="channel-grid" style="display:none;"></div>
 
-fetch("matches.json")
-  .then(res => res.json())
-  .then(data => renderMatchChannels(data))
-  .catch(err => console.error("Failed to load match data:", err));
+  <script>
+    // Global HLS instance tracker
+    let currentHls = null;
 
-function renderChannels(tab, channels) {
-  const grid = document.getElementById(tab);
-  grid.innerHTML = '';
-  channels.forEach(({ name, srcs }, index) => {
-    const box = document.createElement('div');
-    box.className = 'channel-box';
-    box.setAttribute('data-index', index);
-    box.innerHTML = `<h3>${name}</h3>
-      <div class="iframe-container">
-        <iframe allow="autoplay; fullscreen" allowfullscreen style="display:none;"></iframe>
-        <video controls autoplay muted playsinline style="display:none;"></video>
-        <div class="stream-buttons">
-          ${srcs.map((src, idx) => `<button onclick="changeStream(event, this, '${src}')">${idx+1}</button>`).join('')}
-        </div>
-      </div>`;
-    box.onclick = () => toggleIframe(box);
-    grid.appendChild(box);
-  });
-}
+    let ptChannels = [], ukChannels = [], esChannels = [];
+    fetch("channels.json")
+      .then(res => res.json())
+      .then(data => {
+        const { PT, UK, ES } = data;
+        ptChannels = PT; ukChannels = UK; esChannels = ES;
+        renderChannels('PT', ptChannels);
+        renderChannels('UK', ukChannels);
+        renderChannels('ES', esChannels);
+      })
+      .catch(err => console.error("Failed to load channel data:", err));
 
-function renderMatchChannels(matchChannels) {
-  const grid = document.getElementById('Matches');
-  grid.innerHTML = '';
-  matchChannels.forEach(match => {
-    const { team1 = "Team 1", team2 = "Team 2", logo1 = "", logo2 = "", time = "", pt = [], uk = [], es = [] } = match;
-    const box = document.createElement('div');
-    box.className = 'channel-box';
-    box.innerHTML = `
-      <div style="display:flex; align-items:center; justify-content:center; gap:10px; flex-wrap:wrap;">
-        <img src="${logo1}" alt="${team1}" style="height:30px;">
-        <h3 style="margin:0;">${team1} X ${team2}</h3>
-        <img src="${logo2}" alt="${team2}" style="height:30px;">
-      </div>
-      <p class="match-time">${time}</p>
-      <div class="iframe-container">
-        <iframe allow="autoplay; fullscreen" allowfullscreen style="display:none;"></iframe>
-        <video controls autoplay muted playsinline style="display:none;"></video>
-        <div class="stream-buttons">
-          ${pt.length ? `<div><strong>PT:</strong> ${pt.map((src, i) => `<button onclick="changeStream(event, this, '${src}')">${i+1}</button>`).join('')}</div>` : ''}
-          ${uk.length ? `<div style="margin-top:5px;"><strong>UK:</strong> ${uk.map((src, i) => `<button onclick="changeStream(event, this, '${src}')">${i+1}</button>`).join('')}</div>` : ''}
-          ${es.length ? `<div style="margin-top:5px;"><strong>ES:</strong> ${es.map((src, i) => `<button onclick="changeStream(event, this, '${src}')">${i+1}</button>`).join('')}</div>` : ''}
-        </div>
-      </div>`;
-    box.onclick = () => toggleIframe(box);
-    grid.appendChild(box);
-  });
-}
+    fetch("matches.json")
+      .then(res => res.json())
+      .then(data => renderMatchChannels(data))
+      .catch(err => console.error("Failed to load match data:", err));
 
-function toggleIframe(box) {
-  const container = box.querySelector('.iframe-container');
-  const iframe = container.querySelector('iframe');
-  const video = container.querySelector('video');
-  const isVisible = container.style.display === 'block';
-  const grid = box.parentElement;
-
-  document.querySelectorAll('.channel-box').forEach(b => {
-    b.classList.remove('expanded');
-    const c = b.querySelector('.iframe-container');
-    const i = c.querySelector('iframe');
-    const v = c.querySelector('video');
-    c.style.display = 'none';
-    if (i) i.src = '';
-    if (v) v.src = '';
-  });
-
-  if (!isVisible) {
-    box.classList.add('expanded');
-    grid.prepend(box);
-    const firstButton = container.querySelector('.stream-buttons button');
-    if (firstButton) {
-      changeStream({ stopPropagation: () => {} }, firstButton, firstButton.getAttribute('onclick').match(/'(.*?)'/)[1]);
+    function renderChannels(tab, channels) {
+      const grid = document.getElementById(tab);
+      grid.innerHTML = '';
+      channels.forEach(({ name, srcs }, index) => {
+        const box = document.createElement('div');
+        box.className = 'channel-box';
+        box.setAttribute('data-index', index);
+        box.innerHTML = `<h3>${name}</h3>
+          <div class="iframe-container">
+            <iframe allow="autoplay; fullscreen" allowfullscreen style="display:none;"></iframe>
+            <video controls autoplay muted playsinline style="display:none;"></video>
+            <div class="stream-buttons">
+              ${srcs.map((src, idx) => `<button class="stream-btn" data-src="${src}">${idx+1}</button>`).join('')}
+            </div>
+          </div>`;
+        box.onclick = () => toggleIframe(box);
+        grid.appendChild(box);
+        // Attach stream button listeners
+        box.querySelectorAll('.stream-btn').forEach(btn => btn.addEventListener('click', changeStream));
+      });
     }
-    container.style.display = 'block';
-  }
-}
 
-function changeStream(event, btn, url) {
-  event.stopPropagation();
-  const container = btn.closest('.iframe-container');
-  const iframe = container.querySelector('iframe');
-  const video = container.querySelector('video');
-  iframe.style.display = 'none';
-  video.style.display = 'none';
-  iframe.src = '';
-  video.src = '';
-
-  if (url.endsWith('.m3u8')) {
-    video.style.display = 'block';
-    if (Hls.isSupported()) {
-      const hls = new Hls();
-      hls.loadSource(url);
-      hls.attachMedia(video);
-    } else if (video.canPlayType('application/vnd.apple.mpegurl')) {
-      video.src = url;
+    function renderMatchChannels(matchChannels) {
+      const grid = document.getElementById('Matches');
+      grid.innerHTML = '';
+      matchChannels.forEach(match => {
+        const { team1 = "Team 1", team2 = "Team 2", logo1 = "", logo2 = "", time = "", pt = [], uk = [], es = [] } = match;
+        const box = document.createElement('div');
+        box.className = 'channel-box';
+        box.innerHTML = `
+          <div style="display:flex; align-items:center; justify-content:center; gap:10px; flex-wrap:wrap;">
+            <img src="${logo1}" alt="${team1}" style="height:30px;">
+            <h3 style="margin:0;">${team1} X ${team2}</h3>
+            <img src="${logo2}" alt="${team2}" style="height:30px;">
+          </div>
+          <p class="match-time">${time}</p>
+          <div class="iframe-container">
+            <iframe allow="autoplay; fullscreen" allowfullscreen style="display:none;"></iframe>
+            <video controls autoplay muted playsinline style="display:none;"></video>
+            <div class="stream-buttons">
+              ${pt.length ? `<div><strong>PT:</strong> ${pt.map((src, i) => `<button class="stream-btn" data-src="${src}">${i+1}</button>`).join('')}</div>` : ''}
+              ${uk.length ? `<div style="margin-top:5px;"><strong>UK:</strong> ${uk.map((src, i) => `<button class="stream-btn" data-src="${src}">${i+1}</button>`).join('')}</div>` : ''}
+              ${es.length ? `<div style="margin-top:5px;"><strong>ES:</strong> ${es.map((src, i) => `<button class="stream-btn" data-src="${src}">${i+1}</button>`).join('')}</div>` : ''}
+            </div>
+          </div>`;
+        box.onclick = () => toggleIframe(box);
+        grid.appendChild(box);
+        // Attach stream button listeners
+        box.querySelectorAll('.stream-btn').forEach(btn => btn.addEventListener('click', changeStream));
+      });
     }
-  } else {
-    iframe.src = url;
-    iframe.style.display = 'block';
-  }
 
-  container.querySelectorAll('.stream-buttons button').forEach(b => b.classList.remove('active'));
-  btn.classList.add('active');
-}
+    function toggleIframe(box) {
+      const container = box.querySelector('.iframe-container');
+      const iframe = container.querySelector('iframe');
+      const video = container.querySelector('video');
+      const isVisible = container.style.display === 'block';
+      const grid = box.parentElement;
 
-function showTab(event, tabId) {
-  document.querySelectorAll('.tab-button').forEach(btn => btn.classList.remove('active'));
-  event.target.classList.add('active');
-  document.querySelectorAll('.channel-grid').forEach(grid => grid.style.display = 'none');
-  document.getElementById(tabId).style.display = 'grid';
-}
-</script>
-<script>
-const passwordScreen = document.getElementById('passwordScreen');
-const passwordInput = document.getElementById('passwordInput');
-const passwordButton = passwordScreen.querySelector('button');
-const errorMessage = document.getElementById('errorMessage');
-const userPassword = "ptv123";
+      // Collapse others
+      document.querySelectorAll('.channel-box').forEach(b => {
+        b.classList.remove('expanded');
+        const c = b.querySelector('.iframe-container');
+        const i = c.querySelector('iframe');
+        const v = c.querySelector('video');
+        c.style.display = 'none';
+        if (i) i.src = '';
+        if (v) v.src = '';
+      });
 
-if (sessionStorage.getItem('authenticated') === 'true') {
-  passwordScreen.style.display = 'none';
-  document.body.style.overflow = '';
-} else {
-  document.body.style.overflow = 'hidden';
-}
-passwordButton.addEventListener('click', verifyPassword);
-passwordInput.addEventListener('keydown', function(event) {
-  if (event.key === 'Enter') verifyPassword();
-});
-function verifyPassword() {
-  const password = passwordInput.value;
-  if (password === userPassword) {
-    sessionStorage.setItem('authenticated', 'true');
-    passwordScreen.style.display = 'none';
-    document.body.style.overflow = '';
-  } else {
-    errorMessage.style.display = 'block';
-    passwordInput.classList.add('shake');
-    passwordInput.value = '';
-    setTimeout(() => passwordInput.classList.remove('shake'), 500);
-  }
-}
-</script>
-<p id="lastUpdated" style="text-align:center; color:#888; font-size:0.85em; margin-top:30px;"></p>
-<script>
-const lastUpdatedEl = document.getElementById('lastUpdated');
-const now = new Date();
-lastUpdatedEl.textContent = `Last updated: ${now.toLocaleDateString()} ${now.toLocaleTimeString()}`;
-</script>
+      if (!isVisible) {
+        box.classList.add('expanded');
+        grid.prepend(box);
+        const firstBtn = container.querySelector('.stream-btn');
+        if (firstBtn) firstBtn.click();
+        container.style.display = 'block';
+      }
+    }
+
+    function changeStream(event) {
+      event.stopPropagation();
+      const btn = event.currentTarget;
+      const url = btn.dataset.src;
+      const container = btn.closest('.iframe-container');
+      const iframe = container.querySelector('iframe');
+      const video = container.querySelector('video');
+
+      // Cleanup previous HLS instance
+      if (currentHls) { currentHls.destroy(); currentHls = null; }
+
+      iframe.style.display = 'none';
+      video.style.display = 'none';
+      iframe.src = '';
+      video.src = '';
+
+      if (url.endsWith('.m3u8')) {
+        video.style.display = 'block';
+        if (Hls.isSupported()) {
+          currentHls = new Hls();
+          currentHls.loadSource(url);
+          currentHls.attachMedia(video);
+        } else if (video.canPlayType('application/vnd.apple.mpegurl')) {
+          video.src = url;
+        }
+      } else {
+        iframe.src = url;
+        iframe.style.display = 'block';
+      }
+
+      // Update button states
+      container.querySelectorAll('.stream-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+    }
+
+    function showTab(event, tabId) {
+      document.querySelectorAll('.tab-button').forEach(btn => btn.classList.remove('active'));
+      event.target.classList.add('active');
+      document.querySelectorAll('.channel-grid').forEach(grid => grid.style.display = 'none');
+      document.getElementById(tabId).style.display = 'grid';
+    }
+  </script>
+
+  <script>
+    const passwordScreen = document.getElementById('passwordScreen');
+    const passwordInput = document.getElementById('passwordInput');
+    const passwordButton = passwordScreen.querySelector('button');
+    const errorMessage = document.getElementById('errorMessage');
+    const userPassword = "ptv123";
+
+    if (sessionStorage.getItem('authenticated') === 'true') {
+      passwordScreen.style.display = 'none';
+      document.body.style.overflow = '';
+    } else {
+      document.body.style.overflow = 'hidden';
+    }
+
+    passwordButton.addEventListener('click', verifyPassword);
+    passwordInput.addEventListener('keydown', function(event) {
+      if (event.key === 'Enter') verifyPassword();
+    });
+
+    function verifyPassword() {
+      const password = passwordInput.value;
+      if (password === userPassword) {
+        sessionStorage.setItem('authenticated', 'true');
+        passwordScreen.style.display = 'none';
+        document.body.style.overflow = '';
+      } else {
+        errorMessage.style.display = 'block';
+        passwordInput.classList.add('shake');
+        passwordInput.value = '';
+        setTimeout(() => passwordInput.classList.remove('shake'), 500);
+      }
+    }
+  </script>
+
+  <p id="lastUpdated" style="text-align:center; color:#888; font-size:0.85em; margin-top:30px;"></p>
+  <script>
+    const lastUpdatedEl = document.getElementById('lastUpdated');
+    const now = new Date();
+    lastUpdatedEl.textContent = `Last updated: ${now.toLocaleDateString()} ${now.toLocaleTimeString()}`;
+  </script>
 </body>
 </html>
