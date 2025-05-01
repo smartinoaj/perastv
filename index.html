@@ -100,16 +100,25 @@
             grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
             gap: 20px; padding: 0 10px 50px; display: none;
         }
-        @media (min-width: 768px) { .channel-grid:not(#Matches) { grid-template-columns: repeat(2, 1fr); } }
-        @media (min-width: 1024px) { .channel-grid:not(#Matches) { grid-template-columns: repeat(3, 1fr); } }
-        @media (min-width: 1366px) { .channel-grid:not(#Matches) { grid-template-columns: repeat(4, 1fr); } }
-        .channel-grid.active { display: grid; }
+        /* --- Grid Column Change (Back to 3 Max) --- */
+        @media (min-width: 768px) {
+            .channel-grid:not(#Matches) {
+                 grid-template-columns: repeat(2, 1fr); /* 2 columns medium */
+            }
+        }
+        @media (min-width: 1024px) {
+             .channel-grid:not(#Matches) {
+                 grid-template-columns: repeat(3, 1fr); /* 3 columns large */
+            }
+        }
+        /* Removed the 4-column rule */
+        /* --- End Grid Column Change --- */
 
-        /* --- Matches Grid Specific Width --- */
+        .channel-grid.active { display: grid; }
         #Matches.channel-grid {
-             grid-template-columns: 1fr; /* Single column */
-             max-width: 1000px; /* Set back max-width for the grid */
-             margin: 0 auto; /* Center the grid */
+             grid-template-columns: 1fr;
+             max-width: 1000px;
+             margin: 0 auto;
         }
         #Matches.channel-grid.active { display: grid; }
 
@@ -120,8 +129,11 @@
             cursor: pointer; transition: all 0.3s ease;
             border: 1px solid var(--bg-secondary); position: relative; overflow: hidden;
         }
-        /* *** REMOVED max-width rule for unexpanded match boxes *** */
-        /* #Matches .channel-box:not(.expanded) { ... } */
+        #Matches .channel-box:not(.expanded) {
+            max-width: 950px;
+            margin-left: auto;
+            margin-right: auto;
+        }
 
         .channel-box.hidden { display: none; }
         .channel-box:not(.expanded):hover {
@@ -130,17 +142,16 @@
         }
         .channel-header {
             display: flex; align-items: center;
-            justify-content: center; /* Center channel name by default */
+            justify-content: center;
             gap: 10px; text-align: center; min-height: 35px; cursor: pointer;
         }
-         /* --- Matches Header Layout V4 --- */
-        #Matches .channel-header {
-             justify-content: center; /* Center items */
-             gap: 0; /* Remove gap, use margins on h3 */
+         #Matches .channel-header {
+             justify-content: center;
+             gap: 0;
              text-align: center;
         }
         .match-logo {
-            height: 40px; width: 40px; /* Keep increased size */
+            height: 40px; width: 40px;
             object-fit: contain; flex-shrink: 0;
             border-radius: 4px;
             display: inline-block;
@@ -159,15 +170,19 @@
             text-align: center;
             flex-grow: 0;
             flex-shrink: 1;
-            /* Add margin to space out from logos */
-            margin-left: 25px; /* Increased margin */
-            margin-right: 25px; /* Increased margin */
+            margin-left: 25px;
+            margin-right: 25px;
         }
+        /* Center non-match titles */
+         .channel-grid:not(#Matches) .channel-header h3 {
+             margin-left: 0;
+             margin-right: 0;
+         }
 
         .channel-info {
             font-size: 0.8em;
             color: var(--text-secondary);
-            text-align: center; /* Center info text */
+            text-align: center;
             margin-top: 8px;
             margin-left: 0;
             margin-bottom: 0;
@@ -177,12 +192,14 @@
 
         /* --- Expanded Channel Box --- */
         .channel-box.expanded {
-            grid-column: 1 / -1; cursor: default; /* Span full grid */
+            grid-column: 1 / -1; cursor: default;
             background: var(--bg-tertiary); padding-bottom: 20px; z-index: 10;
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
             border: 2px solid var(--accent-color);
             overflow: visible;
-            /* Removed max-width and margin overrides as they are not needed */
+            max-width: none;
+            margin-left: 0;
+            margin-right: 0;
         }
         .channel-box.expanded .channel-header,
         .channel-box.expanded .channel-info { cursor: default; }
@@ -262,6 +279,11 @@
         .loading-message, .error-message { text-align: center; padding: 50px 20px; color: var(--text-secondary); font-size: 1em; font-weight: 500; }
 
         /* --- Responsive Adjustments --- */
+        @media (max-width: 1023px) { /* Adjust max-width for tablets */
+             #Matches .channel-box:not(.expanded) {
+                 max-width: 90%; /* Use percentage for better fit */
+            }
+        }
         @media (max-width: 767px) { /* 1 column */
              .channel-grid:not(#Matches) { grid-template-columns: 1fr; }
              .channel-box { padding: 15px; }
@@ -273,7 +295,7 @@
              #Matches .channel-header { gap: 10px; }
              .match-logo, #Matches .channel-header img.match-logo { height: 32px; width: 32px; }
              .channel-info { font-size: 0.75em;}
-             /* Removed max-width override for mobile */
+             #Matches .channel-box:not(.expanded) { max-width: 100%; } /* Full width on mobile */
              #Matches .channel-header h3 { margin: 0 15px; } /* Adjust margin */
         }
         @media (max-width: 480px) { /* Further adjustments for very small screens */
@@ -304,7 +326,7 @@
     </div>
 
     <div class="tabs">
-        <button class="tab-button" data-tab="PT">PT</button>
+        <button class="tab-button active" data-tab="PT">PT</button>
         <button class="tab-button" data-tab="UK">UK</button>
         <button class="tab-button" data-tab="ES">ES</button>
         <button class="tab-button" data-tab="Matches">Matches</button>
@@ -313,7 +335,7 @@
     <div id="loadingMessage" class="loading-message">Loading channels...</div>
     <div id="fetchErrorMessage" class="error-message" style="display: none;"></div>
 
-    <div id="PT" class="channel-grid"></div>
+    <div id="PT" class="channel-grid active"></div>
     <div id="UK" class="channel-grid"></div>
     <div id="ES" class="channel-grid"></div>
     <div id="Matches" class="channel-grid"></div>
@@ -323,7 +345,7 @@
 </footer>
 
 <script>
-    /* --- JavaScript (No changes needed here for this layout fix) --- */
+    /* --- JavaScript --- */
 
     // --- Configuration ---
     const CONFIG = {
@@ -403,8 +425,9 @@
             renderAllChannels();
             loadingMessage.style.display = 'none';
 
+            // Restore last tab preference or default to PT
             const lastTab = localStorage.getItem(CONFIG.lastTabKey) || 'PT';
-            showTab(lastTab);
+            showTab(lastTab); // ShowTab handles setting the active classes
 
         } catch (error) {
             console.error("Failed to load channel or match data:", error);
