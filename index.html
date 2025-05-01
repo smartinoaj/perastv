@@ -1,234 +1,873 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Peras TV</title>
-  <link rel="icon" type="image/png" href="ptv.png">
-  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@700&display=swap" rel="stylesheet">
-  <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
-  <style>
-    body { margin:0; padding:0; background:#0e0e11; color:#ffffff; font-family:Arial,sans-serif; }
-    h1 { text-align:center; padding:20px; margin-bottom:2px; font-size:2.5em; font-family:'Nunito',sans-serif; }
-    .tabs { display:flex; justify-content:center; gap:10px; margin-bottom:20px; flex-wrap:wrap; }
-    .tab-button { background:#1e1e22; color:white; border:none; padding:10px 20px; cursor:pointer; border-radius:8px; font-size:1em; }
-    .tab-button.active { background:#cc2e2e; }
-    .channel-grid { display:grid; grid-template-columns:repeat(auto-fill, minmax(300px, 1fr)); gap:20px; padding:0 20px 40px; max-width:1200px; margin:0 auto; }
-    .channel-box { background:#1e1e22; border-radius:10px; padding:15px; cursor:pointer; transition:all 0.3s ease; text-align:center; display:flex; align-items:center; justify-content:center; min-height:80px; flex-direction:column; }
-    .channel-box h3 { font-size: 1.2em; margin: 0; font-weight: 600; }
-    .iframe-container { margin-top:10px; display:none; }
-    .iframe-container iframe, .iframe-container video {
-      width: 100%; height: auto; aspect-ratio: 16/9; border: none; border-radius: 10px;
-      object-fit: contain; display: block; max-width: 100%; min-height: 180px; box-sizing: border-box;
-    }
-    .stream-buttons { margin-top:10px; }
-    .stream-buttons button { background:#333; color:white; border:none; padding:5px 10px; margin:0 3px; border-radius:5px; cursor:pointer; font-size:0.9em; }
-    .stream-buttons button:hover { background:#555; }
-    .stream-buttons button.active { background:#cc2e2e; color:white; }
-    .site-list { max-width:800px; margin:40px auto; padding:0 20px; }
-    .site-list a { display:block; background:#1e1e22; padding:15px; margin:10px 0; border-radius:8px; text-decoration:none; color:#cc2e2e; transition:background 0.3s ease; }
-    .site-list a:hover { background:#2c2c31; }
-    @keyframes shake {0% { transform: translateX(0); } 25% { transform: translateX(-5px); } 50% { transform: translateX(5px); } 75% { transform: translateX(-5px); } 100% { transform: translateX(0); }}
-    .shake { animation: shake 0.3s; }
-    .channel-box.expanded { grid-column: 1 / -1; z-index: 2; background: #2a2a2f; position: relative; box-shadow: 0 0 20px rgba(0,0,0,0.5); }
-    .channel-box.expanded .iframe-container iframe, .channel-box.expanded .iframe-container video { min-height: 480px; }
-    .match-time { margin: 5px 0 10px; font-size: 0.95em; color: #ccc; text-align: center; }
-    #Matches.channel-grid { display: flex !important; flex-direction: column; align-items: center; gap: 25px; padding: 0 20px 40px; max-width: 1000px; margin: 0 auto; }
-    #Matches .channel-box { width: 100%; max-width: 900px; }
-    .channel-box img { transition: transform 0.2s ease; }
-    .channel-box img:hover { transform: scale(1.1); }
-    @media (max-width: 600px) {
-      .channel-box.expanded .iframe-container iframe, .channel-box.expanded .iframe-container video { min-height: 220px; }
-      .stream-buttons { flex-wrap: wrap; justify-content: center; }
-      .stream-buttons button { margin: 4px 6px; }
-    }
-  </style>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Peras TV</title>
+    <link rel="icon" type="image/png" href="ptv.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
+    <style>
+        :root {
+            --bg-primary: #0f172a; /* Dark blue-gray */
+            --bg-secondary: #1e293b; /* Slightly lighter blue-gray */
+            --bg-tertiary: #334155; /* Even lighter */
+            --accent-color: #e11d48; /* Vibrant red */
+            --text-primary: #f1f5f9; /* Off-white */
+            --text-secondary: #94a3b8; /* Gray */
+            --border-color: #334155;
+            --font-sans: 'Inter', sans-serif;
+        }
+
+        /* Basic Reset & Body Styling */
+        *, *::before, *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background-color: var(--bg-primary);
+            color: var(--text-primary);
+            font-family: var(--font-sans);
+            line-height: 1.6;
+            overscroll-behavior-y: contain; /* Prevent pull-to-refresh issues */
+        }
+
+        /* Password Screen */
+        #passwordScreen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--bg-primary);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 10000;
+            padding: 20px;
+        }
+        #passwordScreen h2 {
+            color: var(--text-primary);
+            margin-bottom: 15px;
+            font-weight: 600;
+        }
+        #passwordInput {
+            padding: 12px 15px;
+            font-size: 1em;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+            background-color: var(--bg-secondary);
+            color: var(--text-primary);
+            margin: 10px 0;
+            width: 100%;
+            max-width: 300px;
+            text-align: center;
+        }
+        #passwordScreen button {
+            padding: 12px 30px;
+            font-size: 1em;
+            border: none;
+            background-color: var(--accent-color);
+            color: white;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: background-color 0.2s ease;
+        }
+        #passwordScreen button:hover {
+            background-color: #be123c; /* Darker red */
+        }
+        #errorMessage {
+            color: #f87171; /* Lighter red for error */
+            margin-top: 15px;
+            display: none;
+            font-weight: 600;
+        }
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-6px); }
+            50% { transform: translateX(6px); }
+            75% { transform: translateX(-6px); }
+        }
+        .shake {
+            animation: shake 0.4s ease-in-out;
+        }
+
+        /* Main Container & Header */
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 15px; /* Add some horizontal padding */
+        }
+
+        header {
+            text-align: center;
+            padding: 25px 0 15px;
+        }
+        header img {
+            max-width: 220px;
+            height: auto;
+        }
+
+        /* Tabs */
+        .tabs {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+            padding: 0 10px;
+        }
+        .tab-button {
+            background: var(--bg-secondary);
+            color: var(--text-secondary);
+            border: 1px solid var(--border-color);
+            padding: 10px 20px;
+            cursor: pointer;
+            border-radius: 8px;
+            font-size: 0.95em;
+            font-weight: 600;
+            transition: all 0.2s ease;
+        }
+        .tab-button:hover {
+            background: var(--bg-tertiary);
+            color: var(--text-primary);
+        }
+        .tab-button.active {
+            background: var(--accent-color);
+            color: white;
+            border-color: var(--accent-color);
+        }
+
+        /* Channel Grid */
+        .channel-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 20px;
+            padding: 0 10px 40px;
+            display: none; /* Hidden by default */
+        }
+        .channel-grid.active {
+            display: grid;
+        }
+        /* Special layout for Matches tab */
+        #Matches.channel-grid {
+            grid-template-columns: 1fr; /* Single column */
+            max-width: 900px; /* Limit width */
+            margin: 0 auto; /* Center */
+        }
+        #Matches.channel-grid.active {
+            display: grid; /* Use grid here too */
+        }
+
+        /* Channel Box */
+        .channel-box {
+            background: var(--bg-secondary);
+            border-radius: 12px;
+            padding: 15px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 1px solid var(--border-color);
+            position: relative; /* Needed for potential future elements */
+            overflow: hidden; /* Hide overflowing content initially */
+        }
+        .channel-box:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            border-color: var(--text-secondary);
+        }
+        .channel-header {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            text-align: center;
+            min-height: 50px; /* Ensure consistent height */
+            flex-wrap: wrap; /* Allow wrapping if names are long */
+        }
+        .channel-header img {
+            height: 28px;
+            width: auto;
+            object-fit: contain; /* Prevent distortion */
+            flex-shrink: 0; /* Prevent logos from shrinking too much */
+        }
+        .channel-header h3 {
+            font-size: 1.1em;
+            font-weight: 600;
+            margin: 0;
+            flex-grow: 1; /* Allow title to take space */
+            word-break: break-word; /* Break long words */
+        }
+        .match-time {
+            font-size: 0.85em;
+            color: var(--text-secondary);
+            text-align: center;
+            margin-top: 8px;
+            margin-bottom: 5px;
+        }
+
+        /* Player Overlay (for expanded view) */
+        .player-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.85); /* Dark semi-transparent background */
+            display: none; /* Hidden by default */
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            padding: 20px; /* Padding around the player */
+            opacity: 0;
+            transition: opacity 0.3s ease-in-out;
+        }
+        .player-overlay.visible {
+            display: flex;
+            opacity: 1;
+        }
+        .player-container {
+            background-color: var(--bg-secondary);
+            border-radius: 12px;
+            padding: 20px;
+            width: 100%;
+            max-width: 1200px; /* Max width for the player */
+            max-height: 90vh; /* Max height */
+            display: flex;
+            flex-direction: column;
+            overflow: hidden; /* Prevent content overflow */
+            position: relative; /* For close button */
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+            transform: scale(0.95);
+            transition: transform 0.3s ease-in-out;
+        }
+        .player-overlay.visible .player-container {
+            transform: scale(1);
+        }
+        .player-content {
+            flex-grow: 1; /* Take available space */
+            position: relative;
+            width: 100%;
+            /* Aspect ratio for the video/iframe area */
+            aspect-ratio: 16 / 9;
+            background-color: #000; /* Black background for player area */
+            border-radius: 8px;
+            overflow: hidden; /* Clip content */
+            margin-bottom: 15px;
+        }
+        .player-content iframe,
+        .player-content video {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: none;
+            display: none; /* Hide both initially */
+            object-fit: contain; /* Important for M3U8 video */
+        }
+        .player-content iframe.active,
+        .player-content video.active {
+            display: block; /* Show the active one */
+        }
+
+        /* Close Button for Overlay */
+        .close-player-btn {
+            position: absolute;
+            top: 10px;
+            right: 15px;
+            background: rgba(0, 0, 0, 0.5);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 30px;
+            height: 30px;
+            font-size: 1.5em;
+            line-height: 28px; /* Center the 'X' */
+            text-align: center;
+            cursor: pointer;
+            z-index: 1001;
+            transition: background-color 0.2s ease;
+        }
+        .close-player-btn:hover {
+            background: rgba(255, 255, 255, 0.3);
+        }
+
+        /* Stream Buttons */
+        .stream-buttons-container {
+            text-align: center;
+            margin-top: auto; /* Push buttons to the bottom in flex container */
+            padding-top: 10px; /* Space above buttons */
+            max-height: 15vh; /* Limit height */
+            overflow-y: auto; /* Allow scrolling if many buttons */
+        }
+        .stream-buttons-container div {
+            margin-bottom: 8px; /* Space between language groups */
+        }
+        .stream-buttons-container strong {
+            color: var(--text-secondary);
+            font-size: 0.9em;
+            margin-right: 5px;
+        }
+        .stream-button {
+            background: var(--bg-tertiary);
+            color: var(--text-primary);
+            border: 1px solid var(--border-color);
+            padding: 6px 12px;
+            margin: 3px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 0.85em;
+            font-weight: 500;
+            transition: all 0.2s ease;
+            display: inline-block; /* Prevent wrapping inside buttons */
+        }
+        .stream-button:hover {
+            background: #475569; /* Slightly lighter hover */
+            border-color: #64748b;
+        }
+        .stream-button.active {
+            background: var(--accent-color);
+            color: white;
+            border-color: var(--accent-color);
+            font-weight: 600;
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            color: var(--text-secondary);
+            font-size: 0.85em;
+            margin-top: 30px;
+            padding-bottom: 20px;
+        }
+
+        /* Loading/Error States */
+        .loading-message, .error-message {
+            text-align: center;
+            padding: 40px 20px;
+            color: var(--text-secondary);
+            font-size: 1.1em;
+        }
+
+        /* Responsive Adjustments */
+        @media (max-width: 768px) {
+            .container { padding: 0 10px; }
+            header img { max-width: 180px; }
+            .tabs { gap: 8px; margin-bottom: 20px; }
+            .tab-button { padding: 8px 15px; font-size: 0.9em; }
+            .channel-grid { grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 15px; }
+            #Matches.channel-grid { max-width: 100%; } /* Full width on mobile */
+            .player-container { padding: 15px; max-height: 85vh; }
+            .player-content { margin-bottom: 10px; }
+            .close-player-btn { top: 8px; right: 10px; width: 28px; height: 28px; font-size: 1.3em; line-height: 26px; }
+            .stream-button { padding: 5px 10px; font-size: 0.8em; }
+        }
+
+        @media (max-width: 480px) {
+            header img { max-width: 150px; }
+            .channel-grid { grid-template-columns: 1fr; /* Single column on very small screens */ gap: 12px; }
+            .channel-box { padding: 12px; }
+            .channel-header h3 { font-size: 1em; }
+            .channel-header img { height: 24px; }
+            .player-overlay { padding: 10px; }
+            .player-container { padding: 10px; }
+            .stream-buttons-container strong { display: block; margin-bottom: 3px; } /* Stack labels */
+        }
+
+    </style>
 </head>
 <body>
-<div id="passwordScreen" style="position:fixed;top:0;left:0;width:100%;height:100%;background:#0e0e11;display:flex;flex-direction:column;justify-content:center;align-items:center;z-index:9999;">
-  <h2 style="color:white;font-family:'Nunito',sans-serif;">Enter Password</h2>
-  <input type="password" id="passwordInput" style="padding:10px;font-size:1em;border-radius:5px;border:none;margin:10px;">
-  <button style="padding:10px 20px;font-size:1em;border:none;background-color:#cc2e2e;color:white;border-radius:5px;cursor:pointer;">Enter</button>
-  <p id="errorMessage" style="color:red;margin-top:10px;display:none;">Incorrect Password!</p>
+
+<div id="passwordScreen">
+    <h2>Enter Password</h2>
+    <input type="password" id="passwordInput" placeholder="******">
+    <button id="passwordButton">Enter</button>
+    <p id="errorMessage">Incorrect Password!</p>
 </div>
-<h1><img src="ptvlogo.png" alt="PERAS TV" style="max-width:250px;height:auto;"></h1>
-<div class="tabs">
-  <button class="tab-button active" onclick="showTab(event, 'PT')">PT</button>
-  <button class="tab-button" onclick="showTab(event, 'UK')">UK</button>
-  <button class="tab-button" onclick="showTab(event, 'ES')">ES</button>
-  <button class="tab-button" onclick="showTab(event, 'Matches')">Matches</button>
+
+<div class="container">
+    <header>
+        <img src="ptvlogo.png" alt="PERAS TV Logo">
+    </header>
+
+    <div class="tabs">
+        <button class="tab-button active" data-tab="PT">PT</button>
+        <button class="tab-button" data-tab="UK">UK</button>
+        <button class="tab-button" data-tab="ES">ES</button>
+        <button class="tab-button" data-tab="Matches">Matches</button>
+    </div>
+
+    <div id="loadingMessage" class="loading-message">Loading channels...</div>
+    <div id="fetchErrorMessage" class="error-message" style="display: none;"></div>
+
+    <div id="PT" class="channel-grid active"></div>
+    <div id="UK" class="channel-grid"></div>
+    <div id="ES" class="channel-grid"></div>
+    <div id="Matches" class="channel-grid"></div>
+
+    <footer>
+        <p id="lastUpdated"></p>
+    </footer>
 </div>
-<div id="PT" class="channel-grid"></div>
-<div id="UK" class="channel-grid" style="display:none;"></div>
-<div id="ES" class="channel-grid" style="display:none;"></div>
-<div id="Matches" class="channel-grid" style="display:none;"></div>
 
-<script>
-  let ptChannels = [], ukChannels = [], esChannels = [];
-  let hls = null;  // global HLS.js instance
-
-  fetch("channels.json")
-    .then(res => res.json())
-    .then(data => {
-      const { PT, UK, ES } = data;
-      ptChannels = PT; ukChannels = UK; esChannels = ES;
-      renderChannels('PT', ptChannels);
-      renderChannels('UK', ukChannels);
-      renderChannels('ES', esChannels);
-    })
-    .catch(err => console.error("Failed to load channel data:", err));
-
-  fetch("matches.json")
-    .then(res => res.json())
-    .then(data => renderMatchChannels(data))
-    .catch(err => console.error("Failed to load match data:", err));
-
-  function renderChannels(tab, channels) {
-    const grid = document.getElementById(tab);
-    grid.innerHTML = '';
-    channels.forEach(({ name, srcs }, index) => {
-      const box = document.createElement('div');
-      box.className = 'channel-box';
-      box.setAttribute('data-index', index);
-      box.innerHTML = `<h3>${name}</h3>
-        <div class="iframe-container">
-          <iframe allow="autoplay; fullscreen" allowfullscreen style="display:none;"></iframe>
-          <video controls autoplay muted playsinline style="display:none;"></video>
-          <div class="stream-buttons">
-            ${srcs.map((src, idx) => `<button onclick="changeStream(event, this, '${src}')">${idx+1}</button>`).join('')}
-          </div>
-        </div>`;
-      box.onclick = () => toggleIframe(box);
-      grid.appendChild(box);
-    });
-  }
-
-  function renderMatchChannels(matchChannels) {
-    const grid = document.getElementById('Matches');
-    grid.innerHTML = '';
-    matchChannels.forEach(match => {
-      const { team1, team2, logo1 = '', logo2 = '', time = '', pt = [], uk = [], es = [] } = match;
-      const box = document.createElement('div');
-      box.className = 'channel-box';
-      box.innerHTML = `
-        <div style="display:flex; align-items:center; justify-content:center; gap:10px; flex-wrap:wrap;">
-          <img src="${logo1}" alt="${team1}" style="height:30px;">
-          <h3 style="margin:0;">${team1} X ${team2}</h3>
-          <img src="${logo2}" alt="${team2}" style="height:30px;">
+<div id="playerOverlay" class="player-overlay">
+    <div class="player-container">
+        <button id="closePlayerBtn" class="close-player-btn">&times;</button>
+        <div id="playerContent" class="player-content">
+            <iframe allow="autoplay; fullscreen" allowfullscreen></iframe>
+            <video controls autoplay muted playsinline></video>
         </div>
-        <p class="match-time">${time}</p>
-        <div class="iframe-container">
-          <iframe allow="autoplay; fullscreen" allowfullscreen style="display:none;"></iframe>
-          <video controls autoplay muted playsinline style="display:none;"></video>
-          <div class="stream-buttons">
-            ${pt.length ? `<div><strong>PT:</strong> ${pt.map((src,i) => `<button onclick="changeStream(event,this,'${src}')">${i+1}</button>`).join('')}</div>` : ''}
-            ${uk.length ? `<div style="margin-top:5px;"><strong>UK:</strong> ${uk.map((src,i) => `<button onclick="changeStream(event,this,'${src}')">${i+1}</button>`).join('')}</div>` : ''}
-            ${es.length ? `<div style="margin-top:5px;"><strong>ES:</strong> ${es.map((src,i) => `<button onclick="changeStream(event,this,'${src}')">${i+1}</button>`).join('')}</div>` : ''}
-          </div>
-        </div>`;
-      box.onclick = () => toggleIframe(box);
-      grid.appendChild(box);
-    });
-  }
-
-  function toggleIframe(box) {
-    const container = box.querySelector('.iframe-container');
-    const iframe = container.querySelector('iframe');
-    const video = container.querySelector('video');
-    const isVisible = container.style.display === 'block';
-    const grid = box.parentElement;
-
-    document.querySelectorAll('.channel-box').forEach(b => {
-      b.classList.remove('expanded');
-      const c = b.querySelector('.iframe-container');
-      const i = c.querySelector('iframe');
-      const v = c.querySelector('video');
-      c.style.display = 'none';
-      if (i) i.src = '';
-      if (v) v.src = '';
-    });
-
-    if (!isVisible) {
-      box.classList.add('expanded');
-      grid.prepend(box);
-      const firstBtn = container.querySelector('.stream-buttons button');
-      if (firstBtn) {
-        changeStream({ stopPropagation: () => {} }, firstBtn, firstBtn.getAttribute('onclick').match(/'(.*?)'/)[1]);
-      }
-      container.style.display = 'block';
-    }
-  }
-
-  function changeStream(event, btn, url) {
-    event.stopPropagation();
-    const container = btn.closest('.iframe-container');
-    const iframe = container.querySelector('iframe');
-    const video = container.querySelector('video');
-
-    // cleanup previous HLS instance
-    if (hls) {
-      hls.destroy();
-      hls = null;
-    }
-
-    iframe.style.display = 'none';
-    video.style.display = 'none';
-    iframe.src = ''; video.src = '';
-
-    if (url.toLowerCase().endsWith('.m3u8')) {
-      video.style.display = 'block';
-      if (Hls.isSupported()) {
-        hls = new Hls();
-        hls.loadSource(url);
-        hls.attachMedia(video);
-      } else if (video.canPlayType('application/vnd.apple.mpegurl')) {
-        video.src = url;
-      }
-    } else {
-      iframe.src = url;
-      iframe.style.display = 'block';
-    }
-
-    container.querySelectorAll('.stream-buttons button').forEach(b => b.classList.remove('active'));
-    btn.classList.add('active');
-  }
-
-  function showTab(event, tabId) {
-    document.querySelectorAll('.tab-button').forEach(btn => btn.classList.remove('active'));
-    event.target.classList.add('active');
-    document.querySelectorAll('.channel-grid').forEach(g => g.style.display = 'none');
-    document.getElementById(tabId).style.display = tabId === 'Matches' ? 'flex' : 'grid';
-  }
-</script>
+        <div id="streamButtonsContainer" class="stream-buttons-container">
+            </div>
+    </div>
+</div>
 
 <script>
-  const passwordScreen = document.getElementById('passwordScreen');
-  const passwordInput = document.getElementById('passwordInput');
-  const passwordButton = passwordScreen.querySelector('button');
-  const errorMessage = document.getElementById('errorMessage');
-  const userPassword = "ptv123";
-  if (sessionStorage.getItem('authenticated') === 'true') {
-    passwordScreen.style.display = 'none'; document.body.style.overflow = ''; }
-  else { document.body.style.overflow = 'hidden'; }
-  passwordButton.addEventListener('click', verifyPassword);
-  passwordInput.addEventListener('keydown', e => e.key === 'Enter' && verifyPassword());
-  function verifyPassword() {
-    if (passwordInput.value === userPassword) {
-      sessionStorage.setItem('authenticated','true');
-      passwordScreen.style.display = 'none'; document.body.style.overflow='';
-    } else {
-      errorMessage.style.display='block';
-      passwordInput.classList.add('shake'); passwordInput.value='';
-      setTimeout(() => passwordInput.classList.remove('shake'), 500);
+    // --- Configuration ---
+    const CONFIG = {
+        password: "ptv123", // The password
+        channelsUrl: "channels.json",
+        matchesUrl: "matches.json",
+        placeholderImage: 'data:image/svg+xml;charset=UTF-8,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="9" viewBox="0 0 16 9"><rect width="16" height="9" fill="%23000"/></svg>' // Simple black placeholder
+    };
+
+    // --- DOM Elements ---
+    const passwordScreen = document.getElementById('passwordScreen');
+    const passwordInput = document.getElementById('passwordInput');
+    const passwordButton = document.getElementById('passwordButton');
+    const passwordErrorMessage = document.getElementById('errorMessage');
+    const tabsContainer = document.querySelector('.tabs');
+    const channelGrids = document.querySelectorAll('.channel-grid');
+    const lastUpdatedEl = document.getElementById('lastUpdated');
+    const playerOverlay = document.getElementById('playerOverlay');
+    const playerContainer = document.querySelector('.player-container');
+    const playerContent = document.getElementById('playerContent');
+    const playerIframe = playerContent.querySelector('iframe');
+    const playerVideo = playerContent.querySelector('video');
+    const streamButtonsContainer = document.getElementById('streamButtonsContainer');
+    const closePlayerBtn = document.getElementById('closePlayerBtn');
+    const loadingMessage = document.getElementById('loadingMessage');
+    const fetchErrorMessage = document.getElementById('fetchErrorMessage');
+
+    // --- State ---
+    let hlsInstance = null; // Global HLS.js instance
+    let channelsData = {}; // To store fetched channels { PT: [], UK: [], ES: [] }
+    let matchesData = []; // To store fetched matches
+
+    // --- Initialization ---
+    document.addEventListener('DOMContentLoaded', () => {
+        setupPasswordProtection();
+        setupEventListeners();
+        updateTimestamp();
+        loadData();
+    });
+
+    // --- Password Protection ---
+    function setupPasswordProtection() {
+        if (sessionStorage.getItem('authenticated') === 'true') {
+            hidePasswordScreen();
+        } else {
+            document.body.style.overflow = 'hidden'; // Prevent scrolling behind overlay
+            passwordScreen.style.display = 'flex';
+            passwordInput.focus(); // Focus input on load
+        }
     }
-  }
+
+    function verifyPassword() {
+        if (passwordInput.value === CONFIG.password) {
+            sessionStorage.setItem('authenticated', 'true');
+            hidePasswordScreen();
+        } else {
+            passwordErrorMessage.style.display = 'block';
+            passwordInput.classList.add('shake');
+            passwordInput.value = '';
+            passwordInput.focus();
+            // Remove shake animation after it finishes
+            setTimeout(() => passwordInput.classList.remove('shake'), 500);
+        }
+    }
+
+    function hidePasswordScreen() {
+        passwordScreen.style.display = 'none';
+        document.body.style.overflow = ''; // Restore scrolling
+    }
+
+    // --- Event Listeners ---
+    function setupEventListeners() {
+        // Password
+        passwordButton.addEventListener('click', verifyPassword);
+        passwordInput.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter') {
+                verifyPassword();
+            }
+             passwordErrorMessage.style.display = 'none'; // Hide error on input
+        });
+
+        // Tabs
+        tabsContainer.addEventListener('click', (event) => {
+            if (event.target.classList.contains('tab-button')) {
+                showTab(event.target.dataset.tab);
+            }
+        });
+
+        // Player Overlay Close
+        closePlayerBtn.addEventListener('click', closePlayer);
+        playerOverlay.addEventListener('click', (event) => {
+            // Close if clicking outside the player container
+            if (event.target === playerOverlay) {
+                closePlayer();
+            }
+        });
+
+        // Close player with Escape key
+        document.addEventListener('keydown', (event) => {
+            if (event.key === 'Escape' && playerOverlay.classList.contains('visible')) {
+                closePlayer();
+            }
+        });
+    }
+
+    // --- Data Fetching & Rendering ---
+    async function loadData() {
+        loadingMessage.style.display = 'block';
+        fetchErrorMessage.style.display = 'none';
+        try {
+            const [channelsRes, matchesRes] = await Promise.all([
+                fetch(CONFIG.channelsUrl),
+                fetch(CONFIG.matchesUrl)
+            ]);
+
+            if (!channelsRes.ok || !matchesRes.ok) {
+                throw new Error(`Failed to load data (Channels: ${channelsRes.status}, Matches: ${matchesRes.status})`);
+            }
+
+            channelsData = await channelsRes.json();
+            matchesData = await matchesRes.json();
+
+            renderAllChannels();
+            loadingMessage.style.display = 'none';
+
+        } catch (error) {
+            console.error("Failed to load channel or match data:", error);
+            loadingMessage.style.display = 'none';
+            fetchErrorMessage.textContent = `Error loading data: ${error.message}. Please try refreshing.`;
+            fetchErrorMessage.style.display = 'block';
+        }
+    }
+
+    function renderAllChannels() {
+        renderChannels('PT', channelsData.PT || []);
+        renderChannels('UK', channelsData.UK || []);
+        renderChannels('ES', channelsData.ES || []);
+        renderMatchChannels(matchesData || []);
+        // Add click listeners after rendering
+        addChannelBoxEventListeners();
+    }
+
+    function renderChannels(tabId, channels) {
+        const grid = document.getElementById(tabId);
+        if (!grid) return;
+        grid.innerHTML = ''; // Clear previous content
+        if (!channels || channels.length === 0) {
+            grid.innerHTML = '<p class="loading-message">No channels available for this category.</p>';
+            return;
+        }
+        channels.forEach((channel, index) => {
+            const box = createChannelBoxElement(channel, tabId, index);
+            grid.appendChild(box);
+        });
+    }
+
+    function renderMatchChannels(matches) {
+        const grid = document.getElementById('Matches');
+        if (!grid) return;
+        grid.innerHTML = ''; // Clear previous content
+         if (!matches || matches.length === 0) {
+            grid.innerHTML = '<p class="loading-message">No matches available currently.</p>';
+            return;
+        }
+        matches.forEach((match, index) => {
+            const box = createMatchBoxElement(match, index);
+            grid.appendChild(box);
+        });
+    }
+
+    function createChannelBoxElement(channel, tabId, index) {
+        const { name, srcs = [] } = channel;
+        const box = document.createElement('div');
+        box.className = 'channel-box';
+        box.dataset.channelName = name;
+        box.dataset.sources = JSON.stringify(srcs); // Store sources data
+
+        box.innerHTML = `
+            <div class="channel-header">
+                <h3>${name}</h3>
+            </div>
+        `;
+        return box;
+    }
+
+     function createMatchBoxElement(match, index) {
+        const { team1, team2, logo1 = '', logo2 = '', time = '', pt = [], uk = [], es = [] } = match;
+        const box = document.createElement('div');
+        box.className = 'channel-box';
+        // Store all sources together for simplicity in the handler
+        const allSources = { pt, uk, es };
+        box.dataset.channelName = `${team1} vs ${team2}`;
+        box.dataset.sources = JSON.stringify(allSources); // Store sources data as an object
+
+        box.innerHTML = `
+            <div class="channel-header">
+                ${logo1 ? `<img src="${logo1}" alt="${team1} logo">` : ''}
+                <h3>${team1} vs ${team2}</h3>
+                 ${logo2 ? `<img src="${logo2}" alt="${team2} logo">` : ''}
+            </div>
+            ${time ? `<p class="match-time">${time}</p>` : ''}
+        `;
+        return box;
+    }
+
+    function addChannelBoxEventListeners() {
+         document.querySelectorAll('.channel-box').forEach(box => {
+            box.addEventListener('click', () => {
+                const sourcesData = box.dataset.sources;
+                const channelName = box.dataset.channelName;
+                if (sourcesData) {
+                    try {
+                        const sources = JSON.parse(sourcesData);
+                        openPlayer(channelName, sources);
+                    } catch (e) {
+                        console.error("Failed to parse sources data:", e);
+                        alert("Could not load streams for this channel.");
+                    }
+                } else {
+                     alert("No stream sources found for this channel.");
+                }
+            });
+        });
+    }
+
+
+    // --- Tab Management ---
+    function showTab(tabId) {
+        // Update button active states
+        tabsContainer.querySelectorAll('.tab-button').forEach(btn => {
+            btn.classList.toggle('active', btn.dataset.tab === tabId);
+        });
+        // Show/hide grids
+        channelGrids.forEach(grid => {
+            grid.classList.toggle('active', grid.id === tabId);
+        });
+    }
+
+    // --- Player Overlay Management ---
+    function openPlayer(channelName, sources) {
+        // Populate stream buttons
+        streamButtonsContainer.innerHTML = ''; // Clear existing buttons
+
+        let firstUrl = null; // To auto-select the first stream
+
+        // Check if sources is an array (regular channels) or object (matches)
+        if (Array.isArray(sources)) {
+            // Regular channel sources
+            if (sources.length === 0) {
+                 streamButtonsContainer.innerHTML = '<p>No streams available.</p>';
+            } else {
+                 sources.forEach((src, idx) => {
+                    const url = typeof src === 'object' ? src.url : src; // Handle potential object format later
+                    const label = typeof src === 'object' ? src.label : `Stream ${idx + 1}`;
+                    if (!firstUrl) firstUrl = url;
+                    const button = createStreamButton(label, url);
+                    streamButtonsContainer.appendChild(button);
+                });
+            }
+        } else {
+            // Match sources (object with pt, uk, es arrays)
+            let streamCount = 0;
+            Object.entries(sources).forEach(([lang, langSources]) => {
+                if (langSources && langSources.length > 0) {
+                    const langDiv = document.createElement('div');
+                    const strong = document.createElement('strong');
+                    strong.textContent = `${lang.toUpperCase()}:`;
+                    langDiv.appendChild(strong);
+                    langSources.forEach((src, idx) => {
+                         const url = typeof src === 'object' ? src.url : src;
+                         const label = typeof src === 'object' ? src.label : `${idx + 1}`;
+                         if (!firstUrl) firstUrl = url;
+                         const button = createStreamButton(label, url);
+                         langDiv.appendChild(button);
+                         streamCount++;
+                    });
+                    streamButtonsContainer.appendChild(langDiv);
+                }
+            });
+             if (streamCount === 0) {
+                 streamButtonsContainer.innerHTML = '<p>No streams available for this match.</p>';
+            }
+        }
+
+        // Show the overlay
+        playerOverlay.classList.add('visible');
+        document.body.style.overflow = 'hidden'; // Prevent background scrolling
+
+        // Load the first stream if available
+        if (firstUrl) {
+            const firstButton = streamButtonsContainer.querySelector('.stream-button');
+            if (firstButton) {
+                changeStream(firstButton, firstUrl);
+            }
+        } else {
+            // No streams, clear player
+             clearPlayer();
+        }
+    }
+
+    function createStreamButton(label, url) {
+        const button = document.createElement('button');
+        button.className = 'stream-button';
+        button.textContent = label;
+        button.onclick = (event) => {
+            event.stopPropagation(); // Prevent overlay click
+            changeStream(button, url);
+        };
+        return button;
+    }
+
+    function closePlayer() {
+        playerOverlay.classList.remove('visible');
+        document.body.style.overflow = ''; // Restore scrolling
+        clearPlayer(); // Stop video/iframe loading
+    }
+
+     function clearPlayer() {
+        // Stop HLS playback
+        if (hlsInstance) {
+            hlsInstance.destroy();
+            hlsInstance = null;
+        }
+        // Clear iframe src
+        playerIframe.src = 'about:blank'; // More reliable than empty string
+        playerIframe.classList.remove('active');
+        // Clear video src and stop
+        playerVideo.pause();
+        playerVideo.removeAttribute('src'); // remove the source
+        playerVideo.load(); // Request loading empty source
+        playerVideo.classList.remove('active');
+        // Remove active class from buttons
+        streamButtonsContainer.querySelectorAll('.stream-button').forEach(b => b.classList.remove('active'));
+    }
+
+
+    // --- Stream Handling ---
+    function changeStream(clickedButton, url) {
+        console.log(`Attempting to load stream: ${url}`);
+        clearPlayer(); // Clear previous stream first
+
+        // Activate the clicked button
+        clickedButton.classList.add('active');
+
+        // Determine stream type and load
+        if (url && typeof url === 'string') {
+             if (url.toLowerCase().endsWith('.m3u8')) {
+                loadHlsStream(url);
+            } else {
+                loadIframeStream(url);
+            }
+        } else {
+            console.error("Invalid stream URL:", url);
+            alert("Invalid stream URL provided.");
+        }
+    }
+
+    function loadHlsStream(url) {
+        playerVideo.poster = CONFIG.placeholderImage; // Show placeholder while loading
+        playerVideo.classList.add('active');
+
+        if (Hls.isSupported()) {
+            console.log("HLS.js is supported. Initializing...");
+            hlsInstance = new Hls({
+                 // Optional HLS config here
+                 // Example: enableWorker: false // if you suspect worker issues
+            });
+
+            // --- HLS Error Handling ---
+            hlsInstance.on(Hls.Events.ERROR, function (event, data) {
+                console.error('HLS.js Error:', event, data);
+                 if (data.fatal) {
+                    switch(data.type) {
+                        case Hls.ErrorTypes.NETWORK_ERROR:
+                            console.error('Fatal network error encountered', data);
+                            alert(`Network error loading stream: ${data.details}. Please try another source.`);
+                            // Optionally try next source automatically
+                            hlsInstance.destroy(); // Clean up failed instance
+                            break;
+                        case Hls.ErrorTypes.MEDIA_ERROR:
+                            console.error('Fatal media error encountered', data);
+                             alert(`Media error loading stream: ${data.details}. Please try another source.`);
+                            hlsInstance.recoverMediaError(); // Attempt recovery
+                            break;
+                        default:
+                            // Unrecoverable error - destroy instance
+                             alert(`An unrecoverable error occurred: ${data.details}. Please try another source.`);
+                            hlsInstance.destroy();
+                            break;
+                    }
+                } else {
+                     console.warn('Non-fatal HLS.js error:', data.details);
+                }
+            });
+
+            hlsInstance.loadSource(url);
+            hlsInstance.attachMedia(playerVideo);
+            hlsInstance.on(Hls.Events.MANIFEST_PARSED, function() {
+                console.log("HLS Manifest parsed, attempting to play...");
+                playerVideo.play().catch(e => console.error("Video play failed:", e));
+            });
+             hlsInstance.on(Hls.Events.LEVEL_LOADED, function(event, data) {
+                 console.log(`HLS Level ${data.level} loaded.`);
+             });
+
+
+        } else if (playerVideo.canPlayType('application/vnd.apple.mpegurl')) {
+            // Native HLS support (e.g., Safari)
+            console.log("Using native HLS support.");
+            playerVideo.src = url;
+             playerVideo.play().catch(e => console.error("Video play failed:", e));
+        } else {
+            console.error("HLS is not supported by this browser.");
+            alert("HLS playback is not supported in your browser.");
+             playerVideo.classList.remove('active'); // Hide video element
+        }
+    }
+
+    function loadIframeStream(url) {
+         // NOTE: We cannot control the content *inside* the iframe if it has a fixed size.
+         // We can only make the iframe element itself responsive.
+        console.log("Loading iframe stream...");
+        playerIframe.src = url;
+        playerIframe.classList.add('active');
+        // Basic load check (doesn't guarantee content works)
+        playerIframe.onload = () => console.log("Iframe onload event fired.");
+        playerIframe.onerror = () => {
+             console.error("Iframe onerror event fired.");
+             alert("Failed to load the iframe source. It might be blocked or unavailable.");
+             playerIframe.classList.remove('active');
+        };
+    }
+
+    // --- Utility ---
+    function updateTimestamp() {
+        const now = new Date();
+        lastUpdatedEl.textContent = `Last updated: ${now.toLocaleDateString()} ${now.toLocaleTimeString()}`;
+    }
+
 </script>
 
-<p id="lastUpdated" style="text-align:center; color:#888; font-size:0.85em; margin-top:30px;"></p>
-<script>
-  const lastUpdatedEl = document.getElementById('lastUpdated');
-  const now = new Date();
-  lastUpdatedEl.textContent = `Last updated: ${now.toLocaleDateString()} ${now.toLocaleTimeString()}`;
-</script>
 </body>
 </html>
