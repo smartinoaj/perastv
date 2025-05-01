@@ -106,23 +106,34 @@
             border-color: var(--border-color-active);
         }
         .channel-header {
-            display: flex; align-items: center; justify-content: space-between;
+            display: flex; align-items: center;
+            /* Use justify-content: flex-start for regular channels to keep logo left */
+            justify-content: flex-start;
             gap: 10px; text-align: left; min-height: 35px; cursor: pointer;
         }
-        .channel-logo { /* Placeholder for channel logo */
+         /* Specific centering for match headers */
+        #Matches .channel-header {
+             justify-content: space-between;
+        }
+        .channel-logo, .match-logo { /* Combined styles for logos */
             height: 28px; width: 28px; object-fit: contain; flex-shrink: 0;
             background-color: var(--bg-tertiary); /* Placeholder color */
             border-radius: 4px;
-            margin-right: 8px; /* Space between logo and title */
-            display: inline-block; /* Or flex if needed */
+            display: inline-block;
             vertical-align: middle;
         }
+        .channel-logo { margin-right: 8px; } /* Only regular channels need right margin */
+
         .channel-header .logos { display: flex; align-items: center; gap: 8px; flex-shrink: 0; }
         .channel-header img { height: 28px; width: auto; object-fit: contain; }
         .channel-header h3 {
             font-size: 1em; font-weight: 600; margin: 0; flex-grow: 1;
-            word-break: break-word; text-align: center;
+            word-break: break-word;
+            /* Text align left for regular channels, center for matches */
+            text-align: left;
         }
+         #Matches .channel-header h3 { text-align: center; }
+
         .channel-info { /* Container for league/time */
             font-size: 0.75em; color: var(--text-secondary); text-align: center;
             margin-top: 8px; margin-bottom: 0; font-weight: 500; cursor: pointer;
@@ -245,7 +256,7 @@
             .tab-button { padding: 7px 15px; }
             .channel-box { padding: 12px; }
             .channel-header h3 { font-size: 1em; }
-            .channel-header img, .channel-logo { height: 26px; width: 26px; }
+            .channel-header img, .channel-logo, .match-logo { height: 26px; width: 26px; }
             .stream-buttons strong { display: block; margin-bottom: 5px; }
             .player-area { min-height: 200px; }
             #search-input { padding: 10px 15px; font-size: 0.95em; }
@@ -298,7 +309,6 @@
     };
 
     // --- DOM Elements ---
-    // Removed password screen elements
     const searchInput = document.getElementById('search-input');
     const tabsContainer = document.querySelector('.tabs');
     const channelGrids = document.querySelectorAll('.channel-grid');
@@ -315,20 +325,13 @@
 
     // --- Initialization ---
     document.addEventListener('DOMContentLoaded', () => {
-        // Removed setupPasswordProtection();
         setupEventListeners();
         updateTimestamp();
         loadData();
-        // Restore last tab after data load (to ensure grid exists)
     });
-
-    // --- Password Protection Removed ---
-    // Removed setupPasswordProtection, verifyPassword, hidePasswordScreen functions
 
     // --- Event Listeners ---
     function setupEventListeners() {
-        // Removed password listeners
-
         // Tabs
         tabsContainer.addEventListener('click', (event) => {
             if (event.target.classList.contains('tab-button')) {
@@ -388,13 +391,12 @@
     }
 
     // --- Rendering Functions ---
-    // renderAllChannels, renderChannels, renderMatchChannels (remain the same)
     function renderAllChannels() {
         renderChannels('PT', channelsData.PT || []);
         renderChannels('UK', channelsData.UK || []);
         renderChannels('ES', channelsData.ES || []);
         renderMatchChannels(matchesData || []);
-        addChannelBoxEventListeners(); // Add listeners *after* elements are in the DOM
+        addChannelBoxEventListeners();
     }
     function renderChannels(tabId, channels) {
         const grid = document.getElementById(tabId);
@@ -426,18 +428,18 @@
     }
 
     // --- Element Creation ---
-    // createChannelBoxElement, createMatchBoxElement (remain the same)
-     function createChannelBoxElement(channel, uniqueId) {
-        const { name, srcs = [], logo = null } = channel; // Expect optional logo
+    function createChannelBoxElement(channel, uniqueId) {
+        // *** MODIFIED HERE ***
+        const { name, srcs = [], logo = null } = channel; // Expect optional logo property
         const box = document.createElement('div');
         box.className = 'channel-box';
         box.dataset.channelName = name;
         box.dataset.sources = JSON.stringify(srcs);
-        box.id = uniqueId; // ID for ARIA
+        box.id = uniqueId;
 
         box.innerHTML = `
             <div class="channel-header" id="${uniqueId}-header" aria-expanded="false" aria-controls="${uniqueId}-player-container">
-                ${logo ? `<img src="${logo}" alt="${name} logo" class="channel-logo">` : '<span class="channel-logo"></span>' /* Placeholder */}
+                ${logo ? `<img src="${logo}" alt="" class="channel-logo">` : '<span class="channel-logo"></span>'} {/* Display logo or placeholder */}
                 <h3>${name}</h3>
             </div>
             <div class="iframe-container" id="${uniqueId}-player-container" role="region" aria-labelledby="${uniqueId}-header">
@@ -447,31 +449,31 @@
                     <iframe allow="autoplay; fullscreen" allowfullscreen title="Stream Player"></iframe>
                     <video controls autoplay muted playsinline title="Stream Player"></video>
                 </div>
-                <div class="stream-buttons">
-                    </div>
+                <div class="stream-buttons"></div>
             </div>
         `;
         return box;
     }
+
      function createMatchBoxElement(match, uniqueId) {
-        const { team1, team2, logo1 = '', logo2 = '', time = '', league = '', pt = [], uk = [], es = [] } = match; // Expect optional league
+        const { team1, team2, logo1 = '', logo2 = '', time = '', league = '', pt = [], uk = [], es = [] } = match;
         const box = document.createElement('div');
         box.className = 'channel-box';
         const allSources = { pt, uk, es };
         const matchTitle = `${team1} vs ${team2}`;
         box.dataset.channelName = matchTitle;
-        box.dataset.searchTerms = `${team1} ${team2} ${league}`.toLowerCase(); // Add terms for search
+        box.dataset.searchTerms = `${team1} ${team2} ${league}`.toLowerCase();
         box.dataset.sources = JSON.stringify(allSources);
         box.id = uniqueId;
 
         box.innerHTML = `
             <div class="channel-header" id="${uniqueId}-header" aria-expanded="false" aria-controls="${uniqueId}-player-container">
                  <div class="logos">
-                    ${logo1 ? `<img src="${logo1}" alt="${team1} logo">` : '<span style="width:30px;"></span>'}
+                    ${logo1 ? `<img src="${logo1}" alt="" class="match-logo">` : '<span class="match-logo"></span>'}
                 </div>
                 <h3>${matchTitle}</h3>
                  <div class="logos">
-                    ${logo2 ? `<img src="${logo2}" alt="${team2} logo">` : '<span style="width:30px;"></span>'}
+                    ${logo2 ? `<img src="${logo2}" alt="" class="match-logo">` : '<span class="match-logo"></span>'}
                  </div>
             </div>
             <div class="channel-info">
@@ -486,10 +488,13 @@
                     <iframe allow="autoplay; fullscreen" allowfullscreen title="Stream Player"></iframe>
                     <video controls autoplay muted playsinline title="Stream Player"></video>
                 </div>
-                <div class="stream-buttons">
-                    </div>
+                <div class="stream-buttons"></div>
             </div>
         `;
+        // Add error handling for team logos
+        box.querySelectorAll('img.match-logo').forEach(img => {
+            img.onerror = () => { img.style.display = 'none'; img.nextElementSibling?.classList.remove('hidden'); }; // Hide broken image, show placeholder if needed
+        });
         return box;
     }
      function createStreamButtonWrapper(label, url, contextBox) {
@@ -499,7 +504,7 @@
         const button = document.createElement('button');
         button.className = 'stream-button';
         button.textContent = label;
-        button.dataset.streamUrl = url; // Store URL here
+        button.dataset.streamUrl = url;
         button.onclick = () => changeStream(button, url, contextBox);
 
         const reportButton = document.createElement('button');
@@ -522,10 +527,8 @@
 
 
     // --- Event Listener Setup for Channel Boxes ---
-    // addChannelBoxEventListeners (remains the same)
     function addChannelBoxEventListeners() {
          document.querySelectorAll('.channel-box').forEach(box => {
-             // Click listener for the non-player part of the box
             box.addEventListener('click', (event) => {
                 const isExpanded = box.classList.contains('expanded');
                 const isClickOnPlayerArea = event.target.closest('.iframe-container');
@@ -540,7 +543,6 @@
     }
 
     // --- Tab Management ---
-    // showTab (remains the same)
     function showTab(tabId) {
         tabsContainer.querySelectorAll('.tab-button').forEach(btn => {
             btn.classList.toggle('active', btn.dataset.tab === tabId);
@@ -557,12 +559,11 @@
     }
 
     // --- Search Filtering ---
-    // filterChannels (remains the same)
     function filterChannels(searchTerm) {
         const term = searchTerm.toLowerCase().trim();
         document.querySelectorAll('.channel-box').forEach(box => {
             const channelName = box.dataset.channelName?.toLowerCase() || '';
-            const searchTerms = box.dataset.searchTerms?.toLowerCase() || ''; // Includes teams/league for matches
+            const searchTerms = box.dataset.searchTerms?.toLowerCase() || '';
             const isVisible = channelName.includes(term) || searchTerms.includes(term);
             box.classList.toggle('hidden', !isVisible);
 
@@ -573,8 +574,7 @@
     }
 
     // --- Channel Box Expansion ---
-    // toggleExpansion, expandBox, collapseBox, populateAndLoadFirstStream (remain the same)
-     function toggleExpansion(boxToToggle) {
+    function toggleExpansion(boxToToggle) {
         const isExpanding = !boxToToggle.classList.contains('expanded');
         const header = boxToToggle.querySelector('.channel-header');
 
@@ -598,7 +598,8 @@
              box.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
              const firstButton = box.querySelector('.stream-button');
              if (firstButton) {
-                 firstButton.focus();
+                 // Delay focus slightly more to ensure it's ready
+                 setTimeout(() => firstButton.focus({ preventScroll: true }), 50);
              }
         }, 150);
     }
@@ -613,7 +614,8 @@
         const header = box.querySelector('.channel-header');
         if(header) {
             header.setAttribute('aria-expanded', 'false');
-            setTimeout(() => header.focus(), 0);
+            // Focus after slight delay
+            setTimeout(() => header.focus({ preventScroll: true }), 0);
         }
     }
     function populateAndLoadFirstStream(box) {
@@ -630,8 +632,9 @@
             if (Array.isArray(sources)) {
                 if (sources.length > 0) {
                     sources.forEach((src, idx) => {
-                        const url = typeof src === 'object' ? src.url : src;
-                        const label = typeof src === 'object' ? src.label : `Source ${idx + 1}`;
+                        // *** MODIFIED HERE: Check for label in source object ***
+                        const url = typeof src === 'object' && src.url ? src.url : src;
+                        const label = typeof src === 'object' && src.label ? src.label : `Source ${idx + 1}`;
                         if (!firstUrl) firstUrl = url;
                         const buttonWrapper = createStreamButtonWrapper(label, url, box);
                         if (!firstButtonElement) firstButtonElement = buttonWrapper.querySelector('.stream-button');
@@ -647,8 +650,9 @@
                         strong.textContent = `${lang.toUpperCase()}:`;
                         langDiv.appendChild(strong);
                         langSources.forEach((src, idx) => {
-                            const url = typeof src === 'object' ? src.url : src;
-                            const label = typeof src === 'object' ? src.label : `${idx + 1}`;
+                            // *** MODIFIED HERE: Check for label in source object ***
+                            const url = typeof src === 'object' && src.url ? src.url : src;
+                            const label = typeof src === 'object' && src.label ? src.label : `${idx + 1}`;
                             if (!firstUrl) firstUrl = url;
                             const buttonWrapper = createStreamButtonWrapper(label, url, box);
                              if (!firstButtonElement) firstButtonElement = buttonWrapper.querySelector('.stream-button');
@@ -675,10 +679,8 @@
          container.innerHTML = '<p style="color: var(--text-secondary); font-size: 0.9em;">No streams available.</p>';
     }
 
-
     // --- Stream Handling ---
-    // changeStream, clearPlayerInBox, showPlayerMessage, findNextStreamButton, loadHlsStream, loadIframeStream (remain the same)
-     function changeStream(clickedButton, url, contextBox) {
+    function changeStream(clickedButton, url, contextBox) {
         console.log(`Attempting to load stream in box: ${url}`);
         const playerArea = contextBox.querySelector('.player-area');
         const loader = playerArea.querySelector('.loader');
@@ -854,12 +856,10 @@
 
 
     // --- Utility ---
-    // updateTimestamp (remains the same)
-     function updateTimestamp() {
+    function updateTimestamp() {
         const now = new Date();
         lastUpdatedEl.textContent = `Updated: ${now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}`;
     }
-    // Debounce function (remains the same)
     function debounce(func, wait) {
         let timeout;
         return function executedFunction(...args) {
