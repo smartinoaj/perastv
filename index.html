@@ -100,14 +100,23 @@
             grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
             gap: 20px; padding: 0 10px 50px; display: none;
         }
-        @media (min-width: 768px) { .channel-grid:not(#Matches) { grid-template-columns: repeat(2, 1fr); } }
-        @media (min-width: 1024px) { .channel-grid:not(#Matches) { grid-template-columns: repeat(3, 1fr); } }
-        @media (min-width: 1366px) { .channel-grid:not(#Matches) { grid-template-columns: repeat(4, 1fr); } }
-        .channel-grid.active { display: grid; }
+        /* --- Grid Column Change (Corrected to 3 Max) --- */
+        @media (min-width: 768px) {
+            .channel-grid:not(#Matches) {
+                 grid-template-columns: repeat(2, 1fr); /* 2 columns medium */
+            }
+        }
+        @media (min-width: 1024px) {
+             .channel-grid:not(#Matches) {
+                 grid-template-columns: repeat(3, 1fr); /* 3 columns large */
+            }
+        }
+        /* Removed the 4-column rule */
+        /* --- End Grid Column Change --- */
 
-        /* --- Matches Grid Specific Width --- */
+        .channel-grid.active { display: grid; }
         #Matches.channel-grid {
-             grid-template-columns: 1fr; /* Single column */
+             grid-template-columns: 1fr; /* Single column for Matches */
              /* Removed max-width and margin:auto from the grid itself */
         }
         #Matches.channel-grid.active { display: grid; }
@@ -119,7 +128,7 @@
             cursor: pointer; transition: all 0.3s ease;
             border: 1px solid var(--bg-secondary); position: relative; overflow: hidden;
         }
-        /* --- Narrower Initial Match Box (Re-added) --- */
+        /* --- Narrower Initial Match Box (Keep this) --- */
         #Matches .channel-box:not(.expanded) {
             max-width: 950px; /* Adjust as needed */
             margin-left: auto;
@@ -162,9 +171,8 @@
             text-align: center;
             flex-grow: 0;
             flex-shrink: 1;
-            /* Add margin to space out from logos */
-            margin-left: 25px; /* Increased margin */
-            margin-right: 25px; /* Increased margin */
+            margin-left: 25px;
+            margin-right: 25px;
         }
         /* Center non-match titles */
          .channel-grid:not(#Matches) .channel-header h3 {
@@ -277,8 +285,8 @@
                  max-width: 90%; /* Use percentage for better fit */
             }
         }
-        @media (max-width: 767px) { /* 1 column */
-             .channel-grid { grid-template-columns: 1fr; } /* Apply to all */
+        @media (max-width: 767px) { /* 1 column for ALL grids */
+             .channel-grid { grid-template-columns: 1fr; }
              .channel-box { padding: 15px; }
              .stream-button { padding: 6px 15px; font-size: 0.8em; }
              header img { max-width: 160px; }
