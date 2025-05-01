@@ -105,9 +105,9 @@
         @media (min-width: 1366px) { .channel-grid:not(#Matches) { grid-template-columns: repeat(4, 1fr); } }
         .channel-grid.active { display: grid; }
         #Matches.channel-grid {
-             grid-template-columns: 1fr; /* Still single column */
-             max-width: none; /* Remove max-width */
-             margin: 0; /* Remove auto margin */
+             grid-template-columns: 1fr;
+             max-width: none;
+             margin: 0;
         }
         #Matches.channel-grid.active { display: grid; }
 
@@ -118,57 +118,56 @@
             cursor: pointer; transition: all 0.3s ease;
             border: 1px solid var(--bg-secondary); position: relative; overflow: hidden;
         }
-        .channel-box.hidden { display: none; } /* For search filtering */
+        .channel-box.hidden { display: none; }
         .channel-box:not(.expanded):hover {
             transform: translateY(-4px); box-shadow: 0 6px 18px rgba(0, 0, 0, 0.4);
             border-color: var(--border-color-active);
         }
         .channel-header {
             display: flex; align-items: center;
-            justify-content: center; /* Center channel name by default */
+            justify-content: center;
             gap: 10px; text-align: center; min-height: 35px; cursor: pointer;
         }
-         /* --- Matches Header Layout V2 --- */
-        #Matches .channel-header {
+         #Matches .channel-header {
              justify-content: space-evenly; /* Distribute space evenly */
-             gap: 15px; /* Gap between items */
-             text-align: center; /* Keep text centered */
+             gap: 15px;
+             text-align: center;
         }
-        .match-logo { /* Styles only for match logos */
-            height: 40px; width: 40px; /* Increased size */
+        .match-logo {
+            height: 40px; width: 40px;
             object-fit: contain; flex-shrink: 0;
-            background-color: var(--bg-tertiary);
+            /* Removed background-color */
             border-radius: 4px;
             display: inline-block;
             vertical-align: middle;
         }
 
-        .channel-header .logos { /* Container for match logos - no longer needed for positioning */
+        .channel-header .logos {
             display: flex;
             align-items: center;
             gap: 0; /* Remove gap here, handled by justify-content */
             flex-shrink: 0;
         }
-        .channel-header img.match-logo { /* Target only match logos */
-             height: 40px; /* Increased size */
+        .channel-header img.match-logo {
+             height: 40px;
              width: auto;
              object-fit: contain;
         }
         .channel-header h3 {
-            font-size: 1.1em; /* Title size */
+            font-size: 1.1em;
             font-weight: 600; margin: 0;
             word-break: break-word;
-            text-align: center; /* Center all titles */
-            flex-grow: 0; /* Don't allow title to push logos too far */
-            flex-shrink: 1; /* Allow title to shrink if needed */
+            text-align: center;
+            flex-grow: 0;
+            flex-shrink: 1;
         }
 
         .channel-info {
             font-size: 0.8em;
             color: var(--text-secondary);
             text-align: center; /* Center info text */
-            margin-top: 8px; /* Space below header */
-            margin-left: 0; /* Remove previous left margin */
+            margin-top: 8px;
+            margin-left: 0;
             margin-bottom: 0;
             font-weight: 500; cursor: pointer;
         }
@@ -267,9 +266,9 @@
              header img { max-width: 160px; }
              .tabs { gap: 10px; margin-bottom: 30px; }
              .tab-button { padding: 8px 20px; font-size: 0.85em; }
-             #Matches.channel-grid { max-width: 100%; } /* Ensure matches grid is full width */
-             #Matches .channel-header { gap: 10px; } /* Reduce gap on smaller screens */
-             .match-logo, #Matches .channel-header img.match-logo { height: 32px; width: 32px; } /* Slightly smaller logos on mobile */
+             #Matches.channel-grid { max-width: 100%; }
+             #Matches .channel-header { gap: 10px; }
+             .match-logo, #Matches .channel-header img.match-logo { height: 32px; width: 32px; }
              .channel-info { font-size: 0.75em;}
         }
         @media (max-width: 480px) { /* Further adjustments for very small screens */
@@ -319,7 +318,7 @@
 </footer>
 
 <script>
-    /* --- JavaScript --- */
+    /* --- JavaScript (No changes needed here for this fix) --- */
 
     // --- Configuration ---
     const CONFIG = {
@@ -483,7 +482,6 @@
         box.dataset.sources = JSON.stringify(allSources);
         box.id = uniqueId;
 
-        // *** Updated HTML structure for match header ***
         box.innerHTML = `
             <div class="channel-header" id="${uniqueId}-header" aria-expanded="false" aria-controls="${uniqueId}-player-container">
                  ${logo1 ? `<img src="${logo1}" alt="" class="match-logo">` : '<span class="match-logo"></span>'}
