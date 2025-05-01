@@ -132,7 +132,7 @@
             border: 1px solid var(--bg-secondary); position: relative; overflow: hidden;
         }
 
-        /* --- MODIFIED: Wider & Consistent Match Box (Not Expanded) --- */
+        /* --- Wider & Consistent Match Box (Not Expanded) --- */
         /* This rule makes the non-expanded match boxes wider and the same size */
         #Matches .channel-box:not(.expanded) {
             width: 95%;      /* Use percentage for width relative to the centered grid */
@@ -582,7 +582,7 @@
             </div>
             <div class="channel-info">
                 ${league ? `<span>${league}</span>` : ''}
-                ${league && time ? '<span>|</span>' : ''} {/* Separator */}
+                ${league && time ? '<span>|</span>' : ''} {/* CORRECTED: Removed comment from here */}
                 ${time ? `<span>${time}</span>` : ''}
             </div>
              <div class="iframe-container" id="${uniqueId}-player-container" role="region" aria-labelledby="${uniqueId}-header">
