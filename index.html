@@ -574,6 +574,7 @@
         box.id = uniqueId; // Assign unique ID
 
         // Inner HTML structure for the match box
+        // *** THE COMMENT HAS BEEN REMOVED FROM THE LINE BELOW ***
         box.innerHTML = `
             <div class="channel-header" id="${uniqueId}-header" aria-expanded="false" aria-controls="${uniqueId}-player-container">
                  ${logo1 ? `<img src="${logo1}" alt="${team1} logo" class="match-logo">` : '<span class="match-logo"></span>'}
@@ -582,7 +583,7 @@
             </div>
             <div class="channel-info">
                 ${league ? `<span>${league}</span>` : ''}
-                ${league && time ? '<span>|</span>' : ''} {/* CORRECTED: Removed comment from here */}
+                ${league && time ? '<span>|</span>' : ''}
                 ${time ? `<span>${time}</span>` : ''}
             </div>
              <div class="iframe-container" id="${uniqueId}-player-container" role="region" aria-labelledby="${uniqueId}-header">
