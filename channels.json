@@ -1,7 +1,298 @@
 {
-  "name": "Sport TV 1",
+  "PT": [
+    {
+      "name": "Sport TV 1",
+      "srcs": [
+        "https://playmatch.live/player/PT/406",
+        "https://welivesport.shop/esta/sporttv1pt.php",
+        "https://thedaddy.to/embed/stream-74.php",
+        "https://xextreamplay.xyz/premiumtv/daddylivehd.php?id=49",
+        "https://sportsonline.si/channels/pt/sporttv1.php",
+        "https://popcdn.day/go.php?stream=SPT1",
+        "https://time4tv.top/embed/channels/stream49/link1.php"
+      ],
+      "m3u8": [
+        "https://c58bx6vat7sxiexj.freshsoup.shop/v3/director/VE1ZDhiZTEzYzVmZDEzLTZiZTgtYzFhNC03NjBkLTk1MzliNzc5/master.m3u8?md5=0OInlIelShJwUqlO7XRZjA&expires=1746110732"
+      ]
+    },
+    {
+      "name": "Sport TV 2",
+      "srcs": [
+        "https://playmatch.live/player/PT/407",
+        "https://thedaddy.to/embed/stream-74.php",
+        "https://time4tv.top/embed/channels/stream74/link1.php",
+        "https://sportzonline.ps/channels/pt/sporttv2.php",
+        "https://welivesport.shop/esta/sporttv2pt.php"
+      ]
+    },
+    {
+      "name": "Sport TV 3",
+      "srcs": [
+        "https://playmatch.live/player/PT/408",
+        "https://thedaddy.to/embed/stream-454.php",
+        "https://time4tv.top/embed/channels/stream454/link1.php",
+        "https://streamtp4.com/global1.php?stream=sportv_3pt",
+        "https://sportzonline.ps/channels/pt/sporttv3.php"
+      ]
+    },
+    {
+      "name": "Sport TV 4",
+      "srcs": [
+        "https://playmatch.live/player/PT/1138",
+        "https://thedaddy.to/embed/stream-289.php",
+        "https://streamtp4.com/global1.php?stream=sportv_4pt"
+      ]
+    },
+    {
+      "name": "Sport TV 5",
+      "srcs": [
+        "https://playmatch.live/player/PT/409",
+        "https://thedaddy.to/embed/stream-290.php",
+        "https://time4tv.top/embed/channels/stream290/link1.php",
+        "https://dlhd.sx/embed/stream-290.php",
+        "https://sportzonline.ps/channels/pt/sporttv5.php",
+        "https://welivesport.shop/esta/sporttv5pt.php"
+      ]
+    },
+    {
+      "name": "Sport TV 6",
+      "srcs": [
+        "https://playmatch.live/player/PT/3294",
+        "https://thedaddy.to/embed/stream-291.php",
+        "https://streamtp4.com/global1.php?stream=sportv_6pt"
+      ]
+    },
+    {
+      "name": "Sport TV 7",
+      "srcs": [
+        "https://playmatch.live/player/PT/6381"
+      ]
+    },
+    {
+      "name": "DAZN 1",
+      "srcs": [
+        "https://playmatch.live/player/PT/6078",
+        "https://thedaddy.to/embed/stream-455.php",
+        "https://streamtp4.com/global1.php?stream=eleven1_pt",
+        "https://sportzonline.ps/channels/pt/eleven1.php"
+      ]
+    },
+    {
+      "name": "DAZN 2",
+      "srcs": [
+        "https://playmatch.live/player/PT/6079",
+        "https://streamtp4.com/global1.php?stream=eleven2_pt",
+        "https://thedaddy.to/embed/stream-456.php"
+      ]
+    },
+    {
+      "name": "DAZN 3",
+      "srcs": [
+        "https://playmatch.live/player/PT/6080",
+        "https://welivesport.shop/esta/eleven3pt.php",
+        "https://thedaddy.to/embed/stream-457.php"
+      ]
+    },
+    {
+      "name": "DAZN 4",
+      "srcs": [
+        "https://playmatch.live/player/PT/6081",
+        "https://welivesport.shop/esta/eleven4pt.php",
+        "https://thedaddy.to/embed/stream-458.php"
+      ]
+    },
+    {
+      "name": "DAZN 5",
+      "srcs": [
+        "https://playmatch.live/player/PT/6082",
+        "https://thedaddy.to/embed/stream-459.php"
+      ]
+    },
+    {
+      "name": "DAZN 6",
+      "srcs": [
+        "https://playmatch.live/player/PT/6088"
+        ]
+    },
+    {
+      "name": "Benfica TV",
+      "srcs": [
+        "https://playmatch.live/player/PT/403",
+        "https://thedaddy.to/embed/stream-380.php"
+        ]
+    },
+    {
+      "name": "Canal 11",
+      "srcs": [
+        "https://playmatch.live/player/PT/2717",
+        "https://dzeko11.pro/source/64"
+      ]
+    }
+  ],
+"UK": [
+{
+  "name": "Sky Sports Main Event",
   "srcs": [
-    { "type": "m3u8", "url": "https://example.com/live/stream1.m3u8" },
-    { "type": "iframe", "url": "https://embedsite.com/stream123.php" }
+        "https://playmatch.live/player/GB/1056",
+        "https://xextreamplay.xyz/premiumtv/daddylivehd.php?id=38",
+        "https://thedaddy.to/embed/stream-38.php"
+      ]
+    },
+    {
+      "name": "Sky Sports Premier League",
+  "srcs": [
+        "https://playmatch.live/player/GB/1057",
+        "https://xextreamplay.xyz/premiumtv/daddylivehd.php?id=130",
+        "https://thedaddy.to/embed/stream-130.php"
+      ]
+    },
+    {
+      "name": "TNT Sports 1",
+  "srcs": [
+        "https://playmatch.live/player/GB/5430",
+        "https://streamtp4.com/global1.php?stream=tnt_1_gb",
+        "https://thedaddy.to/embed/stream-31.php",
+        "https://soccermlbstream.top/extra/1.php",
+        "https://daddylivehd1.click/embed/stream-31.php"
+      ]
+    },
+    {
+      "name": "TNT Sports 2",
+  "srcs": [
+        "https://playmatch.live/player/GB/5439",
+        "https://streamtp4.com/global1.php?stream=tnt_2_gb",
+        "https://thedaddy.to/embed/stream-32.php"
+      ]
+    },
+    {
+      "name": "TNT Sports 3",
+  "srcs": [
+        "https://playmatch.live/player/GB/1057",
+        "https://xextreamplay.xyz/premiumtv/daddylivehd.php?id=130",
+        "https://thedaddy.to/embed/stream-130.php"
+      ]
+    },
+    {
+      "name": "TNT Sports 4",
+  "srcs": [
+        "https://playmatch.live/player/GB/5497",
+        "https://streamtp4.com/global1.php?stream=tnt_4_gb",
+        "https://thedaddy.to/embed/stream-34.php"
+      ]
+    },
+    {
+      "name": "Premier Sports 1",
+  "srcs": [
+        "https://thedaddy.to/embed/stream-771.php",
+        "https://xextreamplay.xyz/premiumtv/daddylivehd.php?id=771"
+      ]
+    },
+    {
+      "name": "Premier Sports 2",
+  "srcs": [
+        "https://caq21harderv991gpluralplay.xyz/premiumtv/daddylivehd.php?id=31"
   ]
 }
+],
+"ES": [
+{
+  "name": "DAZN 1 [ES]",
+  "srcs": [
+        "https://playmatch.live/player/ES/3247",
+        "https://streamtp4.com/global1.php?stream=dazn1",
+        "https://thedaddy.to/embed/stream-445.php"
+      ]
+    },
+    {
+      "name": "DAZN 2 [ES]",
+  "srcs": [
+        "https://playmatch.live/player/ES/3248",
+        "https://streamtp4.com/global1.php?stream=dazn2",
+        "https://thedaddy.to/embed/stream-446.php"
+      ]
+    },
+    {
+      "name": "DAZN F1",
+  "srcs": [
+        "https://playmatch.live/player/ES/340",
+        "https://xextreamplay.xyz/premiumtv/daddylivehd.php?id=537",
+        "https://thedaddy.to/embed/stream-537.php"
+      ]
+    },
+    {
+      "name": "LaLiga TV Hypermotion",
+  "srcs": [
+        "https://playmatch.live/player/ES/5496",
+        "https://streamtp4.com/global1.php?stream=laligahypermotion",
+        "https://thedaddy.to/embed/stream-539.php"
+      ]
+    },
+    {
+      "name": "LaLiga TV Hypermotion 2",
+  "srcs": [
+        "https://playmatch.live/player/ES/5506"
+      ]
+    },
+    {
+      "name": "LaLiga TV Hypermotion 3",
+  "srcs": [
+        "https://playmatch.live/player/ES/5643"
+      ]
+    },
+    {
+      "name": "M+ Desportes 1",
+  "srcs": [
+        "https://playmatch.live/player/ES/985",
+        "https://xextreamplay.xyz/premiumtv/daddylivehd.php?id=436",
+        "https://thedaddy.to/embed/stream-436.php"
+      ]
+    },
+    {
+      "name": "M+ Desportes 2",
+  "srcs": [
+        "https://playmatch.live/player/ES/986",
+        "https://xextreamplay.xyz/premiumtv/daddylivehd.php?id=438",
+        "https://thedaddy.to/embed/stream-438.php"
+      ]
+    },
+    {
+      "name": "M+ LaLiga TV",
+  "srcs": [
+        "https://playmatch.live/player/ES/5427",
+        "https://xextreamplay.xyz/premiumtv/daddylivehd.php?id=84",
+        "https://thedaddy.to/embed/stream-84.php"
+      ]
+    },
+    {
+      "name": "M+ Liga de Campeones",
+  "srcs": [
+        "https://playmatch.live/player/ES/1955",
+        "https://time4tv.top/embed/channels/stream435/link1.php",
+        "https://thedaddy.to/embed/stream-435.php",
+        "https://daddylivehd1.click/embed/stream-435.php"
+      ]
+    },
+    {
+      "name": "M+ Liga de Campeones 2",
+  "srcs": [
+        "https://playmatch.live/player/ES/1956"
+      ]
+    },
+    {
+      "name": "TVE La 1",
+  "srcs": [
+        "https://thedaddy.to/embed/stream-533.php",
+        "https://xextreamplay.xyz/premiumtv/daddylivehd.php?id=533"
+      ]
+    },
+    {
+      "name": "TVE La 2",
+  "srcs": [
+        "https://thedaddy.to/embed/stream-536.php",
+        "https://xextreamplay.xyz/premiumtv/daddylivehd.php?id=536"
+      ]
+    }
+  ],
+"Matches": []
+}
+
