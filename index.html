@@ -100,12 +100,26 @@
             grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
             gap: 20px; padding: 0 10px 50px; display: none;
         }
-        @media (min-width: 768px) { .channel-grid:not(#Matches) { grid-template-columns: repeat(2, 1fr); } }
-        @media (min-width: 1024px) { .channel-grid:not(#Matches) { grid-template-columns: repeat(3, 1fr); } }
-        @media (min-width: 1366px) { .channel-grid:not(#Matches) { grid-template-columns: repeat(4, 1fr); } }
+        /* --- Grid Column Change (Back to 3) --- */
+        @media (min-width: 768px) {
+            .channel-grid:not(#Matches) {
+                 grid-template-columns: repeat(2, 1fr); /* 2 columns medium */
+            }
+        }
+        @media (min-width: 1024px) {
+             .channel-grid:not(#Matches) {
+                 grid-template-columns: repeat(3, 1fr); /* 3 columns large */
+            }
+        }
+        /* Removed the 4-column rule */
+        /* --- End Grid Column Change --- */
+
         .channel-grid.active { display: grid; }
-        #Matches.channel-grid { grid-template-columns: 1fr; max-width: 950px; margin: 0 auto; }
+        #Matches.channel-grid { /* Matches always stay single column */
+             grid-template-columns: 1fr; max-width: 950px; margin: 0 auto;
+        }
         #Matches.channel-grid.active { display: grid; }
+
 
         /* --- Channel Box --- */
         .channel-box {
@@ -484,13 +498,13 @@
         return box;
     }
      function createStreamButtonWrapper(label, url, contextBox) {
-        // *** MODIFIED HERE: Removed wrapper and report button ***
+        // *** Reverted: Return only the button ***
         const button = document.createElement('button');
         button.className = 'stream-button';
         button.textContent = label;
         button.dataset.streamUrl = url;
         button.onclick = () => changeStream(button, url, contextBox);
-        return button; // Return only the stream button
+        return button;
     }
 
 
@@ -601,8 +615,7 @@
                         const url = typeof src === 'object' && src.url ? src.url : src;
                         const label = typeof src === 'object' && src.label ? src.label : `Source ${idx + 1}`;
                         if (!firstUrl) firstUrl = url;
-                        // *** MODIFIED HERE: Append button directly ***
-                        const button = createStreamButtonWrapper(label, url, box);
+                        const button = createStreamButtonWrapper(label, url, box); // Changed back to button
                         if (!firstButtonElement) firstButtonElement = button;
                         streamButtonsDiv.appendChild(button);
                     });
@@ -619,8 +632,7 @@
                             const url = typeof src === 'object' && src.url ? src.url : src;
                             const label = typeof src === 'object' && src.label ? src.label : `${idx + 1}`;
                             if (!firstUrl) firstUrl = url;
-                             // *** MODIFIED HERE: Append button directly ***
-                            const button = createStreamButtonWrapper(label, url, box);
+                            const button = createStreamButtonWrapper(label, url, box); // Changed back to button
                              if (!firstButtonElement) firstButtonElement = button;
                             langDiv.appendChild(button);
                             streamCount++;
