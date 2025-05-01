@@ -108,7 +108,7 @@
         /* --- Matches Grid Specific Width --- */
         #Matches.channel-grid {
              grid-template-columns: 1fr; /* Single column */
-             /* Removed max-width and margin:auto for initial state */
+             /* *** REMOVED max-width and margin:auto from the grid itself *** */
         }
         #Matches.channel-grid.active { display: grid; }
 
@@ -119,9 +119,9 @@
             cursor: pointer; transition: all 0.3s ease;
             border: 1px solid var(--bg-secondary); position: relative; overflow: hidden;
         }
-        /* --- Narrower Initial Match Box (Re-added) --- */
+        /* --- Narrower Initial Match Box (Keep this) --- */
         #Matches .channel-box:not(.expanded) {
-            max-width: 950px; /* Adjust as needed, slightly wider than before */
+            max-width: 950px; /* Adjust as needed */
             margin-left: auto;
             margin-right: auto;
         }
@@ -136,7 +136,7 @@
             justify-content: center; /* Center channel name by default */
             gap: 10px; text-align: center; min-height: 35px; cursor: pointer;
         }
-         /* --- Matches Header Layout V4 (Centered with margin) --- */
+         /* --- Matches Header Layout V4 --- */
         #Matches .channel-header {
              justify-content: center; /* Center items */
              gap: 0; /* Remove gap, use margins on h3 */
@@ -180,7 +180,7 @@
 
         /* --- Expanded Channel Box --- */
         .channel-box.expanded {
-            grid-column: 1 / -1; cursor: default;
+            grid-column: 1 / -1; cursor: default; /* Span full grid */
             background: var(--bg-tertiary); padding-bottom: 20px; z-index: 10;
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
             border: 2px solid var(--accent-color);
