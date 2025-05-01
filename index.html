@@ -20,24 +20,16 @@
             --text-secondary: #a0a0a0; /* Medium gray */
             --border-color: #3a3a3a; /* Gray for borders */
             --font-sans: 'Inter', sans-serif;
-            --overlay-bg: rgba(0, 0, 0, 0.9); /* Darker overlay */
         }
 
         /* Basic Reset & Body Styling */
-        *, *::before, *::after {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-        }
-
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+        html { scroll-behavior: smooth; }
         body {
-            background-color: var(--bg-primary);
-            color: var(--text-primary);
-            font-family: var(--font-sans);
-            line-height: 1.6;
+            background-color: var(--bg-primary); color: var(--text-primary);
+            font-family: var(--font-sans); line-height: 1.6;
             overscroll-behavior-y: contain;
-            -webkit-font-smoothing: antialiased; /* Smoother fonts */
-            -moz-osx-font-smoothing: grayscale;
+            -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale;
         }
 
         /* Password Screen */
@@ -51,20 +43,16 @@
             padding: 14px 18px; font-size: 1em; border-radius: 8px;
             border: 1px solid var(--border-color); background-color: var(--bg-secondary);
             color: var(--text-primary); margin: 10px 0; width: 100%;
-            max-width: 320px; text-align: center;
-            transition: border-color 0.2s ease;
+            max-width: 320px; text-align: center; transition: border-color 0.2s ease;
         }
-        #passwordInput:focus {
-            outline: none;
-            border-color: var(--accent-color);
-        }
+        #passwordInput:focus { outline: none; border-color: var(--accent-color); }
         #passwordScreen button {
             padding: 14px 35px; font-size: 1em; border: none;
             background-color: var(--accent-color); color: white; border-radius: 8px;
             cursor: pointer; font-weight: 600; transition: background-color 0.2s ease;
             margin-top: 10px;
         }
-        #passwordScreen button:hover { background-color: #b80710; /* Darker red */ }
+        #passwordScreen button:hover { background-color: #b80710; }
         #errorMessage { color: #f87171; margin-top: 15px; display: none; font-weight: 500; }
         @keyframes shake {
             0%, 100% { transform: translateX(0); } 25% { transform: translateX(-6px); }
@@ -73,158 +61,118 @@
         .shake { animation: shake 0.4s ease-in-out; }
 
         /* Main Container & Header */
-        .container { max-width: 1500px; margin: 0 auto; padding: 0 20px; } /* Wider container */
+        .container { max-width: 1500px; margin: 0 auto; padding: 0 20px; }
         header { text-align: center; padding: 30px 0 20px; }
-        header img { max-width: 200px; height: auto; } /* Slightly smaller logo */
+        header img { max-width: 200px; height: auto; }
 
         /* Tabs */
         .tabs {
-            display: flex; justify-content: center; gap: 12px; /* More gap */
+            display: flex; justify-content: center; gap: 12px;
             margin-bottom: 40px; flex-wrap: wrap; padding: 0 10px;
         }
         .tab-button {
-            background: transparent; /* Transparent background */
-            color: var(--text-secondary);
-            border: 1px solid var(--border-color);
-            padding: 10px 25px; cursor: pointer;
-            border-radius: 20px; /* Pill shape */
-            font-size: 0.9em; font-weight: 600; transition: all 0.2s ease;
-            text-transform: uppercase; /* Uppercase text */
-            letter-spacing: 0.5px;
+            background: transparent; color: var(--text-secondary);
+            border: 1px solid var(--border-color); padding: 10px 25px; cursor: pointer;
+            border-radius: 20px; font-size: 0.9em; font-weight: 600;
+            transition: all 0.2s ease; text-transform: uppercase; letter-spacing: 0.5px;
         }
-        .tab-button:hover {
-            background: var(--bg-tertiary);
-            color: var(--text-primary);
-            border-color: var(--bg-tertiary);
-        }
-        .tab-button.active {
-            background: var(--accent-color);
-            color: white;
-            border-color: var(--accent-color);
-        }
+        .tab-button:hover { background: var(--bg-tertiary); color: var(--text-primary); border-color: var(--bg-tertiary); }
+        .tab-button.active { background: var(--accent-color); color: white; border-color: var(--accent-color); }
 
         /* Channel Grid */
         .channel-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); /* Slightly larger min size */
-            gap: 25px; /* Increased gap */
-            padding: 0 10px 50px;
-            display: none; /* Hidden by default */
+            display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 25px; padding: 0 10px 50px; display: none;
         }
         .channel-grid.active { display: grid; }
-        #Matches.channel-grid {
-            grid-template-columns: 1fr; max-width: 950px; margin: 0 auto;
-        }
+        #Matches.channel-grid { grid-template-columns: 1fr; max-width: 950px; margin: 0 auto; }
         #Matches.channel-grid.active { display: grid; }
 
         /* Channel Box */
         .channel-box {
-            background: var(--bg-secondary);
-            border-radius: 10px; /* Slightly less rounded */
-            padding: 18px; /* More padding */
-            cursor: pointer;
-            transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
-            border: 1px solid var(--bg-secondary); /* Border matches background initially */
-            position: relative;
-            overflow: hidden;
+            background: var(--bg-secondary); border-radius: 10px; padding: 18px;
+            cursor: pointer; transition: all 0.3s ease;
+            border: 1px solid var(--bg-secondary); position: relative; overflow: hidden;
         }
-        .channel-box:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 6px 18px rgba(0, 0, 0, 0.4);
+        .channel-box:not(.expanded):hover {
+            transform: translateY(-4px); box-shadow: 0 6px 18px rgba(0, 0, 0, 0.4);
             border-color: var(--border-color);
         }
-        .channel-header {
-            display: flex; align-items: center; justify-content: space-between; /* Space between elements */
-            gap: 12px; text-align: left; /* Align text left */
-            min-height: 40px;
+        .channel-header { /* Clickable header */
+            display: flex; align-items: center; justify-content: space-between;
+            gap: 12px; text-align: left; min-height: 40px; cursor: pointer; /* Ensure header is clickable */
         }
-        .channel-header .logos { /* Container for logos if needed */
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            flex-shrink: 0;
-        }
+        .channel-header .logos { display: flex; align-items: center; gap: 8px; flex-shrink: 0; }
         .channel-header img { height: 30px; width: auto; object-fit: contain; }
         .channel-header h3 {
-            font-size: 1.05em; /* Slightly smaller title */
-            font-weight: 600;
-            margin: 0;
-            flex-grow: 1; /* Takes available space */
-            word-break: break-word;
-            text-align: center; /* Center title between logos */
+            font-size: 1.05em; font-weight: 600; margin: 0; flex-grow: 1;
+            word-break: break-word; text-align: center;
         }
-        #Matches .channel-header h3 { text-align: center; } /* Center match titles */
+        #Matches .channel-header h3 { text-align: center; }
         .match-time {
-            font-size: 0.8em; /* Smaller time */
-            color: var(--text-secondary);
-            text-align: center;
-            margin-top: 10px;
-            margin-bottom: 0; /* No bottom margin */
-            font-weight: 500;
+            font-size: 0.8em; color: var(--text-secondary); text-align: center;
+            margin-top: 10px; margin-bottom: 0; font-weight: 500; cursor: pointer; /* Also clickable */
         }
 
-        /* Player Overlay */
-        .player-overlay {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background-color: var(--overlay-bg);
-            display: none; justify-content: center; align-items: center;
-            z-index: 1000; padding: 25px;
-            opacity: 0; transition: opacity 0.3s ease-in-out;
+        /* Expanded Channel Box Styling */
+        .channel-box.expanded {
+            grid-column: 1 / -1; /* Span full width */
+            cursor: default;
+            background: var(--bg-tertiary); /* Slightly lighter when expanded */
+            padding-bottom: 25px; /* More space */
+            z-index: 10;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            border-color: var(--accent-color);
+            overflow: visible; /* Allow content to show */
         }
-        .player-overlay.visible { display: flex; opacity: 1; }
-        .player-container {
-            background-color: var(--bg-secondary);
-            border-radius: 12px; padding: 25px; width: 100%;
-            max-width: 1300px; /* Wider player */
-            max-height: 90vh; display: flex; flex-direction: column;
-            overflow: hidden; position: relative;
-            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.5);
-            transform: scale(0.95);
-            transition: transform 0.3s ease-in-out;
+        /* Make header non-clickable when expanded */
+        .channel-box.expanded .channel-header,
+        .channel-box.expanded .match-time {
+            cursor: default;
         }
-        .player-overlay.visible .player-container { transform: scale(1); }
-        .player-content {
-            flex-grow: 1; position: relative; width: 100%;
-            aspect-ratio: 16 / 9; background-color: #000;
-            border-radius: 8px; overflow: hidden; margin-bottom: 20px;
+
+        /* Iframe/Video Container inside the box */
+        .iframe-container {
+            margin-top: 20px; /* Space between header and player */
+            display: none; /* Hidden by default */
+            width: 100%;
         }
-        .player-content iframe, .player-content video {
+        .channel-box.expanded .iframe-container {
+            display: block; /* Show when box is expanded */
+        }
+
+        .player-area {
+            position: relative; width: 100%; aspect-ratio: 16 / 9;
+            background-color: #000; border-radius: 8px; overflow: hidden;
+            margin-bottom: 20px; min-height: 220px; /* Base min height */
+        }
+        .player-area iframe, .player-area video {
             position: absolute; top: 0; left: 0; width: 100%; height: 100%;
             border: none; display: none; object-fit: contain;
         }
-        .player-content iframe.active, .player-content video.active { display: block; }
+        .player-area iframe.active, .player-area video.active { display: block; }
 
-        /* Close Button for Overlay */
-        .close-player-btn {
-            position: absolute; top: 12px; right: 12px;
-            background: rgba(255, 255, 255, 0.1); color: var(--text-secondary);
-            border: none; border-radius: 50%; width: 32px; height: 32px;
-            font-size: 1.6em; line-height: 30px; text-align: center;
-            cursor: pointer; z-index: 1001; transition: all 0.2s ease;
+        /* Responsive player height */
+        @media (min-width: 768px) {
+            .channel-box.expanded .player-area { min-height: 450px; max-height: 75vh; }
         }
-        .close-player-btn:hover { background: rgba(255, 255, 255, 0.2); color: var(--text-primary); }
-
-        /* Stream Buttons in Overlay */
-        .stream-buttons-container {
-            text-align: center; margin-top: auto; padding-top: 15px;
-            max-height: 18vh; overflow-y: auto;
-            /* Custom scrollbar (optional) */
-            scrollbar-width: thin;
-            scrollbar-color: var(--bg-tertiary) var(--bg-secondary);
+         @media (min-width: 1024px) {
+            .channel-box.expanded .player-area { min-height: 550px; }
         }
-        .stream-buttons-container::-webkit-scrollbar { width: 8px; }
-        .stream-buttons-container::-webkit-scrollbar-track { background: var(--bg-secondary); border-radius: 4px; }
-        .stream-buttons-container::-webkit-scrollbar-thumb { background-color: var(--bg-tertiary); border-radius: 4px; }
 
-        .stream-buttons-container div { margin-bottom: 10px; }
-        .stream-buttons-container strong {
+        /* Stream Buttons inside the box */
+        .stream-buttons {
+            text-align: center; margin-top: 15px; /* Space below player */
+        }
+        .stream-buttons div { margin-bottom: 10px; }
+        .stream-buttons strong {
             color: var(--text-secondary); font-size: 0.85em; margin-right: 8px;
             font-weight: 600; text-transform: uppercase;
         }
         .stream-button {
-            background: var(--bg-tertiary); color: var(--text-primary);
-            border: 1px solid var(--border-color); padding: 7px 15px; /* Slightly larger */
-            margin: 4px; border-radius: 6px; cursor: pointer;
+            background: var(--bg-secondary); /* Use darker bg for buttons inside */
+            color: var(--text-primary); border: 1px solid var(--border-color);
+            padding: 7px 15px; margin: 4px; border-radius: 6px; cursor: pointer;
             font-size: 0.85em; font-weight: 500; transition: all 0.2s ease;
             display: inline-block;
         }
@@ -244,7 +192,6 @@
         @media (max-width: 992px) {
             .container { padding: 0 15px; }
             .channel-grid { grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 20px; }
-            .player-container { padding: 20px; max-width: 95vw; }
         }
         @media (max-width: 768px) {
             header img { max-width: 160px; }
@@ -253,10 +200,6 @@
             .channel-grid { grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 18px; }
             #Matches.channel-grid { max-width: 100%; }
             .channel-box { padding: 15px; }
-            .player-overlay { padding: 15px; }
-            .player-container { padding: 15px; max-height: 88vh; }
-            .player-content { margin-bottom: 15px; }
-            .close-player-btn { top: 10px; right: 10px; width: 30px; height: 30px; font-size: 1.5em; line-height: 28px; }
             .stream-button { padding: 6px 12px; font-size: 0.8em; }
         }
         @media (max-width: 480px) {
@@ -268,9 +211,8 @@
             .channel-box { padding: 12px; }
             .channel-header h3 { font-size: 1em; }
             .channel-header img { height: 26px; }
-            .player-overlay { padding: 10px; }
-            .player-container { padding: 10px; }
-            .stream-buttons-container strong { display: block; margin-bottom: 5px; }
+            .stream-buttons strong { display: block; margin-bottom: 5px; }
+            .player-area { min-height: 200px; }
         }
 
     </style>
@@ -309,25 +251,13 @@
     </footer>
 </div>
 
-<div id="playerOverlay" class="player-overlay">
-    <div class="player-container">
-        <button id="closePlayerBtn" class="close-player-btn" aria-label="Close player">&times;</button>
-        <div id="playerContent" class="player-content">
-            <iframe allow="autoplay; fullscreen" allowfullscreen title="Stream Player"></iframe>
-            <video controls autoplay muted playsinline title="Stream Player"></video>
-        </div>
-        <div id="streamButtonsContainer" class="stream-buttons-container">
-            </div>
-    </div>
-</div>
-
 <script>
     // --- Configuration ---
     const CONFIG = {
-        password: "ptv123", // The password
+        password: "ptv123",
         channelsUrl: "channels.json",
         matchesUrl: "matches.json",
-        placeholderImage: 'data:image/svg+xml;charset=UTF-8,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="9" viewBox="0 0 16 9"><rect width="16" height="9" fill="%23000000"/></svg>' // Simple black placeholder
+        placeholderImage: 'data:image/svg+xml;charset=UTF-8,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="9" viewBox="0 0 16 9"><rect width="16" height="9" fill="%23000000"/></svg>'
     };
 
     // --- DOM Elements ---
@@ -338,20 +268,14 @@
     const tabsContainer = document.querySelector('.tabs');
     const channelGrids = document.querySelectorAll('.channel-grid');
     const lastUpdatedEl = document.getElementById('lastUpdated');
-    const playerOverlay = document.getElementById('playerOverlay');
-    const playerContainer = document.querySelector('.player-container');
-    const playerContent = document.getElementById('playerContent');
-    const playerIframe = playerContent.querySelector('iframe');
-    const playerVideo = playerContent.querySelector('video');
-    const streamButtonsContainer = document.getElementById('streamButtonsContainer');
-    const closePlayerBtn = document.getElementById('closePlayerBtn');
     const loadingMessage = document.getElementById('loadingMessage');
     const fetchErrorMessage = document.getElementById('fetchErrorMessage');
 
     // --- State ---
-    let hlsInstance = null; // Global HLS.js instance
-    let channelsData = {}; // To store fetched channels { PT: [], UK: [], ES: [] }
-    let matchesData = []; // To store fetched matches
+    let hlsInstance = null;
+    let channelsData = {};
+    let matchesData = [];
+    let currentlyExpandedBox = null; // Track the currently expanded box
 
     // --- Initialization ---
     document.addEventListener('DOMContentLoaded', () => {
@@ -366,9 +290,9 @@
         if (sessionStorage.getItem('authenticated') === 'true') {
             hidePasswordScreen();
         } else {
-            document.body.style.overflow = 'hidden'; // Prevent scrolling behind overlay
+            document.body.style.overflow = 'hidden';
             passwordScreen.style.display = 'flex';
-            passwordInput.focus(); // Focus input on load
+            passwordInput.focus();
         }
     }
 
@@ -381,14 +305,13 @@
             passwordInput.classList.add('shake');
             passwordInput.value = '';
             passwordInput.focus();
-            // Remove shake animation after it finishes
             setTimeout(() => passwordInput.classList.remove('shake'), 500);
         }
     }
 
     function hidePasswordScreen() {
         passwordScreen.style.display = 'none';
-        document.body.style.overflow = ''; // Restore scrolling
+        document.body.style.overflow = '';
     }
 
     // --- Event Listeners ---
@@ -396,10 +319,8 @@
         // Password
         passwordButton.addEventListener('click', verifyPassword);
         passwordInput.addEventListener('keydown', (e) => {
-            if (e.key === 'Enter') {
-                verifyPassword();
-            }
-             passwordErrorMessage.style.display = 'none'; // Hide error on input
+            if (e.key === 'Enter') verifyPassword();
+            passwordErrorMessage.style.display = 'none';
         });
 
         // Tabs
@@ -409,19 +330,10 @@
             }
         });
 
-        // Player Overlay Close
-        closePlayerBtn.addEventListener('click', closePlayer);
-        playerOverlay.addEventListener('click', (event) => {
-            // Close if clicking outside the player container
-            if (event.target === playerOverlay) {
-                closePlayer();
-            }
-        });
-
-        // Close player with Escape key
+        // Close expanded box with Escape key
         document.addEventListener('keydown', (event) => {
-            if (event.key === 'Escape' && playerOverlay.classList.contains('visible')) {
-                closePlayer();
+            if (event.key === 'Escape' && currentlyExpandedBox) {
+                 toggleExpansion(currentlyExpandedBox); // Collapse the current box
             }
         });
     }
@@ -431,7 +343,6 @@
         loadingMessage.style.display = 'block';
         fetchErrorMessage.style.display = 'none';
         try {
-            // Added cache busting parameter to URLs
             const cacheBuster = `?t=${Date.now()}`;
             const [channelsRes, matchesRes] = await Promise.all([
                 fetch(CONFIG.channelsUrl + cacheBuster),
@@ -461,16 +372,15 @@
         renderChannels('UK', channelsData.UK || []);
         renderChannels('ES', channelsData.ES || []);
         renderMatchChannels(matchesData || []);
-        // Add click listeners after rendering
-        addChannelBoxEventListeners();
+        addChannelBoxEventListeners(); // Add listeners *after* elements are in the DOM
     }
 
     function renderChannels(tabId, channels) {
         const grid = document.getElementById(tabId);
         if (!grid) return;
-        grid.innerHTML = ''; // Clear previous content
+        grid.innerHTML = '';
         if (!channels || channels.length === 0) {
-            grid.innerHTML = '<p class="loading-message">No channels available for this category.</p>';
+            grid.innerHTML = '<p class="loading-message">No channels available.</p>';
             return;
         }
         channels.forEach((channel) => {
@@ -482,9 +392,9 @@
     function renderMatchChannels(matches) {
         const grid = document.getElementById('Matches');
         if (!grid) return;
-        grid.innerHTML = ''; // Clear previous content
+        grid.innerHTML = '';
          if (!matches || matches.length === 0) {
-            grid.innerHTML = '<p class="loading-message">No matches available currently.</p>';
+            grid.innerHTML = '<p class="loading-message">No matches available.</p>';
             return;
         }
         matches.forEach((match) => {
@@ -499,12 +409,19 @@
         const box = document.createElement('div');
         box.className = 'channel-box';
         box.dataset.channelName = name;
-        box.dataset.sources = JSON.stringify(srcs); // Store sources data
+        box.dataset.sources = JSON.stringify(srcs);
 
-        // Simple header for regular channels
         box.innerHTML = `
             <div class="channel-header">
                 <h3>${name}</h3>
+            </div>
+            <div class="iframe-container">
+                <div class="player-area">
+                    <iframe allow="autoplay; fullscreen" allowfullscreen title="Stream Player"></iframe>
+                    <video controls autoplay muted playsinline title="Stream Player"></video>
+                </div>
+                <div class="stream-buttons">
+                    </div>
             </div>
         `;
         return box;
@@ -514,23 +431,29 @@
         const { team1, team2, logo1 = '', logo2 = '', time = '', pt = [], uk = [], es = [] } = match;
         const box = document.createElement('div');
         box.className = 'channel-box';
-        // Store all sources together for simplicity in the handler
         const allSources = { pt, uk, es };
         box.dataset.channelName = `${team1} vs ${team2}`;
-        box.dataset.sources = JSON.stringify(allSources); // Store sources data as an object
+        box.dataset.sources = JSON.stringify(allSources);
 
-        // More detailed header for matches
         box.innerHTML = `
             <div class="channel-header">
-                <div class="logos">
-                    ${logo1 ? `<img src="${logo1}" alt="${team1} logo">` : '<span style="width:30px;"></span>' /* Placeholder */}
+                 <div class="logos">
+                    ${logo1 ? `<img src="${logo1}" alt="${team1} logo">` : '<span style="width:30px;"></span>'}
                 </div>
                 <h3>${team1} vs ${team2}</h3>
                  <div class="logos">
-                    ${logo2 ? `<img src="${logo2}" alt="${team2} logo">` : '<span style="width:30px;"></span>' /* Placeholder */}
+                    ${logo2 ? `<img src="${logo2}" alt="${team2} logo">` : '<span style="width:30px;"></span>'}
                  </div>
             </div>
             ${time ? `<p class="match-time">${time}</p>` : ''}
+             <div class="iframe-container">
+                 <div class="player-area">
+                    <iframe allow="autoplay; fullscreen" allowfullscreen title="Stream Player"></iframe>
+                    <video controls autoplay muted playsinline title="Stream Player"></video>
+                </div>
+                <div class="stream-buttons">
+                    </div>
+            </div>
         `;
         return box;
     }
@@ -538,224 +461,241 @@
     // --- Event Listener Setup for Channel Boxes ---
     function addChannelBoxEventListeners() {
          document.querySelectorAll('.channel-box').forEach(box => {
-            box.addEventListener('click', () => {
-                const sourcesData = box.dataset.sources;
-                const channelName = box.dataset.channelName;
-                if (sourcesData) {
-                    try {
-                        const sources = JSON.parse(sourcesData);
-                        openPlayer(channelName, sources);
-                    } catch (e) {
-                        console.error("Failed to parse sources data:", e);
-                        alert("Could not load streams for this channel.");
-                    }
-                } else {
-                     alert("No stream sources found for this channel.");
+             // Click listener for the non-player part of the box
+            box.addEventListener('click', (event) => {
+                // Only toggle if the click is directly on the box or its header/time elements,
+                // and the box is NOT already expanded.
+                const isExpanded = box.classList.contains('expanded');
+                const isClickOnPlayerArea = event.target.closest('.iframe-container');
+
+                if (!isExpanded && !isClickOnPlayerArea) {
+                    toggleExpansion(box);
+                } else if (isExpanded && !isClickOnPlayerArea) {
+                    // If it IS expanded, clicking outside the player area collapses it
+                    toggleExpansion(box);
                 }
+                // Clicks inside the player area are ignored here (no propagation needed)
             });
         });
     }
-
 
     // --- Tab Management ---
     function showTab(tabId) {
-        // Update button active states
         tabsContainer.querySelectorAll('.tab-button').forEach(btn => {
             btn.classList.toggle('active', btn.dataset.tab === tabId);
         });
-        // Show/hide grids
         channelGrids.forEach(grid => {
             grid.classList.toggle('active', grid.id === tabId);
         });
+        // Collapse any open channel when switching tabs
+        if (currentlyExpandedBox) {
+            collapseBox(currentlyExpandedBox);
+        }
     }
 
-    // --- Player Overlay Management ---
-    function openPlayer(channelName, sources) {
-        // Populate stream buttons
-        streamButtonsContainer.innerHTML = ''; // Clear existing buttons
+    // --- Channel Box Expansion ---
+    function toggleExpansion(boxToToggle) {
+        const isExpanding = !boxToToggle.classList.contains('expanded');
 
-        let firstUrl = null; // To auto-select the first stream
+        // If another box is already expanded, collapse it first
+        if (isExpanding && currentlyExpandedBox && currentlyExpandedBox !== boxToToggle) {
+            collapseBox(currentlyExpandedBox);
+        }
 
-        // Check if sources is an array (regular channels) or object (matches)
-        if (Array.isArray(sources)) {
-            // Regular channel sources
-            if (sources.length === 0) {
-                 streamButtonsContainer.innerHTML = '<p>No streams available.</p>';
-            } else {
-                 sources.forEach((src, idx) => {
-                    const url = typeof src === 'object' ? src.url : src; // Handle potential future object format
-                    const label = typeof src === 'object' ? src.label : `Source ${idx + 1}`; // More descriptive label
-                    if (!firstUrl) firstUrl = url;
-                    const button = createStreamButton(label, url);
-                    streamButtonsContainer.appendChild(button);
-                });
-            }
+        // Toggle the target box
+        if (isExpanding) {
+            expandBox(boxToToggle);
         } else {
-            // Match sources (object with pt, uk, es arrays)
-            let streamCount = 0;
-            Object.entries(sources).forEach(([lang, langSources]) => {
-                if (langSources && langSources.length > 0) {
-                    const langDiv = document.createElement('div');
-                    const strong = document.createElement('strong');
-                    strong.textContent = `${lang.toUpperCase()}:`;
-                    langDiv.appendChild(strong);
-                    langSources.forEach((src, idx) => {
-                         const url = typeof src === 'object' ? src.url : src;
-                         const label = typeof src === 'object' ? src.label : `${idx + 1}`;
-                         if (!firstUrl) firstUrl = url;
-                         const button = createStreamButton(label, url);
-                         langDiv.appendChild(button);
-                         streamCount++;
+            collapseBox(boxToToggle);
+        }
+    }
+
+    function expandBox(box) {
+        box.classList.add('expanded');
+        currentlyExpandedBox = box;
+
+        // Populate buttons and load first stream
+        populateAndLoadFirstStream(box);
+
+        // Scroll the box into view smoothly after a short delay to allow rendering
+        setTimeout(() => {
+             box.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        }, 100); // Adjust delay if needed
+    }
+
+    function collapseBox(box) {
+        box.classList.remove('expanded');
+        if (currentlyExpandedBox === box) {
+            currentlyExpandedBox = null;
+        }
+        // Clear player when collapsing
+        clearPlayerInBox(box);
+        // Clear buttons
+        const streamButtonsDiv = box.querySelector('.stream-buttons');
+        if (streamButtonsDiv) {
+            streamButtonsDiv.innerHTML = '';
+        }
+    }
+
+    function populateAndLoadFirstStream(box) {
+        const sourcesData = box.dataset.sources;
+        const streamButtonsDiv = box.querySelector('.stream-buttons');
+        if (!sourcesData || !streamButtonsDiv) return;
+
+        streamButtonsDiv.innerHTML = ''; // Clear previous buttons
+        let firstUrl = null;
+
+        try {
+            const sources = JSON.parse(sourcesData);
+
+            if (Array.isArray(sources)) { // Regular channels
+                if (sources.length > 0) {
+                    sources.forEach((src, idx) => {
+                        const url = typeof src === 'object' ? src.url : src;
+                        const label = typeof src === 'object' ? src.label : `Source ${idx + 1}`;
+                        if (!firstUrl) firstUrl = url;
+                        const button = createStreamButton(label, url, box); // Pass box context
+                        streamButtonsDiv.appendChild(button);
                     });
-                    streamButtonsContainer.appendChild(langDiv);
+                } else {
+                     streamButtonsDiv.innerHTML = '<p style="color: var(--text-secondary); font-size: 0.9em;">No streams available.</p>';
                 }
-            });
-             if (streamCount === 0) {
-                 streamButtonsContainer.innerHTML = '<p>No streams available for this match.</p>';
+            } else { // Match sources (object)
+                let streamCount = 0;
+                Object.entries(sources).forEach(([lang, langSources]) => {
+                    if (langSources && langSources.length > 0) {
+                        const langDiv = document.createElement('div');
+                        const strong = document.createElement('strong');
+                        strong.textContent = `${lang.toUpperCase()}:`;
+                        langDiv.appendChild(strong);
+                        langSources.forEach((src, idx) => {
+                            const url = typeof src === 'object' ? src.url : src;
+                            const label = typeof src === 'object' ? src.label : `${idx + 1}`;
+                            if (!firstUrl) firstUrl = url;
+                            const button = createStreamButton(label, url, box); // Pass box context
+                            langDiv.appendChild(button);
+                            streamCount++;
+                        });
+                        streamButtonsDiv.appendChild(langDiv);
+                    }
+                });
+                 if (streamCount === 0) {
+                     streamButtonsDiv.innerHTML = '<p style="color: var(--text-secondary); font-size: 0.9em;">No streams available.</p>';
+                }
             }
-        }
 
-        // Show the overlay
-        playerOverlay.classList.add('visible');
-        document.body.style.overflow = 'hidden'; // Prevent background scrolling
-
-        // Load the first stream if available
-        if (firstUrl) {
-            const firstButton = streamButtonsContainer.querySelector('.stream-button');
-            if (firstButton) {
-                changeStream(firstButton, firstUrl);
+            // Load the first stream if found
+            if (firstUrl) {
+                 const firstButton = streamButtonsDiv.querySelector('.stream-button');
+                 if (firstButton) {
+                     changeStream(firstButton, firstUrl, box);
+                 }
+            } else {
+                clearPlayerInBox(box); // No streams, ensure player is cleared
             }
-        } else {
-            // No streams, clear player
-             clearPlayer();
-             // Optionally display a message in the player area
-             playerContent.innerHTML = '<p style="color: var(--text-secondary); text-align: center; padding-top: 20%;">No streams to display.</p>';
+
+        } catch (e) {
+            console.error("Failed to parse sources data for box:", e);
+            streamButtonsDiv.innerHTML = '<p style="color: var(--text-secondary); font-size: 0.9em;">Error loading stream data.</p>';
         }
     }
 
-    function createStreamButton(label, url) {
+    function createStreamButton(label, url, contextBox) {
         const button = document.createElement('button');
         button.className = 'stream-button';
         button.textContent = label;
         button.onclick = (event) => {
-            event.stopPropagation(); // Prevent overlay click
-            changeStream(button, url);
+            // No stopPropagation needed here as the parent listener handles it
+            changeStream(button, url, contextBox);
         };
         return button;
     }
 
-    function closePlayer() {
-        playerOverlay.classList.remove('visible');
-        document.body.style.overflow = ''; // Restore scrolling
-        clearPlayer(); // Stop video/iframe loading
-        // Restore original player content structure if it was replaced
-        if (!playerContent.querySelector('iframe')) {
-             playerContent.innerHTML = `
-                <iframe allow="autoplay; fullscreen" allowfullscreen title="Stream Player"></iframe>
-                <video controls autoplay muted playsinline title="Stream Player"></video>
-             `;
+    // --- Stream Handling (within a specific box) ---
+    function changeStream(clickedButton, url, contextBox) {
+        console.log(`Attempting to load stream in box: ${url}`);
+        clearPlayerInBox(contextBox); // Clear previous stream in this box
+
+        // Activate the clicked button within this box
+        const streamButtonsDiv = contextBox.querySelector('.stream-buttons');
+        if (streamButtonsDiv) {
+             streamButtonsDiv.querySelectorAll('.stream-button').forEach(b => b.classList.remove('active'));
         }
-    }
-
-     function clearPlayer() {
-        // Stop HLS playback
-        if (hlsInstance) {
-            hlsInstance.destroy();
-            hlsInstance = null;
-        }
-
-        // Re-fetch elements in case they were removed
-        const currentIframe = playerContent.querySelector('iframe');
-        const currentVideo = playerContent.querySelector('video');
-
-        // Clear iframe src
-        if (currentIframe) {
-            currentIframe.src = 'about:blank'; // More reliable than empty string
-            currentIframe.classList.remove('active');
-        }
-        // Clear video src and stop
-         if (currentVideo) {
-            currentVideo.pause();
-            currentVideo.removeAttribute('src'); // remove the source
-            currentVideo.load(); // Request loading empty source
-            currentVideo.classList.remove('active');
-            currentVideo.poster = ''; // Remove poster
-        }
-
-        // Remove active class from buttons
-        streamButtonsContainer.querySelectorAll('.stream-button').forEach(b => b.classList.remove('active'));
-    }
-
-
-    // --- Stream Handling ---
-    function changeStream(clickedButton, url) {
-        console.log(`Attempting to load stream: ${url}`);
-        clearPlayer(); // Clear previous stream first
-
-        // Re-fetch elements in case they were cleared/recreated
-        const currentIframe = playerContent.querySelector('iframe');
-        const currentVideo = playerContent.querySelector('video');
-
-        if (!currentIframe || !currentVideo) {
-             console.error("Player elements not found after clearing.");
-             // Recreate them if necessary
-             playerContent.innerHTML = `
-                <iframe allow="autoplay; fullscreen" allowfullscreen title="Stream Player"></iframe>
-                <video controls autoplay muted playsinline title="Stream Player"></video>
-             `;
-             // Try again after a brief delay
-             setTimeout(() => changeStream(clickedButton, url), 50);
-             return;
-        }
-
-
-        // Activate the clicked button
-        streamButtonsContainer.querySelectorAll('.stream-button').forEach(b => b.classList.remove('active'));
         clickedButton.classList.add('active');
 
+        // Get player elements specific to this box
+        const iframe = contextBox.querySelector('.player-area iframe');
+        const video = contextBox.querySelector('.player-area video');
+
+        if (!iframe || !video) {
+            console.error("Could not find player elements in context box.");
+            return;
+        }
 
         // Determine stream type and load
         if (url && typeof url === 'string') {
              if (url.toLowerCase().endsWith('.m3u8')) {
-                loadHlsStream(url, currentVideo);
+                loadHlsStream(url, video); // Pass the specific video element
             } else {
-                loadIframeStream(url, currentIframe);
+                loadIframeStream(url, iframe); // Pass the specific iframe element
             }
         } else {
             console.error("Invalid stream URL:", url);
             alert("Invalid stream URL provided.");
-            clearPlayer(); // Ensure player is clear if URL is bad
+            clearPlayerInBox(contextBox); // Clear player if URL is bad
+        }
+    }
+
+     function clearPlayerInBox(box) {
+         // Stop HLS playback if it belongs to this box
+        if (hlsInstance && currentlyExpandedBox === box) {
+            hlsInstance.destroy();
+            hlsInstance = null;
+        }
+        // Clear iframe src
+        const iframe = box.querySelector('.player-area iframe');
+        if (iframe) {
+             iframe.src = 'about:blank';
+             iframe.classList.remove('active');
+        }
+        // Clear video src and stop
+        const video = box.querySelector('.player-area video');
+        if (video) {
+             video.pause();
+             video.removeAttribute('src');
+             video.load();
+             video.classList.remove('active');
+             video.poster = ''; // Remove placeholder
+        }
+        // Deactivate buttons in this box
+        const streamButtonsDiv = box.querySelector('.stream-buttons');
+        if (streamButtonsDiv) {
+            streamButtonsDiv.querySelectorAll('.stream-button').forEach(b => b.classList.remove('active'));
         }
     }
 
     function loadHlsStream(url, videoElement) {
-        videoElement.poster = CONFIG.placeholderImage; // Show placeholder while loading
+        videoElement.poster = CONFIG.placeholderImage;
         videoElement.classList.add('active');
 
         if (Hls.isSupported()) {
             console.log("HLS.js is supported. Initializing...");
-            hlsInstance = new Hls({
-                 // Increase buffer lengths slightly for potentially better stability
-                 // maxBufferLength: 60, // default 30
-                 // maxMaxBufferLength: 120, // default 600
-            });
+            // Ensure previous instance related to this box context is destroyed
+            if (hlsInstance && currentlyExpandedBox === videoElement.closest('.channel-box')) {
+                 hlsInstance.destroy();
+            }
 
-            // --- HLS Error Handling ---
+            hlsInstance = new Hls({ /* Optional config */ });
+
             hlsInstance.on(Hls.Events.ERROR, function (event, data) {
                 console.error('HLS.js Error:', event, data);
                  if (data.fatal) {
                     let userMessage = `Stream Error (${data.details}). Try another source.`;
-                    // Provide more specific messages if possible
-                    if (data.type === Hls.ErrorTypes.NETWORK_ERROR) {
-                        userMessage = `Network Error loading stream (${data.details}). Check connection or try another source.`;
-                    } else if (data.type === Hls.ErrorTypes.MEDIA_ERROR) {
-                         userMessage = `Media Playback Error (${data.details}). Try another source.`;
-                    }
+                    if (data.type === Hls.ErrorTypes.NETWORK_ERROR) userMessage = `Network Error loading stream (${data.details}). Check connection or try another source.`;
+                    else if (data.type === Hls.ErrorTypes.MEDIA_ERROR) userMessage = `Media Playback Error (${data.details}). Try another source.`;
                     alert(userMessage);
-                    if(hlsInstance) hlsInstance.destroy(); // Clean up failed instance
-                    hlsInstance = null;
-                    videoElement.classList.remove('active'); // Hide player
-                    videoElement.poster = ''; // Remove placeholder
+                    if(hlsInstance) hlsInstance.destroy(); hlsInstance = null;
+                    videoElement.classList.remove('active'); videoElement.poster = '';
                  }
             });
 
@@ -763,29 +703,17 @@
             hlsInstance.attachMedia(videoElement);
             hlsInstance.on(Hls.Events.MANIFEST_PARSED, function() {
                 console.log("HLS Manifest parsed, attempting to play...");
-                videoElement.play().catch(e => {
-                    console.error("Video play failed:", e);
-                    // Autoplay might be blocked, user interaction needed
-                    if (e.name === 'NotAllowedError') {
-                         alert("Playback requires user interaction. Click play on the video player.");
-                    }
-                });
+                videoElement.play().catch(e => console.error("Video play failed:", e));
             });
-             hlsInstance.on(Hls.Events.LEVEL_LOADED, function(event, data) {
-                 console.log(`HLS Level ${data.level} loaded.`);
-             });
-
 
         } else if (videoElement.canPlayType('application/vnd.apple.mpegurl')) {
-            // Native HLS support (e.g., Safari)
             console.log("Using native HLS support.");
             videoElement.src = url;
-             videoElement.play().catch(e => console.error("Video play failed:", e));
+            videoElement.play().catch(e => console.error("Video play failed:", e));
         } else {
             console.error("HLS is not supported by this browser.");
             alert("HLS playback is not supported in your browser.");
-             videoElement.classList.remove('active'); // Hide video element
-             videoElement.poster = '';
+            videoElement.classList.remove('active'); videoElement.poster = '';
         }
     }
 
@@ -793,7 +721,6 @@
         console.log("Loading iframe stream...");
         iframeElement.src = url;
         iframeElement.classList.add('active');
-        // Basic load check (doesn't guarantee content works)
         iframeElement.onload = () => console.log("Iframe onload event fired.");
         iframeElement.onerror = () => {
              console.error("Iframe onerror event fired.");
@@ -805,7 +732,6 @@
     // --- Utility ---
     function updateTimestamp() {
         const now = new Date();
-        // More concise format
         lastUpdatedEl.textContent = `Updated: ${now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}`;
     }
 
