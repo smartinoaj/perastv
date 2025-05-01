@@ -108,8 +108,7 @@
         /* --- Matches Grid Specific Width --- */
         #Matches.channel-grid {
              grid-template-columns: 1fr; /* Single column */
-             max-width: 1000px; /* Set a max-width */
-             margin: 0 auto; /* Center the single column grid */
+             /* Removed max-width and margin:auto for initial state */
         }
         #Matches.channel-grid.active { display: grid; }
 
@@ -120,8 +119,12 @@
             cursor: pointer; transition: all 0.3s ease;
             border: 1px solid var(--bg-secondary); position: relative; overflow: hidden;
         }
-        /* Removed the specific width for non-expanded match boxes */
-        /* #Matches .channel-box:not(.expanded) { ... } */
+        /* --- Narrower Initial Match Box --- */
+        #Matches .channel-box:not(.expanded) {
+            max-width: 950px; /* Adjust max-width as needed */
+            margin-left: auto;
+            margin-right: auto;
+        }
 
         .channel-box.hidden { display: none; }
         .channel-box:not(.expanded):hover {
@@ -147,7 +150,6 @@
             vertical-align: middle;
         }
 
-        /* Removed .logos container rule */
         .channel-header img.match-logo {
              height: 40px;
              width: auto;
@@ -158,7 +160,7 @@
             font-weight: 600; margin: 0;
             word-break: break-word;
             text-align: center;
-            flex-grow: 0; /* Prevent pushing */
+            flex-grow: 0;
             flex-shrink: 1;
             /* Add margin to space out from logos */
             margin-left: 25px; /* Increased margin */
@@ -183,8 +185,9 @@
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
             border: 2px solid var(--accent-color);
             overflow: visible;
-            /* Removed max-width override as it's not needed */
-            /* Removed margin overrides */
+            max-width: none; /* Override initial max-width */
+            margin-left: 0; /* Override initial margin */
+            margin-right: 0; /* Override initial margin */
         }
         .channel-box.expanded .channel-header,
         .channel-box.expanded .channel-info { cursor: default; }
@@ -264,6 +267,11 @@
         .loading-message, .error-message { text-align: center; padding: 50px 20px; color: var(--text-secondary); font-size: 1em; font-weight: 500; }
 
         /* --- Responsive Adjustments --- */
+        @media (max-width: 1023px) { /* Adjust max-width for tablets */
+             #Matches .channel-box:not(.expanded) {
+                 max-width: 90%; /* Use percentage for better fit */
+            }
+        }
         @media (max-width: 767px) { /* 1 column */
              .channel-grid:not(#Matches) { grid-template-columns: 1fr; }
              .channel-box { padding: 15px; }
@@ -275,6 +283,7 @@
              #Matches .channel-header { gap: 10px; }
              .match-logo, #Matches .channel-header img.match-logo { height: 32px; width: 32px; }
              .channel-info { font-size: 0.75em;}
+             #Matches .channel-box:not(.expanded) { max-width: 100%; } /* Full width on mobile */
              #Matches .channel-header h3 { margin: 0 15px; } /* Adjust margin */
         }
         @media (max-width: 480px) { /* Further adjustments for very small screens */
