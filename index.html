@@ -27,25 +27,24 @@
 
         /* Basic Reset & Body Styling */
         *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-        html, body {
-             height: 100%; /* Ensure html takes full height */
+        html {
+            scroll-behavior: smooth;
+            height: 100%; /* Ensure html takes full height */
         }
-        html { scroll-behavior: smooth; }
         body {
             background-color: var(--bg-primary); color: var(--text-primary);
             font-family: var(--font-sans); line-height: 1.6;
             overscroll-behavior-y: contain;
             -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale;
-            display: flex; /* Use flexbox for footer */
-            flex-direction: column;
             min-height: 100vh; /* Ensure body takes at least full viewport height */
+            /* Removed display: flex and flex-direction */
+            padding-bottom: 60px; /* Add padding to prevent footer overlap if content is short */
+            position: relative; /* Needed for absolute positioning of footer if desired */
         }
-        .container {
-             flex-grow: 1; /* Allow container to grow and push footer down */
-        }
+        /* Removed .container { flex-grow: 1; } */
+        .container { max-width: 1600px; margin: 0 auto; padding: 0 20px; }
 
         /* --- Main Layout --- */
-        .container { max-width: 1600px; margin: 0 auto; padding: 0 20px; }
         header { text-align: center; padding: 30px 0 20px; }
         header img { max-width: 200px; height: auto; }
 
@@ -77,11 +76,10 @@
             color: var(--text-secondary);
             text-align: center; /* Center placeholder too */
         }
-        /* Adjust placeholder centering for different browsers if needed */
-         #search-input::-webkit-input-placeholder { text-align: center; }
-         #search-input:-moz-placeholder { text-align: center; }
-         #search-input::-moz-placeholder { text-align: center; }
-         #search-input:-ms-input-placeholder { text-align: center; }
+        #search-input::-webkit-input-placeholder { text-align: center; }
+        #search-input:-moz-placeholder { text-align: center; }
+        #search-input::-moz-placeholder { text-align: center; }
+        #search-input:-ms-input-placeholder { text-align: center; }
 
 
         /* --- Tabs --- */
@@ -233,9 +231,10 @@
         /* --- Footer --- */
         footer {
             text-align: center; color: var(--text-secondary); font-size: 0.8em;
-            margin-top: 40px; /* Pushes footer down */
             padding: 20px 0; /* Add padding */
-            width: 100%; /* Ensure footer spans width */
+            width: 100%;
+            /* Removed absolute positioning, rely on body min-height and padding */
+            margin-top: 40px; /* Add margin to separate from content */
         }
 
         /* --- Loading/Error States (General) --- */
