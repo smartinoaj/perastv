@@ -100,23 +100,16 @@
             grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
             gap: 20px; padding: 0 10px 50px; display: none;
         }
-        /* --- Grid Column Change (Back to 3) --- */
-        @media (min-width: 768px) {
-            .channel-grid:not(#Matches) {
-                 grid-template-columns: repeat(2, 1fr); /* 2 columns medium */
-            }
-        }
-        @media (min-width: 1024px) {
-             .channel-grid:not(#Matches) {
-                 grid-template-columns: repeat(3, 1fr); /* 3 columns large */
-            }
-        }
-        /* Removed the 4-column rule */
-        /* --- End Grid Column Change --- */
-
+        @media (min-width: 768px) { .channel-grid:not(#Matches) { grid-template-columns: repeat(2, 1fr); } }
+        @media (min-width: 1024px) { .channel-grid:not(#Matches) { grid-template-columns: repeat(3, 1fr); } }
+        @media (min-width: 1366px) { .channel-grid:not(#Matches) { grid-template-columns: repeat(4, 1fr); } }
         .channel-grid.active { display: grid; }
-        #Matches.channel-grid { /* Matches always stay single column */
-             grid-template-columns: 1fr; max-width: 950px; margin: 0 auto;
+
+        /* --- Matches Grid Specific Width --- */
+        #Matches.channel-grid {
+             grid-template-columns: 1fr; /* Still single column */
+             max-width: none; /* Remove max-width to allow full width */
+             margin: 0; /* Remove auto margin */
         }
         #Matches.channel-grid.active { display: grid; }
 
@@ -134,29 +127,56 @@
         }
         .channel-header {
             display: flex; align-items: center;
-            justify-content: center; /* Center channel name */
+            justify-content: center; /* Center channel name by default */
             gap: 10px; text-align: center; min-height: 35px; cursor: pointer;
         }
-         #Matches .channel-header { justify-content: space-between; } /* Keep space-between for matches */
+         /* --- Matches Header Layout --- */
+        #Matches .channel-header {
+             justify-content: flex-start; /* Align items to the start */
+             gap: 15px; /* Increase gap */
+             text-align: left; /* Align text left */
+        }
         .match-logo { /* Styles only for match logos */
-            height: 28px; width: 28px; object-fit: contain; flex-shrink: 0;
+            height: 36px; width: 36px; /* Increased size */
+            object-fit: contain; flex-shrink: 0;
             background-color: var(--bg-tertiary);
             border-radius: 4px;
             display: inline-block;
             vertical-align: middle;
         }
 
-        .channel-header .logos { display: flex; align-items: center; gap: 8px; flex-shrink: 0; }
-        .channel-header img.match-logo { height: 28px; width: auto; object-fit: contain; }
+        .channel-header .logos { /* Container for match logos */
+            display: flex;
+            align-items: center;
+            gap: 10px; /* Gap between the two logos */
+            flex-shrink: 0;
+        }
+        .channel-header img.match-logo { /* Target only match logos */
+             height: 36px; /* Increased size */
+             width: auto;
+             object-fit: contain;
+        }
         .channel-header h3 {
-            font-size: 1em; font-weight: 600; margin: 0; flex-grow: 1;
+            font-size: 1.1em; /* Slightly larger title for matches */
+            font-weight: 600; margin: 0;
             word-break: break-word;
-            text-align: center; /* Center all titles */
+            text-align: left; /* Align text left for matches */
+            flex-grow: 1; /* Allow title to take space */
+        }
+        /* Keep centering for non-match titles */
+        .channel-grid:not(#Matches) .channel-header h3 {
+             text-align: center;
         }
 
+
         .channel-info {
-            font-size: 0.75em; color: var(--text-secondary); text-align: center;
-            margin-top: 8px; margin-bottom: 0; font-weight: 500; cursor: pointer;
+            font-size: 0.8em; /* Slightly larger info text */
+            color: var(--text-secondary);
+            text-align: left; /* Align info left */
+            margin-top: 5px; /* Reduced top margin */
+            margin-left: calc(36px + 10px + 36px + 15px); /* Align with start of title (logo1 width + gap + logo2 width + header gap) */
+            margin-bottom: 0;
+            font-weight: 500; cursor: pointer;
         }
         .channel-info span { margin: 0 5px; }
 
@@ -213,21 +233,19 @@
             color: var(--text-secondary); font-size: 0.85em; margin-right: 8px;
             font-weight: 600; text-transform: uppercase;
         }
-        /* Removed .stream-button-wrapper styles */
         .stream-button {
             background: var(--bg-secondary); color: var(--text-primary);
             border: 1px solid var(--border-color); padding: 7px 18px;
             border-radius: 20px; cursor: pointer; font-size: 0.85em;
             font-weight: 500; transition: all 0.2s ease;
-            display: inline-block; /* Keep inline-block */
-            margin: 4px; /* Add margin directly to button */
+            display: inline-block;
+            margin: 4px;
         }
         .stream-button:hover { background: #4a4a4a; border-color: #5a5a5a; }
         .stream-button.active {
             background: var(--accent-color); color: white;
             border-color: var(--accent-color); font-weight: 600;
         }
-        /* Removed .report-button styles */
         .try-next-button {
             background: var(--accent-color); color: white;
             border: none; padding: 8px 15px; border-radius: 6px;
@@ -255,7 +273,10 @@
              header img { max-width: 160px; }
              .tabs { gap: 10px; margin-bottom: 30px; }
              .tab-button { padding: 8px 20px; font-size: 0.85em; }
-             #Matches.channel-grid { max-width: 100%; }
+             #Matches.channel-grid { max-width: 100%; } /* Ensure matches grid is full width */
+             #Matches .channel-header { gap: 10px; } /* Reduce gap on smaller screens */
+             .match-logo, #Matches .channel-header img.match-logo { height: 30px; width: 30px; } /* Slightly smaller logos on mobile */
+             .channel-info { margin-left: calc(30px + 10px + 30px + 10px); font-size: 0.75em;} /* Adjust info margin */
         }
         @media (max-width: 480px) { /* Further adjustments for very small screens */
             .container { padding: 0 10px; }
@@ -264,10 +285,11 @@
             .tab-button { padding: 7px 15px; }
             .channel-box { padding: 12px; }
             .channel-header h3 { font-size: 1em; }
-            .match-logo { height: 26px; width: 26px; }
+            .match-logo, #Matches .channel-header img.match-logo { height: 28px; width: 28px; }
             .stream-buttons strong { display: block; margin-bottom: 5px; }
             .player-area { min-height: 200px; }
             #search-input { padding: 10px 15px; font-size: 0.95em; }
+             .channel-info { margin-left: calc(28px + 10px + 28px + 10px); font-size: 0.7em;} /* Adjust info margin */
         }
 
     </style>
@@ -469,13 +491,12 @@
 
         box.innerHTML = `
             <div class="channel-header" id="${uniqueId}-header" aria-expanded="false" aria-controls="${uniqueId}-player-container">
-                 <div class="logos">
+                 <div class="logos"> {/* Wrap logos */}
                     ${logo1 ? `<img src="${logo1}" alt="" class="match-logo">` : '<span class="match-logo"></span>'}
-                </div>
-                <h3>${matchTitle}</h3>
-                 <div class="logos">
                     ${logo2 ? `<img src="${logo2}" alt="" class="match-logo">` : '<span class="match-logo"></span>'}
                  </div>
+                <h3>${matchTitle}</h3>
+                 {/* Removed duplicate logo container */}
             </div>
             <div class="channel-info">
                 ${league ? `<span>${league}</span>` : ''}
@@ -498,7 +519,6 @@
         return box;
     }
      function createStreamButtonWrapper(label, url, contextBox) {
-        // *** Reverted: Return only the button ***
         const button = document.createElement('button');
         button.className = 'stream-button';
         button.textContent = label;
@@ -615,7 +635,7 @@
                         const url = typeof src === 'object' && src.url ? src.url : src;
                         const label = typeof src === 'object' && src.label ? src.label : `Source ${idx + 1}`;
                         if (!firstUrl) firstUrl = url;
-                        const button = createStreamButtonWrapper(label, url, box); // Changed back to button
+                        const button = createStreamButtonWrapper(label, url, box);
                         if (!firstButtonElement) firstButtonElement = button;
                         streamButtonsDiv.appendChild(button);
                     });
@@ -632,7 +652,7 @@
                             const url = typeof src === 'object' && src.url ? src.url : src;
                             const label = typeof src === 'object' && src.label ? src.label : `${idx + 1}`;
                             if (!firstUrl) firstUrl = url;
-                            const button = createStreamButtonWrapper(label, url, box); // Changed back to button
+                            const button = createStreamButtonWrapper(label, url, box);
                              if (!firstButtonElement) firstButtonElement = button;
                             langDiv.appendChild(button);
                             streamCount++;
