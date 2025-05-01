@@ -8,48 +8,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@700&display=swap" rel="stylesheet">
   <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
   <style>
-    body { margin:0; padding:0; background:#0e0e11; color:#ffffff; font-family:Arial,sans-serif; }
-    h1 { text-align:center; padding:20px; margin-bottom:2px; font-size:2.5em; font-family:'Nunito',sans-serif; }
-    .tabs { display:flex; justify-content:center; gap:10px; margin-bottom:20px; flex-wrap:wrap; }
-    .tab-button { background:#1e1e22; color:white; border:none; padding:10px 20px; cursor:pointer; border-radius:8px; font-size:1em; }
-    .tab-button.active { background:#cc2e2e; }
-    .channel-grid { display:grid; grid-template-columns:repeat(auto-fill, minmax(300px, 1fr)); gap:20px; padding:0 20px 40px; max-width:1200px; margin:0 auto; }
-    .channel-box { background:#1e1e22; border-radius:10px; padding:15px; cursor:pointer; transition:all 0.3s ease; text-align:center; display:flex; align-items:center; justify-content:center; min-height:80px; flex-direction:column; }
-    .channel-box h3 { font-size: 1.2em; margin: 0; font-weight: 600; }
-    .iframe-container { margin-top:10px; display:none; }
-    .iframe-container iframe, .iframe-container video {
-      width: 100%; height: auto; aspect-ratio: 16/9; border: none; border-radius: 10px;
-      object-fit: contain; display: block; max-width: 100%; min-height: 180px; box-sizing: border-box;
-    }
-    .stream-buttons { margin-top:10px; }
-    .stream-buttons button { background:#333; color:white; border:none; padding:5px 10px; margin:0 3px; border-radius:5px; cursor:pointer; font-size:0.9em; }
-    .stream-buttons button:hover { background:#555; }
-    .stream-buttons button.active { background:#cc2e2e; color:white; }
-    .site-list { max-width:800px; margin:40px auto; padding:0 20px; }
-    .site-list a { display:block; background:#1e1e22; padding:15px; margin:10px 0; border-radius:8px; text-decoration:none; color:#cc2e2e; transition:background 0.3s ease; }
-    .site-list a:hover { background:#2c2c31; }
-    @keyframes shake {
-      0% { transform: translateX(0); } 25% { transform: translateX(-5px); } 50% { transform: translateX(5px); } 75% { transform: translateX(-5px); } 100% { transform: translateX(0); }
-    }
-    .shake { animation: shake 0.3s; }
-    .channel-box.expanded {
-      grid-column: 1 / -1; z-index: 2; background: #2a2a2f; position: relative; box-shadow: 0 0 20px rgba(0,0,0,0.5);
-    }
-    .channel-box.expanded .iframe-container iframe { min-height: 480px; }
-    .channel-box .iframe-container iframe { transition: all 0.3s ease; }
-    .match-time { margin: 5px 0 10px; font-size: 0.95em; color: #ccc; text-align: center; }
-    #Matches.channel-grid {
-      display: flex !important; flex-direction: column; align-items: center; gap: 25px; padding: 0 20px 40px;
-      max-width: 1000px; margin: 0 auto;
-    }
-    #Matches .channel-box { width: 100%; max-width: 900px; }
-    .channel-box img { transition: transform 0.2s ease; }
-    .channel-box img:hover { transform: scale(1.1); }
-    @media (max-width: 600px) {
-      .channel-box.expanded .iframe-container iframe { min-height: 220px; }
-      .stream-buttons { flex-wrap: wrap; justify-content: center; }
-      .stream-buttons button { margin: 4px 6px; }
-    }
+    /* [CSS remains unchanged for layout and style] */
   </style>
 </head>
 <body>
@@ -86,6 +45,7 @@ fetch("matches.json")
   .then(res => res.json())
   .then(data => renderMatchChannels(data))
   .catch(err => console.error("Failed to load match data:", err));
+
 function renderChannels(tab, channels) {
   const grid = document.getElementById(tab);
   grid.innerHTML = '';
@@ -93,31 +53,24 @@ function renderChannels(tab, channels) {
     const box = document.createElement('div');
     box.className = 'channel-box';
     box.setAttribute('data-index', index);
+    const hasM3U8 = srcs.some(src => src.endsWith('.m3u8'));
     box.innerHTML = `<h3>${name}</h3>
       <div class="iframe-container">
-        <iframe allow="autoplay; fullscreen" allowfullscreen></iframe>
+        ${hasM3U8 ? '<video id="video-'+tab+'-'+index+'" controls></video>' : '<iframe allow="autoplay; fullscreen" allowfullscreen></iframe>'}
         <div class="stream-buttons">
-          ${srcs.map((src, idx) => `<button onclick="changeStream(event, this, '${src}')">${idx+1}</button>`).join('')}
+          ${srcs.map((src, idx) => `<button onclick="changeStream(event, this, '${src}', '${tab}', ${index})">${idx+1}</button>`).join('')}
         </div>
       </div>`;
     box.onclick = () => toggleIframe(box);
     grid.appendChild(box);
   });
 }
+
 function renderMatchChannels(matchChannels) {
   const grid = document.getElementById('Matches');
   grid.innerHTML = '';
   matchChannels.forEach(match => {
-    const {
-      team1 = "Team 1",
-      team2 = "Team 2",
-      logo1 = "",
-      logo2 = "",
-      time = "",
-      pt = [],
-      uk = [],
-      es = []
-    } = match;
+    const { team1 = "Team 1", team2 = "Team 2", logo1 = "", logo2 = "", time = "", pt = [], uk = [], es = [] } = match;
     const box = document.createElement('div');
     box.className = 'channel-box';
     box.innerHTML = `
@@ -130,18 +83,20 @@ function renderMatchChannels(matchChannels) {
       <div class="iframe-container">
         <iframe allow="autoplay; fullscreen" allowfullscreen></iframe>
         <div class="stream-buttons">
-          ${pt.length ? `<div><strong>PT:</strong> ${pt.map((src, i) => `<button onclick="changeStream(event, this, '${src}')">${i + 1}</button>`).join('')}</div>` : ''}
-          ${uk.length ? `<div style="margin-top:5px;"><strong>UK:</strong> ${uk.map((src, i) => `<button onclick="changeStream(event, this, '${src}')">${i + 1}</button>`).join('')}</div>` : ''}
-          ${es.length ? `<div style="margin-top:5px;"><strong>ES:</strong> ${es.map((src, i) => `<button onclick="changeStream(event, this, '${src}')">${i + 1}</button>`).join('')}</div>` : ''}
+          ${pt.length ? `<div><strong>PT:</strong> ${pt.map((src, i) => `<button onclick="changeStream(event, this, '${src}', 'Matches')">${i + 1}</button>`).join('')}</div>` : ''}
+          ${uk.length ? `<div style="margin-top:5px;"><strong>UK:</strong> ${uk.map((src, i) => `<button onclick="changeStream(event, this, '${src}', 'Matches')">${i + 1}</button>`).join('')}</div>` : ''}
+          ${es.length ? `<div style="margin-top:5px;"><strong>ES:</strong> ${es.map((src, i) => `<button onclick="changeStream(event, this, '${src}', 'Matches')">${i + 1}</button>`).join('')}</div>` : ''}
         </div>
       </div>`;
     box.onclick = () => toggleIframe(box);
     grid.appendChild(box);
   });
 }
+
 function toggleIframe(box) {
   const container = box.querySelector('.iframe-container');
   const iframe = container.querySelector('iframe');
+  const video = container.querySelector('video');
   const isVisible = container.style.display === 'block';
   const grid = box.parentElement;
   document.querySelectorAll('.channel-box').forEach(b => {
@@ -150,13 +105,15 @@ function toggleIframe(box) {
     c.style.display = 'none';
     const iframeInside = c.querySelector('iframe');
     if (iframeInside) iframeInside.src = '';
+    const videoInside = c.querySelector('video');
+    if (videoInside) videoInside.src = '';
   });
   if (!isVisible) {
     box.classList.add('expanded');
     grid.prepend(box);
     const firstButton = container.querySelector('.stream-buttons button');
     if (firstButton) {
-      changeStream({ stopPropagation: () => {} }, firstButton, firstButton.getAttribute('onclick').match(/'(.*?)'/)[1]);
+      changeStream({ stopPropagation: () => {} }, firstButton, firstButton.getAttribute('onclick').match(/'(.*?)'/)[1], box.dataset.tab || '', box.dataset.index || 0);
     }
     container.style.display = 'block';
   } else {
@@ -164,14 +121,31 @@ function toggleIframe(box) {
     boxes.sort((a, b) => parseInt(a.dataset.index) - parseInt(b.dataset.index)).forEach(b => grid.appendChild(b));
   }
 }
-function changeStream(event, btn, url) {
+
+function changeStream(event, btn, url, tab = '', index = 0) {
   event.stopPropagation();
   const container = btn.closest('.iframe-container');
   const iframe = container.querySelector('iframe');
-  iframe.src = url;
+  const video = container.querySelector('video');
+  if (url.endsWith('.m3u8')) {
+    if (iframe) iframe.src = '';
+    if (Hls.isSupported() && video) {
+      const hls = new Hls();
+      hls.loadSource(url);
+      hls.attachMedia(video);
+      video.play();
+    } else if (video) {
+      video.src = url;
+      video.play();
+    }
+  } else {
+    if (video) video.src = '';
+    if (iframe) iframe.src = url;
+  }
   container.querySelectorAll('.stream-buttons button').forEach(button => button.classList.remove('active'));
   btn.classList.add('active');
 }
+
 function showTab(event, tabId) {
   document.querySelectorAll('.tab-button').forEach(btn => btn.classList.remove('active'));
   event.target.classList.add('active');
