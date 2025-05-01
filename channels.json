@@ -2,7 +2,6 @@
   "PT": [
     {
       "name": "Sport TV 1",
-      "logo": "img/channels/sporttv1.png", 
       "srcs": [
         "https://playmatch.live/player/PT/406",
         "https://thedaddy.to/embed/stream-74.php",
@@ -15,7 +14,6 @@
     },
     {
       "name": "Sport TV 2",
-      "logo": "img/channels/sporttv2.png", 
       "srcs": [
         "https://playmatch.live/player/PT/407",
         "https://thedaddy.to/embed/stream-74.php",
@@ -26,7 +24,6 @@
     },
     {
       "name": "Sport TV 3",
-      "logo": "img/channels/sporttv3.png", 
       "srcs": [
         "https://playmatch.live/player/PT/408",
         "https://thedaddy.to/embed/stream-454.php",
@@ -37,7 +34,6 @@
     },
     {
       "name": "Sport TV 4",
-      "logo": "img/channels/sporttv4.png", 
       "srcs": [
         "https://playmatch.live/player/PT/1138",
         "https://thedaddy.to/embed/stream-289.php",
@@ -46,7 +42,6 @@
     },
     {
       "name": "Sport TV 5",
-      "logo": "img/channels/sporttv5.png", 
       "srcs": [
         "https://playmatch.live/player/PT/409",
         "https://thedaddy.to/embed/stream-290.php",
@@ -58,7 +53,6 @@
     },
     {
       "name": "Sport TV 6",
-      "logo": "img/channels/sporttv6.png", 
       "srcs": [
         "https://playmatch.live/player/PT/3294",
         "https://thedaddy.to/embed/stream-291.php",
@@ -67,14 +61,12 @@
     },
     {
       "name": "Sport TV 7",
-      "logo": "img/channels/sporttv7.png", 
       "srcs": [
         "https://playmatch.live/player/PT/6381"
       ]
     },
     {
       "name": "DAZN 1",
-      "logo": "img/channels/dazn1_pt.png", 
       "srcs": [
         "https://playmatch.live/player/PT/6078",
         "https://thedaddy.to/embed/stream-455.php",
@@ -84,7 +76,6 @@
     },
     {
       "name": "DAZN 2",
-      "logo": "img/channels/dazn2_pt.png", 
       "srcs": [
         "https://playmatch.live/player/PT/6079",
         "https://streamtp4.com/global1.php?stream=eleven2_pt",
@@ -93,7 +84,6 @@
     },
     {
       "name": "DAZN 3",
-       "logo": "img/channels/dazn3_pt.png", 
       "srcs": [
         "https://playmatch.live/player/PT/6080",
         "https://welivesport.shop/esta/eleven3pt.php",
@@ -102,7 +92,6 @@
     },
     {
       "name": "DAZN 4",
-       "logo": "img/channels/dazn4_pt.png", 
       "srcs": [
         "https://playmatch.live/player/PT/6081",
         "https://welivesport.shop/esta/eleven4pt.php",
@@ -111,7 +100,6 @@
     },
     {
       "name": "DAZN 5",
-      "logo": "img/channels/dazn5_pt.png", 
       "srcs": [
         "https://playmatch.live/player/PT/6082",
         "https://thedaddy.to/embed/stream-459.php"
@@ -119,14 +107,12 @@
     },
     {
       "name": "DAZN 6",
-      "logo": "img/channels/dazn6_pt.png", 
       "srcs": [
         "https://playmatch.live/player/PT/6088"
         ]
     },
     {
       "name": "Benfica TV",
-      "logo": "img/channels/benficatv.png", 
       "srcs": [
         "https://playmatch.live/player/PT/403",
         "https://thedaddy.to/embed/stream-380.php"
@@ -134,7 +120,6 @@
     },
     {
       "name": "Canal 11",
-      "logo": "img/channels/canal11.png", 
       "srcs": [
         "https://playmatch.live/player/PT/2717",
         "https://dzeko11.pro/source/64"
@@ -142,188 +127,169 @@
     }
   ],
 "UK": [
-    {
-      "name": "Sky Sports Main Event",
-      "logo": "img/channels/skysports_me.png", 
-      "srcs": [
-            "https://playmatch.live/player/GB/1056",
-            "https://xextreamplay.xyz/premiumtv/daddylivehd.php?id=38",
-            "https://thedaddy.to/embed/stream-38.php"
-          ]
+{
+  "name": "Sky Sports Main Event",
+  "srcs": [
+        "https://playmatch.live/player/GB/1056",
+        "https://xextreamplay.xyz/premiumtv/daddylivehd.php?id=38",
+        "https://thedaddy.to/embed/stream-38.php"
+      ]
     },
     {
       "name": "Sky Sports Premier League",
-      "logo": "img/channels/skysports_pl.png", 
-      "srcs": [
-            "https://playmatch.live/player/GB/1057",
-            "https://xextreamplay.xyz/premiumtv/daddylivehd.php?id=130",
-            "https://thedaddy.to/embed/stream-130.php"
-          ]
+  "srcs": [
+        "https://playmatch.live/player/GB/1057",
+        "https://xextreamplay.xyz/premiumtv/daddylivehd.php?id=130",
+        "https://thedaddy.to/embed/stream-130.php"
+      ]
     },
     {
       "name": "TNT Sports 1",
-      "logo": "img/channels/tnt1_uk.png", 
-      "srcs": [
-            "https://playmatch.live/player/GB/5430",
-            "https://streamtp4.com/global1.php?stream=tnt_1_gb",
-            "https://thedaddy.to/embed/stream-31.php",
-            "https://soccermlbstream.top/extra/1.php",
-            "https://daddylivehd1.click/embed/stream-31.php"
-          ]
+  "srcs": [
+        "https://playmatch.live/player/GB/5430",
+        "https://streamtp4.com/global1.php?stream=tnt_1_gb",
+        "https://thedaddy.to/embed/stream-31.php",
+        "https://soccermlbstream.top/extra/1.php",
+        "https://daddylivehd1.click/embed/stream-31.php"
+      ]
     },
     {
       "name": "TNT Sports 2",
-      "logo": "img/channels/tnt2_uk.png", 
-      "srcs": [
-            "https://playmatch.live/player/GB/5439",
-            "https://streamtp4.com/global1.php?stream=tnt_2_gb",
-            "https://thedaddy.to/embed/stream-32.php"
-          ]
+  "srcs": [
+        "https://playmatch.live/player/GB/5439",
+        "https://streamtp4.com/global1.php?stream=tnt_2_gb",
+        "https://thedaddy.to/embed/stream-32.php"
+      ]
     },
     {
       "name": "TNT Sports 3",
-      "logo": "img/channels/tnt3_uk.png", 
-      "srcs": [
-            "https://playmatch.live/player/GB/1057", 
-            "https://xextreamplay.xyz/premiumtv/daddylivehd.php?id=130",
-            "https://thedaddy.to/embed/stream-130.php"
-          ]
+  "srcs": [
+        "https://playmatch.live/player/GB/1057",
+        "https://xextreamplay.xyz/premiumtv/daddylivehd.php?id=130",
+        "https://thedaddy.to/embed/stream-130.php"
+      ]
     },
     {
       "name": "TNT Sports 4",
-      "logo": "img/channels/tnt4_uk.png", 
-      "srcs": [
-            "https://playmatch.live/player/GB/5497",
-            "https://streamtp4.com/global1.php?stream=tnt_4_gb",
-            "https://thedaddy.to/embed/stream-34.php"
-          ]
+  "srcs": [
+        "https://playmatch.live/player/GB/5497",
+        "https://streamtp4.com/global1.php?stream=tnt_4_gb",
+        "https://thedaddy.to/embed/stream-34.php"
+      ]
     },
     {
       "name": "Premier Sports 1",
-      "logo": "img/channels/premier1_uk.png", 
-      "srcs": [
-            "https://thedaddy.to/embed/stream-771.php",
-            "https://xextreamplay.xyz/premiumtv/daddylivehd.php?id=771"
-          ]
+  "srcs": [
+        "https://thedaddy.to/embed/stream-771.php",
+        "https://xextreamplay.xyz/premiumtv/daddylivehd.php?id=771"
+      ]
     },
     {
       "name": "Premier Sports 2",
-      "logo": "img/channels/premier2_uk.png", 
-      "srcs": [
-            "https://caq21harderv991gpluralplay.xyz/premiumtv/daddylivehd.php?id=31"
-      ]
-    }
+  "srcs": [
+        "https://caq21harderv991gpluralplay.xyz/premiumtv/daddylivehd.php?id=31"
+  ]
+}
 ],
 "ES": [
-    {
-      "name": "DAZN 1 [ES]",
-      "logo": "img/channels/dazn1_es.png", 
-      "srcs": [
-            "https://playmatch.live/player/ES/3247",
-            "https://streamtp4.com/global1.php?stream=dazn1",
-            "https://thedaddy.to/embed/stream-445.php"
-          ]
+{
+  "name": "DAZN 1 [ES]",
+  "srcs": [
+        "https://playmatch.live/player/ES/3247",
+        "https://streamtp4.com/global1.php?stream=dazn1",
+        "https://thedaddy.to/embed/stream-445.php"
+      ]
     },
     {
       "name": "DAZN 2 [ES]",
-      "logo": "img/channels/dazn2_es.png", 
-      "srcs": [
-            "https://playmatch.live/player/ES/3248",
-            "https://streamtp4.com/global1.php?stream=dazn2",
-            "https://thedaddy.to/embed/stream-446.php"
-          ]
+  "srcs": [
+        "https://playmatch.live/player/ES/3248",
+        "https://streamtp4.com/global1.php?stream=dazn2",
+        "https://thedaddy.to/embed/stream-446.php"
+      ]
     },
     {
       "name": "DAZN F1",
-      "logo": "img/channels/daznf1_es.png", 
-      "srcs": [
-            "https://playmatch.live/player/ES/340",
-            "https://xextreamplay.xyz/premiumtv/daddylivehd.php?id=537",
-            "https://thedaddy.to/embed/stream-537.php"
-          ]
+  "srcs": [
+        "https://playmatch.live/player/ES/340",
+        "https://xextreamplay.xyz/premiumtv/daddylivehd.php?id=537",
+        "https://thedaddy.to/embed/stream-537.php"
+      ]
     },
     {
       "name": "LaLiga TV Hypermotion",
-      "logo": "img/channels/laliga_hyper.png", 
-      "srcs": [
-            "https://playmatch.live/player/ES/5496",
-            "https://streamtp4.com/global1.php?stream=laligahypermotion",
-            "https://thedaddy.to/embed/stream-539.php"
-          ]
+  "srcs": [
+        "https://playmatch.live/player/ES/5496",
+        "https://streamtp4.com/global1.php?stream=laligahypermotion",
+        "https://thedaddy.to/embed/stream-539.php"
+      ]
     },
     {
       "name": "LaLiga TV Hypermotion 2",
-      "logo": "img/channels/laliga_hyper2.png", 
-      "srcs": [
-            "https://playmatch.live/player/ES/5506"
-          ]
+  "srcs": [
+        "https://playmatch.live/player/ES/5506"
+      ]
     },
     {
       "name": "LaLiga TV Hypermotion 3",
-      "logo": "img/channels/laliga_hyper3.png", 
-      "srcs": [
-            "https://playmatch.live/player/ES/5643"
-          ]
+  "srcs": [
+        "https://playmatch.live/player/ES/5643"
+      ]
     },
     {
       "name": "M+ Desportes 1",
-      "logo": "img/channels/m_desportes1.png", 
-      "srcs": [
-            "https://playmatch.live/player/ES/985",
-            "https://xextreamplay.xyz/premiumtv/daddylivehd.php?id=436",
-            "https://thedaddy.to/embed/stream-436.php"
-          ]
+  "srcs": [
+        "https://playmatch.live/player/ES/985",
+        "https://xextreamplay.xyz/premiumtv/daddylivehd.php?id=436",
+        "https://thedaddy.to/embed/stream-436.php"
+      ]
     },
     {
       "name": "M+ Desportes 2",
-      "logo": "img/channels/m_desportes2.png", 
-      "srcs": [
-            "https://playmatch.live/player/ES/986",
-            "https://xextreamplay.xyz/premiumtv/daddylivehd.php?id=438",
-            "https://thedaddy.to/embed/stream-438.php"
-          ]
+  "srcs": [
+        "https://playmatch.live/player/ES/986",
+        "https://xextreamplay.xyz/premiumtv/daddylivehd.php?id=438",
+        "https://thedaddy.to/embed/stream-438.php"
+      ]
     },
     {
       "name": "M+ LaLiga TV",
-      "logo": "img/channels/m_laliga.png", 
-      "srcs": [
-            "https://playmatch.live/player/ES/5427",
-            "https://xextreamplay.xyz/premiumtv/daddylivehd.php?id=84",
-            "https://thedaddy.to/embed/stream-84.php"
-          ]
+  "srcs": [
+        "https://playmatch.live/player/ES/5427",
+        "https://xextreamplay.xyz/premiumtv/daddylivehd.php?id=84",
+        "https://thedaddy.to/embed/stream-84.php"
+      ]
     },
     {
       "name": "M+ Liga de Campeones",
-      "logo": "img/channels/m_campeones.png", 
-      "srcs": [
-            "https://playmatch.live/player/ES/1955",
-            "https://time4tv.top/embed/channels/stream435/link1.php",
-            "https://thedaddy.to/embed/stream-435.php",
-            "https://daddylivehd1.click/embed/stream-435.php"
-          ]
+  "srcs": [
+        "https://playmatch.live/player/ES/1955",
+        "https://time4tv.top/embed/channels/stream435/link1.php",
+        "https://thedaddy.to/embed/stream-435.php",
+        "https://daddylivehd1.click/embed/stream-435.php"
+      ]
     },
     {
       "name": "M+ Liga de Campeones 2",
-      "logo": "img/channels/m_campeones2.png", 
-      "srcs": [
-            "https://playmatch.live/player/ES/1956"
-          ]
+  "srcs": [
+        "https://playmatch.live/player/ES/1956"
+      ]
     },
     {
       "name": "TVE La 1",
-      "logo": "img/channels/tve1.png", 
-      "srcs": [
-            "https://thedaddy.to/embed/stream-533.php",
-            "https://xextreamplay.xyz/premiumtv/daddylivehd.php?id=533"
-          ]
+  "srcs": [
+        "https://thedaddy.to/embed/stream-533.php",
+        "https://xextreamplay.xyz/premiumtv/daddylivehd.php?id=533"
+      ]
     },
     {
       "name": "TVE La 2",
-      "logo": "img/channels/tve2.png", 
-      "srcs": [
-            "https://thedaddy.to/embed/stream-536.php",
-            "https://xextreamplay.xyz/premiumtv/daddylivehd.php?id=536"
-          ]
+  "srcs": [
+        "https://thedaddy.to/embed/stream-536.php",
+        "https://xextreamplay.xyz/premiumtv/daddylivehd.php?id=536"
+      ]
     }
-  ]
+  ],
+"Matches": []
 }
+
