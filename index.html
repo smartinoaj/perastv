@@ -162,38 +162,44 @@
 
         /* --- Channel Header --- */
         .channel-header {
-            /* --- MODIFIED: Added Flexbox for centering --- */
             display: flex;           /* Enable Flexbox */
             align-items: center;     /* Vertically center items */
             justify-content: center; /* Horizontally center items */
-            /* --- End Modification --- */
             gap: 10px; text-align: center; min-height: 40px; /* Ensure consistent height */
-            cursor: pointer; padding-right: 30px; /* Space for favorite button */
+            cursor: pointer;
+            /* --- MODIFIED: Removed padding-right --- */
+            /* padding-right: 30px; */ /* Removed - space for button handled by absolute positioning */
             width: 100%; /* Ensure header takes full width */
         }
         /* Matches Header Layout (adjust gap if needed) */
-        /* Kept justify-content: center here, redundant but harmless */
         .channel-box[id^="match-"] .channel-header { justify-content: center; gap: 15px; }
         /* Logo styling for MATCHES */
         .match-logo {
             height: 40px; width: 40px; object-fit: contain; /* Scale nicely */
             flex-shrink: 0; border-radius: 4px; display: inline-block; vertical-align: middle;
-            /* REMOVED background-color */
         }
         /* Title */
         .channel-header h3 {
             font-size: 1.1em; font-weight: 600; margin: 0;
             word-break: break-word; /* Prevent long names overflowing */
             text-align: center; /* Ensure text itself is centered */
-            /* --- MODIFIED: Adjusted flex properties --- */
-            flex-grow: 0; /* Don't allow title to grow excessively, especially with logos */
+            flex-grow: 0; /* Don't allow title to grow excessively */
             flex-shrink: 1; /* Allow title to shrink if needed */
-            /* --- End Modification --- */
             padding: 0 5px; /* Small padding around text */
+            /* --- Add padding to account for the favorite button space --- */
+            /* Adjust this value if the button size/position changes */
+            padding-right: 35px; /* Add space on the right for the button */
+            padding-left: 35px;  /* Add equal space on the left for balance */
+            box-sizing: border-box; /* Include padding in the element's total width/height */
         }
         /* Spacing around match titles */
-        /* Removed redundant flex-grow: 0 from here as it's now in the general h3 rule */
-        .channel-box[id^="match-"] .channel-header h3 { margin-left: 5px; margin-right: 5px; }
+        .channel-box[id^="match-"] .channel-header h3 {
+            margin-left: 5px; margin-right: 5px;
+            /* No extra padding needed here as logos provide visual balance */
+            padding-left: 5px;
+            padding-right: 5px;
+        }
+
 
         /* Channel Info (for Matches) */
         .channel-info {
@@ -207,7 +213,6 @@
 
         /* --- Expanded Channel Box --- */
         .channel-box.expanded {
-            /* **MODIFIED: Force span and auto width** */
             grid-column: 1 / -1; /* Force item to span all columns of its parent grid */
             width: auto;         /* Allow the item to naturally fill the spanned columns */
             max-width: 1200px;   /* Still limit maximum width on very large screens */
@@ -329,6 +334,8 @@
              .favorite-button svg { width: 18px; height: 18px; }
              /* Ensure expanded box still has reasonable max-width on mobile */
              .channel-box.expanded { max-width: 95%; }
+             /* Adjust padding for smaller screens */
+             .channel-header h3 { padding-left: 30px; padding-right: 30px; }
         }
         @media (max-width: 480px) { /* Apply below 480px */
             .container { padding: 0 10px; }
@@ -347,6 +354,8 @@
              .channel-info { font-size: 0.7em;}
              .footer-disclaimer { font-size: 0.7em; }
              .box-disclaimer { font-size: 0.65em; }
+             /* Adjust padding for smallest screens */
+             .channel-header h3 { padding-left: 25px; padding-right: 25px; }
         }
 
     </style>
@@ -858,7 +867,6 @@
 
     /**
      * Creates the HTML element (DIV) for a single channel box.
-     * **MODIFIED: Does NOT include channel logos.**
      * @param {object} channelData - Channel data object { name, srcs: [{ label, url }] }. Logo property is ignored.
      * @param {string} uniqueItemId - The unique identifier for this channel box element (e.g., 'PT-channel-0').
      * @returns {HTMLDivElement | null} The created channel box element or null on error.
@@ -916,7 +924,6 @@
 
      /**
       * Creates the HTML element (DIV) for a single match box.
-      * **MODIFIED: Uses helper that no longer adds background to placeholder spans.**
       * @param {object} matchData - Match data object { team1, team2, logo1?, logo2?, time?, league?, pt:[], uk:[], es:[] }.
       * @param {string} uniqueItemId - The unique identifier for this match box element (e.g., 'match-0').
       * @returns {HTMLDivElement | null} The created match box element or null on error.
