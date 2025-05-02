@@ -280,8 +280,7 @@
 
         // --- Favorite Management ---
         function loadFavoritesFromStorage() { /* ... (keep existing code) ... */
-            const storedFavoritesJson = localStorage.getItem(CONFIG.favoritesKey);
-            if (storedFavoritesJson) { try { const parsedFavorites = JSON.parse(storedFavoritesJson); if (Array.isArray(parsedFavorites) && parsedFavorites.every(item => typeof item === 'string')) { favoriteItemIds = parsedFavorites; } else { console.warn("Invalid favorites data found. Resetting."); favoriteItemIds = []; localStorage.removeItem(CONFIG.favoritesKey); } } catch (error) { console.error("Error parsing favorites:", error); favoriteItemIds = []; } } else { favoriteItemIds = []; } console.log("Loaded favorites:", favoriteItemIds);
+            const storedFavoritesJson = localStorage.getItem(CONFIG.favoritesKey); if (storedFavoritesJson) { try { const parsedFavorites = JSON.parse(storedFavoritesJson); if (Array.isArray(parsedFavorites) && parsedFavorites.every(item => typeof item === 'string')) { favoriteItemIds = parsedFavorites; } else { console.warn("Invalid favorites data found. Resetting."); favoriteItemIds = []; localStorage.removeItem(CONFIG.favoritesKey); } } catch (error) { console.error("Error parsing favorites:", error); favoriteItemIds = []; } } else { favoriteItemIds = []; } console.log("Loaded favorites:", favoriteItemIds);
         }
         function saveFavoritesToStorage() { /* ... (keep existing code) ... */
             try { localStorage.setItem(CONFIG.favoritesKey, JSON.stringify(favoriteItemIds)); console.log("Saved favorites:", favoriteItemIds); } catch (error) { console.error("Error saving favorites:", error); }
@@ -308,11 +307,10 @@
             if (openInNewTabToggleElement) { openInNewTabToggleElement.addEventListener('change', (event) => { const isChecked = event.target.checked; openInNewTabEnabled = isChecked; if (isChecked && openInPlayerPageToggleElement) { openInPlayerPageToggleElement.checked = false; openInPlayerPageEnabled = false; } saveToggleStates(); console.log(`'Open source in new tab' toggled: ${openInNewTabEnabled}`); }); }
             if (openInPlayerPageToggleElement) { openInPlayerPageToggleElement.addEventListener('change', (event) => { const isChecked = event.target.checked; openInPlayerPageEnabled = isChecked; if (isChecked && openInNewTabToggleElement) { openInNewTabToggleElement.checked = false; openInNewTabEnabled = false; } saveToggleStates(); console.log(`'Open player page in new tab' toggled: ${openInPlayerPageEnabled}`); }); }
             // Keyboard
-            document.addEventListener('keydown', (event) => { /* ... (keep existing keyboard nav logic, BUT see modification in addChannelBoxEventListeners for Enter/OK) ... */
+            document.addEventListener('keydown', (event) => { /* ... (keep existing keyboard nav logic, box activation moved) ... */
                  if (event.key === 'Escape' && currentlyExpandedBoxElement) { collapseItemBox(currentlyExpandedBoxElement); }
                  const focusableElements = getFocusableElementsInActiveGrid(); const currentIndex = focusableElements.indexOf(document.activeElement);
                  if (['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight'].includes(event.key)) { if (document.activeElement && document.activeElement.closest('.channel-box') && !currentlyExpandedBoxElement) { event.preventDefault(); let nextIndex = -1; const activeGrid = document.getElementById(activeTabId); const numCols = activeGrid ? getComputedStyle(activeGrid).gridTemplateColumns.split(' ').length : 1; switch (event.key) { case 'ArrowDown': nextIndex = currentIndex + numCols; break; case 'ArrowUp': nextIndex = currentIndex - numCols; break; case 'ArrowRight': nextIndex = (currentIndex + 1) % numCols === 0 && numCols > 1 ? -1 : currentIndex + 1; break; case 'ArrowLeft': nextIndex = currentIndex % numCols === 0 && numCols > 1 ? -1 : currentIndex - 1; break; } if (nextIndex >= 0 && nextIndex < focusableElements.length) { focusableElements[nextIndex].focus(); } } else if (!document.activeElement || document.activeElement === document.body || document.activeElement === searchInputElement || document.activeElement.closest('.tabs')) { focusableElements[0]?.focus(); } }
-                 // Enter/OK on box is now handled in addChannelBoxEventListeners
                  if (event.key === 'Enter' || event.key === 'Ok') { if (document.activeElement && document.activeElement.classList.contains('stream-button')) { event.preventDefault(); document.activeElement.click(); } else if (document.activeElement && document.activeElement.classList.contains('tab-button')) { event.preventDefault(); document.activeElement.click(); } else if (document.activeElement && document.activeElement.classList.contains('favorite-button')) { event.preventDefault(); document.activeElement.click(); } }
             });
         }
@@ -349,68 +347,8 @@
        }
 
         // --- Event Listener Setup for Channel Boxes ---
-        /**
-         * Adds listeners to channel/match boxes.
-         * **MODIFIED:** Click/Enter on box now checks `openInPlayerPageEnabled`.
-         * @param {HTMLElement} [scopeElement=document] - Optional scope.
-         */
-        function addChannelBoxEventListeners(scopeElement = document) {
-             if (!scopeElement) return;
-             scopeElement.querySelectorAll('.channel-box:not([data-listener-added="true"])').forEach(boxElement => {
-                const headerElement = boxElement.querySelector('.channel-header');
-                const infoElement = boxElement.querySelector('.channel-info');
-                const favoriteButtonElement = boxElement.querySelector('.favorite-button');
-                const boxId = boxElement.id;
-                const itemId = boxElement.dataset.itemId; // Get the item ID
-
-                // --- Click Handler for Header/Info ---
-                const handleBoxClick = (event) => {
-                     // Prevent action if favorite button was clicked
-                     if (event.target.closest('.favorite-button')) return;
-
-                     // Check if player page toggle is ON
-                     if (openInPlayerPageEnabled && itemId) {
-                         const playerPageUrl = `player.html?item=${encodeURIComponent(itemId)}`;
-                         console.log(`Box clicked: Opening player page in new tab (${playerPageUrl})`);
-                         window.open(playerPageUrl, '_blank');
-                     } else {
-                         // Default behavior: Expand the box
-                         console.log("Box clicked: Expanding box.");
-                         toggleItemBoxExpansion(boxElement);
-                     }
-                };
-
-                // Add click listener to header and info (if it exists)
-                if (headerElement) headerElement.addEventListener('click', handleBoxClick);
-                if (infoElement && getComputedStyle(infoElement).display !== 'none') {
-                     infoElement.addEventListener('click', handleBoxClick);
-                }
-
-                // --- Favorite Button Handler (Click) ---
-                if (favoriteButtonElement && boxId) { favoriteButtonElement.addEventListener('click', (event) => { event.stopPropagation(); toggleFavoriteStatus(boxId, favoriteButtonElement); }); }
-                else if (!boxId) { console.warn("Could not attach favorite listener: Box ID missing.", boxElement); }
-
-                // --- Keyboard Activation Handler (Enter/OK on the box itself) ---
-                boxElement.addEventListener('keydown', (event) => {
-                     if ((event.key === 'Enter' || event.key === 'Ok') && !boxElement.classList.contains('expanded')) {
-                         event.preventDefault(); // Prevent default action
-
-                         // Check if player page toggle is ON
-                         if (openInPlayerPageEnabled && itemId) {
-                            const playerPageUrl = `player.html?item=${encodeURIComponent(itemId)}`;
-                            console.log(`Box activated (keyboard): Opening player page in new tab (${playerPageUrl})`);
-                            window.open(playerPageUrl, '_blank');
-                         } else {
-                            // Default behavior: Expand the box
-                            console.log("Box activated (keyboard): Expanding box.");
-                            toggleItemBoxExpansion(boxElement);
-                         }
-                     }
-                });
-
-                // --- Mark as Processed ---
-                boxElement.dataset.listenerAdded = 'true';
-            });
+        function addChannelBoxEventListeners(scopeElement = document) { /* ... (keep existing code - handles box click/activation based on toggle) ... */
+             if (!scopeElement) return; scopeElement.querySelectorAll('.channel-box:not([data-listener-added="true"])').forEach(boxElement => { const headerElement = boxElement.querySelector('.channel-header'); const infoElement = boxElement.querySelector('.channel-info'); const favoriteButtonElement = boxElement.querySelector('.favorite-button'); const boxId = boxElement.id; const itemId = boxElement.dataset.itemId; const handleBoxClick = (event) => { if (event.target.closest('.favorite-button')) return; if (openInPlayerPageEnabled && itemId) { const playerPageUrl = `player.html?item=${encodeURIComponent(itemId)}`; console.log(`Box clicked: Opening player page in new tab (${playerPageUrl})`); window.open(playerPageUrl, '_blank'); } else { console.log("Box clicked: Expanding/Collapsing box."); toggleItemBoxExpansion(boxElement); } }; if (headerElement) headerElement.addEventListener('click', handleBoxClick); if (infoElement && getComputedStyle(infoElement).display !== 'none') { infoElement.addEventListener('click', handleBoxClick); } if (favoriteButtonElement && boxId) { favoriteButtonElement.addEventListener('click', (event) => { event.stopPropagation(); toggleFavoriteStatus(boxId, favoriteButtonElement); }); } else if (!boxId) { console.warn("Could not attach favorite listener: Box ID missing.", boxElement); } boxElement.addEventListener('keydown', (event) => { if ((event.key === 'Enter' || event.key === 'Ok') && !boxElement.classList.contains('expanded')) { event.preventDefault(); if (openInPlayerPageEnabled && itemId) { const playerPageUrl = `player.html?item=${encodeURIComponent(itemId)}`; console.log(`Box activated (keyboard): Opening player page in new tab (${playerPageUrl})`); window.open(playerPageUrl, '_blank'); } else { console.log("Box activated (keyboard): Expanding box."); toggleItemBoxExpansion(boxElement); } } }); boxElement.dataset.listenerAdded = 'true'; });
         }
 
         // --- Tab Management ---
@@ -427,17 +365,89 @@
         function toggleItemBoxExpansion(boxElement) { /* ... (keep existing code) ... */
              if (!boxElement) return; const isCurrentlyExpanded = boxElement.classList.contains('expanded'); const headerElement = boxElement.querySelector('.channel-header'); if (!isCurrentlyExpanded && currentlyExpandedBoxElement && currentlyExpandedBoxElement !== boxElement) { collapseItemBox(currentlyExpandedBoxElement); } if (!isCurrentlyExpanded) { expandItemBox(boxElement); if (headerElement) headerElement.setAttribute('aria-expanded', 'true'); } else { collapseItemBox(boxElement); if (headerElement) headerElement.setAttribute('aria-expanded', 'false'); }
         }
-        function expandItemBox(boxElement) { /* ... (keep existing code) ... */
-            boxElement.classList.add('expanded'); boxElement.classList.remove('hidden'); boxElement.tabIndex = -1; currentlyExpandedBoxElement = boxElement; populateStreamsAndLoadFirst(boxElement); setTimeout(() => { boxElement.scrollIntoView({ behavior: 'smooth', block: 'nearest' }); const firstStreamButton = boxElement.querySelector('.stream-button'); if (firstStreamButton) setTimeout(() => firstStreamButton.focus({ preventScroll: true }), 150); else boxElement.querySelector('.iframe-container')?.focus(); }, 100);
+
+        /**
+         * Expands a box.
+         * **MODIFIED:** Conditionally hides player area if 'Open source in new tab' is ON.
+         * @param {HTMLDivElement} boxElement - The box element to expand.
+         */
+        function expandItemBox(boxElement) {
+            if (!boxElement) return;
+            const playerAreaElement = boxElement.querySelector('.player-area');
+
+            // --- NEW: Hide/Show Player Area based on Toggle ---
+            if (playerAreaElement) {
+                if (openInNewTabEnabled) {
+                    console.log("   Hiding player area because 'Open source in new tab' is ON.");
+                    playerAreaElement.style.display = 'none'; // Hide player
+                } else {
+                    console.log("   Ensuring player area is visible.");
+                    playerAreaElement.style.display = 'flex'; // Ensure player is visible (flex centers loader/msg)
+                }
+            }
+            // --- End of New Logic ---
+
+            boxElement.classList.add('expanded');
+            boxElement.classList.remove('hidden'); // Ensure it's visible
+            boxElement.tabIndex = -1; // Remove from main grid tab flow when expanded
+            currentlyExpandedBoxElement = boxElement; // Update global tracker
+
+            populateStreamsAndLoadFirst(boxElement); // Load stream buttons and attempt to play (if needed)
+
+            // --- Smooth Scroll into View ---
+            setTimeout(() => {
+                 boxElement.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+                 // --- Focus Management (Accessibility) ---
+                 const firstStreamButton = boxElement.querySelector('.stream-button');
+                 if (firstStreamButton) setTimeout(() => firstStreamButton.focus({ preventScroll: true }), 150);
+                 else boxElement.querySelector('.iframe-container')?.focus(); // Fallback
+            }, 100);
         }
-        function collapseItemBox(boxElement) { /* ... (keep existing code) ... */
-            const wasCurrentlyExpanded = (currentlyExpandedBoxElement === boxElement); boxElement.classList.remove('expanded'); if (wasCurrentlyExpanded) currentlyExpandedBoxElement = null; clearPlayerStateInBox(boxElement); const streamButtonsContainer = boxElement.querySelector('.stream-buttons'); if (streamButtonsContainer) streamButtonsContainer.innerHTML = ''; const headerElement = boxElement.querySelector('.channel-header'); if(headerElement) headerElement.setAttribute('aria-expanded', 'false'); const normalizedSearchTerm = searchInputElement.value.toLowerCase().trim(); const isSearching = normalizedSearchTerm !== ''; const parentGridId = boxElement.closest('.channel-grid')?.id; const itemName = boxElement.dataset.itemName?.toLowerCase() || ''; const additionalSearchTerms = boxElement.dataset.searchTerms?.toLowerCase() || ''; const matchesSearch = itemName.includes(normalizedSearchTerm) || additionalSearchTerms.includes(normalizedSearchTerm); let shouldBeVisibleAfterCollapse = false; if (!isSearching) { shouldBeVisibleAfterCollapse = (parentGridId === activeTabId); } else { if (parentGridId === activeTabId) shouldBeVisibleAfterCollapse = matchesSearch; else if (activeTabId === 'ALL') shouldBeVisibleAfterCollapse = matchesSearch; else if (activeTabId === 'Favorites') shouldBeVisibleAfterCollapse = matchesSearch && favoriteItemIds.includes(boxElement.id); } boxElement.classList.toggle('hidden', !shouldBeVisibleAfterCollapse); boxElement.tabIndex = shouldBeVisibleAfterCollapse ? 0 : -1; if (wasCurrentlyExpanded && shouldBeVisibleAfterCollapse) setTimeout(() => boxElement.focus({ preventScroll: true }), 50); else if (wasCurrentlyExpanded) setTimeout(() => document.getElementById(activeTabId)?.focus({ preventScroll: true }), 50);
+
+        /**
+         * Collapses a box.
+         * **MODIFIED:** Ensures player area display is reset.
+         * @param {HTMLDivElement} boxElement - The box element to collapse.
+         */
+        function collapseItemBox(boxElement) {
+            if (!boxElement) return;
+            const wasCurrentlyExpanded = (currentlyExpandedBoxElement === boxElement);
+            const playerAreaElement = boxElement.querySelector('.player-area'); // Get player area
+
+            boxElement.classList.remove('expanded');
+
+            if (wasCurrentlyExpanded) {
+                currentlyExpandedBoxElement = null;
+            }
+
+            // --- Clean Up Player and Buttons ---
+            clearPlayerStateInBox(boxElement); // Ensure player is fully cleared
+            const streamButtonsContainer = boxElement.querySelector('.stream-buttons');
+            if (streamButtonsContainer) streamButtonsContainer.innerHTML = ''; // Clear buttons
+
+            // --- NEW: Reset Player Area Display ---
+            if (playerAreaElement) {
+                playerAreaElement.style.display = ''; // Reset display (will default to CSS 'flex')
+            }
+            // --- End of New Logic ---
+
+            // Update accessibility attribute
+            const headerElement = boxElement.querySelector('.channel-header');
+            if(headerElement) headerElement.setAttribute('aria-expanded', 'false');
+
+            // --- Restore Focusability and Re-apply Filter ---
+            const normalizedSearchTerm = searchInputElement.value.toLowerCase().trim(); const isSearching = normalizedSearchTerm !== ''; const parentGridId = boxElement.closest('.channel-grid')?.id; const itemName = boxElement.dataset.itemName?.toLowerCase() || ''; const additionalSearchTerms = boxElement.dataset.searchTerms?.toLowerCase() || ''; const matchesSearch = itemName.includes(normalizedSearchTerm) || additionalSearchTerms.includes(normalizedSearchTerm); let shouldBeVisibleAfterCollapse = false; if (!isSearching) { shouldBeVisibleAfterCollapse = (parentGridId === activeTabId); } else { if (parentGridId === activeTabId) shouldBeVisibleAfterCollapse = matchesSearch; else if (activeTabId === 'ALL') shouldBeVisibleAfterCollapse = matchesSearch; else if (activeTabId === 'Favorites') shouldBeVisibleAfterCollapse = matchesSearch && favoriteItemIds.includes(boxElement.id); } boxElement.classList.toggle('hidden', !shouldBeVisibleAfterCollapse); boxElement.tabIndex = shouldBeVisibleAfterCollapse ? 0 : -1;
+
+            // --- Restore Focus ---
+            if (wasCurrentlyExpanded && shouldBeVisibleAfterCollapse) setTimeout(() => boxElement.focus({ preventScroll: true }), 50);
+            else if (wasCurrentlyExpanded) setTimeout(() => document.getElementById(activeTabId)?.focus({ preventScroll: true }), 50);
         }
+
         function populateStreamsAndLoadFirst(boxElement) { /* ... (keep existing code - handles 3 toggle states) ... */
-            const sourcesJson = boxElement.dataset.sources; const streamButtonsContainer = boxElement.querySelector('.stream-buttons'); const playerAreaElement = boxElement.querySelector('.player-area'); if (!sourcesJson || !streamButtonsContainer || !playerAreaElement) { displayNoStreamsAvailable(playerAreaElement, streamButtonsContainer); return; } streamButtonsContainer.innerHTML = ''; let firstStreamUrl = null; let firstStreamButtonElement = null; let streamCount = 0; const fragment = document.createDocumentFragment(); try { const sourcesData = JSON.parse(sourcesJson); if (Array.isArray(sourcesData)) { sourcesData.forEach((src) => { const url = typeof src === 'object' && src.url ? src.url : (typeof src === 'string' ? src : null); const label = typeof src === 'object' && src.label ? src.label : `Source ${streamCount + 1}`; if (url) { if (!firstStreamUrl) firstStreamUrl = url; const button = createStreamSourceButton(label, url, boxElement); if (!firstStreamButtonElement) firstStreamButtonElement = button; fragment.appendChild(button); streamCount++; } }); } else if (typeof sourcesData === 'object' && sourcesData !== null) { Object.entries(sourcesData).forEach(([langKey, sourcesInLang]) => { if (sourcesInLang && Array.isArray(sourcesInLang) && sourcesInLang.length > 0) { const langGroupDiv = document.createElement('div'); const langLabel = document.createElement('strong'); langLabel.textContent = `${langKey.toUpperCase()}:`; langGroupDiv.appendChild(langLabel); sourcesInLang.forEach((src) => { const url = typeof src === 'object' && src.url ? src.url : (typeof src === 'string' ? src : null); const label = typeof src === 'object' && src.label ? src.label : `Src ${streamCount + 1}`; if (url) { if (!firstStreamUrl) firstStreamUrl = url; const button = createStreamSourceButton(label, url, boxElement); if (!firstStreamButtonElement) firstStreamButtonElement = button; langGroupDiv.appendChild(button); streamCount++; } }); fragment.appendChild(langGroupDiv); } }); } streamButtonsContainer.appendChild(fragment); if (streamCount === 0) { displayNoStreamsAvailable(playerAreaElement, streamButtonsContainer); clearPlayerStateInBox(boxElement); } else if (openInPlayerPageEnabled) { console.log("Skipping auto-load: 'Open player page' enabled."); displayMessageInPlayerArea(playerAreaElement, `<strong>Select a source</strong><span>'Open player page' active. Click to open.</span>`, false); clearPlayerStateInBox(boxElement); } else if (openInNewTabEnabled) { console.log("Skipping auto-load: 'Open source' enabled."); displayMessageInPlayerArea(playerAreaElement, `<strong>Select a source</strong><span>'Open source' active. Click to open.</span>`, false); clearPlayerStateInBox(boxElement); } else if (firstStreamUrl && firstStreamButtonElement) { const videoEl = boxElement.querySelector('video'); const iframeEl = boxElement.querySelector('iframe'); if (!videoEl.classList.contains('active') && !iframeEl.classList.contains('active')) { console.log("Auto-loading first stream (toggles OFF)."); loadStreamIntoPlayer(firstStreamButtonElement, firstStreamUrl, boxElement); } else { console.log("Skipping auto-load, player active."); const activeSrc = videoEl.src || iframeEl.src; if (activeSrc) streamButtonsContainer.querySelectorAll('.stream-button').forEach(btn => btn.classList.toggle('active', btn.dataset.streamUrl === activeSrc)); } } else { console.error("Inconsistency: Streams counted, no first URL/Button.", boxElement.id); displayNoStreamsAvailable(playerAreaElement, streamButtonsContainer); clearPlayerStateInBox(boxElement); } } catch (error) { console.error("Failed to parse sources/create buttons:", boxElement.id, error); streamButtonsContainer.innerHTML = '<p class="status-message error">Error loading sources.</p>'; clearPlayerStateInBox(boxElement); }
+            const sourcesJson = boxElement.dataset.sources; const streamButtonsContainer = boxElement.querySelector('.stream-buttons'); const playerAreaElement = boxElement.querySelector('.player-area'); if (!sourcesJson || !streamButtonsContainer || !playerAreaElement) { displayNoStreamsAvailable(playerAreaElement, streamButtonsContainer); return; } streamButtonsContainer.innerHTML = ''; let firstStreamUrl = null; let firstStreamButtonElement = null; let streamCount = 0; const fragment = document.createDocumentFragment(); try { const sourcesData = JSON.parse(sourcesJson); if (Array.isArray(sourcesData)) { sourcesData.forEach((src) => { const url = typeof src === 'object' && src.url ? src.url : (typeof src === 'string' ? src : null); const label = typeof src === 'object' && src.label ? src.label : `Source ${streamCount + 1}`; if (url) { if (!firstStreamUrl) firstStreamUrl = url; const button = createStreamSourceButton(label, url, boxElement); if (!firstStreamButtonElement) firstStreamButtonElement = button; fragment.appendChild(button); streamCount++; } }); } else if (typeof sourcesData === 'object' && sourcesData !== null) { Object.entries(sourcesData).forEach(([langKey, sourcesInLang]) => { if (sourcesInLang && Array.isArray(sourcesInLang) && sourcesInLang.length > 0) { const langGroupDiv = document.createElement('div'); const langLabel = document.createElement('strong'); langLabel.textContent = `${langKey.toUpperCase()}:`; langGroupDiv.appendChild(langLabel); sourcesInLang.forEach((src) => { const url = typeof src === 'object' && src.url ? src.url : (typeof src === 'string' ? src : null); const label = typeof src === 'object' && src.label ? src.label : `Src ${streamCount + 1}`; if (url) { if (!firstStreamUrl) firstStreamUrl = url; const button = createStreamSourceButton(label, url, boxElement); if (!firstStreamButtonElement) firstStreamButtonElement = button; langGroupDiv.appendChild(button); streamCount++; } }); fragment.appendChild(langGroupDiv); } }); } streamButtonsContainer.appendChild(fragment); if (streamCount === 0) { displayNoStreamsAvailable(playerAreaElement, streamButtonsContainer); clearPlayerStateInBox(boxElement); } else if (openInPlayerPageEnabled) { console.log("Skipping auto-load: 'Open player page' enabled."); if (playerAreaElement.style.display !== 'none') displayMessageInPlayerArea(playerAreaElement, `<strong>Select a source</strong><span>'Open player page' active. Click to open.</span>`, false); clearPlayerStateInBox(boxElement); } else if (openInNewTabEnabled) { console.log("Skipping auto-load: 'Open source' enabled."); if (playerAreaElement.style.display !== 'none') displayMessageInPlayerArea(playerAreaElement, `<strong>Select a source</strong><span>'Open source' active. Click to open.</span>`, false); clearPlayerStateInBox(boxElement); } else if (firstStreamUrl && firstStreamButtonElement) { const videoEl = boxElement.querySelector('video'); const iframeEl = boxElement.querySelector('iframe'); if (!videoEl.classList.contains('active') && !iframeEl.classList.contains('active')) { console.log("Auto-loading first stream (toggles OFF)."); loadStreamIntoPlayer(firstStreamButtonElement, firstStreamUrl, boxElement); } else { console.log("Skipping auto-load, player active."); const activeSrc = videoEl.src || iframeEl.src; if (activeSrc) streamButtonsContainer.querySelectorAll('.stream-button').forEach(btn => btn.classList.toggle('active', btn.dataset.streamUrl === activeSrc)); } } else { console.error("Inconsistency: Streams counted, no first URL/Button.", boxElement.id); displayNoStreamsAvailable(playerAreaElement, streamButtonsContainer); clearPlayerStateInBox(boxElement); } } catch (error) { console.error("Failed to parse sources/create buttons:", boxElement.id, error); streamButtonsContainer.innerHTML = '<p class="status-message error">Error loading sources.</p>'; clearPlayerStateInBox(boxElement); }
         }
         function displayNoStreamsAvailable(playerAreaElement, streamButtonsContainer) { /* ... (keep existing code) ... */
-             const message = 'No stream sources listed for this item.'; if (streamButtonsContainer) streamButtonsContainer.innerHTML = `<p style="color: var(--text-secondary); font-size: 0.9em; padding: 10px 0;">${message}</p>`; if (playerAreaElement) displayMessageInPlayerArea(playerAreaElement, `<strong>No Streams Available</strong><span>${message}</span>`, false);
+             const message = 'No stream sources listed for this item.'; if (streamButtonsContainer) streamButtonsContainer.innerHTML = `<p style="color: var(--text-secondary); font-size: 0.9em; padding: 10px 0;">${message}</p>`; if (playerAreaElement && playerAreaElement.style.display !== 'none') displayMessageInPlayerArea(playerAreaElement, `<strong>No Streams Available</strong><span>${message}</span>`, false);
         }
 
         // --- Stream Handling (Only used when BOTH toggles are false) ---
