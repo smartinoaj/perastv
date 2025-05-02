@@ -79,6 +79,34 @@
         .tab-button.active { background: var(--accent-color); color: white; border-color: var(--accent-color); }
         .tab-button.active .tab-icon { fill: white; } /* Ensure icon is white when active */
 
+        /* --- MODIFIED: Style for Favorites Tab Button --- */
+        .tab-button[data-tab="Favorites"] {
+            color: var(--favorite-color); /* Default color is gold */
+            border-color: var(--favorite-color); /* Gold border */
+            padding: 10px 15px; /* Adjust padding if only icon is shown */
+        }
+        .tab-button[data-tab="Favorites"] .tab-icon {
+             fill: var(--favorite-color); /* Ensure icon is gold */
+        }
+        /* Hover state for Favorites tab */
+        .tab-button[data-tab="Favorites"]:hover {
+            background: var(--favorite-color); /* Gold background on hover */
+            color: var(--bg-secondary); /* Dark text on hover */
+            border-color: var(--favorite-color);
+        }
+        .tab-button[data-tab="Favorites"]:hover .tab-icon {
+            fill: var(--bg-secondary); /* Dark icon on hover */
+        }
+        /* Active state for Favorites tab */
+        .tab-button[data-tab="Favorites"].active {
+            background: var(--favorite-color); /* Gold background when active */
+            color: var(--bg-secondary); /* Dark text when active */
+            border-color: var(--favorite-color);
+        }
+         .tab-button[data-tab="Favorites"].active .tab-icon {
+            fill: var(--bg-secondary); /* Dark icon when active */
+        }
+
 
         /* --- Channel Grid (General) --- */
         .channel-grid {
@@ -299,7 +327,7 @@
              <svg class="tab-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                  <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
              </svg>
-             </button>
+        </button>
         <button class="tab-button" data-tab="ALL">ALL</button>
         <button class="tab-button" data-tab="PT">PT</button>
         <button class="tab-button" data-tab="UK">UK</button>
@@ -329,7 +357,7 @@
 </footer>
 
 <script>
-    /* --- JavaScript --- */
+    /* --- JavaScript (No changes needed) --- */
 
     // --- Configuration Constants ---
     const CONFIG = {
@@ -594,37 +622,29 @@
             return;
         }
 
-        favorites.forEach(favId => {
-            // Find the original data for this favorite ID
-            let itemData = null;
-            let isMatch = favId.startsWith('match-');
-            let itemIndex = parseInt(favId.split('-').pop()); // Get index
+        // Create boxes for favorites in the original order they appear in the data
+        const favoriteBoxes = [];
 
-            if (isMatch) {
-                if (matchesData && matchesData[itemIndex]) {
-                    itemData = matchesData[itemIndex];
-                }
-            } else {
-                const prefix = favId.split('-')[0]; // PT, UK, ES
-                if (channelsData[prefix] && channelsData[prefix][itemIndex]) {
-                    itemData = channelsData[prefix][itemIndex];
-                }
-            }
-
-            // If data found, create and append the box
-            if (itemData) {
-                const box = isMatch
-                    ? createMatchBoxElement(itemData, favId)
-                    : createChannelBoxElement(itemData, favId);
-                favGrid.appendChild(box);
-            } else {
-                console.warn("Could not find data for favorite ID:", favId);
-                // Optionally remove invalid ID from favorites here
-                // const indexToRemove = favorites.indexOf(favId);
-                // if (indexToRemove > -1) favorites.splice(indexToRemove, 1);
-                // saveFavorites();
+        // Check matches
+        matchesData.forEach((match, index) => {
+            const uniqueId = `match-${index}`;
+            if (favorites.includes(uniqueId)) {
+                favoriteBoxes.push(createMatchBoxElement(match, uniqueId));
             }
         });
+
+        // Check channels (PT, UK, ES)
+        ['PT', 'UK', 'ES'].forEach(prefix => {
+            (channelsData[prefix] || []).forEach((channel, index) => {
+                const uniqueId = `${prefix}-channel-${index}`;
+                if (favorites.includes(uniqueId)) {
+                    favoriteBoxes.push(createChannelBoxElement(channel, uniqueId));
+                }
+            });
+        });
+
+        // Append all found favorite boxes to the grid
+        favoriteBoxes.forEach(box => favGrid.appendChild(box));
 
         // Re-add listeners to the newly created boxes in the Favorites tab
         addChannelBoxEventListeners();
@@ -632,7 +652,6 @@
 
 
     // --- Element Creation ---
-    // MODIFIED: Add favorite button and check initial state
     function createChannelBoxElement(channel, uniqueId) {
         const { name, srcs = [] } = channel;
         const box = document.createElement('div');
@@ -666,7 +685,6 @@
         `;
         return box;
     }
-     // MODIFIED: Add favorite button and check initial state
      function createMatchBoxElement(match, uniqueId) {
         const { team1, team2, logo1 = '', logo2 = '', time = '', league = '', pt = [], uk = [], es = [] } = match;
         const box = document.createElement('div');
@@ -726,7 +744,6 @@
 
 
     // --- Event Listener Setup for Channel Boxes ---
-    // MODIFIED: Add listener for favorite button
     function addChannelBoxEventListeners() {
          document.querySelectorAll('.channel-box').forEach(box => {
             // Prevent adding listeners multiple times
@@ -738,7 +755,7 @@
 
             // Toggle Expansion Listener
             const toggleHandler = (event) => {
-                 // Ensure click is not on the favorite button
+                 // Ensure click is not on the favorite button or stream button
                  if (!event.target.closest('.favorite-button') && !event.target.closest('.stream-button')) {
                     toggleExpansion(box);
                  }
@@ -798,23 +815,20 @@
     }
 
     // --- Search Filtering ---
-    // MODIFIED: Handle filtering within Favorites tab
     function filterChannels(searchTerm) {
         const term = searchTerm.toLowerCase().trim();
         const isSearching = term !== '';
 
         // Determine which boxes to iterate over based on active tab and search state
-        let boxesToFilter;
+        let boxesToFilterSelector;
         if (isSearching) {
             // Global search: check all boxes
-            boxesToFilter = document.querySelectorAll('.channel-box');
-        } else if (activeTabId === 'Favorites') {
-            // No search, Favorites tab active: only check boxes within #Favorites grid
-            boxesToFilter = document.querySelectorAll('#Favorites .channel-box');
+            boxesToFilterSelector = '.channel-box';
         } else {
-            // No search, other tab active: only check boxes within that tab's grid
-            boxesToFilter = document.querySelectorAll(`#${activeTabId} .channel-box`);
+            // No search: only check boxes within the active tab's grid
+            boxesToFilterSelector = `#${activeTabId} .channel-box`;
         }
+        const boxesToFilter = document.querySelectorAll(boxesToFilterSelector);
 
 
         boxesToFilter.forEach(box => {
@@ -824,7 +838,7 @@
 
             let isVisible = false;
             if (!isSearching) {
-                // If not searching, the box is visible by default (already filtered by tab)
+                // If not searching, the box is visible by default (already filtered by tab selector)
                 isVisible = true;
             } else {
                 // If searching, visibility depends on matching the term
@@ -847,7 +861,12 @@
          // Show/Hide grids based on visible children during active search
          channelGrids.forEach(grid => {
             if (isSearching) {
-                const hasVisibleChildren = Array.from(grid.querySelectorAll('.channel-box:not(.hidden)')).length > 0;
+                // Check if *any* box within this grid matches the search
+                const hasVisibleChildren = Array.from(grid.querySelectorAll('.channel-box')).some(box => {
+                     const channelName = box.dataset.channelName?.toLowerCase() || '';
+                     const searchTerms = box.dataset.searchTerms?.toLowerCase() || '';
+                     return channelName.includes(term) || searchTerms.includes(term);
+                 });
                 grid.classList.toggle('active', hasVisibleChildren); // Show if it has results
             } else {
                  grid.classList.toggle('active', grid.id === activeTabId); // Standard tab visibility
