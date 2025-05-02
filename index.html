@@ -100,6 +100,7 @@
         console.log("PerasTV Initializing...");
         loadFavoritesFromStorage(); // Load favorites from localStorage first
         setupGlobalEventListeners();     // Set up tab clicks, search, keyboard shortcuts
+        setupConsoleDeterrents();    // Add listeners to deter console access
         updateTimestampDisplay();         // Display initial time
         setInterval(updateTimestampDisplay, 60000); // Update time every minute
         fetchAndRenderData();           // Fetch channel/match data and render the UI
@@ -226,16 +227,15 @@
             }, CONFIG.searchDebounceMs);
         });
 
-        // --- Global Keydown Listener ---
+        // --- Global Keydown Listener (Handles Navigation and Activation) ---
+        // Note: F12 and other dev tool shortcuts are handled in setupConsoleDeterrents
         document.addEventListener('keydown', (event) => {
             // Close the currently expanded box when the Escape key is pressed
             if (event.key === 'Escape' && currentlyExpandedBoxElement) {
                 collapseItemBox(currentlyExpandedBoxElement); // Use the collapse function
             }
 
-            // --- Basic D-Pad Navigation (Example - Needs Refinement) ---
-            // This is a very basic example and needs significant improvement for robust TV navigation.
-            // It doesn't handle grid wrapping, focusing search/tabs, or player controls well.
+            // --- Basic D-Pad Navigation ---
             const focusableElements = getFocusableElementsInActiveGrid();
             const currentIndex = focusableElements.indexOf(document.activeElement);
 
@@ -1736,6 +1736,73 @@
         console.log("   Iframe: Setting src attribute.");
         iframeElement.src = iframeUrl;
     }
+
+    // --- Console Access Deterrents ---
+    /**
+     * Adds event listeners to attempt to block right-click and common dev console shortcuts.
+     * Note: This is a deterrent, not foolproof security.
+     */
+    function setupConsoleDeterrents() {
+        // Disable right-click context menu
+        document.addEventListener('contextmenu', (event) => {
+            console.log("Context menu blocked.");
+            event.preventDefault();
+        });
+
+        // Attempt to block common dev tools key combinations
+        document.addEventListener('keydown', (event) => {
+            // Block F12
+            if (event.key === 'F12' || event.keyCode === 123) {
+                console.log("F12 key press detected - attempting block.");
+                event.preventDefault();
+                // Optional: Make console annoying to use if opened
+                // try { debugger; } catch(e) {}
+                return false;
+            }
+
+            // Block Ctrl+Shift+I (Inspect Element)
+            if (event.ctrlKey && event.shiftKey && (event.key === 'I' || event.keyCode === 73)) {
+                console.log("Ctrl+Shift+I detected - attempting block.");
+                event.preventDefault();
+                // try { debugger; } catch(e) {}
+                return false;
+            }
+
+            // Block Ctrl+Shift+J (Console)
+            if (event.ctrlKey && event.shiftKey && (event.key === 'J' || event.keyCode === 74)) {
+                console.log("Ctrl+Shift+J detected - attempting block.");
+                event.preventDefault();
+                // try { debugger; } catch(e) {}
+                return false;
+            }
+
+            // Block Ctrl+Shift+C (Inspect Element alternative)
+            if (event.ctrlKey && event.shiftKey && (event.key === 'C' || event.keyCode === 67)) {
+                 console.log("Ctrl+Shift+C detected - attempting block.");
+                 event.preventDefault();
+                 // try { debugger; } catch(e) {}
+                 return false;
+            }
+
+            // Block Ctrl+U (View Source) - Less reliable across browsers
+            if (event.ctrlKey && (event.key === 'U' || event.keyCode === 85)) {
+                console.log("Ctrl+U detected - attempting block.");
+                event.preventDefault();
+                // try { debugger; } catch(e) {}
+                return false;
+            }
+        });
+
+        // Optional: Detect if dev tools are opened by checking window resize or using debugger statement loops
+        // This is more complex and can impact performance or user experience negatively.
+        // Example (annoying debugger loop):
+        // setInterval(() => {
+        //     try { debugger; } catch(e) {}
+        // }, 1000); // Adjust interval as needed
+
+        console.log("Console access deterrents initialized.");
+    }
+
 
     // --- Utility Functions ---
 
