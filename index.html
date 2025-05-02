@@ -98,15 +98,23 @@
              /* Most grids go to 2 columns */
             .channel-grid#PT, .channel-grid#UK, .channel-grid#ES,
             .channel-grid#ALL, .channel-grid#Favorites { grid-template-columns: repeat(2, 1fr); }
-             /* Matches grid remains single column but wider */
-            #Matches.channel-grid { grid-template-columns: 1fr; max-width: 800px; margin: 0 auto; }
+             /* Matches grid remains single column */
+            /* --- MODIFIED: Removed max-width and margin from #Matches grid --- */
+            #Matches.channel-grid {
+                grid-template-columns: 1fr;
+                /* max-width: 800px; */ /* Removed */
+                /* margin: 0 auto; */   /* Removed */
+            }
         }
         @media (min-width: 1024px) { /* Medium screens and up */
              /* Most grids go to 3 columns */
             .channel-grid#PT, .channel-grid#UK, .channel-grid#ES,
             .channel-grid#ALL, .channel-grid#Favorites { grid-template-columns: repeat(3, 1fr); }
-             /* Matches grid stays wide single column */
-            #Matches.channel-grid { max-width: 1000px; }
+             /* Matches grid stays single column */
+             /* --- MODIFIED: Removed max-width from #Matches grid --- */
+             #Matches.channel-grid {
+                /* max-width: 1000px; */ /* Removed */
+            }
         }
         @media (min-width: 1280px) { /* Large screens and up */
              /* Most grids go to 4 columns */
@@ -127,12 +135,12 @@
             flex-direction: column; /* Stack header/info vertically */
         }
         /* Specific styling for MATCH boxes when NOT expanded (full width in Matches/ALL tabs) */
+        /* This rule ensures unexpanded matches still take full width of their container */
         #Matches .channel-box[id^="match-"]:not(.expanded),
         #ALL .channel-box[id^="match-"]:not(.expanded) {
             grid-column: 1 / -1; /* Span full grid width */
-             /* Max width is handled by the grid container's max-width */
              width: 100%; /* Take full width of the grid column */
-             margin: auto;
+             margin: auto; /* Center horizontally if grid has padding */
         }
         /* Channel boxes in ALL/Favorites should behave like normal grid items */
         #ALL .channel-box:not([id^="match-"]):not(.expanded),
@@ -213,7 +221,6 @@
         .channel-box.expanded {
             grid-column: 1 / -1; /* Force item to span all columns of its parent grid */
             width: auto;         /* Allow the item to naturally fill the spanned columns */
-            /* --- MODIFIED: Removed max-width --- */
             /* max-width: 1200px; */ /* Removed to allow full width */
             margin: 20px 0;   /* Center vertically, remove horizontal auto margin */
             position: relative;    /* Keep relative for z-index */
@@ -331,9 +338,6 @@
              .channel-box[id^="match-"] .channel-header h3 { margin: 0 5px; font-size: 1em; } /* Reduce margin/size */
              .favorite-button { top: 8px; right: 8px; }
              .favorite-button svg { width: 18px; height: 18px; }
-             /* Ensure expanded box still has reasonable max-width on mobile */
-             /* Removed max-width constraint even for mobile to ensure full width */
-             /* .channel-box.expanded { max-width: 95%; } */
              /* Adjust padding for smaller screens */
              .channel-header h3 { padding-left: 30px; padding-right: 30px; }
         }
