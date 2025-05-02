@@ -277,8 +277,8 @@
             searchDebounceMs: 300,      // Delay (ms) for search input before filtering
             lastTabKey: 'perasTvLastTab', // localStorage key for remembering the last active tab
             favoritesKey: 'perasTvFavorites', // localStorage key for storing favorite item IDs
-            // *** OPTIMIZATION: Reduced iframe timeout for faster feedback on failure ***
-            iframeLoadTimeoutMs: 15000 // Timeout (ms) for waiting for an iframe stream to load (was 20000)
+            // *** OPTIMIZATION: Increased iframe timeout for slower loading sources ***
+            iframeLoadTimeoutMs: 35000 // Timeout (ms) for waiting for an iframe stream to load (was 15000)
         };
 
         // --- DOM Element References ---
