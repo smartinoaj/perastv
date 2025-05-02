@@ -8,362 +8,9 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
     <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
-    <style>
-        /* --- CSS Variables (Theme) --- */
-        :root {
-            /* Theme Colors */
-            --bg-primary: #0a0a0a; /* Main background */
-            --bg-secondary: #1a1a1a; /* Card/input background */
-            --bg-tertiary: #2a2a2a; /* Expanded card/hover background */
-            --accent-color: #e50914; /* Red accent */
-            --text-primary: #ffffff; /* Primary text */
-            --text-secondary: #a0a0a0; /* Secondary text (placeholders, info) */
-            --border-color: #4a4a4a; /* Slightly softer border */
-            --border-color-active: #6b7280; /* Border for active/focused elements */
-            --error-color: #f87171; /* Red for errors */
-            --favorite-color: #facc15; /* Gold/Yellow for favorite star */
-            --info-color: #3b82f6; /* Blue for informational messages */
-            --font-sans: 'Inter', sans-serif; /* Main font */
-        }
-
-        /* --- Basic Reset & Body Styling --- */
-        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-        html { scroll-behavior: smooth; height: 100%; }
-        body {
-            background-color: var(--bg-primary); color: var(--text-primary);
-            font-family: var(--font-sans); line-height: 1.6;
-            overscroll-behavior-y: contain; /* Prevent pull-to-refresh issues */
-            -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale;
-            min-height: 100vh;
-            padding-bottom: 120px; /* Space for footer */
-            position: relative; /* Needed for footer positioning? */
-        }
-        .container { max-width: 1600px; margin: 0 auto; padding: 0 20px; }
-
-        /* --- Header --- */
-        header { text-align: center; padding: 30px 0 20px; }
-        header img { max-width: 200px; height: auto; }
-
-        /* --- Search Bar --- */
-        .search-container { display: flex; justify-content: center; margin-bottom: 30px; padding: 0 15px; }
-        #search-input {
-            padding: 12px 18px; font-size: 1em; border-radius: 25px;
-            border: 1px solid var(--border-color); background-color: var(--bg-secondary);
-            color: var(--text-primary); width: 100%; max-width: 500px;
-            transition: all 0.2s ease; text-align: center;
-            appearance: none; /* Remove default search input styling */
-        }
-        #search-input:focus { outline: none; border-color: var(--border-color-active); background-color: var(--bg-tertiary); }
-        #search-input::placeholder { color: var(--text-secondary); text-align: center; }
-        /* Cross-browser placeholder centering */
-        #search-input::-webkit-input-placeholder { text-align: center; }
-        #search-input:-moz-placeholder { text-align: center; }
-        #search-input::-moz-placeholder { text-align: center; }
-        #search-input:-ms-input-placeholder { text-align: center; }
-
-        /* --- Tabs --- */
-        .tabs { display: flex; justify-content: center; gap: 12px; margin-bottom: 40px; flex-wrap: wrap; padding: 0 10px; }
-        .tab-button {
-            background: transparent; color: var(--text-secondary);
-            border: 1px solid var(--border-color); padding: 10px 25px; cursor: pointer;
-            border-radius: 20px; font-size: 0.9em; font-weight: 600;
-            transition: all 0.2s ease; text-transform: uppercase; letter-spacing: 0.5px;
-            display: inline-flex; align-items: center; gap: 6px; /* Align icon and text */
-            white-space: nowrap; /* Prevent wrapping */
-        }
-        .tab-button .tab-icon { width: 1em; height: 1em; fill: currentColor; flex-shrink: 0; }
-        .tab-button:hover { background: var(--bg-tertiary); color: var(--text-primary); border-color: var(--bg-tertiary); }
-        .tab-button.active { background: var(--accent-color); color: white; border-color: var(--accent-color); }
-        .tab-button.active .tab-icon { fill: white; }
-
-        /* Favorites Tab Button Styling */
-        .tab-button[data-tab="Favorites"] { color: var(--favorite-color); border-color: var(--favorite-color); padding: 10px 15px; } /* Slightly less padding for icon-only */
-        .tab-button[data-tab="Favorites"] .tab-icon { fill: var(--favorite-color); }
-        .tab-button[data-tab="Favorites"]:hover { background: var(--favorite-color); color: var(--bg-secondary); border-color: var(--favorite-color); }
-        .tab-button[data-tab="Favorites"]:hover .tab-icon { fill: var(--bg-secondary); }
-        .tab-button[data-tab="Favorites"].active { background: var(--favorite-color); color: var(--bg-secondary); border-color: var(--favorite-color); }
-        .tab-button[data-tab="Favorites"].active .tab-icon { fill: var(--bg-secondary); }
-
-        /* --- Channel Grid (General) --- */
-        .channel-grid {
-            display: grid;
-            /* Responsive columns: Start with 1, increase for larger screens */
-            grid-template-columns: 1fr;
-            gap: 20px; padding: 0 10px 50px;
-            display: none; /* Hidden by default, shown when active */
-        }
-        /* Grid Columns adjustments based on screen size and specific tabs */
-        @media (min-width: 640px) { /* Small screens and up */
-             /* Most grids go to 2 columns */
-            .channel-grid#PT, .channel-grid#UK, .channel-grid#ES,
-            .channel-grid#ALL, .channel-grid#Favorites { grid-template-columns: repeat(2, 1fr); }
-             /* Matches grid remains single column */
-            /* --- MODIFIED: Removed max-width and margin from #Matches grid --- */
-            #Matches.channel-grid {
-                grid-template-columns: 1fr;
-                /* max-width: 800px; */ /* Removed */
-                /* margin: 0 auto; */   /* Removed */
-            }
-        }
-        @media (min-width: 1024px) { /* Medium screens and up */
-             /* Most grids go to 3 columns */
-            .channel-grid#PT, .channel-grid#UK, .channel-grid#ES,
-            .channel-grid#ALL, .channel-grid#Favorites { grid-template-columns: repeat(3, 1fr); }
-             /* Matches grid stays single column */
-             /* --- MODIFIED: Removed max-width from #Matches grid --- */
-             #Matches.channel-grid {
-                /* max-width: 1000px; */ /* Removed */
-            }
-        }
-        @media (min-width: 1280px) { /* Large screens and up */
-             /* Most grids go to 4 columns */
-            .channel-grid#PT, .channel-grid#UK, .channel-grid#ES,
-            .channel-grid#ALL, .channel-grid#Favorites { grid-template-columns: repeat(4, 1fr); }
-        }
-
-        /* Show active grid */
-        .channel-grid.active { display: grid; }
-
-        /* --- Channel Box (General Styling) --- */
-        .channel-box {
-            background: var(--bg-secondary); border-radius: 10px; padding: 15px;
-            cursor: pointer; transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
-            border: 1px solid transparent; /* Start with transparent border for smooth transition */
-            position: relative; overflow: hidden;
-            display: flex; /* Use flexbox for vertical centering if needed */
-            flex-direction: column; /* Stack header/info vertically */
-        }
-        /* Specific styling for MATCH boxes when NOT expanded (full width in Matches/ALL tabs) */
-        /* This rule ensures unexpanded matches still take full width of their container */
-        #Matches .channel-box[id^="match-"]:not(.expanded),
-        #ALL .channel-box[id^="match-"]:not(.expanded) {
-            grid-column: 1 / -1; /* Span full grid width */
-             width: 100%; /* Take full width of the grid column */
-             margin: auto; /* Center horizontally if grid has padding */
-        }
-        /* Channel boxes in ALL/Favorites should behave like normal grid items */
-        #ALL .channel-box:not([id^="match-"]):not(.expanded),
-        #Favorites .channel-box:not(.expanded) {
-            grid-column: auto / span 1; width: auto; max-width: none; margin: 0;
-        }
-        /* Hide filtered-out boxes */
-        .channel-box.hidden { display: none; }
-        /* Hover effect for non-expanded boxes */
-        .channel-box:not(.expanded):hover {
-            transform: translateY(-4px);
-            box-shadow: 0 6px 18px rgba(0, 0, 0, 0.4);
-            border-color: var(--border-color-active);
-        }
-
-        /* --- Favorite Button (Star Icon) --- */
-        .favorite-button {
-            position: absolute; top: 10px; right: 10px;
-            background: none; border: none; padding: 5px; cursor: pointer;
-            z-index: 5; /* Above other content */
-            color: var(--text-secondary); transition: color 0.2s ease;
-        }
-        .favorite-button svg { width: 20px; height: 20px; fill: none; stroke: currentColor; stroke-width: 1.5; }
-        .favorite-button:hover { color: var(--text-primary); }
-        .favorite-button.is-favorite { color: var(--favorite-color); }
-        .favorite-button.is-favorite svg { fill: currentColor; stroke-width: 0; } /* Fill when favorited */
-
-        /* --- Channel Header --- */
-        .channel-header {
-            display: flex;           /* Enable Flexbox */
-            align-items: center;     /* Vertically center items */
-            justify-content: center; /* Horizontally center items */
-            gap: 10px; text-align: center; min-height: 40px; /* Ensure consistent height */
-            cursor: pointer;
-            /* padding-right: 30px; /* Removed - space for button handled by absolute positioning */
-            width: 100%; /* Ensure header takes full width */
-        }
-        /* Matches Header Layout (adjust gap if needed) */
-        .channel-box[id^="match-"] .channel-header { justify-content: center; gap: 15px; }
-        /* Logo styling for MATCHES */
-        .match-logo {
-            height: 40px; width: 40px; object-fit: contain; /* Scale nicely */
-            flex-shrink: 0; border-radius: 4px; display: inline-block; vertical-align: middle;
-        }
-        /* Title */
-        .channel-header h3 {
-            font-size: 1.1em; font-weight: 600; margin: 0;
-            word-break: break-word; /* Prevent long names overflowing */
-            text-align: center; /* Ensure text itself is centered */
-            flex-grow: 0; /* Don't allow title to grow excessively */
-            flex-shrink: 1; /* Allow title to shrink if needed */
-            padding: 0 5px; /* Small padding around text */
-            /* Add padding to account for the favorite button space */
-            padding-right: 35px; /* Add space on the right for the button */
-            padding-left: 35px;  /* Add equal space on the left for balance */
-            box-sizing: border-box; /* Include padding in the element's total width/height */
-        }
-        /* Spacing around match titles */
-        .channel-box[id^="match-"] .channel-header h3 {
-            margin-left: 5px; margin-right: 5px;
-            /* No extra padding needed here as logos provide visual balance */
-            padding-left: 5px;
-            padding-right: 5px;
-        }
-
-
-        /* Channel Info (for Matches) */
-        .channel-info {
-            font-size: 0.8em; color: var(--text-secondary); text-align: center;
-            margin-top: 8px; margin-bottom: 0; font-weight: 500; cursor: pointer;
-            display: block; /* Shown by default, hidden via CSS below */
-        }
-        /* Hide info section for regular channels */
-        .channel-box:not([id^="match-"]) .channel-info { display: none; }
-        .channel-info span { margin: 0 5px; }
-
-        /* --- Expanded Channel Box --- */
-        .channel-box.expanded {
-            grid-column: 1 / -1; /* Force item to span all columns of its parent grid */
-            width: auto;         /* Allow the item to naturally fill the spanned columns */
-            /* max-width: 1200px; */ /* Removed to allow full width */
-            margin: 20px 0;   /* Center vertically, remove horizontal auto margin */
-            position: relative;    /* Keep relative for z-index */
-            cursor: default; background: var(--bg-tertiary);
-            padding-bottom: 20px; z-index: 10; /* Bring to front */
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
-            border: 2px solid var(--accent-color); overflow: visible;
-            display: flex !important; /* Use flex, override .hidden if needed */
-            flex-direction: column; /* Stack content vertically */
-        }
-        /* Non-clickable header/info when expanded */
-        .channel-box.expanded .channel-header,
-        .channel-box.expanded .channel-info { cursor: default; }
-
-        /* --- Player Area --- */
-        .iframe-container { margin-top: 18px; display: none; width: 100%; }
-        .channel-box.expanded .iframe-container { display: block; }
-        .player-area {
-            position: relative; width: 100%; aspect-ratio: 16 / 9; /* Maintain aspect ratio */
-            background-color: #000; border-radius: 8px; overflow: hidden;
-            margin-bottom: 18px; min-height: 200px; /* Minimum height */
-            display: flex; justify-content: center; align-items: center; /* Center loader/message */
-        }
-        .player-area iframe, .player-area video {
-            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-            border: none; display: none; /* Hidden until active */
-            object-fit: contain; /* Ensure video fits without cropping */
-        }
-        .player-area iframe.active, .player-area video.active { display: block; } /* Show active player */
-        /* Message displayed within the player area (errors, info) */
-        .player-message {
-            color: var(--text-secondary); font-size: 0.9em; padding: 20px;
-            text-align: center; display: none; /* Hidden by default */
-            max-width: 80%; /* Prevent message being too wide */
-        }
-        .player-message.visible { display: block; }
-        .player-message strong { color: var(--text-primary); display: block; margin-bottom: 5px; font-weight: 600; }
-        .player-message span { font-size: 0.9em; display: block; margin-top: 5px; line-height: 1.4; }
-        .player-message button { margin-top: 15px; } /* Spacing for Try Next button */
-        /* Loading spinner */
-        .loader {
-            width: 40px; height: 40px; border-radius: 50%;
-            border: 4px solid var(--border-color); border-top-color: var(--accent-color);
-            animation: spin 1s linear infinite; display: none; /* Hidden by default */
-        }
-        .loader.visible { display: block; }
-        @keyframes spin { to { transform: rotate(360deg); } }
-        /* Adjust player size for larger screens */
-        @media (min-width: 768px) { .channel-box.expanded .player-area { min-height: 400px; max-height: 70vh; } }
-        @media (min-width: 1024px) { .channel-box.expanded .player-area { min-height: 480px; } }
-
-        /* --- Stream Buttons --- */
-        .stream-buttons { text-align: center; margin-top: 15px; margin-bottom: 15px; padding: 0 10px; }
-        .stream-buttons div { margin-bottom: 10px; } /* Spacing for language groups */
-        .stream-buttons strong { /* Language label (PT:, UK:) */
-            color: var(--text-secondary); font-size: 0.85em; margin-right: 8px;
-            font-weight: 600; text-transform: uppercase; display: inline-block; /* Keep on same line as first button */
-        }
-        .stream-button {
-            background: var(--bg-secondary); color: var(--text-primary);
-            border: 1px solid var(--border-color); padding: 7px 18px; border-radius: 20px;
-            cursor: pointer; font-size: 0.85em; font-weight: 500;
-            transition: all 0.2s ease; display: inline-block; margin: 4px; /* Spacing between buttons */
-            vertical-align: middle; /* Align with label */
-        }
-        .stream-button:hover { background: #4a4a4a; border-color: #5a5a5a; }
-        .stream-button.active { background: var(--accent-color); color: white; border-color: var(--accent-color); font-weight: 600; }
-        /* "Try Next Source" button styling */
-        .try-next-button {
-            background: var(--info-color); color: white; border: none;
-            padding: 8px 15px; border-radius: 6px; cursor: pointer;
-            font-size: 0.85em; font-weight: 500; transition: background-color 0.2s ease;
-        }
-        .try-next-button:hover { background-color: #2563eb; } /* Darker blue */
-
-        /* --- Disclaimer inside Expanded Box --- */
-        .box-disclaimer { font-size: 0.7em; color: #888; text-align: center; padding: 0 15px; margin-top: 10px; line-height: 1.4; display: none; }
-        .channel-box.expanded .box-disclaimer { display: block; }
-
-        /* --- Footer --- */
-        footer { text-align: center; color: var(--text-secondary); font-size: 0.8em; padding: 20px 0; width: 100%; margin-top: 40px; }
-        .footer-disclaimer { font-size: 0.75em; margin-top: 15px; padding: 0 20px; max-width: 800px; margin-left: auto; margin-right: auto; line-height: 1.5; color: #888; }
-
-        /* --- General Loading/Error/Info Messages (outside grids) --- */
-        .status-message {
-            text-align: center; padding: 30px 20px; /* Reduced padding */
-            color: var(--text-secondary); font-size: 1em; font-weight: 500;
-            border-radius: 8px; margin: 20px auto; max-width: 600px;
-            line-height: 1.5;
-        }
-        .status-message.loading { background-color: var(--bg-secondary); border: 1px dashed var(--border-color); }
-        .status-message.error { background-color: rgba(248, 113, 113, 0.1); border: 1px solid var(--error-color); color: var(--error-color); }
-        /* Info message used for empty states within grids */
-        .status-message.info { background-color: rgba(59, 130, 246, 0.1); border: 1px solid var(--info-color); color: var(--info-color); }
-        .status-message strong { color: var(--text-primary); display: block; margin-bottom: 10px; font-size: 1.1em; }
-        .status-message span { display: block; font-size: 0.9em; } /* For sub-text in error messages */
-
-
-        /* --- Responsive Adjustments --- */
-        @media (max-width: 767px) { /* Apply below 768px */
-             /* Grids become single column (already default, but ensures override) */
-             .channel-grid { grid-template-columns: 1fr; }
-             .channel-box { padding: 15px; }
-             .stream-button { padding: 6px 15px; font-size: 0.8em; }
-             header img { max-width: 160px; }
-             .tabs { gap: 10px; margin-bottom: 30px; }
-             .tab-button { padding: 8px 15px; font-size: 0.85em; }
-             /* Ensure match boxes take full width */
-             #Matches .channel-box[id^="match-"]:not(.expanded),
-             #ALL .channel-box[id^="match-"]:not(.expanded) { max-width: 100%; }
-             /* Adjust match header layout */
-             #Matches .channel-header, #ALL .channel-box[id^="match-"] .channel-header { gap: 10px; }
-             .match-logo { height: 32px; width: 32px; }
-             .channel-info { font-size: 0.75em;}
-             .channel-box[id^="match-"] .channel-header h3 { margin: 0 5px; font-size: 1em; } /* Reduce margin/size */
-             .favorite-button { top: 8px; right: 8px; }
-             .favorite-button svg { width: 18px; height: 18px; }
-             /* Adjust padding for smaller screens */
-             .channel-header h3 { padding-left: 30px; padding-right: 30px; }
-        }
-        @media (max-width: 480px) { /* Apply below 480px */
-            .container { padding: 0 10px; }
-            header img { max-width: 140px; }
-            .tabs { gap: 8px; }
-            .tab-button { padding: 7px 12px; }
-            .channel-box { padding: 12px; }
-            .channel-header h3 { font-size: 1em;}
-            .channel-box[id^="match-"] .channel-header h3 { margin: 0 5px;}
-            .match-logo { height: 30px; width: 30px; }
-            /* Stack language label above buttons */
-            .stream-buttons strong { display: block; margin-bottom: 5px; margin-right: 0; text-align: center; }
-            .stream-buttons div { text-align: center; } /* Center buttons under label */
-            .player-area { min-height: 200px; }
-            #search-input { padding: 10px 15px; font-size: 0.95em; }
-             .channel-info { font-size: 0.7em;}
-             .footer-disclaimer { font-size: 0.7em; }
-             .box-disclaimer { font-size: 0.65em; }
-             /* Adjust padding for smallest screens */
-             .channel-header h3 { padding-left: 25px; padding-right: 25px; }
-        }
-
-    </style>
-</head>
+    </head>
 <body>
 
 <div class="container">
@@ -381,7 +28,8 @@
                  <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
              </svg>
              </button>
-        <button class="tab-button" data-tab="ALL" role="tab" aria-controls="ALL" aria-selected="true">ALL</button> <button class="tab-button" data-tab="PT" role="tab" aria-controls="PT" aria-selected="false">PT</button>
+        <button class="tab-button" data-tab="ALL" role="tab" aria-controls="ALL" aria-selected="true">ALL</button>
+        <button class="tab-button" data-tab="PT" role="tab" aria-controls="PT" aria-selected="false">PT</button>
         <button class="tab-button" data-tab="UK" role="tab" aria-controls="UK" aria-selected="false">UK</button>
         <button class="tab-button" data-tab="ES" role="tab" aria-controls="ES" aria-selected="false">ES</button>
         <button class="tab-button" data-tab="Matches" role="tab" aria-controls="Matches" aria-selected="false">Matches</button>
@@ -390,14 +38,16 @@
     <div id="loadingMessage" class="status-message loading" role="status">Loading channels...</div>
     <div id="fetchErrorMessage" class="status-message error" role="alert" style="display: none;"></div>
 
-    <div id="Favorites" class="channel-grid" role="tabpanel" aria-labelledby="tab-Favorites" tabindex="0"></div>
-    <div id="ALL" class="channel-grid" role="tabpanel" aria-labelledby="tab-ALL" tabindex="0"></div>
-    <div id="PT" class="channel-grid" role="tabpanel" aria-labelledby="tab-PT" tabindex="0"></div>
-    <div id="UK" class="channel-grid" role="tabpanel" aria-labelledby="tab-UK" tabindex="0"></div>
-    <div id="ES" class="channel-grid" role="tabpanel" aria-labelledby="tab-ES" tabindex="0"></div>
-    <div id="Matches" class="channel-grid" role="tabpanel" aria-labelledby="tab-Matches" tabindex="0"></div>
+    <div id="Favorites" class="channel-grid" role="tabpanel" aria-labelledby="tab-Favorites" tabindex="-1"></div>
+    <div id="ALL" class="channel-grid active" role="tabpanel" aria-labelledby="tab-ALL" tabindex="0"></div>
+    <div id="PT" class="channel-grid" role="tabpanel" aria-labelledby="tab-PT" tabindex="-1"></div>
+    <div id="UK" class="channel-grid" role="tabpanel" aria-labelledby="tab-UK" tabindex="-1"></div>
+    <div id="ES" class="channel-grid" role="tabpanel" aria-labelledby="tab-ES" tabindex="-1"></div>
+    <div id="Matches" class="channel-grid" role="tabpanel" aria-labelledby="tab-Matches" tabindex="-1"></div>
 
-</div> <footer>
+</div>
+
+<footer>
     <p id="lastUpdated">Updated: Fetching time...</p>
     <p class="footer-disclaimer">
         <strong>Disclaimer:</strong> PerasTV does not host any video content. All streams are embedded from external, publicly available sources found on the internet. We are not responsible for the legality, accuracy, or quality of the content provided by these third-party sites. Users are advised to respect copyright laws and use this service responsibly. Stream availability is not guaranteed.
@@ -582,12 +232,80 @@
             if (event.key === 'Escape' && currentlyExpandedBoxElement) {
                 collapseItemBox(currentlyExpandedBoxElement); // Use the collapse function
             }
-            // Potentially add other keyboard shortcuts here (e.g., focus search, navigate tabs)
+
+            // --- Basic D-Pad Navigation (Example - Needs Refinement) ---
+            // This is a very basic example and needs significant improvement for robust TV navigation.
+            // It doesn't handle grid wrapping, focusing search/tabs, or player controls well.
+            const focusableElements = getFocusableElementsInActiveGrid();
+            const currentIndex = focusableElements.indexOf(document.activeElement);
+
+            if (['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight'].includes(event.key)) {
+                 if (document.activeElement && document.activeElement.closest('.channel-box') && !currentlyExpandedBoxElement) {
+                    event.preventDefault(); // Prevent default scrolling
+                    let nextIndex = -1;
+                    const numCols = getComputedStyle(document.getElementById(activeTabId)).gridTemplateColumns.split(' ').length;
+
+                    switch (event.key) {
+                        case 'ArrowDown':
+                            nextIndex = currentIndex + numCols;
+                            break;
+                        case 'ArrowUp':
+                             nextIndex = currentIndex - numCols;
+                            break;
+                        case 'ArrowRight':
+                             nextIndex = currentIndex + 1;
+                             // Basic boundary check (doesn't handle wrapping perfectly)
+                             if ((currentIndex + 1) % numCols === 0) nextIndex = -1; // Don't wrap right for now
+                            break;
+                        case 'ArrowLeft':
+                             nextIndex = currentIndex - 1;
+                             // Basic boundary check
+                             if (currentIndex % numCols === 0) nextIndex = -1; // Don't wrap left for now
+                            break;
+                    }
+
+                    // Focus the next element if it exists
+                    if (nextIndex >= 0 && nextIndex < focusableElements.length) {
+                        focusableElements[nextIndex].focus();
+                    }
+                 } else if (!document.activeElement || document.activeElement === document.body) {
+                     // If nothing is focused, focus the first item in the grid
+                     focusableElements[0]?.focus();
+                 }
+                 // TODO: Add logic to navigate between tabs, search bar, and expanded player controls.
+            }
+
+            // --- Activate Item with Enter/OK ---
+            if (event.key === 'Enter' || event.key === 'Ok') { // 'Ok' is common on TV remotes
+                 if (document.activeElement && document.activeElement.classList.contains('channel-box') && !currentlyExpandedBoxElement) {
+                    event.preventDefault();
+                    toggleItemBoxExpansion(document.activeElement);
+                 } else if (document.activeElement && document.activeElement.classList.contains('stream-button')) {
+                    event.preventDefault();
+                    document.activeElement.click(); // Activate the focused stream button
+                 } else if (document.activeElement && document.activeElement.classList.contains('tab-button')) {
+                    event.preventDefault();
+                    document.activeElement.click(); // Activate the focused tab button
+                 }
+                 // TODO: Handle Enter/OK on favorite button, player controls etc.
+            }
         });
 
         // NOTE: Listeners for dynamically created channel/match boxes are added
         // separately in `addChannelBoxEventListeners` after rendering.
     }
+
+    /**
+     * Helper function to get currently visible and focusable channel boxes in the active grid.
+     * @returns {Array<HTMLElement>} - An array of focusable channel box elements.
+     */
+    function getFocusableElementsInActiveGrid() {
+        const activeGrid = document.getElementById(activeTabId);
+        if (!activeGrid) return [];
+        // Select boxes that are direct children of the active grid and are not hidden or expanded
+        return Array.from(activeGrid.querySelectorAll(':scope > .channel-box:not(.hidden):not(.expanded)'));
+    }
+
 
     // --- Data Fetching & Initial Rendering ---
 
@@ -725,10 +443,22 @@
                 itemElement = createMatchBoxElement(itemData, uniqueItemId);
             } else { // itemType === 'channel'
                 // Find the original index within its category in `allChannelsData`
-                const category = gridId; // Assuming gridId matches the category key (PT, UK, ES)
-                const categoryIndex = allChannelsData[category]?.findIndex(c => c === itemData);
-                uniqueItemId = `${category}-channel-${categoryIndex}`; // e.g., PT-channel-0, UK-channel-1
-                itemElement = createChannelBoxElement(itemData, uniqueItemId);
+                // Need to determine the category key based on the itemData reference
+                let category = '';
+                for (const key in allChannelsData) {
+                    if (allChannelsData[key]?.includes(itemData)) {
+                        category = key;
+                        break;
+                    }
+                }
+                const categoryIndex = allChannelsData[category]?.findIndex(c => c === itemData) ?? -1;
+
+                if (category && categoryIndex !== -1) {
+                    uniqueItemId = `${category}-channel-${categoryIndex}`; // e.g., PT-channel-0, UK-channel-1
+                    itemElement = createChannelBoxElement(itemData, uniqueItemId);
+                } else {
+                     console.warn(`Could not determine unique ID for channel item in grid ${gridId}:`, itemData);
+                }
             }
 
             if (itemElement) {
@@ -871,6 +601,7 @@
 
     /**
      * Creates the HTML element (DIV) for a single channel box.
+     * Adds tabindex="0" for basic keyboard navigation.
      * @param {object} channelData - Channel data object { name, srcs: [{ label, url }] }. Logo property is ignored.
      * @param {string} uniqueItemId - The unique identifier for this channel box element (e.g., 'PT-channel-0').
      * @returns {HTMLDivElement | null} The created channel box element or null on error.
@@ -887,6 +618,7 @@
         const boxElement = document.createElement('div');
         boxElement.className = 'channel-box';
         boxElement.id = uniqueItemId;
+        boxElement.tabIndex = 0; // Make box focusable for keyboard/D-pad navigation
         // Store essential data directly on the element for easy access later (search, expansion)
         boxElement.dataset.itemName = name; // Use consistent 'itemName' for search
         boxElement.dataset.itemType = 'channel';
@@ -898,16 +630,15 @@
         boxElement.innerHTML = `
             <button class="favorite-button ${isFavorite ? 'is-favorite' : ''}"
                     aria-label="${isFavorite ? 'Remove from' : 'Add to'} Favorites"
-                    aria-pressed="${isFavorite}">
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true">
+                    aria-pressed="${isFavorite}"
+                    tabindex="-1"> <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true">
                     <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
                 </svg>
             </button>
             <div class="channel-header" id="${uniqueItemId}-header" aria-expanded="false" aria-controls="${uniqueItemId}-content">
                 <h3>${name}</h3>
             </div>
-            <div class="channel-info"></div>
-            <div class="iframe-container" id="${uniqueItemId}-content" role="region" aria-labelledby="${uniqueItemId}-header">
+            <div class="channel-info"></div> <div class="iframe-container" id="${uniqueItemId}-content" role="region" aria-labelledby="${uniqueItemId}-header">
                 <div class="player-area">
                     <div class="loader"></div>
                     <div class="player-message" role="alert"></div>
@@ -928,6 +659,7 @@
 
      /**
       * Creates the HTML element (DIV) for a single match box.
+      * Adds tabindex="0" for basic keyboard navigation and loading="lazy" to images.
       * @param {object} matchData - Match data object { team1, team2, logo1?, logo2?, time?, league?, pt:[], uk:[], es:[] }.
       * @param {string} uniqueItemId - The unique identifier for this match box element (e.g., 'match-0').
       * @returns {HTMLDivElement | null} The created match box element or null on error.
@@ -943,6 +675,7 @@
         const boxElement = document.createElement('div');
         boxElement.className = 'channel-box';
         boxElement.id = uniqueItemId;
+        boxElement.tabIndex = 0; // Make box focusable
 
         // --- Store Data on Element ---
         const matchTitle = `${team1} vs ${team2}`;
@@ -956,10 +689,10 @@
 
         const isFavorite = favoriteItemIds.includes(uniqueItemId);
 
-        // --- Helper function for Logo HTML (reduces repetition) ---
+        // --- Helper function for Logo HTML (adds loading="lazy") ---
         const createLogoHtml = (logoUrl, altText) => {
             return logoUrl
-                ? `<img src="${logoUrl}" alt="${altText} logo" class="match-logo" onerror="this.style.display='none'; this.onerror=null;">`
+                ? `<img src="${logoUrl}" alt="${altText} logo" class="match-logo" loading="lazy" onerror="this.style.display='none'; this.onerror=null;">` // Added loading="lazy"
                 // Provide a styled placeholder span if no logo URL exists (NO background)
                 : '<span class="match-logo" aria-label="No logo available" style="display: inline-block; width: 40px;"></span>';
         };
@@ -968,8 +701,8 @@
         boxElement.innerHTML = `
              <button class="favorite-button ${isFavorite ? 'is-favorite' : ''}"
                      aria-label="${isFavorite ? 'Remove from' : 'Add to'} Favorites"
-                     aria-pressed="${isFavorite}">
-                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true">
+                     aria-pressed="${isFavorite}"
+                     tabindex="-1"> <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true">
                      <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
                  </svg>
              </button>
@@ -1014,6 +747,7 @@
         buttonElement.className = 'stream-button';
         buttonElement.textContent = label || 'Source'; // Use 'Source' as a fallback label
         buttonElement.dataset.streamUrl = url; // Store URL for easy access
+        // Note: tabindex is not explicitly set here; focus managed within expanded box.
 
         // --- Add Click Event Listener ---
         buttonElement.onclick = (event) => {
@@ -1027,7 +761,7 @@
     // --- Event Listener Setup for Channel Boxes ---
 
     /**
-     * Adds necessary click event listeners (toggle expansion, toggle favorite)
+     * Adds necessary click/keydown event listeners (toggle expansion, toggle favorite)
      * to all channel/match box elements within a given scope (or the whole document).
      * Uses a data attribute `data-listener-added` to prevent adding listeners multiple times.
      * @param {HTMLElement} [scopeElement=document] - Optional scope to search within (e.g., a specific grid). Defaults to the entire document.
@@ -1042,8 +776,7 @@
             const favoriteButtonElement = boxElement.querySelector('.favorite-button');
             const boxId = boxElement.id; // Get the unique ID (crucial for favorites)
 
-            // --- Expansion Toggle Handler ---
-            // This function handles clicks on the header or info section to expand/collapse the box
+            // --- Expansion Toggle Handler (Click) ---
             const handleExpansionToggle = (event) => {
                  // IMPORTANT: Ensure the click wasn't on the favorite button itself
                  if (!event.target.closest('.favorite-button')) {
@@ -1051,28 +784,35 @@
                  }
             };
 
-            // Add listener to the header (present on both channels and matches)
+            // Add click listener to the header
             if (headerElement) {
                 headerElement.addEventListener('click', handleExpansionToggle);
             }
-            // Add listener to the info section *only if* it's visible (i.e., for matches)
-            // This prevents channels from being expandable by clicking the (hidden) info area
+            // Add click listener to the info section for matches
             if (infoElement && getComputedStyle(infoElement).display !== 'none') {
                  infoElement.addEventListener('click', handleExpansionToggle);
             }
 
-            // --- Favorite Button Handler ---
+            // --- Favorite Button Handler (Click) ---
             if (favoriteButtonElement && boxId) { // Ensure button and ID exist
                 favoriteButtonElement.addEventListener('click', (event) => {
-                    event.stopPropagation(); // IMPORTANT: Stop click from bubbling to the header/info toggle handler
-                    toggleFavoriteStatus(boxId, favoriteButtonElement); // Call the favorite toggle function
+                    event.stopPropagation(); // Stop click from bubbling
+                    toggleFavoriteStatus(boxId, favoriteButtonElement);
                 });
             } else if (!boxId) {
                  console.warn("Could not attach favorite listener: Box ID missing.", boxElement);
             }
 
+            // --- Keyboard Activation Handler (Enter/OK on the box itself) ---
+            // Note: D-Pad navigation between boxes is handled globally in setupGlobalEventListeners
+            boxElement.addEventListener('keydown', (event) => {
+                 if ((event.key === 'Enter' || event.key === 'Ok') && !boxElement.classList.contains('expanded')) {
+                     event.preventDefault(); // Prevent potential form submission/scrolling
+                     toggleItemBoxExpansion(boxElement);
+                 }
+            });
+
             // --- Mark as Processed ---
-            // Set a data attribute to prevent adding these listeners again if this function is called multiple times
             boxElement.dataset.listenerAdded = 'true';
         });
     }
@@ -1101,7 +841,7 @@
             btn.setAttribute('aria-selected', isButtonActive ? 'true' : 'false'); // Set ARIA selected state
         });
 
-        // --- Update Grid Visibility ---
+        // --- Update Grid Visibility and Focusability ---
         channelGridElements.forEach(grid => {
             const isGridActive = grid.id === tabIdToShow;
             grid.classList.toggle('active', isGridActive); // Show the active grid, hide others
@@ -1110,7 +850,6 @@
         });
 
         // --- Collapse Any Open Box ---
-        // Ensure a clean state when switching tabs
         if (currentlyExpandedBoxElement) {
             collapseItemBox(currentlyExpandedBoxElement);
         }
@@ -1119,20 +858,20 @@
         localStorage.setItem(CONFIG.lastTabKey, tabIdToShow);
 
         // --- Special Handling for Favorites Tab ---
-        // If switching *to* the Favorites tab, ensure its content is up-to-date
-        // (as favorites might have been changed while viewing another tab).
         if (tabIdToShow === 'Favorites') {
             renderFavoritesTabContent(); // Re-render the content
-            // Re-attach listeners specifically to the newly rendered elements in the Favorites grid
-            addChannelBoxEventListeners(document.getElementById('Favorites'));
+            addChannelBoxEventListeners(document.getElementById('Favorites')); // Re-attach listeners
         }
 
         // --- Re-apply Search Filter ---
-        // Ensure the current search term (if any) is applied to the newly visible content
         filterVisibleContent(searchInputElement.value);
 
-        // Optionally focus the active grid for keyboard navigation, with a slight delay
-        // setTimeout(() => { document.getElementById(tabIdToShow)?.focus(); }, 50);
+        // --- Focus Management ---
+        // Focus the newly activated grid container for better spatial navigation start point.
+        // Use timeout to ensure rendering is complete.
+        setTimeout(() => {
+            document.getElementById(tabIdToShow)?.focus({ preventScroll: true }); // Prevent scroll jump if possible
+        }, 50);
     }
 
     // --- Search Filtering ---
@@ -1151,79 +890,73 @@
         let resultsFoundInActiveTab = false;
         const activeGridElement = document.getElementById(activeTabId);
 
-        // Iterate through ALL channel/match boxes present in the DOM
-        document.querySelectorAll('.channel-box').forEach(boxElement => {
+        // Get all boxes (might be more efficient than querying per tab)
+        const allBoxes = document.querySelectorAll('.channel-box');
+
+        allBoxes.forEach(boxElement => {
             const parentGridId = boxElement.closest('.channel-grid')?.id;
-            if (!parentGridId) return; // Should not happen, but safety check
+            if (!parentGridId) return; // Safety check
 
-            // Get search data from the element's datasets
+            // Get search data
             const itemName = boxElement.dataset.itemName?.toLowerCase() || '';
-            const additionalSearchTerms = boxElement.dataset.searchTerms?.toLowerCase() || ''; // For matches
+            const additionalSearchTerms = boxElement.dataset.searchTerms?.toLowerCase() || '';
 
-            // --- Determine if the box matches the search term ---
+            // Determine if the box matches the search term
             const matchesSearch = itemName.includes(normalizedSearchTerm) || additionalSearchTerms.includes(normalizedSearchTerm);
 
             let shouldBeVisible = false;
 
             // --- Visibility Logic ---
             if (!isSearching) {
-                // If search is empty, visibility depends *only* on whether the box is in the currently active tab.
+                // No search term: Visible if it's in the active tab.
                 shouldBeVisible = (parentGridId === activeTabId);
             } else {
-                // If searching, visibility depends on BOTH matching the search term AND being relevant to the active tab.
+                // Searching: Visible if it matches search AND is relevant to the active tab.
                 if (parentGridId === activeTabId) {
-                    // If the box is naturally in the active tab, it just needs to match the search.
+                    // Box is in the active tab, just needs to match search.
                     shouldBeVisible = matchesSearch;
                 } else if (activeTabId === 'ALL') {
-                     // If on the 'ALL' tab, any box matching the search should be visible.
+                     // On 'ALL' tab, any box matching search is visible.
                      shouldBeVisible = matchesSearch;
                 } else if (activeTabId === 'Favorites') {
-                     // If on the 'Favorites' tab, the box must match the search AND be in the favorites list.
+                     // On 'Favorites' tab, must match search AND be a favorite.
                      shouldBeVisible = matchesSearch && favoriteItemIds.includes(boxElement.id);
                 }
-                // Boxes in other non-active, non-ALL, non-Favorites tabs remain hidden during search.
+                 // Boxes in other non-active tabs remain hidden during search.
             }
 
-            // --- Apply Visibility ---
-            // Toggle the 'hidden' class unless the box is currently expanded (don't hide expanded boxes via filter)
+            // --- Apply Visibility & Focusability ---
+            // Toggle 'hidden' class unless expanded
             if (!boxElement.classList.contains('expanded')) {
                 boxElement.classList.toggle('hidden', !shouldBeVisible);
+                // Update tabindex: only visible, non-expanded boxes should be focusable in the main grid
+                boxElement.tabIndex = shouldBeVisible ? 0 : -1;
             } else {
-                 // Ensure expanded boxes are never hidden by the filter, even if they don't match
+                 // Ensure expanded boxes are never hidden by filter and remain non-focusable in the grid flow
                  boxElement.classList.remove('hidden');
+                 boxElement.tabIndex = -1;
             }
 
             // Track if any results were found *within the currently active grid*
-            if (shouldBeVisible && parentGridId === activeTabId) {
+            if (shouldBeVisible && parentGridId === activeTabId && !boxElement.classList.contains('expanded')) {
                 resultsFoundInActiveTab = true;
-            }
-
-            // --- Collapse Logic (Optional but recommended) ---
-            // If a box is expanded but should *not* be visible according to the filter rules
-            // (e.g., search term changed, or tab switched), collapse it.
-            if (boxElement.classList.contains('expanded') && !shouldBeVisible) {
-                 // collapseItemBox(boxElement); // Decide if auto-collapsing is desired UX
             }
         });
 
         // --- Show/Hide "No Results" Message for the Active Grid ---
         if (activeGridElement) {
-             // Find or create the message element within the active grid
              let noResultsMessageElement = activeGridElement.querySelector('.status-message.info.no-results');
              if (!noResultsMessageElement) {
                  noResultsMessageElement = document.createElement('p');
-                 noResultsMessageElement.className = 'status-message info no-results'; // Add specific class
-                 noResultsMessageElement.style.display = 'none'; // Start hidden
-                 // Prepend it so it appears above any remaining items if needed
+                 noResultsMessageElement.className = 'status-message info no-results';
+                 noResultsMessageElement.style.display = 'none';
                  activeGridElement.prepend(noResultsMessageElement);
              }
 
-             // Show message only if searching AND no results were found in the *active* tab
              if (isSearching && !resultsFoundInActiveTab) {
                  noResultsMessageElement.innerHTML = `No results found for "<strong>${searchTerm}</strong>" in this section.`;
                  noResultsMessageElement.style.display = 'block';
              } else {
-                 // Hide the message if not searching or if results were found
                  noResultsMessageElement.style.display = 'none';
              }
         }
@@ -1234,7 +967,7 @@
 
     /**
      * Toggles the expanded/collapsed state of a channel/match box element.
-     * Manages the `currentlyExpandedBoxElement` state.
+     * Manages the `currentlyExpandedBoxElement` state and focus.
      * @param {HTMLDivElement} boxElement - The box element to expand or collapse.
      */
     function toggleItemBoxExpansion(boxElement) {
@@ -1244,7 +977,6 @@
         const headerElement = boxElement.querySelector('.channel-header');
 
         // --- Collapse Other Box If Expanding New One ---
-        // If we are about to expand this box, and another box is already expanded, collapse the other one first.
         if (!isCurrentlyExpanded && currentlyExpandedBoxElement && currentlyExpandedBoxElement !== boxElement) {
             collapseItemBox(currentlyExpandedBoxElement);
         }
@@ -1263,58 +995,86 @@
 
     /**
      * Expands a specific channel/match box, populates its streams, and scrolls it into view.
+     * Manages focus within the expanded box.
      * @param {HTMLDivElement} boxElement - The box element to expand.
      */
     function expandItemBox(boxElement) {
         boxElement.classList.add('expanded');
-        boxElement.classList.remove('hidden'); // Ensure it's visible regardless of filters
+        boxElement.classList.remove('hidden'); // Ensure it's visible
+        boxElement.tabIndex = -1; // Remove from main grid tab flow when expanded
         currentlyExpandedBoxElement = boxElement; // Update global tracker
 
         populateStreamsAndLoadFirst(boxElement); // Load stream buttons and attempt to play
 
         // --- Smooth Scroll into View ---
-        // Use a short timeout to allow the browser to render the expanded state before scrolling
         setTimeout(() => {
-             boxElement.scrollIntoView({ behavior: 'smooth', block: 'nearest' }); // Scroll gently
+             boxElement.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
              // --- Focus Management (Accessibility) ---
-             // Optionally focus the first stream button for better keyboard navigation
+             // Focus the first stream button for keyboard/D-pad navigation within the box.
              const firstStreamButton = boxElement.querySelector('.stream-button');
              if (firstStreamButton) {
-                 // Delay focus slightly more to ensure visibility after scroll animation
                  setTimeout(() => firstStreamButton.focus({ preventScroll: true }), 150);
              } else {
-                 // If no stream buttons, focus the container itself? Or the header?
-                 // boxElement.querySelector('.iframe-container')?.focus(); // Requires tabindex="-1"
+                 // Fallback focus if no stream buttons (e.g., focus the player area or container)
+                 boxElement.querySelector('.iframe-container')?.focus(); // Requires tabindex="-1" on container if used
              }
-        }, 100); // Adjust delay as needed
+        }, 100);
     }
 
     /**
-     * Collapses a specific channel/match box and cleans up its player state.
+     * Collapses a specific channel/match box, cleans up its player state, and restores focus.
      * @param {HTMLDivElement} boxElement - The box element to collapse.
      */
     function collapseItemBox(boxElement) {
+        const wasCurrentlyExpanded = (currentlyExpandedBoxElement === boxElement);
         boxElement.classList.remove('expanded');
 
-        // If this was the globally tracked expanded box, clear the tracker
-        if (currentlyExpandedBoxElement === boxElement) {
+        if (wasCurrentlyExpanded) {
             currentlyExpandedBoxElement = null;
         }
 
         // --- Clean Up Player and Buttons ---
-        clearPlayerStateInBox(boxElement); // Stop video/HLS, clear iframe src
+        clearPlayerStateInBox(boxElement);
         const streamButtonsContainer = boxElement.querySelector('.stream-buttons');
-        if (streamButtonsContainer) streamButtonsContainer.innerHTML = ''; // Remove stream buttons
+        if (streamButtonsContainer) streamButtonsContainer.innerHTML = '';
 
-        // Update accessibility attribute on the header
+        // Update accessibility attribute
         const headerElement = boxElement.querySelector('.channel-header');
         if(headerElement) headerElement.setAttribute('aria-expanded', 'false');
 
-        // --- Re-apply Filter ---
-        // If the search input is currently empty, re-applying the filter might hide
-        // the box again if it doesn't belong to the active tab.
-        if (searchInputElement.value === '') {
-            filterVisibleContent('');
+        // --- Restore Focusability and Re-apply Filter ---
+        // Determine if it should be visible after collapsing based on current filter/tab
+        const normalizedSearchTerm = searchInputElement.value.toLowerCase().trim();
+        const isSearching = normalizedSearchTerm !== '';
+        const parentGridId = boxElement.closest('.channel-grid')?.id;
+        const itemName = boxElement.dataset.itemName?.toLowerCase() || '';
+        const additionalSearchTerms = boxElement.dataset.searchTerms?.toLowerCase() || '';
+        const matchesSearch = itemName.includes(normalizedSearchTerm) || additionalSearchTerms.includes(normalizedSearchTerm);
+
+        let shouldBeVisibleAfterCollapse = false;
+        if (!isSearching) {
+            shouldBeVisibleAfterCollapse = (parentGridId === activeTabId);
+        } else {
+            if (parentGridId === activeTabId) shouldBeVisibleAfterCollapse = matchesSearch;
+            else if (activeTabId === 'ALL') shouldBeVisibleAfterCollapse = matchesSearch;
+            else if (activeTabId === 'Favorites') shouldBeVisibleAfterCollapse = matchesSearch && favoriteItemIds.includes(boxElement.id);
+        }
+
+        boxElement.classList.toggle('hidden', !shouldBeVisibleAfterCollapse);
+        boxElement.tabIndex = shouldBeVisibleAfterCollapse ? 0 : -1; // Make focusable again if visible
+
+        // --- Restore Focus ---
+        // If this was the box that was actively expanded, try to return focus to it.
+        // Use a timeout to ensure the DOM updates (like tabIndex) are processed.
+        if (wasCurrentlyExpanded && shouldBeVisibleAfterCollapse) {
+            setTimeout(() => {
+                boxElement.focus({ preventScroll: true });
+            }, 50);
+        } else if (wasCurrentlyExpanded) {
+             // If the collapsed box is now hidden, focus the grid container as a fallback
+             setTimeout(() => {
+                document.getElementById(activeTabId)?.focus({ preventScroll: true });
+            }, 50);
         }
     }
 
@@ -1347,14 +1107,13 @@
             if (Array.isArray(sourcesData)) {
                 // --- Handle Channel Sources (Simple Array) ---
                 sourcesData.forEach((src) => {
-                    // Handle both {label, url} objects and simple string URLs
                     const url = typeof src === 'object' && src.url ? src.url : (typeof src === 'string' ? src : null);
                     const label = typeof src === 'object' && src.label ? src.label : `Source ${streamCount + 1}`;
 
-                    if (url) { // Only process if a valid URL exists
-                         if (!firstStreamUrl) firstStreamUrl = url; // Capture the first URL found
+                    if (url) {
+                         if (!firstStreamUrl) firstStreamUrl = url;
                          const button = createStreamSourceButton(label, url, boxElement);
-                         if (!firstStreamButtonElement) firstStreamButtonElement = button; // Capture the first button element
+                         if (!firstStreamButtonElement) firstStreamButtonElement = button;
                          fragment.appendChild(button);
                          streamCount++;
                     } else {
@@ -1365,45 +1124,40 @@
             } else if (typeof sourcesData === 'object' && sourcesData !== null) {
                 // --- Handle Match Sources (Object grouped by language: {pt: [], uk: [], es: []}) ---
                 Object.entries(sourcesData).forEach(([langKey, sourcesInLang]) => {
-                    // Check if the language category has a non-empty array of sources
                     if (sourcesInLang && Array.isArray(sourcesInLang) && sourcesInLang.length > 0) {
-                        // Create a container div for this language group
                         const langGroupDiv = document.createElement('div');
                         const langLabel = document.createElement('strong');
-                        langLabel.textContent = `${langKey.toUpperCase()}:`; // e.g., PT:
+                        langLabel.textContent = `${langKey.toUpperCase()}:`;
                         langGroupDiv.appendChild(langLabel);
 
                         sourcesInLang.forEach((src) => {
                             const url = typeof src === 'object' && src.url ? src.url : (typeof src === 'string' ? src : null);
-                            const label = typeof src === 'object' && src.label ? src.label : `Src ${streamCount + 1}`; // Use label or generic
+                            const label = typeof src === 'object' && src.label ? src.label : `Src ${streamCount + 1}`;
 
                              if (url) {
-                                 if (!firstStreamUrl) firstStreamUrl = url; // Capture first URL overall
+                                 if (!firstStreamUrl) firstStreamUrl = url;
                                  const button = createStreamSourceButton(label, url, boxElement);
-                                 if (!firstStreamButtonElement) firstStreamButtonElement = button; // Capture first button overall
-                                 langGroupDiv.appendChild(button); // Add button to the language group
+                                 if (!firstStreamButtonElement) firstStreamButtonElement = button;
+                                 langGroupDiv.appendChild(button);
                                  streamCount++;
                             } else {
                                 console.warn("Skipping invalid match source entry:", src, "in lang:", langKey, "box:", boxElement.id);
                             }
                         });
-                        fragment.appendChild(langGroupDiv); // Add the whole language group to the fragment
+                        fragment.appendChild(langGroupDiv);
                     }
                 });
             }
 
             // --- Append Buttons and Load First Stream ---
-            streamButtonsContainer.appendChild(fragment); // Add all buttons to the DOM
+            streamButtonsContainer.appendChild(fragment);
 
             if (streamCount === 0) {
-                // If no valid streams were found after parsing
                 displayNoStreamsAvailable(playerAreaElement, streamButtonsContainer);
-                clearPlayerStateInBox(boxElement); // Ensure player is cleared
+                clearPlayerStateInBox(boxElement);
             } else if (firstStreamUrl && firstStreamButtonElement) {
-                // If streams were found, try loading the first one
                  loadStreamIntoPlayer(firstStreamButtonElement, firstStreamUrl, boxElement);
             } else {
-                // Fallback: Should not happen if streamCount > 0, but handle defensively
                  console.error("Inconsistency: Streams counted, but no first URL/Button element found.", boxElement.id);
                  displayNoStreamsAvailable(playerAreaElement, streamButtonsContainer);
                  clearPlayerStateInBox(boxElement);
@@ -1412,7 +1166,7 @@
         } catch (error) {
             console.error("Failed to parse sources data or create buttons for box:", boxElement.id, error);
             streamButtonsContainer.innerHTML = '<p class="status-message error" style="padding: 10px;">Error loading stream sources.</p>';
-             clearPlayerStateInBox(boxElement); // Clear player on error
+             clearPlayerStateInBox(boxElement);
         }
     }
 
@@ -1424,11 +1178,9 @@
      function displayNoStreamsAvailable(playerAreaElement, streamButtonsContainer) {
          const message = 'No stream sources listed for this item.';
          if (streamButtonsContainer) {
-            // Display simple text in the buttons area
             streamButtonsContainer.innerHTML = `<p style="color: var(--text-secondary); font-size: 0.9em; padding: 10px 0;">${message}</p>`;
          }
          if (playerAreaElement) {
-             // Display a more prominent message in the player area itself
              displayMessageInPlayerArea(playerAreaElement, `<strong>No Streams Available</strong><span>${message}</span>`, false);
          }
     }
@@ -1468,10 +1220,8 @@
         // --- Update Button Styles ---
         const streamButtonsContainer = parentBoxElement.querySelector('.stream-buttons');
         if (streamButtonsContainer) {
-             // Remove 'active' class from all buttons within this box
              streamButtonsContainer.querySelectorAll('.stream-button').forEach(b => b.classList.remove('active'));
         }
-        // Add 'active' class to the clicked button (if one was provided)
         if (clickedButtonElement) {
             clickedButtonElement.classList.add('active');
         }
@@ -1497,7 +1247,6 @@
 
         // --- Determine Stream Type and Load ---
         try {
-            // Use URL API for robust path checking, handles potential query params/hashes
             const urlObject = new URL(streamUrl);
             if (urlObject.pathname.toLowerCase().endsWith('.m3u8')) {
                  console.log("Detected HLS stream (.m3u8).");
@@ -1507,7 +1256,6 @@
                 loadUrlIntoIframe(streamUrl, iframeElement, playerAreaElement);
             }
         } catch (error) {
-            // Catch errors from `new URL(streamUrl)` if the URL is fundamentally malformed
             console.error("Error processing stream URL:", error);
             loaderElement.classList.remove('visible');
             displayMessageInPlayerArea(playerAreaElement, `<strong>URL Error</strong><span>Could not process the stream link.</span>`, true, streamUrl, parentBoxElement);
@@ -1523,47 +1271,43 @@
      function clearPlayerStateInBox(boxElement) {
         if (!boxElement) return;
         const playerAreaElement = boxElement.querySelector('.player-area');
-        if (!playerAreaElement) return; // Nothing to clear if player area doesn't exist
+        if (!playerAreaElement) return;
 
         const videoElement = playerAreaElement.querySelector('video');
         const iframeElement = playerAreaElement.querySelector('iframe');
         const loaderElement = playerAreaElement.querySelector('.loader');
         const messageContainerElement = playerAreaElement.querySelector('.player-message');
 
-        // --- Stop and Destroy HLS Instance (if it belongs to this video element) ---
+        // --- Stop and Destroy HLS Instance ---
         if (currentHlsInstance && videoElement && currentHlsInstance.media === videoElement) {
             console.log(`Destroying active HLS instance for box: ${boxElement.id}`);
             currentHlsInstance.destroy();
-            currentHlsInstance = null; // Clear the global reference
+            currentHlsInstance = null;
         }
 
         // --- Reset Iframe ---
         if (iframeElement) {
-             iframeElement.src = 'about:blank'; // Clear the source to stop loading/playback
-             iframeElement.classList.remove('active'); // Hide the iframe
+             iframeElement.src = 'about:blank';
+             iframeElement.classList.remove('active');
         }
 
         // --- Reset Video Element ---
         if (videoElement) {
-             // Replacing the node is often the most reliable way to fully reset state and listeners
-             // const newVideo = videoElement.cloneNode(true);
-             // videoElement.parentNode?.replaceChild(newVideo, videoElement);
-             // videoElement = newVideo; // Work with the new node from now on if needed
-
-             // Simpler approach: Pause, remove src, load() to reset
              videoElement.pause();
-             videoElement.removeAttribute('src'); // Remove HLS or native source
-             videoElement.load(); // Request browser to reset internal state
-             videoElement.classList.remove('active'); // Hide the video element
-             videoElement.poster = CONFIG.placeholderImage; // Reset poster image
+             videoElement.removeAttribute('src');
+             // Detach HLS event listeners if they were added natively (less common now with HLS.js focus)
+             // videoElement.onloadedmetadata = null;
+             // videoElement.onerror = null;
+             videoElement.load();
+             videoElement.classList.remove('active');
+             videoElement.poster = CONFIG.placeholderImage;
         }
 
         // --- Reset UI Indicators ---
         if (loaderElement) loaderElement.classList.remove('visible');
         if (messageContainerElement) messageContainerElement.classList.remove('visible');
 
-        // --- Deactivate Stream Buttons (Visual Cue) ---
-        // Although buttons are removed on collapse, clear active state here too for robustness
+        // --- Deactivate Stream Buttons ---
         const streamButtonsContainer = boxElement.querySelector('.stream-buttons');
         if (streamButtonsContainer) {
             streamButtonsContainer.querySelectorAll('.stream-button.active').forEach(b => b.classList.remove('active'));
@@ -1575,7 +1319,7 @@
      * Displays a message (error, info) within the player area overlay.
      * Automatically handles hiding player elements and the loader.
      * @param {HTMLDivElement} playerAreaElement - The player area element.
-     * @param {string} messageHtml - The HTML content for the message (use `<strong>` and `<span>` for structure).
+     * @param {string} messageHtml - The HTML content for the message.
      * @param {boolean} showTryNextButton - Whether to display the 'Try Next Source' button.
      * @param {string} [failedUrl=null] - The URL that failed (required if `showTryNextButton` is true).
      * @param {HTMLDivElement} [parentBoxElement=null] - The parent box (required if `showTryNextButton` is true).
@@ -1586,7 +1330,6 @@
         const videoElement = playerAreaElement?.querySelector('video');
         const iframeElement = playerAreaElement?.querySelector('iframe');
 
-        // Ensure essential elements exist
         if (!messageContainerElement || !loaderElement || !playerAreaElement) {
              console.error("Cannot display player message - essential elements missing.");
              return;
@@ -1598,27 +1341,23 @@
         loaderElement.classList.remove('visible');
 
         // --- Set Message Content ---
-        messageContainerElement.innerHTML = messageHtml; // Set the main message text/HTML
+        messageContainerElement.innerHTML = messageHtml;
 
-        // --- Add "Try Next" Button (if applicable) ---
+        // --- Add "Try Next" Button ---
         if (showTryNextButton && failedUrl && parentBoxElement) {
-            // Find the *next* button element in the DOM after the failed one
             const nextButtonElement = findNextAvailableStreamButton(failedUrl, parentBoxElement);
 
-            if (nextButtonElement) { // Check if a next button was actually found
+            if (nextButtonElement) {
                 const tryNextBtn = document.createElement('button');
                 tryNextBtn.className = 'try-next-button';
                 tryNextBtn.textContent = 'Try Next Source';
-                // Add click listener to simulate clicking the next button
                 tryNextBtn.onclick = (event) => {
-                    event.stopPropagation(); // Prevent bubbling
-                    nextButtonElement.click(); // Trigger the click handler of the next button
+                    event.stopPropagation();
+                    nextButtonElement.click(); // Simulate click on the next button
                 };
-                // Append the button below the message text
-                messageContainerElement.appendChild(document.createElement('br')); // Add space
+                messageContainerElement.appendChild(document.createElement('br'));
                 messageContainerElement.appendChild(tryNextBtn);
             } else {
-                // Optionally, indicate that there are no more sources to try
                 const noMoreSourcesSpan = document.createElement('span');
                 noMoreSourcesSpan.style.fontSize = '0.8em';
                 noMoreSourcesSpan.style.marginTop = '10px';
@@ -1636,29 +1375,23 @@
      * Finds the next stream button element in the DOM following the one associated with the failed URL.
      * @param {string} failedUrl - The URL of the stream source that failed.
      * @param {HTMLDivElement} parentBoxElement - The parent channel/match box containing the buttons.
-     * @returns {HTMLButtonElement | null} The next button element, or null if none is found after the failed one.
+     * @returns {HTMLButtonElement | null} The next button element, or null if none is found.
      */
     function findNextAvailableStreamButton(failedUrl, parentBoxElement) {
         if (!failedUrl || !parentBoxElement) return null;
 
-        // Get all stream buttons within this specific box, in the order they appear in the DOM
         const allButtonsInBox = parentBoxElement.querySelectorAll('.stream-button');
         let foundFailedButton = false;
 
         for (let i = 0; i < allButtonsInBox.length; i++) {
             const currentButton = allButtonsInBox[i];
-            // Check if this button corresponds to the URL that failed
             if (currentButton.dataset.streamUrl === failedUrl) {
                 foundFailedButton = true;
-            }
-            // If we have already found the failed button, the *current* button in the loop is the next one
-            else if (foundFailedButton) {
-                return currentButton; // Return the next button element immediately
+            } else if (foundFailedButton) {
+                return currentButton; // Return the next button
             }
         }
-
-        // If the loop finishes without finding a button *after* the failed one (or the failed one wasn't found)
-        return null;
+        return null; // No next button found
     }
 
     /**
@@ -1669,135 +1402,103 @@
      * @param {HTMLDivElement} playerAreaElement - The containing player area element for UI updates.
      */
      function loadHlsStreamIntoVideo(hlsUrl, videoElement, playerAreaElement) {
-        const parentBoxElement = videoElement.closest('.channel-box'); // Get parent box for context
-        videoElement.poster = CONFIG.placeholderImage; // Show placeholder image initially
+        const parentBoxElement = videoElement.closest('.channel-box');
+        videoElement.poster = CONFIG.placeholderImage;
 
-        // --- Use HLS.js if supported by the browser ---
+        // --- Use HLS.js if supported ---
         if (Hls.isSupported()) {
             console.log("HLS.js is supported. Initializing new instance...");
 
-            // --- HLS Instance Management ---
-            // Destroy any previous HLS instance *if* it was attached to this specific video element.
-            // This prevents issues if multiple boxes are expanded/streams loaded quickly.
+             // Destroy previous instance if it exists and is attached to this element
              if (currentHlsInstance && currentHlsInstance.media === videoElement) {
                  console.log(`Destroying existing HLS.js instance for video in box: ${parentBoxElement?.id}`);
                  currentHlsInstance.destroy();
              }
-             // Create a new HLS instance regardless. The global `currentHlsInstance` will point to this new one.
             currentHlsInstance = new Hls({
-                // --- HLS.js Configuration Options ---
-                // More robust timeout settings
-                manifestLoadingTimeOut: 15000, // 15 seconds for manifest
-                levelLoadingTimeOut: 15000,    // 15 seconds for level playlists
-                fragLoadingTimeOut: 20000,     // 20 seconds for fragments
-                // Retry settings (adjust based on stream reliability)
-                manifestLoadErrorMaxRetry: 2, // Retry manifest load twice on error
-                levelLoadErrorMaxRetry: 3,    // Retry level load 3 times
-                fragLoadErrorMaxRetry: 4,     // Retry fragment load 4 times (might help with temporary network issues)
-                // Start closer to the live edge (adjust `liveSyncDurationCount` based on segment duration)
-                liveSyncDurationCount: 3, // Try starting 3 segments from the edge
-                // Other potentially useful options (use with caution)
-                // enableSoftwareAES: true, // Can help with some encrypted streams, might increase CPU load
-                // lowLatencyMode: true, // Experimental, might break some streams
+                manifestLoadingTimeOut: 15000,
+                levelLoadingTimeOut: 15000,
+                fragLoadingTimeOut: 20000,
+                manifestLoadErrorMaxRetry: 2,
+                levelLoadErrorMaxRetry: 3,
+                fragLoadErrorMaxRetry: 4,
+                liveSyncDurationCount: 3,
             });
 
             // --- HLS.js Event Listeners ---
-
-            // --- Error Handling ---
             currentHlsInstance.on(Hls.Events.ERROR, function (event, data) {
-                 // IMPORTANT: Check if this error belongs to the *currently active* HLS instance and video element.
-                 // This prevents handling errors from old/destroyed instances.
                  if (!currentHlsInstance || currentHlsInstance.media !== videoElement) {
                      console.log("Ignoring HLS error from an old/inactive instance.");
                      return;
                  }
-
                 console.error('HLS.js Error:', { event, type: data.type, details: data.details, fatal: data.fatal });
-                let userMessage = `<strong>Stream Error</strong> (${data.details || 'Unknown HLS error'}).`; // Default
-
-                // Provide more specific user messages
+                let userMessage = `<strong>Stream Error</strong> (${data.details || 'Unknown HLS error'}).`;
                 switch (data.type) {
                     case Hls.ErrorTypes.NETWORK_ERROR:
                         userMessage = `<strong>Network Error</strong> (${data.details}). Check connection or try another source.`;
                         break;
                     case Hls.ErrorTypes.MEDIA_ERROR:
-                         // Handle specific media errors differently if needed
                          if (data.details === 'bufferStalledError' && !data.fatal) {
                              console.warn("HLS buffer stalled (non-fatal), attempting recovery...");
-                             // HLS.js often recovers; maybe show a subtle buffering indicator?
-                             return; // Don't treat recoverable stall as a fatal error immediately
+                             return; // Don't show fatal error for recoverable stall
                          }
                          userMessage = `<strong>Media Playback Error</strong> (${data.details}). Stream data might be invalid.`;
                         break;
-                    // Add cases for MUX_ERROR, OTHER_ERROR if specific handling is needed
                 }
-
-                 // If the error is marked as fatal by HLS.js:
                  if (data.fatal) {
                     console.error("Fatal HLS error occurred. Cleaning up.");
                     displayMessageInPlayerArea(playerAreaElement, userMessage, true, hlsUrl, parentBoxElement);
-                    currentHlsInstance.destroy(); // Destroy the failed instance
-                    currentHlsInstance = null;
-                    videoElement.classList.remove('active'); // Hide the video element
-                    videoElement.poster = ''; // Remove poster on error
+                    // Ensure destruction happens *after* displaying message
+                    if (currentHlsInstance && currentHlsInstance.media === videoElement) {
+                         currentHlsInstance.destroy();
+                         currentHlsInstance = null;
+                    }
+                    videoElement.classList.remove('active');
+                    videoElement.poster = '';
                  } else {
                      console.warn("Non-fatal HLS error occurred:", data.details);
-                     // Log non-fatal errors but usually allow HLS.js to attempt recovery.
                  }
             });
 
-            // --- Manifest Parsed ---
-            // Fired when the main playlist is loaded and parsed successfully.
             currentHlsInstance.on(Hls.Events.MANIFEST_PARSED, function() {
                  if (currentHlsInstance && currentHlsInstance.media === videoElement) {
                     console.log("HLS Manifest parsed successfully.");
-                    playerAreaElement.querySelector('.loader').classList.remove('visible'); // Hide loader
-                    videoElement.classList.add('active'); // Show video element
-                    videoElement.muted = true; // Ensure muted for autoplay policies
-                    // Attempt to play the video
+                    playerAreaElement.querySelector('.loader').classList.remove('visible');
+                    videoElement.classList.add('active');
+                    videoElement.muted = true;
                     videoElement.play().then(() => {
                          console.log("HLS playback initiated via play().");
                     }).catch(error => {
                          console.error("HLS videoElement.play() failed:", error);
-                         // Handle browsers blocking autoplay
                          if (error.name === 'NotAllowedError') {
                              displayMessageInPlayerArea(playerAreaElement, `<strong>Playback Paused</strong><span>Click the play button in the video player to start.</span>`, false);
-                             // Don't destroy HLS here; user needs to interact.
                          } else {
-                             // Handle other unexpected playback errors
                              displayMessageInPlayerArea(playerAreaElement, `<strong>Playback Error</strong><span>Could not start video (${error.name}).</span>`, true, hlsUrl, parentBoxElement);
-                             videoElement.classList.remove('active'); // Hide video on fatal play error
+                             videoElement.classList.remove('active');
                          }
-                         playerAreaElement.querySelector('.loader').classList.remove('visible'); // Ensure loader is hidden on error too
+                         playerAreaElement.querySelector('.loader').classList.remove('visible');
                     });
                  }
             });
 
-            // --- Attach Media and Load Source ---
-            currentHlsInstance.attachMedia(videoElement); // Link HLS.js to the video element
-            // Load the HLS source URL *after* attaching media and setting up listeners
+            // Attach Media and Load Source
+            currentHlsInstance.attachMedia(videoElement);
             currentHlsInstance.loadSource(hlsUrl);
 
-        // --- Use Native HLS Support (iOS/Safari) ---
+        // --- Use Native HLS Support ---
         } else if (videoElement.canPlayType('application/vnd.apple.mpegurl')) {
             console.log("Using native browser HLS support.");
-            // Native HLS works by setting the video element's `src` attribute.
+            // Replace node for clean state (important for native)
+            const newVideoElement = videoElement.cloneNode(true);
+            videoElement.parentNode?.replaceChild(newVideoElement, videoElement);
+            videoElement = newVideoElement; // Update reference
 
-            // It's often best practice to replace the video node to ensure a clean state,
-            // especially when switching sources frequently.
-            const newVideoElement = videoElement.cloneNode(true); // Create a fresh clone
-            videoElement.parentNode?.replaceChild(newVideoElement, videoElement); // Replace the old node
-            videoElement = newVideoElement; // Update our reference to the new node
-
-            // --- Native HLS Event Listeners (on the new node) ---
+            // --- Native HLS Event Listeners ---
             videoElement.onloadedmetadata = () => {
-                // Check if the source is still the one we intended (important due to async nature)
                 if (videoElement.getAttribute('src') === hlsUrl) {
                     console.log("Native HLS metadata loaded.");
                     playerAreaElement.querySelector('.loader').classList.remove('visible');
                     videoElement.classList.add('active');
-                    videoElement.muted = true; // Mute for autoplay
-                    // Attempt to play
+                    videoElement.muted = true;
                     videoElement.play().then(() => {
                          console.log("Native HLS playback initiated via play().");
                     }).catch(error => {
@@ -1812,29 +1513,27 @@
                     });
                 }
             };
-
             videoElement.onerror = () => {
-                 // Check if the error corresponds to the URL we tried to load
                  if (videoElement.getAttribute('src') === hlsUrl) {
                      console.error("Native HLS playback error occurred.");
-                     const error = videoElement.error; // Get details from the video element's error object
+                     const error = videoElement.error;
                      const errorMessage = error ? (error.message || `code ${error.code}`) : 'Unknown error';
                      displayMessageInPlayerArea(playerAreaElement, `<strong>Stream Error</strong><span>Native HLS failed: ${errorMessage}.</span>`, true, hlsUrl, parentBoxElement);
                      videoElement.classList.remove('active');
-                     videoElement.poster = ''; // Clear poster on error
+                     videoElement.poster = '';
                      playerAreaElement.querySelector('.loader').classList.remove('visible');
                  } else {
-                      console.log("Ignoring native HLS error for a different src."); // Error might be from a previous source attempt
+                      console.log("Ignoring native HLS error for a different src.");
                  }
             };
 
-            // --- Set Source and Load ---
-            videoElement.src = hlsUrl; // Set the HLS URL as the source
-            videoElement.load(); // Explicitly call load() to trigger loading the new source
+            // Set Source and Load
+            videoElement.src = hlsUrl;
+            videoElement.load();
 
-        // --- HLS Not Supported At All ---
+        // --- HLS Not Supported ---
         } else {
-            console.error("HLS playback is not supported by this browser (neither HLS.js nor native).");
+            console.error("HLS playback is not supported by this browser.");
             displayMessageInPlayerArea(playerAreaElement, `<strong>Unsupported Stream</strong><span>Your browser cannot play HLS (.m3u8) streams.</span>`, false);
             videoElement.classList.remove('active');
             videoElement.poster = '';
@@ -1850,65 +1549,49 @@
      * @param {HTMLDivElement} playerAreaElement - The containing player area element for UI updates.
      */
     function loadUrlIntoIframe(iframeUrl, iframeElement, playerAreaElement) {
-        const parentBoxElement = iframeElement.closest('.channel-box'); // For context in messages
+        const parentBoxElement = iframeElement.closest('.channel-box');
         console.log("Loading iframe stream...");
-        let iframeLoadTimeoutId = null; // Variable to hold the timeout ID
+        let iframeLoadTimeoutId = null;
 
-        // --- Cleanup Function (called on success, error, or timeout) ---
         const cleanupIframeLoad = () => {
-            clearTimeout(iframeLoadTimeoutId); // Clear the timeout timer
-            // Remove temporary listeners to prevent memory leaks if needed,
-            // though 'onload' and 'onerror' on the element itself are usually fine.
+            clearTimeout(iframeLoadTimeoutId);
         };
 
-        // --- Failure Handler (called on error or timeout) ---
         const handleIframeLoadFailure = (reason) => {
-            cleanupIframeLoad(); // Clear timeout
-            // Check if the failure is still relevant (i.e., the src wasn't changed again quickly)
+            cleanupIframeLoad();
              if (iframeElement.getAttribute('src') === iframeUrl || iframeElement.getAttribute('src') === 'about:blank') {
                  console.error(`Iframe failed to load: ${reason}`);
                  displayMessageInPlayerArea(playerAreaElement, `<strong>Stream Error</strong><span>${reason}. It might be offline or blocked by browser security.</span>`, true, iframeUrl, parentBoxElement);
-                 iframeElement.classList.remove('active'); // Hide iframe
-                 iframeElement.src = 'about:blank'; // Ensure src is cleared
-                 playerAreaElement.querySelector('.loader').classList.remove('visible'); // Hide loader
+                 iframeElement.classList.remove('active');
+                 iframeElement.src = 'about:blank';
+                 playerAreaElement.querySelector('.loader').classList.remove('visible');
              } else {
-                 console.log("Ignoring iframe failure for a different src."); // Failure event arrived after src was changed
+                 console.log("Ignoring iframe failure for a different src.");
              }
         };
 
-        // --- Set Timeout ---
-        // Start a timer. If the 'onload' event doesn't fire within this time, assume failure.
         iframeLoadTimeoutId = setTimeout(() => {
-            // Double-check the src attribute when the timeout fires
              if (iframeElement.getAttribute('src') === iframeUrl) {
                 handleIframeLoadFailure("Load timeout");
              } else {
                  console.log("Iframe timeout occurred, but src has changed. Ignoring.");
              }
-        }, CONFIG.iframeLoadTimeoutMs); // Use configured timeout value
+        }, CONFIG.iframeLoadTimeoutMs);
 
-        // --- Iframe Event Listeners ---
         iframeElement.onload = () => {
-            cleanupIframeLoad(); // Success! Clear the timeout.
-            // Verify the loaded src matches the intended URL (prevents race conditions)
+            cleanupIframeLoad();
             if (iframeElement.getAttribute('src') === iframeUrl) {
                  console.log("Iframe onload event fired successfully for:", iframeUrl);
-                 playerAreaElement.querySelector('.loader').classList.remove('visible'); // Hide loader
-                 iframeElement.classList.add('active'); // Show the iframe
+                 playerAreaElement.querySelector('.loader').classList.remove('visible');
+                 iframeElement.classList.add('active');
              } else {
                  console.log("Iframe onload fired, but for a different src. Ignoring.");
              }
         };
-
         iframeElement.onerror = () => {
-             // The 'onerror' event often fires for cross-origin restrictions even if content loads,
-             // but it's a strong indicator of failure if the content *doesn't* load.
-             // Relying on the timeout is often more practical for cross-origin iframes.
              handleIframeLoadFailure("onError event fired");
         };
 
-        // --- Set the iframe source ---
-        // This initiates the loading process.
         iframeElement.src = iframeUrl;
     }
 
@@ -1920,11 +1603,9 @@
     function updateTimestampDisplay() {
         try {
             const now = new Date();
-            // Use Intl.DateTimeFormat for locale-aware time formatting
             const timeString = new Intl.DateTimeFormat(navigator.language || 'en-US', {
                 hour: '2-digit',
                 minute: '2-digit',
-                // timeZoneName: 'short' // Optional: Add timezone abbreviation
             }).format(now);
             lastUpdatedTimestampElement.textContent = `Updated: ${timeString}`;
         } catch (error) {
@@ -1954,7 +1635,6 @@
       * @param {string} [text="An error occurred."] - The error message text to display.
       */
        function showDataFetchErrorMessage(text = "An error occurred.") {
-           // Use innerHTML to allow simple formatting (like the <strong> and <span> used before)
            dataFetchErrorMessageElement.innerHTML = `<strong>Error</strong><span>${text}</span>`;
            dataFetchErrorMessageElement.style.display = 'block';
        }
