@@ -199,12 +199,13 @@
 
         /* --- Expanded Channel Box --- */
         .channel-box.expanded {
-            /* **MODIFIED: Ensure full width spanning and max-width** */
-            grid-column: 1 / -1 !important; /* Force span across all grid columns */
-            width: 100%; /* Occupy full width of the spanned columns */
+            /* **MODIFIED: Ensure it takes full width within container, centered** */
+            width: 100%; /* Take full available width */
             max-width: 1200px; /* Limit max width on very large screens */
             margin: 20px auto; /* Center horizontally with vertical margin */
-            position: relative;
+            /* Override grid placement */
+            grid-column: auto; /* Reset grid column */
+            position: relative; /* Keep relative for z-index */
             cursor: default; background: var(--bg-tertiary);
             padding-bottom: 20px; z-index: 10; /* Bring to front */
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
@@ -319,6 +320,8 @@
              .channel-box[id^="match-"] .channel-header h3 { margin: 0 5px; font-size: 1em; } /* Reduce margin/size */
              .favorite-button { top: 8px; right: 8px; }
              .favorite-button svg { width: 18px; height: 18px; }
+             /* Ensure expanded box still has reasonable max-width on mobile */
+             .channel-box.expanded { max-width: 95%; }
         }
         @media (max-width: 480px) { /* Apply below 480px */
             .container { padding: 0 10px; }
