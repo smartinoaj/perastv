@@ -167,8 +167,7 @@
             justify-content: center; /* Horizontally center items */
             gap: 10px; text-align: center; min-height: 40px; /* Ensure consistent height */
             cursor: pointer;
-            /* --- MODIFIED: Removed padding-right --- */
-            /* padding-right: 30px; */ /* Removed - space for button handled by absolute positioning */
+            /* padding-right: 30px; /* Removed - space for button handled by absolute positioning */
             width: 100%; /* Ensure header takes full width */
         }
         /* Matches Header Layout (adjust gap if needed) */
@@ -186,8 +185,7 @@
             flex-grow: 0; /* Don't allow title to grow excessively */
             flex-shrink: 1; /* Allow title to shrink if needed */
             padding: 0 5px; /* Small padding around text */
-            /* --- Add padding to account for the favorite button space --- */
-            /* Adjust this value if the button size/position changes */
+            /* Add padding to account for the favorite button space */
             padding-right: 35px; /* Add space on the right for the button */
             padding-left: 35px;  /* Add equal space on the left for balance */
             box-sizing: border-box; /* Include padding in the element's total width/height */
@@ -215,8 +213,9 @@
         .channel-box.expanded {
             grid-column: 1 / -1; /* Force item to span all columns of its parent grid */
             width: auto;         /* Allow the item to naturally fill the spanned columns */
-            max-width: 1200px;   /* Still limit maximum width on very large screens */
-            margin: 20px auto;   /* Center horizontally within the spanned columns */
+            /* --- MODIFIED: Removed max-width --- */
+            /* max-width: 1200px; */ /* Removed to allow full width */
+            margin: 20px 0;   /* Center vertically, remove horizontal auto margin */
             position: relative;    /* Keep relative for z-index */
             cursor: default; background: var(--bg-tertiary);
             padding-bottom: 20px; z-index: 10; /* Bring to front */
@@ -333,7 +332,8 @@
              .favorite-button { top: 8px; right: 8px; }
              .favorite-button svg { width: 18px; height: 18px; }
              /* Ensure expanded box still has reasonable max-width on mobile */
-             .channel-box.expanded { max-width: 95%; }
+             /* Removed max-width constraint even for mobile to ensure full width */
+             /* .channel-box.expanded { max-width: 95%; } */
              /* Adjust padding for smaller screens */
              .channel-header h3 { padding-left: 30px; padding-right: 30px; }
         }
