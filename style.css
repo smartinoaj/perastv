@@ -381,13 +381,15 @@ body.player-page .loader {
 }
 
 /* ========================================= */
-/* --- NEW: Custom Fullscreen Button Styles --- */
+/* --- Custom Fullscreen Button Styles (Updated) --- */
 /* ========================================= */
 
 .player-area .custom-fullscreen-btn {
     position: absolute;
-    bottom: 10px; /* Adjust as needed */
-    right: 10px;  /* Adjust as needed */
+    /* --- UPDATED: Position top-right --- */
+    top: 10px;
+    right: 10px;
+    /* --- End Update --- */
     z-index: 10; /* Ensure it's above the iframe/video */
     background-color: rgba(42, 42, 42, 0.7);
     border: none;
@@ -445,8 +447,10 @@ video:-ms-fullscreen + .custom-fullscreen-btn {
 /* Adjust button position slightly on smaller screens */
 @media (max-width: 480px) {
     .player-area .custom-fullscreen-btn {
-        bottom: 5px;
+        /* --- UPDATED: Position top-right --- */
+        top: 5px;
         right: 5px;
+        /* --- End Update --- */
         padding: 6px;
     }
     .player-area .custom-fullscreen-btn svg {
