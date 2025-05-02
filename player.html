@@ -3,46 +3,48 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Player - Peras TV</title> <link rel="icon" type="image/png" href="ptv.png">
+    <title>Player - Peras TV</title>
+    <link rel="icon" type="image/png" href="ptv.png">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
     <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
     </head>
-<body class="player-page"> <div id="player-page-loading" class="status-message loading">Loading player...</div>
-<div id="player-page-error" class="status-message error" style="display: none;"></div>
+<body class="player-page">
+    <div id="player-page-loading" class="status-message loading">Loading player...</div>
+    <div id="player-page-error" class="status-message error" style="display: none;"></div>
 
-<div id="player-page-content" style="display: none; width: 100%; height: 100%; display: flex; flex-direction: column;">
+    <div id="player-page-content" style="display: none; width: 100%; height: 100%; display: flex; flex-direction: column;">
 
-    <div class="player-area">
-        <div class="loader"></div>
-        <div class="player-message" role="alert"></div>
-        <iframe allow="autoplay; fullscreen; encrypted-media; picture-in-picture" allowfullscreen title="Stream Player"></iframe>
-        <video controls autoplay muted playsinline title="Stream Player"></video>
-        <button class="custom-fullscreen-btn" aria-label="Enter Fullscreen" title="Enter Fullscreen">
-            </button>
-    </div>
-
-    <div class="stream-buttons">
+        <div class="player-area">
+            <div class="loader"></div>
+            <div class="player-message" role="alert"></div>
+            <iframe allow="autoplay; fullscreen; encrypted-media; picture-in-picture" allowfullscreen title="Stream Player"></iframe>
+            <video controls autoplay muted playsinline title="Stream Player"></video>
+            <button class="custom-fullscreen-btn" aria-label="Enter Fullscreen" title="Enter Fullscreen">
+                </button>
         </div>
 
-    <p class="box-disclaimer">
-        Disclaimer: This site embeds content from external sources. We do not host streams. Availability and quality not guaranteed. Use responsibly.
-    </p>
+        <div class="stream-buttons">
+            </div>
 
-</div>
+        <p class="box-disclaimer">
+            Disclaimer: This site embeds content from external sources. We do not host streams. Availability and quality not guaranteed. Use responsibly.
+        </p>
+
+    </div>
 
 
 <script>
-    // --- Player Page Logic ---
+    // --- Player Page Logic (Self-Executing Function) ---
     (function() {
         // --- Configuration ---
         const CONFIG = {
-            channelsUrl: "channels.json",
-            matchesUrl: "matches.json",
-            placeholderImage: 'data:image/svg+xml;charset=UTF-8,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="9" viewBox="0 0 16 9"><rect width="16" height="9" fill="%231a1a1a"/></svg>',
-            iframeLoadTimeoutMs: 35000
+            channelsUrl: "channels.json", // URL for channels data
+            matchesUrl: "matches.json",   // URL for matches data
+            placeholderImage: 'data:image/svg+xml;charset=UTF-8,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="9" viewBox="0 0 16 9"><rect width="16" height="9" fill="%231a1a1a"/></svg>', // Placeholder image for video
+            iframeLoadTimeoutMs: 35000      // Timeout for iframe loading attempts
         };
 
         // --- SVG Icons for Fullscreen Button ---
@@ -54,67 +56,77 @@
         const loadingElement = document.getElementById('player-page-loading');
         const errorElement = document.getElementById('player-page-error');
         const contentElement = document.getElementById('player-page-content');
-        // Player elements within the container
+        // Elements within the player content area
         const playerAreaElement = contentElement.querySelector('.player-area');
         const streamButtonsContainer = contentElement.querySelector('.stream-buttons');
         const videoElement = contentElement.querySelector('video');
         const iframeElement = contentElement.querySelector('iframe');
         const loaderElement = contentElement.querySelector('.loader');
         const messageContainerElement = contentElement.querySelector('.player-message');
-        // --- NEW: Custom fullscreen button ---
         const customFullscreenButton = playerAreaElement.querySelector('.custom-fullscreen-btn');
 
         // --- State ---
-        let currentHlsInstance = null;
-        let itemData = null; // To store the found channel/match data
+        let currentHlsInstance = null; // Reference to the active HLS.js instance
+        let itemData = null;           // Stores the found channel/match data
 
         // --- Initialization ---
+        // Run when the DOM is fully loaded
         document.addEventListener('DOMContentLoaded', () => {
+            // Get item ID from URL parameters
             const urlParams = new URLSearchParams(window.location.search);
             const itemId = urlParams.get('item');
 
+            // Show error if no item ID is provided
             if (!itemId) {
                 showError("Error: No item specified in the URL.");
                 return;
             }
+
             console.log("Player page loading for item:", itemId);
-            setupCustomFullscreenButton(); // --- NEW: Setup listener
-            loadItemDataAndInitialize(itemId);
+            setupCustomFullscreenButton(); // Setup listener for the fullscreen button
+            loadItemDataAndInitialize(itemId); // Fetch data and initialize the player
         });
 
         // --- Data Loading ---
+        /**
+         * Fetches channel and match data, finds the specified item, and initializes the player UI.
+         * @param {string} itemId - The unique ID of the item to load.
+         */
         async function loadItemDataAndInitialize(itemId) {
             try {
-                showLoading(); // Use function
+                showLoading(); // Show loading indicator
 
-                // Fetch both data sources concurrently
+                // Fetch both data sources concurrently with cache busting
                 const cacheBuster = `?t=${Date.now()}`;
                 const [channelsResponse, matchesResponse] = await Promise.all([
                     fetch(CONFIG.channelsUrl + cacheBuster),
                     fetch(CONFIG.matchesUrl + cacheBuster)
                 ]);
 
+                // Check if fetch requests were successful
                 if (!channelsResponse.ok) throw new Error(`Failed to load channels: ${channelsResponse.statusText}`);
                 if (!matchesResponse.ok) throw new Error(`Failed to load matches: ${matchesResponse.statusText}`);
 
+                // Parse JSON data
                 const allChannelsData = await channelsResponse.json();
                 const allMatchesData = await matchesResponse.json();
 
-                // Find the item data based on the ID
+                // Find the specific item data using its ID
                 itemData = findItemById(itemId, allChannelsData, allMatchesData);
 
+                // Throw error if item data couldn't be found
                 if (!itemData) {
                     throw new Error(`Item with ID "${itemId}" not found.`);
                 }
 
                 console.log("Found item data:", itemData);
-                initializePlayerUI();
+                initializePlayerUI(); // Set up the player interface
 
             } catch (error) {
                 console.error("Failed to load item data:", error);
-                showError(`Error loading player: ${error.message}`);
+                showError(`Error loading player: ${error.message}`); // Display error message
             } finally {
-                hideLoading(); // Use function
+                hideLoading(); // Hide loading indicator regardless of success/failure
             }
         }
 
@@ -123,48 +135,57 @@
          * @param {string} itemId - The unique ID (e.g., 'PT-channel-0', 'match-1').
          * @param {object} channelsData - The fetched channels JSON object.
          * @param {Array} matchesData - The fetched matches JSON array.
-         * @returns {object | null} The found item data object or null.
+         * @returns {object | null} The found item data object (with added itemType and name) or null.
          */
         function findItemById(itemId, channelsData, matchesData) {
              if (itemId.startsWith('match-')) {
+                 // Extract index from match ID
                 const matchIndex = parseInt(itemId.split('-')[1], 10);
                 if (!isNaN(matchIndex) && matchIndex >= 0 && matchIndex < matchesData.length) {
+                    // Return match data with added type and name
                     return { ...matchesData[matchIndex], itemType: 'match', name: `${matchesData[matchIndex].team1} vs ${matchesData[matchIndex].team2}` };
                 }
             } else if (itemId.includes('-channel-')) {
-                const parts = itemId.split('-'); const category = parts[0]; const channelIndex = parseInt(parts[parts.length - 1], 10);
+                // Extract category and index from channel ID
+                const parts = itemId.split('-');
+                const category = parts[0];
+                const channelIndex = parseInt(parts[parts.length - 1], 10);
                 if (channelsData[category] && !isNaN(channelIndex) && channelIndex >= 0 && channelIndex < channelsData[category].length) {
+                    // Return channel data with added type
                     return { ...channelsData[category][channelIndex], itemType: 'channel' };
                 }
             }
-            return null; // Not found
+            return null; // Item not found
         }
 
         // --- UI Initialization ---
+        /** Sets up the player UI after item data is loaded. */
         function initializePlayerUI() {
-            if (!itemData) return;
+            if (!itemData) return; // Exit if no data
 
-            // Set page title
-            const itemName = itemData.name || 'Player';
+            // Set page title based on item name
+            const itemName = itemData.name || 'Player'; // Use item name or default
             document.title = `${itemName} - Peras TV`;
-            // No separate header title element anymore
 
-            // Populate stream buttons and auto-load first stream
-            populateStreamsAndLoadFirst(); // No need to pass box element anymore
+            // Populate stream buttons and attempt to auto-load the first stream
+            populateStreamsAndLoadFirst();
 
-            // Show the content area
+            // Show the main player content area
             contentElement.style.display = 'flex'; // Use flex for column layout
         }
 
         // --- Status Display ---
+        /** Shows the loading indicator and hides other states. */
         function showLoading() {
             loadingElement.style.display = 'block';
             errorElement.style.display = 'none';
             contentElement.style.display = 'none';
         }
+        /** Hides the loading indicator. */
         function hideLoading() {
              loadingElement.style.display = 'none';
         }
+        /** Shows an error message and hides other states. */
         function showError(message) {
             hideLoading();
             contentElement.style.display = 'none';
@@ -172,177 +193,435 @@
             errorElement.style.display = 'block';
         }
 
-        // --- Player Logic (Adapted from index.html) ---
-        // NOTE: These functions now operate directly on the elements defined in this scope.
+        // --- Player Logic (Adapted from index.html, simplified for player page) ---
 
         /**
-         * Populates stream buttons and attempts to auto-load the first stream.
+         * Populates stream buttons based on itemData and attempts to auto-load the first stream.
          */
         function populateStreamsAndLoadFirst() {
-            // Extract sources based on item type
+            // Extract sources based on item type (channel or match)
             let sourcesData = null;
             if (itemData.itemType === 'channel') {
-                sourcesData = itemData.srcs; // Simple array
+                sourcesData = itemData.srcs; // Array of sources
             } else if (itemData.itemType === 'match') {
-                sourcesData = { pt: itemData.pt || [], uk: itemData.uk || [], es: itemData.es || [] }; // Object with languages
+                // Combine sources from different languages into one object
+                sourcesData = { pt: itemData.pt || [], uk: itemData.uk || [], es: itemData.es || [] };
             }
 
+            // Exit if essential elements or data are missing
             if (!sourcesData || !streamButtonsContainer || !playerAreaElement) {
                  displayNoStreamsAvailable(playerAreaElement, streamButtonsContainer); return;
             }
 
-            streamButtonsContainer.innerHTML = '';
-            let firstStreamUrl = null; let firstStreamButtonElement = null; let streamCount = 0;
-            const fragment = document.createDocumentFragment();
+            streamButtonsContainer.innerHTML = ''; // Clear previous buttons
+            let firstStreamUrl = null;          // URL of the first valid stream found
+            let firstStreamButtonElement = null; // The button element for the first stream
+            let streamCount = 0;                // Counter for valid streams
+            const fragment = document.createDocumentFragment(); // For efficient DOM manipulation
 
             try {
                  // --- Populate Buttons ---
-                if (Array.isArray(sourcesData)) { // Channel
+                if (Array.isArray(sourcesData)) { // Handle channel sources (simple array)
                     sourcesData.forEach((src) => {
+                        // Extract URL and label (handle object or string format)
                         const url = typeof src === 'object' && src.url ? src.url : (typeof src === 'string' ? src : null);
                         const label = typeof src === 'object' && src.label ? src.label : `Source ${streamCount + 1}`;
-                        if (url) { if (!firstStreamUrl) firstStreamUrl = url; const button = createStreamSourceButton(label, url); if (!firstStreamButtonElement) firstStreamButtonElement = button; fragment.appendChild(button); streamCount++; }
+                        if (url) { // If URL is valid
+                            if (!firstStreamUrl) firstStreamUrl = url; // Store the first URL
+                            const button = createStreamSourceButton(label, url); // Create the button
+                            if (!firstStreamButtonElement) firstStreamButtonElement = button; // Store the first button
+                            fragment.appendChild(button); // Add button to fragment
+                            streamCount++;
+                        }
                     });
-                } else if (typeof sourcesData === 'object' && sourcesData !== null) { // Match
+                } else if (typeof sourcesData === 'object' && sourcesData !== null) { // Handle match sources (object with language keys)
                     Object.entries(sourcesData).forEach(([langKey, sourcesInLang]) => {
+                        // Process each language group if it has sources
                         if (sourcesInLang && Array.isArray(sourcesInLang) && sourcesInLang.length > 0) {
-                            const langGroupDiv = document.createElement('div'); const langLabel = document.createElement('strong'); langLabel.textContent = `${langKey.toUpperCase()}:`; langGroupDiv.appendChild(langLabel);
+                            const langGroupDiv = document.createElement('div'); // Container for the group
+                            const langLabel = document.createElement('strong'); // Language label (e.g., "PT:")
+                            langLabel.textContent = `${langKey.toUpperCase()}:`;
+                            langGroupDiv.appendChild(langLabel);
+                            // Create buttons for sources in this language
                             sourcesInLang.forEach((src) => {
                                 const url = typeof src === 'object' && src.url ? src.url : (typeof src === 'string' ? src : null);
                                 const label = typeof src === 'object' && src.label ? src.label : `Src ${streamCount + 1}`;
-                                 if (url) { if (!firstStreamUrl) firstStreamUrl = url; const button = createStreamSourceButton(label, url); if (!firstStreamButtonElement) firstStreamButtonElement = button; langGroupDiv.appendChild(button); streamCount++; }
-                            }); fragment.appendChild(langGroupDiv);
+                                 if (url) {
+                                     if (!firstStreamUrl) firstStreamUrl = url;
+                                     const button = createStreamSourceButton(label, url);
+                                     if (!firstStreamButtonElement) firstStreamButtonElement = button;
+                                     langGroupDiv.appendChild(button);
+                                     streamCount++;
+                                 }
+                            });
+                            fragment.appendChild(langGroupDiv); // Add the language group to the fragment
                         }
                     });
                 }
-                streamButtonsContainer.appendChild(fragment);
+                streamButtonsContainer.appendChild(fragment); // Add all created buttons/groups to the DOM
 
                 // --- Handle Auto-load ---
-                if (streamCount === 0) { displayNoStreamsAvailable(playerAreaElement, streamButtonsContainer); clearPlayerState(); }
-                else if (firstStreamUrl && firstStreamButtonElement) { console.log("Auto-loading first stream for player page."); loadStreamIntoPlayer(firstStreamButtonElement, firstStreamUrl); }
-                else { console.error("Inconsistency: Streams counted, but no first URL/Button."); displayNoStreamsAvailable(playerAreaElement, streamButtonsContainer); clearPlayerState(); }
+                if (streamCount === 0) {
+                    // No valid streams found
+                    displayNoStreamsAvailable(playerAreaElement, streamButtonsContainer);
+                    clearPlayerState(); // Ensure player is cleared
+                } else if (firstStreamUrl && firstStreamButtonElement) {
+                    // Streams found, auto-load the first one
+                    console.log("Auto-loading first stream for player page.");
+                    loadStreamIntoPlayer(firstStreamButtonElement, firstStreamUrl);
+                } else {
+                    // Should not happen if streamCount > 0, but handle defensively
+                    console.error("Inconsistency: Streams counted, but no first URL/Button.");
+                    displayNoStreamsAvailable(playerAreaElement, streamButtonsContainer);
+                    clearPlayerState();
+                }
             } catch (error) {
+                // Handle errors during source parsing or button creation
                 console.error("Failed to parse sources/create buttons:", error);
                 streamButtonsContainer.innerHTML = '<p class="status-message error">Error loading sources.</p>';
-                clearPlayerState();
+                clearPlayerState(); // Ensure player is cleared on error
             }
         }
 
-        function displayNoStreamsAvailable(playerArea, buttonsContainer) { /* ... (keep existing code) ... */
+        /** Displays a message when no stream sources are available for the item. */
+        function displayNoStreamsAvailable(playerArea, buttonsContainer) {
              const message = 'No stream sources listed for this item.';
              if (buttonsContainer) buttonsContainer.innerHTML = `<p style="color: var(--text-secondary); font-size: 0.9em; padding: 10px 0;">${message}</p>`;
              if (playerArea) displayMessageInPlayerArea(playerArea, `<strong>No Streams Available</strong><span>${message}</span>`, false);
         }
 
+        /**
+         * Creates a stream source button element.
+         * @param {string} label - Text for the button.
+         * @param {string} url - The stream URL associated with the button.
+         * @returns {HTMLButtonElement} The created button element.
+         */
         function createStreamSourceButton(label, url) {
            const buttonElement = document.createElement('button');
            buttonElement.className = 'stream-button';
-           buttonElement.textContent = label || 'Source';
-           buttonElement.dataset.streamUrl = url;
+           buttonElement.textContent = label || 'Source'; // Use label or default text
+           buttonElement.dataset.streamUrl = url; // Store URL in data attribute
+
+           // Add click listener to load the stream when clicked
            buttonElement.onclick = (event) => {
-               event.stopPropagation();
+               event.stopPropagation(); // Prevent click from bubbling up
                console.log(`Loading stream in player page: ${label} (${url})`);
-               loadStreamIntoPlayer(buttonElement, url);
+               loadStreamIntoPlayer(buttonElement, url); // Load this stream
            };
            return buttonElement;
        }
 
-        function loadStreamIntoPlayer(clickedButtonElement, streamUrl) { /* ... (keep existing code - simplified) ... */
-            if (!streamUrl || typeof streamUrl !== 'string') return;
+        /**
+         * Loads the specified stream URL into the appropriate player (video or iframe).
+         * @param {HTMLButtonElement} clickedButtonElement - The button that was clicked.
+         * @param {string} streamUrl - The URL to load.
+         */
+        function loadStreamIntoPlayer(clickedButtonElement, streamUrl) {
+            if (!streamUrl || typeof streamUrl !== 'string') return; // Basic validation
+
             console.log(`>>> Player Page: loadStreamIntoPlayer START: ${streamUrl}`);
-            clearPlayerState(); messageContainerElement.classList.remove('visible'); loaderElement.classList.add('visible');
-            streamButtonsContainer.querySelectorAll('.stream-button').forEach(b => b.classList.remove('active')); if (clickedButtonElement) clickedButtonElement.classList.add('active');
-            if (!streamUrl.startsWith('http://') && !streamUrl.startsWith('https://')) { loaderElement.classList.remove('visible'); displayMessageInPlayerArea(playerAreaElement, `<strong>Invalid URL</strong><span>Link must start with http/https.</span>`, true, streamUrl); return; }
-            setTimeout(() => { try { const urlObject = new URL(streamUrl); if (urlObject.pathname.toLowerCase().endsWith('.m3u8')) loadHlsStreamIntoVideo(streamUrl, videoElement, playerAreaElement); else loadUrlIntoIframe(streamUrl, iframeElement, playerAreaElement); } catch (error) { loaderElement.classList.remove('visible'); displayMessageInPlayerArea(playerAreaElement, `<strong>URL Error</strong><span>Could not process link.</span>`, true, streamUrl); } }, 50);
+            // Prepare UI for loading
+            clearPlayerState(); // Clear any previous player state
+            messageContainerElement.classList.remove('visible'); // Hide messages
+            loaderElement.classList.add('visible'); // Show loader
+
+            // Update button states: deactivate all, then activate the clicked one
+            streamButtonsContainer.querySelectorAll('.stream-button').forEach(b => b.classList.remove('active'));
+            if (clickedButtonElement) clickedButtonElement.classList.add('active');
+
+            // Basic URL validation
+            if (!streamUrl.startsWith('http://') && !streamUrl.startsWith('https://')) {
+                loaderElement.classList.remove('visible');
+                displayMessageInPlayerArea(playerAreaElement, `<strong>Invalid URL</strong><span>Link must start with http/https.</span>`, true, streamUrl);
+                return;
+            }
+
+            // Determine player type (HLS or iframe) and load after a short delay
+            setTimeout(() => {
+                try {
+                    const urlObject = new URL(streamUrl);
+                    if (urlObject.pathname.toLowerCase().endsWith('.m3u8')) {
+                        loadHlsStreamIntoVideo(streamUrl, videoElement, playerAreaElement);
+                    } else {
+                        loadUrlIntoIframe(streamUrl, iframeElement, playerAreaElement);
+                    }
+                } catch (error) {
+                    // Handle URL parsing errors
+                    loaderElement.classList.remove('visible');
+                    displayMessageInPlayerArea(playerAreaElement, `<strong>URL Error</strong><span>Could not process link.</span>`, true, streamUrl);
+                }
+            }, 50);
         }
 
-        function clearPlayerState() { /* ... (keep existing code) ... */
-            if (currentHlsInstance && videoElement && currentHlsInstance.media === videoElement) { try { currentHlsInstance.destroy(); } catch (e) {} currentHlsInstance = null; }
-            if (iframeElement) { if (iframeElement.getAttribute('src') && iframeElement.getAttribute('src') !== 'about:blank') iframeElement.src = 'about:blank'; iframeElement.classList.remove('active'); }
-            if (videoElement) { videoElement.pause(); if (videoElement.hasAttribute('src')) videoElement.removeAttribute('src'); if (videoElement.currentSrc) videoElement.load(); videoElement.classList.remove('active'); videoElement.poster = CONFIG.placeholderImage; }
-            if (loaderElement) loaderElement.classList.remove('visible'); if (messageContainerElement) messageContainerElement.classList.remove('visible');
+        /** Clears the current player state (stops video/HLS, clears iframe, hides messages/loader). */
+        function clearPlayerState() {
+            // Destroy HLS instance if active and attached to the video element
+            if (currentHlsInstance && videoElement && currentHlsInstance.media === videoElement) {
+                try { currentHlsInstance.destroy(); } catch (e) { console.warn("Error destroying HLS instance:", e); }
+                currentHlsInstance = null;
+            }
+
+            // Clear iframe source and hide
+            if (iframeElement) {
+                if (iframeElement.getAttribute('src') && iframeElement.getAttribute('src') !== 'about:blank') {
+                    iframeElement.src = 'about:blank'; // Prevent resource loading
+                }
+                iframeElement.classList.remove('active');
+            }
+
+            // Pause video, clear source, reset poster, and hide
+            if (videoElement) {
+                videoElement.pause();
+                if (videoElement.hasAttribute('src')) videoElement.removeAttribute('src');
+                if (videoElement.currentSrc) videoElement.load(); // Force resource release
+                videoElement.classList.remove('active');
+                videoElement.poster = CONFIG.placeholderImage;
+            }
+
+            // Hide loader and message containers
+            if (loaderElement) loaderElement.classList.remove('visible');
+            if (messageContainerElement) messageContainerElement.classList.remove('visible');
+
+            // Deactivate any active stream buttons
             streamButtonsContainer.querySelectorAll('.stream-button.active').forEach(b => b.classList.remove('active'));
-            // --- NEW: Hide custom fullscreen button ---
+
+            // Hide custom fullscreen button and reset its icon
             if (customFullscreenButton) customFullscreenButton.style.display = 'none';
-            updateFullscreenButtonState(); // Reset icon
+            updateFullscreenButtonState();
         }
 
-        function displayMessageInPlayerArea(playerArea, messageHtml, showTryNextButton, failedUrl = null) { /* ... (keep existing code - simplified Try Next) ... */
-             if (!messageContainerElement || !loaderElement || !playerArea) return;
-             if (videoElement) videoElement.classList.remove('active'); if (iframeElement) iframeElement.classList.remove('active'); loaderElement.classList.remove('visible'); messageContainerElement.innerHTML = messageHtml;
+        /**
+         * Displays a message within the player area (e.g., error, info).
+         * @param {HTMLDivElement} playerArea - The player area element.
+         * @param {string} messageHtml - HTML content for the message.
+         * @param {boolean} showTryNextButton - Whether to show the "Try Next Source" button.
+         * @param {string | null} failedUrl - The URL that failed (needed for finding the next source).
+         */
+        function displayMessageInPlayerArea(playerArea, messageHtml, showTryNextButton, failedUrl = null) {
+             if (!messageContainerElement || !loaderElement || !playerArea) return; // Ensure elements exist
+
+             // Hide active player elements
+             if (videoElement) videoElement.classList.remove('active');
+             if (iframeElement) iframeElement.classList.remove('active');
+             loaderElement.classList.remove('visible'); // Hide loader
+
+             // Set message content
+             messageContainerElement.innerHTML = messageHtml;
+
+             // Add "Try Next Source" button if applicable
              if (showTryNextButton && failedUrl) {
-                 const nextButtonElement = findNextAvailableStreamButton(failedUrl);
-                 if (nextButtonElement) { const tryNextBtn = document.createElement('button'); tryNextBtn.className = 'try-next-button'; tryNextBtn.textContent = 'Try Next Source'; tryNextBtn.onclick = (event) => { event.stopPropagation(); nextButtonElement.click(); }; messageContainerElement.appendChild(document.createElement('br')); messageContainerElement.appendChild(tryNextBtn); }
-                 else { const noMoreSpan = document.createElement('span'); noMoreSpan.style.cssText = 'font-size:0.8em;margin-top:10px;display:block;'; noMoreSpan.textContent = '(No more sources available)'; messageContainerElement.appendChild(noMoreSpan); }
-             } messageContainerElement.classList.add('visible');
-             // --- NEW: Hide custom fullscreen button ---
+                 const nextButtonElement = findNextAvailableStreamButton(failedUrl); // Find the next button
+                 if (nextButtonElement) {
+                     // Create and append the button
+                     const tryNextBtn = document.createElement('button');
+                     tryNextBtn.className = 'try-next-button';
+                     tryNextBtn.textContent = 'Try Next Source';
+                     tryNextBtn.onclick = (event) => {
+                         event.stopPropagation(); // Prevent clicks bubbling up
+                         nextButtonElement.click(); // Simulate click on the next source button
+                     };
+                     messageContainerElement.appendChild(document.createElement('br'));
+                     messageContainerElement.appendChild(tryNextBtn);
+                 } else {
+                     // No more sources available message
+                     const noMoreSpan = document.createElement('span');
+                     noMoreSpan.style.cssText = 'font-size:0.8em;margin-top:10px;display:block;';
+                     noMoreSpan.textContent = '(No more sources available)';
+                     messageContainerElement.appendChild(noMoreSpan);
+                 }
+             }
+             messageContainerElement.classList.add('visible'); // Show the message container
+
+             // Hide custom fullscreen button and reset its icon when a message is shown
              if (customFullscreenButton) customFullscreenButton.style.display = 'none';
-             updateFullscreenButtonState(); // Reset icon
+             updateFullscreenButtonState();
         }
 
-        function findNextAvailableStreamButton(failedUrl) { /* ... (keep existing code - simplified) ... */
-            if (!failedUrl) return null; const allButtons = streamButtonsContainer.querySelectorAll('.stream-button'); let foundFailed = false;
-            for (let i = 0; i < allButtons.length; i++) { if (allButtons[i].dataset.streamUrl === failedUrl) foundFailed = true; else if (foundFailed) return allButtons[i]; } return null;
+        /**
+         * Finds the next stream button element in the container after the one with the failed URL.
+         * @param {string} failedUrl - The URL of the stream that failed.
+         * @returns {HTMLButtonElement | null} The next button element or null if none found.
+         */
+        function findNextAvailableStreamButton(failedUrl) {
+            if (!failedUrl) return null;
+            const allButtons = streamButtonsContainer.querySelectorAll('.stream-button');
+            let foundFailed = false;
+            // Iterate through buttons to find the one after the failed one
+            for (let i = 0; i < allButtons.length; i++) {
+                if (allButtons[i].dataset.streamUrl === failedUrl) {
+                    foundFailed = true; // Mark when the failed button is found
+                } else if (foundFailed) {
+                    return allButtons[i]; // Return the next button
+                }
+            }
+            return null; // No button found after the failed one
         }
 
-        function loadHlsStreamIntoVideo(hlsUrl, videoEl, playerArea) { /* ... (keep existing code) ... */
-             videoEl.poster = CONFIG.placeholderImage;
+        /** Loads an HLS stream into the video element. */
+        function loadHlsStreamIntoVideo(hlsUrl, videoEl, playerArea) {
+             videoEl.poster = CONFIG.placeholderImage; // Set poster during load
+
             if (Hls.isSupported()) {
-                if (currentHlsInstance && currentHlsInstance.media === videoEl) { currentHlsInstance.destroy(); currentHlsInstance = null; } else if (currentHlsInstance) { currentHlsInstance.destroy(); currentHlsInstance = null; }
-                currentHlsInstance = new Hls({ /* ... HLS config ... */ });
-                const hlsErrorListener = (event, data) => { if (!currentHlsInstance || currentHlsInstance.media !== videoEl) return; console.error('HLS Error:', data.type, data.details, data.fatal); let msg = `Stream Error (${data.details||'Unknown'})`; if(data.fatal){ displayMessageInPlayerArea(playerArea, `<strong>${msg}</strong>`, true, hlsUrl); if(currentHlsInstance && currentHlsInstance.media === videoEl){currentHlsInstance.destroy(); currentHlsInstance=null;} videoEl.classList.remove('active'); videoEl.poster=CONFIG.placeholderImage; } };
-                const hlsManifestParsedListener = () => { if (!currentHlsInstance || currentHlsInstance.media !== videoEl) return; playerArea.querySelector('.loader').classList.remove('visible'); videoEl.classList.add('active'); videoEl.muted = true; videoEl.play().catch(e => { if(currentHlsInstance && currentHlsInstance.media === videoEl){ displayMessageInPlayerArea(playerArea, `<strong>Playback Error</strong><span>${e.name==='NotAllowedError'?'Click play.':e.message}</span>`, e.name !== 'NotAllowedError', hlsUrl); if(e.name !== 'NotAllowedError') videoEl.classList.remove('active'); playerArea.querySelector('.loader').classList.remove('visible'); } }); };
-                currentHlsInstance.on(Hls.Events.ERROR, hlsErrorListener); currentHlsInstance.on(Hls.Events.MANIFEST_PARSED, hlsManifestParsedListener);
-                currentHlsInstance.attachMedia(videoEl); currentHlsInstance.loadSource(hlsUrl);
+                // --- Use HLS.js ---
+                console.log("Using HLS.js for:", hlsUrl);
+                // Destroy previous instance if needed
+                if (currentHlsInstance && currentHlsInstance.media === videoEl) { currentHlsInstance.destroy(); currentHlsInstance = null; }
+                else if (currentHlsInstance) { currentHlsInstance.destroy(); currentHlsInstance = null; }
+
+                // Create new HLS instance
+                currentHlsInstance = new Hls({ /* HLS config from index.html */
+                    liveSyncDurationCount: 2, manifestLoadingTimeOut: 15000, levelLoadingTimeOut: 15000,
+                    fragLoadingTimeOut: 20000, manifestLoadErrorMaxRetry: 3, levelLoadErrorMaxRetry: 4,
+                    fragLoadErrorMaxRetry: 5
+                 });
+
+                // Error listener
+                const hlsErrorListener = (event, data) => {
+                    if (!currentHlsInstance || currentHlsInstance.media !== videoEl) return;
+                    console.error('HLS Error:', data.type, data.details, data.fatal);
+                    let msg = `Stream Error (${data.details||'Unknown'})`;
+                    if(data.fatal){
+                        displayMessageInPlayerArea(playerArea, `<strong>${msg}</strong>`, true, hlsUrl);
+                        if(currentHlsInstance && currentHlsInstance.media === videoEl){currentHlsInstance.destroy(); currentHlsInstance=null;}
+                        videoEl.classList.remove('active'); videoEl.poster=CONFIG.placeholderImage;
+                    }
+                };
+                // Manifest parsed listener (stream ready)
+                const hlsManifestParsedListener = () => {
+                    if (!currentHlsInstance || currentHlsInstance.media !== videoEl) return;
+                    playerArea.querySelector('.loader').classList.remove('visible');
+                    videoEl.classList.add('active');
+                    videoEl.muted = true; // Mute for autoplay
+                    videoEl.play().catch(e => { // Handle play errors
+                        if(currentHlsInstance && currentHlsInstance.media === videoEl){
+                            const message = e.name==='NotAllowedError'?'Click play.':e.message;
+                            const showNext = e.name !== 'NotAllowedError';
+                            displayMessageInPlayerArea(playerArea, `<strong>Playback Error</strong><span>${message}</span>`, showNext, hlsUrl);
+                            if(showNext) videoEl.classList.remove('active');
+                            playerArea.querySelector('.loader').classList.remove('visible');
+                        }
+                    });
+                };
+                // Attach listeners and load
+                currentHlsInstance.on(Hls.Events.ERROR, hlsErrorListener);
+                currentHlsInstance.on(Hls.Events.MANIFEST_PARSED, hlsManifestParsedListener);
+                currentHlsInstance.attachMedia(videoEl);
+                currentHlsInstance.loadSource(hlsUrl);
+
             } else if (videoEl.canPlayType('application/vnd.apple.mpegurl')) {
-                 if (currentHlsInstance) { currentHlsInstance.destroy(); currentHlsInstance = null; }
-                 const handleNativeLoadedMetadata = () => { if (videoEl.getAttribute('src') !== hlsUrl) return; playerArea.querySelector('.loader').classList.remove('visible'); videoEl.classList.add('active'); videoEl.muted = true; videoEl.play().catch(e => { if(videoEl.getAttribute('src') === hlsUrl){ displayMessageInPlayerArea(playerArea, `<strong>Playback Error</strong><span>${e.name==='NotAllowedError'?'Click play.':e.message}</span>`, e.name !== 'NotAllowedError', hlsUrl); if(e.name !== 'NotAllowedError') videoEl.classList.remove('active'); playerArea.querySelector('.loader').classList.remove('visible'); } }); };
-                 const handleNativeError = () => { if (videoEl.getAttribute('src') !== hlsUrl) return; const err = videoEl.error; const msg = err ? (err.message || `code ${err.code}`) : 'Unknown'; displayMessageInPlayerArea(playerArea, `<strong>Stream Error</strong><span>Native HLS failed: ${msg}.</span>`, true, hlsUrl); videoEl.classList.remove('active'); videoEl.poster = CONFIG.placeholderImage; playerArea.querySelector('.loader').classList.remove('visible'); };
-                 videoEl.removeEventListener('loadedmetadata', handleNativeLoadedMetadata); videoEl.removeEventListener('error', handleNativeError); videoEl.addEventListener('loadedmetadata', handleNativeLoadedMetadata); videoEl.addEventListener('error', handleNativeError);
-                 videoEl.src = hlsUrl; videoEl.load();
-            } else { displayMessageInPlayerArea(playerArea, `<strong>Unsupported Stream</strong><span>Browser cannot play HLS.</span>`, false); videoEl.classList.remove('active'); videoEl.poster = CONFIG.placeholderImage; playerArea.querySelector('.loader').classList.remove('visible'); }
-            // --- NEW: Show custom fullscreen button ---
+                // --- Use Native HLS ---
+                 console.log("Using native HLS support for:", hlsUrl);
+                 if (currentHlsInstance) { currentHlsInstance.destroy(); currentHlsInstance = null; } // Cleanup HLS.js
+
+                 // Native loaded metadata listener
+                 const handleNativeLoadedMetadata = () => {
+                     if (videoEl.getAttribute('src') !== hlsUrl) return;
+                     playerArea.querySelector('.loader').classList.remove('visible');
+                     videoEl.classList.add('active');
+                     videoEl.muted = true;
+                     videoEl.play().catch(e => { // Handle play errors
+                         if(videoEl.getAttribute('src') === hlsUrl){
+                             const message = e.name==='NotAllowedError'?'Click play.':e.message;
+                             const showNext = e.name !== 'NotAllowedError';
+                             displayMessageInPlayerArea(playerArea, `<strong>Playback Error</strong><span>${message}</span>`, showNext, hlsUrl);
+                             if(showNext) videoEl.classList.remove('active');
+                             playerArea.querySelector('.loader').classList.remove('visible');
+                         }
+                     });
+                 };
+                 // Native error listener
+                 const handleNativeError = () => {
+                     if (videoEl.getAttribute('src') !== hlsUrl) return;
+                     const err = videoEl.error;
+                     const msg = err ? (err.message || `code ${err.code}`) : 'Unknown';
+                     displayMessageInPlayerArea(playerArea, `<strong>Stream Error</strong><span>Native HLS failed: ${msg}.</span>`, true, hlsUrl);
+                     videoEl.classList.remove('active'); videoEl.poster = CONFIG.placeholderImage;
+                     playerArea.querySelector('.loader').classList.remove('visible');
+                 };
+                 // Add listeners (remove old first)
+                 videoEl.removeEventListener('loadedmetadata', handleNativeLoadedMetadata);
+                 videoEl.removeEventListener('error', handleNativeError);
+                 videoEl.addEventListener('loadedmetadata', handleNativeLoadedMetadata);
+                 videoEl.addEventListener('error', handleNativeError);
+                 // Set source and load
+                 videoEl.src = hlsUrl;
+                 videoEl.load();
+
+            } else {
+                // --- HLS Not Supported ---
+                displayMessageInPlayerArea(playerArea, `<strong>Unsupported Stream</strong><span>Browser cannot play HLS.</span>`, false);
+                videoEl.classList.remove('active'); videoEl.poster = CONFIG.placeholderImage;
+                playerArea.querySelector('.loader').classList.remove('visible');
+            }
+            // Show custom fullscreen button after attempting load
             if (customFullscreenButton) customFullscreenButton.style.display = 'block';
             updateFullscreenButtonState();
         }
 
-        function loadUrlIntoIframe(iframeUrl, iframeEl, playerArea) { /* ... (keep existing code) ... */
+        /** Loads a general URL into the iframe. */
+        function loadUrlIntoIframe(iframeUrl, iframeEl, playerArea) {
              let iframeLoadTimeoutId = null; let isLoadSuccessful = false;
-            if (currentHlsInstance) { currentHlsInstance.destroy(); currentHlsInstance = null; }
+            if (currentHlsInstance) { currentHlsInstance.destroy(); currentHlsInstance = null; } // Cleanup HLS.js
+
+            // Cleanup function for listeners/timeout
             const cleanup = () => { clearTimeout(iframeLoadTimeoutId); iframeEl.onload = null; iframeEl.onerror = null; };
-            const handleFailure = (reason) => { cleanup(); if (iframeEl.getAttribute('src') === iframeUrl) { displayMessageInPlayerArea(playerArea, `<strong>Stream Error</strong><span>${reason}. Might be offline/blocked.</span>`, true, iframeUrl); iframeEl.classList.remove('active'); iframeEl.src = 'about:blank'; playerArea.querySelector('.loader').classList.remove('visible'); } };
-            iframeLoadTimeoutId = setTimeout(() => { if (!isLoadSuccessful && iframeEl.getAttribute('src') === iframeUrl) handleFailure(`Load timeout (${CONFIG.iframeLoadTimeoutMs / 1000}s)`); }, CONFIG.iframeLoadTimeoutMs);
-            iframeEl.onload = () => { if (iframeEl.getAttribute('src') === iframeUrl) { isLoadSuccessful = true; cleanup(); playerArea.querySelector('.loader').classList.remove('visible'); iframeEl.classList.add('active'); } else if (iframeEl.getAttribute('src') !== 'about:blank') { /* ignore */ } };
+            // Failure handler
+            const handleFailure = (reason) => {
+                cleanup();
+                if (iframeEl.getAttribute('src') === iframeUrl) { // Check if failure corresponds to current URL
+                    displayMessageInPlayerArea(playerArea, `<strong>Stream Error</strong><span>${reason}. Might be offline/blocked.</span>`, true, iframeUrl);
+                    iframeEl.classList.remove('active'); iframeEl.src = 'about:blank';
+                    playerArea.querySelector('.loader').classList.remove('visible');
+                }
+            };
+            // Set timeout for load failure
+            iframeLoadTimeoutId = setTimeout(() => {
+                if (!isLoadSuccessful && iframeEl.getAttribute('src') === iframeUrl) handleFailure(`Load timeout (${CONFIG.iframeLoadTimeoutMs / 1000}s)`);
+            }, CONFIG.iframeLoadTimeoutMs);
+            // Success handler
+            iframeEl.onload = () => {
+                if (iframeEl.getAttribute('src') === iframeUrl) { // Check if load corresponds to current URL
+                    isLoadSuccessful = true; cleanup();
+                    playerArea.querySelector('.loader').classList.remove('visible');
+                    iframeEl.classList.add('active');
+                } else if (iframeEl.getAttribute('src') !== 'about:blank') { /* ignore intermediate loads */ }
+            };
+            // Error handler
             iframeEl.onerror = () => { if (iframeEl.getAttribute('src') === iframeUrl) handleFailure("onError event fired"); };
+            // Set src to start loading
             iframeEl.src = iframeUrl;
-            // --- NEW: Show custom fullscreen button ---
+            // Show custom fullscreen button after attempting load
             if (customFullscreenButton) customFullscreenButton.style.display = 'block';
             updateFullscreenButtonState();
         }
 
-        // --- NEW: Custom Fullscreen Logic ---
+        // --- Custom Fullscreen Logic (MODIFIED to target player-area) ---
         /**
          * Sets up the event listener for the custom fullscreen button.
+         * Targets the player-area container for fullscreen request.
          */
         function setupCustomFullscreenButton() {
-            if (!customFullscreenButton) return;
+            if (!customFullscreenButton || !playerAreaElement) return; // Ensure elements exist
 
-            // Set initial icon
+            // Set initial icon state
             updateFullscreenButtonState();
 
+            // Add click listener
             customFullscreenButton.onclick = () => {
-                // Determine which element is active and should be fullscreened
-                const elementToFullscreen = iframeElement.classList.contains('active') ? iframeElement : (videoElement.classList.contains('active') ? videoElement : null);
+                 // Check if any player inside the playerArea is actually active
+                 const isActive = iframeElement?.classList.contains('active') || videoElement?.classList.contains('active');
+                 if (!isActive) {
+                     // Don't allow fullscreen if no player is active
+                     console.warn("Fullscreen button clicked, but no active player (iframe/video) found on player page.");
+                     return;
+                 }
 
-                if (!elementToFullscreen) {
-                    console.warn("No active element (iframe/video) found to fullscreen on player page.");
-                    return;
-                }
-
-                toggleBrowserFullscreen(elementToFullscreen);
+                // Request fullscreen for the playerAreaElement container
+                console.log("Requesting fullscreen for playerArea on player page.");
+                toggleBrowserFullscreen(playerAreaElement); // Pass the container element
             };
 
-            // Listen for fullscreen changes to update button icon
+            // Listen for fullscreen changes globally to update button icon
             document.addEventListener('fullscreenchange', updateFullscreenButtonState);
             document.addEventListener('webkitfullscreenchange', updateFullscreenButtonState);
             document.addEventListener('mozfullscreenchange', updateFullscreenButtonState);
@@ -351,14 +630,16 @@
 
         /**
          * Toggles fullscreen mode for a given element using the Fullscreen API.
-         * @param {HTMLElement} element The element to make fullscreen (iframe or video).
+         * @param {HTMLElement} element The element to make fullscreen (the .player-area).
          */
         function toggleBrowserFullscreen(element) {
             if (!element) return;
 
+            // Check if browser is currently NOT in fullscreen mode
             if (!document.fullscreenElement && !document.webkitFullscreenElement && !document.mozFullScreenElement && !document.msFullscreenElement) {
                 // --- Enter Fullscreen ---
                 console.log("Requesting fullscreen for element:", element);
+                // Use standard or vendor-prefixed methods
                 if (element.requestFullscreen) {
                     element.requestFullscreen().catch(err => console.error(`Error attempting to enable full-screen mode: ${err.message} (${err.name})`));
                 } else if (element.webkitRequestFullscreen) { /* Safari */
@@ -371,6 +652,7 @@
             } else {
                 // --- Exit Fullscreen ---
                 console.log("Exiting fullscreen.");
+                 // Use standard or vendor-prefixed methods
                 if (document.exitFullscreen) {
                     document.exitFullscreen();
                 } else if (document.webkitExitFullscreen) { /* Safari */
@@ -385,14 +667,23 @@
 
         /**
          * Updates the appearance (icon, label) of the custom fullscreen button
-         * based on the current fullscreen state of the document.
+         * based on the current fullscreen state of the document and whether the playerArea is fullscreen.
          */
         function updateFullscreenButtonState() {
-            if (!customFullscreenButton) return;
+            if (!customFullscreenButton) return; // Exit if button doesn't exist
 
+            // Check if *any* element is currently fullscreen
             const isFullscreenActive = !!(document.fullscreenElement || document.webkitFullscreenElement || document.mozFullScreenElement || document.msFullscreenElement);
+            // Check if the playerAreaElement *itself* is the element currently fullscreen
+            const isThisPlayerAreaFullscreen = isFullscreenActive && (
+                document.fullscreenElement === playerAreaElement ||
+                document.webkitFullscreenElement === playerAreaElement ||
+                document.mozFullScreenElement === playerAreaElement ||
+                document.msFullscreenElement === playerAreaElement
+            );
 
-            if (isFullscreenActive) {
+            // Set icon and label based on whether *this* player area is fullscreen
+            if (isThisPlayerAreaFullscreen) {
                 customFullscreenButton.innerHTML = SVG_EXIT_FULLSCREEN;
                 customFullscreenButton.setAttribute('aria-label', 'Exit Fullscreen');
                 customFullscreenButton.setAttribute('title', 'Exit Fullscreen');
@@ -403,7 +694,7 @@
             }
              console.log("Player page fullscreen state changed. Is active:", isFullscreenActive);
         }
-        // --- End NEW Custom Fullscreen Logic ---
+        // --- End Custom Fullscreen Logic ---
 
 
     })(); // End of IIFE
