@@ -381,61 +381,46 @@ body.player-page .loader {
 }
 
 /* ========================================= */
-/* --- Custom Fullscreen Button Styles (Updated) --- */
+/* --- Custom Fullscreen Button Styles (Corrected) --- */
 /* ========================================= */
 
+/* Base styles for the button */
 .player-area .custom-fullscreen-btn {
     position: absolute;
     top: 10px;
     right: 10px;
-    z-index: 10; /* Ensure it's above the iframe/video */
+    z-index: 10;
     background-color: rgba(42, 42, 42, 0.7);
     border: none;
     color: white;
     padding: 8px;
     border-radius: 4px;
     cursor: pointer;
-    line-height: 0; /* Align SVG nicely */
+    line-height: 0;
     transition: background-color 0.2s ease, opacity 0.2s ease;
-    /* --- UPDATED: Start with opacity 0 for fade-in on hover --- */
-    opacity: 0;
-    display: none; /* Hide initially */
-    pointer-events: none; /* Prevent interaction when invisible */
-}
-
-/* Show button only when iframe or video is active */
-.player-area iframe.active + .custom-fullscreen-btn, /* Assumes button is AFTER iframe */
-.player-area video.active + .custom-fullscreen-btn { /* Assumes button is AFTER video */
-     display: block;
-     pointer-events: auto; /* Allow interaction when displayed */
-}
-
-/* --- UPDATED: Fade in on hover (only when NOT fullscreen) --- */
-.player-area:hover iframe.active:not(:fullscreen):not(:-webkit-full-screen):not(:-moz-full-screen):not(:-ms-fullscreen) + .custom-fullscreen-btn,
-.player-area:hover video.active:not(:fullscreen):not(:-webkit-full-screen):not(:-moz-full-screen):not(:-ms-fullscreen) + .custom-fullscreen-btn,
-.player-area iframe.active:not(:fullscreen):not(:-webkit-full-screen):not(:-moz-full-screen):not(:-ms-fullscreen) + .custom-fullscreen-btn:focus-visible,
-.player-area video.active:not(:fullscreen):not(:-webkit-full-screen):not(:-moz-full-screen):not(:-ms-fullscreen) + .custom-fullscreen-btn:focus-visible {
-    opacity: 1; /* Show on hover/focus */
-}
-
-.player-area .custom-fullscreen-btn:hover {
-     background-color: rgba(62, 62, 62, 0.9);
-}
-
-.player-area .custom-fullscreen-btn:focus-visible {
-    outline: 2px solid var(--accent-color);
-    outline-offset: 1px;
-}
-
-/* Hide button if player message is visible */
-.player-area .player-message.visible ~ .custom-fullscreen-btn { /* Assumes button is AFTER message */
+    /* Initially hidden completely */
     display: none;
     opacity: 0;
     pointer-events: none;
 }
 
-/* --- UPDATED: Styles for when the *element* itself is fullscreen --- */
-/* Ensure button is always visible (opacity 1) when its sibling iframe/video is fullscreen */
+/* STEP 1: Make button potentially visible and interactive when player is active */
+.player-area iframe.active + .custom-fullscreen-btn,
+.player-area video.active + .custom-fullscreen-btn {
+     display: block; /* Make it take up space */
+     pointer-events: auto; /* Make it interactive */
+     /* Opacity is still 0 here by default from the base rule */
+}
+
+/* STEP 2: Show on hover/focus ONLY when NOT fullscreen */
+.player-area:hover iframe.active:not(:fullscreen):not(:-webkit-full-screen):not(:-moz-full-screen):not(:-ms-fullscreen) + .custom-fullscreen-btn,
+.player-area:hover video.active:not(:fullscreen):not(:-webkit-full-screen):not(:-moz-full-screen):not(:-ms-fullscreen) + .custom-fullscreen-btn,
+.player-area iframe.active:not(:fullscreen):not(:-webkit-full-screen):not(:-moz-full-screen):not(:-ms-fullscreen) + .custom-fullscreen-btn:focus-visible,
+.player-area video.active:not(:fullscreen):not(:-webkit-full-screen):not(:-moz-full-screen):not(:-ms-fullscreen) + .custom-fullscreen-btn:focus-visible {
+    opacity: 1; /* Fade in */
+}
+
+/* STEP 3: FORCE visibility when the sibling iframe/video IS fullscreen */
 iframe:fullscreen + .custom-fullscreen-btn,
 video:fullscreen + .custom-fullscreen-btn,
 iframe:-webkit-full-screen + .custom-fullscreen-btn,
@@ -444,10 +429,28 @@ iframe:-moz-full-screen + .custom-fullscreen-btn,
 video:-moz-full-screen + .custom-fullscreen-btn,
 iframe:-ms-fullscreen + .custom-fullscreen-btn,
 video:-ms-fullscreen + .custom-fullscreen-btn {
-     opacity: 1; /* Always visible when element is fullscreen */
+     opacity: 1 !important; /* Force opacity */
+     display: block !important; /* Ensure it's displayed */
+     pointer-events: auto !important; /* Ensure it's interactive */
      background-color: rgba(20, 20, 20, 0.8); /* Optional: different background */
-     display: block; /* Ensure it's displayed */
-     pointer-events: auto; /* Ensure it's interactive */
+}
+
+/* Hide button if player message is visible (overrides everything else) */
+.player-area .player-message.visible ~ .custom-fullscreen-btn {
+    display: none !important;
+    opacity: 0 !important;
+    pointer-events: none !important;
+}
+
+/* Hover effect for the button itself */
+.player-area .custom-fullscreen-btn:hover {
+     background-color: rgba(62, 62, 62, 0.9);
+}
+
+/* Focus effect for the button itself */
+.player-area .custom-fullscreen-btn:focus-visible {
+    outline: 2px solid var(--accent-color);
+    outline-offset: 1px;
 }
 
 /* Adjust button position slightly on smaller screens */
