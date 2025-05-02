@@ -157,9 +157,7 @@
             <strong>Disclaimer:</strong> PerasTV does not host any video content. All streams are embedded from external, publicly available sources found on the internet. We are not responsible for the legality, accuracy, or quality of the content provided by these third-party sites. Users are advised to respect copyright laws and use this service responsibly. Stream availability is not guaranteed.
         </p>
     </footer>
-</div> <script src="config.js"></script>
-
-<script>
+</div> <script>
     // --- Console Access Deterrents (Run Immediately) ---
     /**
      * Adds event listeners to attempt to block right-click, common dev console shortcuts,
@@ -289,7 +287,7 @@
     setupConsoleDeterrents();
 
 
-
+    const SITE_PASSWORD_B64 = "cHR2";
     const AUTH_KEY = 'perasTvAuthenticated'; // Key for sessionStorage
 
     const passwordOverlay = document.getElementById('password-overlay');
@@ -305,8 +303,9 @@
         mainContainer.style.display = 'block'; // Show main content
         initializeApp(); // Initialize the app directly
     } else {
-        if (typeof SITE_PASSWORD === 'undefined') {
-             console.error("ERROR: SITE_PASSWORD is not defined. Make sure config.js is loaded correctly and defines SITE_PASSWORD.");
+        // Check if SITE_PASSWORD_B64 is set correctly
+        if (typeof SITE_PASSWORD_B64 === 'undefined' || SITE_PASSWORD_B64 === "PASTE_YOUR_BASE64_PASSWORD_HERE" || SITE_PASSWORD_B64 === "") {
+             console.error("ERROR: SITE_PASSWORD_B64 is not set correctly in the script. Please generate the Base64 password and paste it.");
              // Display an error message to the user instead of the password prompt
              passwordOverlay.innerHTML = '<p style="color:var(--error-color); text-align:center;">Configuration Error: Password not set.</p>';
              passwordOverlay.classList.remove('hidden'); // Ensure the overlay is visible to show the error
@@ -319,9 +318,18 @@
             passwordForm.addEventListener('submit', (event) => {
                 event.preventDefault(); // Stop form from submitting the traditional way
                 const enteredPassword = passwordInput.value;
+                let correctPassword = "";
+                try {
+                    // Decode the Base64 password
+                    correctPassword = atob(SITE_PASSWORD_B64);
+                } catch (e) {
+                    console.error("Error decoding Base64 password:", e);
+                    passwordError.textContent = 'Configuration Error';
+                    return; // Stop if decoding fails
+                }
 
-                // Use SITE_PASSWORD from config.js for comparison
-                if (enteredPassword === SITE_PASSWORD) {
+                // Compare entered password with the decoded password
+                if (enteredPassword === correctPassword) {
                     // Password is correct
                     console.log("Password correct.");
                     sessionStorage.setItem(AUTH_KEY, 'true'); // Store auth status for the session
