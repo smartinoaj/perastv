@@ -9,109 +9,27 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
     <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
-    <style>
-        /* Styles specific to the player page */
-        body {
-            padding: 20px; /* Add some padding around the content */
-            display: flex;
-            flex-direction: column;
-            align-items: center; /* Center content horizontally */
-            min-height: 100vh;
-        }
-        .player-page-container {
-            width: 100%;
-            max-width: 1200px; /* Limit maximum width */
-            background-color: var(--bg-secondary);
-            border-radius: 10px;
-            padding: 20px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
-        }
-        .player-page-header {
-            text-align: center;
-            margin-bottom: 20px;
-            padding-bottom: 15px;
-            border-bottom: 1px solid var(--border-color);
-        }
-        .player-page-header h1 {
-            font-size: 1.8em;
-            font-weight: 700;
-            color: var(--text-primary);
-            margin: 0;
-        }
-        /* Use existing player area styles from style.css */
-        /* Ensure player area takes appropriate width */
-        .player-area {
-            margin-left: auto;
-            margin-right: auto;
-            margin-bottom: 25px; /* More space below player */
-        }
-         /* Ensure stream buttons are centered */
-        .stream-buttons {
-            text-align: center;
-            margin-bottom: 20px;
-        }
-        /* Footer specific to player page */
-        .player-page-footer {
-            text-align: center;
-            margin-top: 30px;
-            font-size: 0.8em;
-            color: var(--text-secondary);
-        }
-
-        /* Hide elements not needed from style.css */
-        header, .search-container, .tabs, .toggles-container, .channel-grid, footer {
-            display: none !important;
-        }
-        /* Override grid settings for the player box */
-         .channel-box.expanded {
-            grid-column: auto; /* Don't span columns */
-            margin: 0; /* Reset margin */
-            border: none; /* No border needed */
-            background: transparent; /* Transparent background */
-            box-shadow: none; /* No shadow */
-            padding: 0;
-            cursor: default;
-         }
-         .channel-box.expanded .channel-header,
-         .channel-box.expanded .channel-info {
-             display: none; /* Hide original header/info */
-         }
-         .channel-box.expanded .favorite-button {
-             display: none; /* Hide favorite button */
-         }
-         .channel-box.expanded .box-disclaimer {
-             margin-top: 15px; /* Adjust disclaimer spacing */
-         }
-
-    </style>
-</head>
-<body>
-
-<div id="player-page-loading" class="status-message loading">Loading player...</div>
+    </head>
+<body class="player-page"> <div id="player-page-loading" class="status-message loading">Loading player...</div>
 <div id="player-page-error" class="status-message error" style="display: none;"></div>
 
-<div id="player-page-content" class="player-page-container" style="display: none;">
-    <div class="player-page-header">
-        <h1 id="item-title">Item Name</h1> </div>
+<div id="player-page-content" style="display: none; width: 100%; height: 100%; display: flex; flex-direction: column;">
 
-    <div class="channel-box expanded"> <div class="iframe-container" style="display: block; margin-top: 0;"> <div class="player-area">
-                <div class="loader"></div>
-                <div class="player-message" role="alert"></div>
-                <iframe allow="autoplay; fullscreen; encrypted-media; picture-in-picture" allowfullscreen title="Stream Player"></iframe>
-                <video controls autoplay muted playsinline title="Stream Player"></video>
-            </div>
-            <div class="stream-buttons">
-                </div>
-            <p class="box-disclaimer">
-                Disclaimer: This site embeds content from external sources. We do not host streams. Availability and quality not guaranteed. Use responsibly.
-            </p>
-        </div>
+    <div class="player-area"> <div class="loader"></div>
+        <div class="player-message" role="alert"></div>
+        <iframe allow="autoplay; fullscreen; encrypted-media; picture-in-picture" allowfullscreen title="Stream Player"></iframe>
+        <video controls autoplay muted playsinline title="Stream Player"></video>
     </div>
+
+    <div class="stream-buttons">
+        </div>
+
+    <p class="box-disclaimer">
+        Disclaimer: This site embeds content from external sources. We do not host streams. Availability and quality not guaranteed. Use responsibly.
+    </p>
+
 </div>
 
-<div class="player-page-footer">
-    &copy; Peras TV
-</div>
 
 <script>
     // --- Player Page Logic ---
@@ -128,9 +46,7 @@
         const loadingElement = document.getElementById('player-page-loading');
         const errorElement = document.getElementById('player-page-error');
         const contentElement = document.getElementById('player-page-content');
-        const titleElement = document.getElementById('item-title');
         // Player elements within the container
-        const playerBoxElement = contentElement.querySelector('.channel-box'); // The container div
         const playerAreaElement = contentElement.querySelector('.player-area');
         const streamButtonsContainer = contentElement.querySelector('.stream-buttons');
         const videoElement = contentElement.querySelector('video');
@@ -158,9 +74,7 @@
         // --- Data Loading ---
         async function loadItemDataAndInitialize(itemId) {
             try {
-                loadingElement.style.display = 'block';
-                errorElement.style.display = 'none';
-                contentElement.style.display = 'none';
+                showLoading(); // Use function
 
                 // Fetch both data sources concurrently
                 const cacheBuster = `?t=${Date.now()}`;
@@ -189,7 +103,7 @@
                 console.error("Failed to load item data:", error);
                 showError(`Error loading player: ${error.message}`);
             } finally {
-                loadingElement.style.display = 'none';
+                hideLoading(); // Use function
             }
         }
 
@@ -201,18 +115,14 @@
          * @returns {object | null} The found item data object or null.
          */
         function findItemById(itemId, channelsData, matchesData) {
-            if (itemId.startsWith('match-')) {
+             if (itemId.startsWith('match-')) {
                 const matchIndex = parseInt(itemId.split('-')[1], 10);
                 if (!isNaN(matchIndex) && matchIndex >= 0 && matchIndex < matchesData.length) {
-                    // Add itemType for easier handling later if needed
                     return { ...matchesData[matchIndex], itemType: 'match', name: `${matchesData[matchIndex].team1} vs ${matchesData[matchIndex].team2}` };
                 }
             } else if (itemId.includes('-channel-')) {
-                const parts = itemId.split('-');
-                const category = parts[0];
-                const channelIndex = parseInt(parts[parts.length - 1], 10);
+                const parts = itemId.split('-'); const category = parts[0]; const channelIndex = parseInt(parts[parts.length - 1], 10);
                 if (channelsData[category] && !isNaN(channelIndex) && channelIndex >= 0 && channelIndex < channelsData[category].length) {
-                     // Add itemType for easier handling later if needed
                     return { ...channelsData[category][channelIndex], itemType: 'channel' };
                 }
             }
@@ -223,21 +133,29 @@
         function initializePlayerUI() {
             if (!itemData) return;
 
-            // Set page title and header
+            // Set page title
             const itemName = itemData.name || 'Player';
             document.title = `${itemName} - Peras TV`;
-            titleElement.textContent = itemName;
+            // No separate header title element anymore
 
             // Populate stream buttons and auto-load first stream
-            populateStreamsAndLoadFirst(playerBoxElement); // Pass the container box
+            populateStreamsAndLoadFirst(); // No need to pass box element anymore
 
             // Show the content area
-            contentElement.style.display = 'block';
+            contentElement.style.display = 'flex'; // Use flex for column layout
         }
 
-        // --- Error Handling ---
+        // --- Status Display ---
+        function showLoading() {
+            loadingElement.style.display = 'block';
+            errorElement.style.display = 'none';
+            contentElement.style.display = 'none';
+        }
+        function hideLoading() {
+             loadingElement.style.display = 'none';
+        }
         function showError(message) {
-            loadingElement.style.display = 'none';
+            hideLoading();
             contentElement.style.display = 'none';
             errorElement.innerHTML = `<strong>Error</strong><span>${message}</span>`;
             errorElement.style.display = 'block';
@@ -248,9 +166,8 @@
 
         /**
          * Populates stream buttons and attempts to auto-load the first stream.
-         * @param {HTMLDivElement} boxElement - The container box element (playerBoxElement).
          */
-        function populateStreamsAndLoadFirst(boxElement) {
+        function populateStreamsAndLoadFirst() {
             // Extract sources based on item type
             let sourcesData = null;
             if (itemData.itemType === 'channel') {
@@ -273,45 +190,26 @@
                     sourcesData.forEach((src) => {
                         const url = typeof src === 'object' && src.url ? src.url : (typeof src === 'string' ? src : null);
                         const label = typeof src === 'object' && src.label ? src.label : `Source ${streamCount + 1}`;
-                        if (url) {
-                             if (!firstStreamUrl) firstStreamUrl = url;
-                             const button = createStreamSourceButton(label, url, boxElement); // Pass boxElement
-                             if (!firstStreamButtonElement) firstStreamButtonElement = button;
-                             fragment.appendChild(button); streamCount++;
-                        }
+                        if (url) { if (!firstStreamUrl) firstStreamUrl = url; const button = createStreamSourceButton(label, url); if (!firstStreamButtonElement) firstStreamButtonElement = button; fragment.appendChild(button); streamCount++; }
                     });
                 } else if (typeof sourcesData === 'object' && sourcesData !== null) { // Match
                     Object.entries(sourcesData).forEach(([langKey, sourcesInLang]) => {
                         if (sourcesInLang && Array.isArray(sourcesInLang) && sourcesInLang.length > 0) {
-                            const langGroupDiv = document.createElement('div');
-                            const langLabel = document.createElement('strong'); langLabel.textContent = `${langKey.toUpperCase()}:`; langGroupDiv.appendChild(langLabel);
+                            const langGroupDiv = document.createElement('div'); const langLabel = document.createElement('strong'); langLabel.textContent = `${langKey.toUpperCase()}:`; langGroupDiv.appendChild(langLabel);
                             sourcesInLang.forEach((src) => {
                                 const url = typeof src === 'object' && src.url ? src.url : (typeof src === 'string' ? src : null);
                                 const label = typeof src === 'object' && src.label ? src.label : `Src ${streamCount + 1}`;
-                                 if (url) {
-                                     if (!firstStreamUrl) firstStreamUrl = url;
-                                     const button = createStreamSourceButton(label, url, boxElement); // Pass boxElement
-                                     if (!firstStreamButtonElement) firstStreamButtonElement = button;
-                                     langGroupDiv.appendChild(button); streamCount++;
-                                }
-                            });
-                            fragment.appendChild(langGroupDiv);
+                                 if (url) { if (!firstStreamUrl) firstStreamUrl = url; const button = createStreamSourceButton(label, url); if (!firstStreamButtonElement) firstStreamButtonElement = button; langGroupDiv.appendChild(button); streamCount++; }
+                            }); fragment.appendChild(langGroupDiv);
                         }
                     });
                 }
                 streamButtonsContainer.appendChild(fragment);
 
                 // --- Handle Auto-load ---
-                if (streamCount === 0) {
-                    displayNoStreamsAvailable(playerAreaElement, streamButtonsContainer);
-                    clearPlayerState(); // Clear player area
-                } else if (firstStreamUrl && firstStreamButtonElement) {
-                    console.log("Auto-loading first stream for player page.");
-                    loadStreamIntoPlayer(firstStreamButtonElement, firstStreamUrl); // Load directly
-                } else {
-                     console.error("Inconsistency: Streams counted, but no first URL/Button.");
-                     displayNoStreamsAvailable(playerAreaElement, streamButtonsContainer); clearPlayerState();
-                }
+                if (streamCount === 0) { displayNoStreamsAvailable(playerAreaElement, streamButtonsContainer); clearPlayerState(); }
+                else if (firstStreamUrl && firstStreamButtonElement) { console.log("Auto-loading first stream for player page."); loadStreamIntoPlayer(firstStreamButtonElement, firstStreamUrl); }
+                else { console.error("Inconsistency: Streams counted, but no first URL/Button."); displayNoStreamsAvailable(playerAreaElement, streamButtonsContainer); clearPlayerState(); }
             } catch (error) {
                 console.error("Failed to parse sources/create buttons:", error);
                 streamButtonsContainer.innerHTML = '<p class="status-message error">Error loading sources.</p>';
@@ -319,13 +217,13 @@
             }
         }
 
-        function displayNoStreamsAvailable(playerArea, buttonsContainer) {
+        function displayNoStreamsAvailable(playerArea, buttonsContainer) { /* ... (keep existing code) ... */
              const message = 'No stream sources listed for this item.';
              if (buttonsContainer) buttonsContainer.innerHTML = `<p style="color: var(--text-secondary); font-size: 0.9em; padding: 10px 0;">${message}</p>`;
              if (playerArea) displayMessageInPlayerArea(playerArea, `<strong>No Streams Available</strong><span>${message}</span>`, false);
         }
 
-        function createStreamSourceButton(label, url, parentBoxElement) { // parentBoxElement is needed for context in loadStreamIntoPlayer
+        function createStreamSourceButton(label, url) {
            const buttonElement = document.createElement('button');
            buttonElement.className = 'stream-button';
            buttonElement.textContent = label || 'Source';
@@ -333,126 +231,62 @@
            buttonElement.onclick = (event) => {
                event.stopPropagation();
                console.log(`Loading stream in player page: ${label} (${url})`);
-               loadStreamIntoPlayer(buttonElement, url); // Just pass button and URL
+               loadStreamIntoPlayer(buttonElement, url);
            };
            return buttonElement;
        }
 
-        function loadStreamIntoPlayer(clickedButtonElement, streamUrl) {
+        function loadStreamIntoPlayer(clickedButtonElement, streamUrl) { /* ... (keep existing code - simplified) ... */
             if (!streamUrl || typeof streamUrl !== 'string') return;
             console.log(`>>> Player Page: loadStreamIntoPlayer START: ${streamUrl}`);
-
-            clearPlayerState(); // Clear previous state first
-            messageContainerElement.classList.remove('visible');
-            loaderElement.classList.add('visible');
-
-            streamButtonsContainer.querySelectorAll('.stream-button').forEach(b => b.classList.remove('active'));
-            if (clickedButtonElement) clickedButtonElement.classList.add('active');
-
-            if (!streamUrl.startsWith('http://') && !streamUrl.startsWith('https://')) {
-                loaderElement.classList.remove('visible');
-                displayMessageInPlayerArea(playerAreaElement, `<strong>Invalid URL</strong><span>Link must start with http/https.</span>`, true, streamUrl);
-                return;
-            }
-
-            setTimeout(() => {
-                try {
-                    const urlObject = new URL(streamUrl);
-                    if (urlObject.pathname.toLowerCase().endsWith('.m3u8')) {
-                        loadHlsStreamIntoVideo(streamUrl, videoElement, playerAreaElement);
-                    } else {
-                        loadUrlIntoIframe(streamUrl, iframeElement, playerAreaElement);
-                    }
-                } catch (error) {
-                    loaderElement.classList.remove('visible');
-                    displayMessageInPlayerArea(playerAreaElement, `<strong>URL Error</strong><span>Could not process link.</span>`, true, streamUrl);
-                }
-            }, 50);
+            clearPlayerState(); messageContainerElement.classList.remove('visible'); loaderElement.classList.add('visible');
+            streamButtonsContainer.querySelectorAll('.stream-button').forEach(b => b.classList.remove('active')); if (clickedButtonElement) clickedButtonElement.classList.add('active');
+            if (!streamUrl.startsWith('http://') && !streamUrl.startsWith('https://')) { loaderElement.classList.remove('visible'); displayMessageInPlayerArea(playerAreaElement, `<strong>Invalid URL</strong><span>Link must start with http/https.</span>`, true, streamUrl); return; }
+            setTimeout(() => { try { const urlObject = new URL(streamUrl); if (urlObject.pathname.toLowerCase().endsWith('.m3u8')) loadHlsStreamIntoVideo(streamUrl, videoElement, playerAreaElement); else loadUrlIntoIframe(streamUrl, iframeElement, playerAreaElement); } catch (error) { loaderElement.classList.remove('visible'); displayMessageInPlayerArea(playerAreaElement, `<strong>URL Error</strong><span>Could not process link.</span>`, true, streamUrl); } }, 50);
         }
 
-        function clearPlayerState() {
-            // console.log("--- Player Page: clearPlayerState START ---");
-            if (currentHlsInstance && videoElement && currentHlsInstance.media === videoElement) {
-                try { currentHlsInstance.destroy(); } catch (e) {} currentHlsInstance = null;
-            }
-            if (iframeElement) {
-                if (iframeElement.getAttribute('src') && iframeElement.getAttribute('src') !== 'about:blank') iframeElement.src = 'about:blank';
-                iframeElement.classList.remove('active');
-            }
-            if (videoElement) {
-                videoElement.pause(); if (videoElement.hasAttribute('src')) videoElement.removeAttribute('src');
-                if (videoElement.currentSrc) videoElement.load(); videoElement.classList.remove('active');
-                videoElement.poster = CONFIG.placeholderImage;
-            }
-            if (loaderElement) loaderElement.classList.remove('visible');
-            if (messageContainerElement) messageContainerElement.classList.remove('visible');
+        function clearPlayerState() { /* ... (keep existing code) ... */
+            if (currentHlsInstance && videoElement && currentHlsInstance.media === videoElement) { try { currentHlsInstance.destroy(); } catch (e) {} currentHlsInstance = null; }
+            if (iframeElement) { if (iframeElement.getAttribute('src') && iframeElement.getAttribute('src') !== 'about:blank') iframeElement.src = 'about:blank'; iframeElement.classList.remove('active'); }
+            if (videoElement) { videoElement.pause(); if (videoElement.hasAttribute('src')) videoElement.removeAttribute('src'); if (videoElement.currentSrc) videoElement.load(); videoElement.classList.remove('active'); videoElement.poster = CONFIG.placeholderImage; }
+            if (loaderElement) loaderElement.classList.remove('visible'); if (messageContainerElement) messageContainerElement.classList.remove('visible');
             streamButtonsContainer.querySelectorAll('.stream-button.active').forEach(b => b.classList.remove('active'));
-            // console.log("--- Player Page: clearPlayerState END ---");
         }
 
-        function displayMessageInPlayerArea(playerArea, messageHtml, showTryNextButton, failedUrl = null) {
+        function displayMessageInPlayerArea(playerArea, messageHtml, showTryNextButton, failedUrl = null) { /* ... (keep existing code - simplified Try Next) ... */
              if (!messageContainerElement || !loaderElement || !playerArea) return;
-             // console.log("Displaying message in player area:", messageHtml.substring(0, 50) + "...");
-             if (videoElement) videoElement.classList.remove('active');
-             if (iframeElement) iframeElement.classList.remove('active');
-             loaderElement.classList.remove('visible');
-             messageContainerElement.innerHTML = messageHtml;
-
-             if (showTryNextButton && failedUrl) { // No need to check toggles here
-                 const nextButtonElement = findNextAvailableStreamButton(failedUrl); // Don't need parentBoxElement here
-                 if (nextButtonElement) {
-                     const tryNextBtn = document.createElement('button'); tryNextBtn.className = 'try-next-button'; tryNextBtn.textContent = 'Try Next Source';
-                     tryNextBtn.onclick = (event) => { event.stopPropagation(); nextButtonElement.click(); };
-                     messageContainerElement.appendChild(document.createElement('br')); messageContainerElement.appendChild(tryNextBtn);
-                 } else {
-                     const noMoreSpan = document.createElement('span'); noMoreSpan.style.cssText = 'font-size:0.8em;margin-top:10px;display:block;'; noMoreSpan.textContent = '(No more sources available)'; messageContainerElement.appendChild(noMoreSpan);
-                 }
-             }
-             messageContainerElement.classList.add('visible');
+             if (videoElement) videoElement.classList.remove('active'); if (iframeElement) iframeElement.classList.remove('active'); loaderElement.classList.remove('visible'); messageContainerElement.innerHTML = messageHtml;
+             if (showTryNextButton && failedUrl) {
+                 const nextButtonElement = findNextAvailableStreamButton(failedUrl);
+                 if (nextButtonElement) { const tryNextBtn = document.createElement('button'); tryNextBtn.className = 'try-next-button'; tryNextBtn.textContent = 'Try Next Source'; tryNextBtn.onclick = (event) => { event.stopPropagation(); nextButtonElement.click(); }; messageContainerElement.appendChild(document.createElement('br')); messageContainerElement.appendChild(tryNextBtn); }
+                 else { const noMoreSpan = document.createElement('span'); noMoreSpan.style.cssText = 'font-size:0.8em;margin-top:10px;display:block;'; noMoreSpan.textContent = '(No more sources available)'; messageContainerElement.appendChild(noMoreSpan); }
+             } messageContainerElement.classList.add('visible');
         }
 
-        function findNextAvailableStreamButton(failedUrl) {
-            if (!failedUrl) return null;
-            const allButtons = streamButtonsContainer.querySelectorAll('.stream-button');
-            let foundFailed = false;
-            for (let i = 0; i < allButtons.length; i++) {
-                if (allButtons[i].dataset.streamUrl === failedUrl) foundFailed = true;
-                else if (foundFailed) return allButtons[i];
-            } return null;
+        function findNextAvailableStreamButton(failedUrl) { /* ... (keep existing code - simplified) ... */
+            if (!failedUrl) return null; const allButtons = streamButtonsContainer.querySelectorAll('.stream-button'); let foundFailed = false;
+            for (let i = 0; i < allButtons.length; i++) { if (allButtons[i].dataset.streamUrl === failedUrl) foundFailed = true; else if (foundFailed) return allButtons[i]; } return null;
         }
 
-        function loadHlsStreamIntoVideo(hlsUrl, videoEl, playerArea) {
+        function loadHlsStreamIntoVideo(hlsUrl, videoEl, playerArea) { /* ... (keep existing code) ... */
              videoEl.poster = CONFIG.placeholderImage;
             if (Hls.isSupported()) {
-                if (currentHlsInstance && currentHlsInstance.media === videoEl) { currentHlsInstance.destroy(); currentHlsInstance = null; }
-                else if (currentHlsInstance) { currentHlsInstance.destroy(); currentHlsInstance = null; }
+                if (currentHlsInstance && currentHlsInstance.media === videoEl) { currentHlsInstance.destroy(); currentHlsInstance = null; } else if (currentHlsInstance) { currentHlsInstance.destroy(); currentHlsInstance = null; }
                 currentHlsInstance = new Hls({ /* ... HLS config ... */ });
-                const hlsErrorListener = (event, data) => { /* ... error handling ... */
-                     if (!currentHlsInstance || currentHlsInstance.media !== videoEl) return;
-                     console.error('HLS Error:', data.type, data.details, data.fatal); let msg = `Stream Error (${data.details||'Unknown'})`;
-                     if(data.fatal){ displayMessageInPlayerArea(playerArea, `<strong>${msg}</strong>`, true, hlsUrl); if(currentHlsInstance && currentHlsInstance.media === videoEl){currentHlsInstance.destroy(); currentHlsInstance=null;} videoEl.classList.remove('active'); videoEl.poster=CONFIG.placeholderImage; }
-                };
-                const hlsManifestParsedListener = () => { /* ... manifest parsed handling ... */
-                     if (!currentHlsInstance || currentHlsInstance.media !== videoEl) return;
-                     playerArea.querySelector('.loader').classList.remove('visible'); videoEl.classList.add('active'); videoEl.muted = true;
-                     videoEl.play().catch(e => { if(currentHlsInstance && currentHlsInstance.media === videoEl){ displayMessageInPlayerArea(playerArea, `<strong>Playback Error</strong><span>${e.name==='NotAllowedError'?'Click play.':e.message}</span>`, e.name !== 'NotAllowedError', hlsUrl); if(e.name !== 'NotAllowedError') videoEl.classList.remove('active'); playerArea.querySelector('.loader').classList.remove('visible'); } });
-                };
+                const hlsErrorListener = (event, data) => { if (!currentHlsInstance || currentHlsInstance.media !== videoEl) return; console.error('HLS Error:', data.type, data.details, data.fatal); let msg = `Stream Error (${data.details||'Unknown'})`; if(data.fatal){ displayMessageInPlayerArea(playerArea, `<strong>${msg}</strong>`, true, hlsUrl); if(currentHlsInstance && currentHlsInstance.media === videoEl){currentHlsInstance.destroy(); currentHlsInstance=null;} videoEl.classList.remove('active'); videoEl.poster=CONFIG.placeholderImage; } };
+                const hlsManifestParsedListener = () => { if (!currentHlsInstance || currentHlsInstance.media !== videoEl) return; playerArea.querySelector('.loader').classList.remove('visible'); videoEl.classList.add('active'); videoEl.muted = true; videoEl.play().catch(e => { if(currentHlsInstance && currentHlsInstance.media === videoEl){ displayMessageInPlayerArea(playerArea, `<strong>Playback Error</strong><span>${e.name==='NotAllowedError'?'Click play.':e.message}</span>`, e.name !== 'NotAllowedError', hlsUrl); if(e.name !== 'NotAllowedError') videoEl.classList.remove('active'); playerArea.querySelector('.loader').classList.remove('visible'); } }); };
                 currentHlsInstance.on(Hls.Events.ERROR, hlsErrorListener); currentHlsInstance.on(Hls.Events.MANIFEST_PARSED, hlsManifestParsedListener);
                 currentHlsInstance.attachMedia(videoEl); currentHlsInstance.loadSource(hlsUrl);
             } else if (videoEl.canPlayType('application/vnd.apple.mpegurl')) {
-                /* ... Native HLS handling ... */
                  if (currentHlsInstance) { currentHlsInstance.destroy(); currentHlsInstance = null; }
                  const handleNativeLoadedMetadata = () => { if (videoEl.getAttribute('src') !== hlsUrl) return; playerArea.querySelector('.loader').classList.remove('visible'); videoEl.classList.add('active'); videoEl.muted = true; videoEl.play().catch(e => { if(videoEl.getAttribute('src') === hlsUrl){ displayMessageInPlayerArea(playerArea, `<strong>Playback Error</strong><span>${e.name==='NotAllowedError'?'Click play.':e.message}</span>`, e.name !== 'NotAllowedError', hlsUrl); if(e.name !== 'NotAllowedError') videoEl.classList.remove('active'); playerArea.querySelector('.loader').classList.remove('visible'); } }); };
                  const handleNativeError = () => { if (videoEl.getAttribute('src') !== hlsUrl) return; const err = videoEl.error; const msg = err ? (err.message || `code ${err.code}`) : 'Unknown'; displayMessageInPlayerArea(playerArea, `<strong>Stream Error</strong><span>Native HLS failed: ${msg}.</span>`, true, hlsUrl); videoEl.classList.remove('active'); videoEl.poster = CONFIG.placeholderImage; playerArea.querySelector('.loader').classList.remove('visible'); };
-                 videoEl.removeEventListener('loadedmetadata', handleNativeLoadedMetadata); videoEl.removeEventListener('error', handleNativeError);
-                 videoEl.addEventListener('loadedmetadata', handleNativeLoadedMetadata); videoEl.addEventListener('error', handleNativeError);
+                 videoEl.removeEventListener('loadedmetadata', handleNativeLoadedMetadata); videoEl.removeEventListener('error', handleNativeError); videoEl.addEventListener('loadedmetadata', handleNativeLoadedMetadata); videoEl.addEventListener('error', handleNativeError);
                  videoEl.src = hlsUrl; videoEl.load();
-            } else {
-                displayMessageInPlayerArea(playerArea, `<strong>Unsupported Stream</strong><span>Browser cannot play HLS.</span>`, false); videoEl.classList.remove('active'); videoEl.poster = CONFIG.placeholderImage; playerArea.querySelector('.loader').classList.remove('visible');
-            }
+            } else { displayMessageInPlayerArea(playerArea, `<strong>Unsupported Stream</strong><span>Browser cannot play HLS.</span>`, false); videoEl.classList.remove('active'); videoEl.poster = CONFIG.placeholderImage; playerArea.querySelector('.loader').classList.remove('visible'); }
         }
 
-        function loadUrlIntoIframe(iframeUrl, iframeEl, playerArea) {
+        function loadUrlIntoIframe(iframeUrl, iframeEl, playerArea) { /* ... (keep existing code) ... */
              let iframeLoadTimeoutId = null; let isLoadSuccessful = false;
             if (currentHlsInstance) { currentHlsInstance.destroy(); currentHlsInstance = null; }
             const cleanup = () => { clearTimeout(iframeLoadTimeoutId); iframeEl.onload = null; iframeEl.onerror = null; };

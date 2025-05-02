@@ -24,8 +24,8 @@ body {
     overscroll-behavior-y: contain; /* Prevent pull-to-refresh issues */
     -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale;
     min-height: 100vh;
-    padding-bottom: 120px; /* Space for footer */
-    position: relative; /* Needed for footer positioning? */
+    padding-bottom: 120px; /* Space for footer - only applies to index */
+    position: relative;
 }
 .container { max-width: 1600px; margin: 0 auto; padding: 0 20px; }
 
@@ -40,360 +40,112 @@ header img { max-width: 200px; height: auto; }
     border: 1px solid var(--border-color); background-color: var(--bg-secondary);
     color: var(--text-primary); width: 100%; max-width: 500px;
     transition: all 0.2s ease; text-align: center;
-    appearance: none; /* Remove default search input styling */
+    appearance: none;
 }
 #search-input:focus { outline: none; border-color: var(--border-color-active); background-color: var(--bg-tertiary); }
 #search-input::placeholder { color: var(--text-secondary); text-align: center; }
-/* Cross-browser placeholder centering */
 #search-input::-webkit-input-placeholder { text-align: center; }
 #search-input:-moz-placeholder { text-align: center; }
 #search-input::-moz-placeholder { text-align: center; }
 #search-input:-ms-input-placeholder { text-align: center; }
 
 /* --- Tabs --- */
-.tabs { display: flex; justify-content: center; gap: 12px; margin-bottom: 20px; /* Reduced margin-bottom */ flex-wrap: wrap; padding: 0 10px; }
+.tabs { display: flex; justify-content: center; gap: 12px; margin-bottom: 20px; flex-wrap: wrap; padding: 0 10px; }
 .tab-button {
     background: transparent; color: var(--text-secondary);
     border: 1px solid var(--border-color); padding: 10px 25px; cursor: pointer;
     border-radius: 20px; font-size: 0.9em; font-weight: 600;
     transition: all 0.2s ease; text-transform: uppercase; letter-spacing: 0.5px;
-    display: inline-flex; align-items: center; gap: 6px; /* Align icon and text */
-    white-space: nowrap; /* Prevent wrapping */
+    display: inline-flex; align-items: center; gap: 6px; white-space: nowrap;
 }
 .tab-button .tab-icon { width: 1em; height: 1em; fill: currentColor; flex-shrink: 0; }
-.tab-button:hover, .tab-button:focus-visible { /* Added focus-visible for keyboard nav */
-    background: var(--bg-tertiary); color: var(--text-primary); border-color: var(--bg-tertiary); outline: none;
-}
+.tab-button:hover, .tab-button:focus-visible { background: var(--bg-tertiary); color: var(--text-primary); border-color: var(--bg-tertiary); outline: none; }
 .tab-button.active { background: var(--accent-color); color: white; border-color: var(--accent-color); }
 .tab-button.active .tab-icon { fill: white; }
-
-/* Favorites Tab Button Styling */
-.tab-button[data-tab="Favorites"] { color: var(--favorite-color); border-color: var(--favorite-color); padding: 10px 15px; } /* Slightly less padding for icon-only */
+.tab-button[data-tab="Favorites"] { color: var(--favorite-color); border-color: var(--favorite-color); padding: 10px 15px; }
 .tab-button[data-tab="Favorites"] .tab-icon { fill: var(--favorite-color); }
-.tab-button[data-tab="Favorites"]:hover, .tab-button[data-tab="Favorites"]:focus-visible { /* Added focus-visible */
-    background: var(--favorite-color); color: var(--bg-secondary); border-color: var(--favorite-color);
-}
+.tab-button[data-tab="Favorites"]:hover, .tab-button[data-tab="Favorites"]:focus-visible { background: var(--favorite-color); color: var(--bg-secondary); border-color: var(--favorite-color); }
 .tab-button[data-tab="Favorites"]:hover .tab-icon, .tab-button[data-tab="Favorites"]:focus-visible .tab-icon { fill: var(--bg-secondary); }
 .tab-button[data-tab="Favorites"].active { background: var(--favorite-color); color: var(--bg-secondary); border-color: var(--favorite-color); }
 .tab-button[data-tab="Favorites"].active .tab-icon { fill: var(--bg-secondary); }
 
 /* --- Toggle Switches Section --- */
-.toggles-container {
-    display: flex;
-    flex-direction: column; /* Stack toggles vertically */
-    align-items: center; /* Center the containers horizontally */
-    gap: 10px; /* Space between toggle rows */
-    margin-bottom: 35px; /* Space below the section */
-    padding: 0 10px;
-}
-
-/* Individual Toggle Container */
-.toggle-switch-container {
-    display: flex; /* Use flex to layout label and switch */
-    align-items: center; /* Vertically align label and switch */
-    justify-content: center; /* Center the group within its max-width */
-    gap: 10px; /* Space between the switch and the text label */
-    width: 100%; /* Allow container to take available width */
-    max-width: 300px; /* Set a max-width to control centering */
-}
-
-/* Toggle Switch Label Text */
-.toggle-switch-container label[for] {
-    font-size: 0.9em;
-    color: var(--text-secondary);
-    cursor: pointer;
-    user-select: none; /* Prevent text selection */
-    text-align: left; /* Align text to the left */
-    /* The label will naturally sit next to the switch due to flex 'gap' */
-}
-
-/* The Switch Wrapper (the <label> containing the input and slider) */
-.toggle-switch {
-    position: relative;
-    display: inline-block;
-    width: 50px; /* Fixed width of the switch */
-    height: 26px; /* Fixed height of the switch */
-    flex-shrink: 0; /* Prevent the switch itself from shrinking */
-    /* Optional: If you want the switch to appear first visually */
-    /* order: -1; */
-}
-
-.toggle-switch input {
-    opacity: 0;
-    width: 0;
-    height: 0;
-}
-
-/* The Slider Track */
-.slider {
-    position: absolute;
-    cursor: pointer;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background-color: var(--border-color); /* Off state color */
-    transition: .4s;
-    border-radius: 26px; /* Rounded switch */
-}
-
-/* The Slider Knob */
-.slider:before {
-    position: absolute;
-    content: "";
-    height: 20px; /* Size of the knob */
-    width: 20px;
-    left: 3px; /* Position of the knob */
-    bottom: 3px;
-    background-color: white;
-    transition: .4s;
-    border-radius: 50%; /* Circular knob */
-}
-
-/* Checked State */
-input:checked + .slider {
-    background-color: var(--accent-color); /* On state color */
-}
-
-input:checked + .slider:before {
-    transform: translateX(24px); /* Move knob to the right */
-}
-
-/* Focus State */
-input:focus-visible + .slider { /* Style for keyboard focus */
-     box-shadow: 0 0 1px var(--accent-color);
-     outline: 2px solid var(--accent-color);
-     outline-offset: 1px;
-}
-/* --- End of Toggle Switch Styles --- */
-
+.toggles-container { display: flex; flex-direction: column; align-items: center; gap: 10px; margin-bottom: 35px; padding: 0 10px; }
+.toggle-switch-container { display: flex; align-items: center; justify-content: center; gap: 10px; width: 100%; max-width: 300px; }
+.toggle-switch-container label[for] { font-size: 0.9em; color: var(--text-secondary); cursor: pointer; user-select: none; text-align: left; }
+.toggle-switch { position: relative; display: inline-block; width: 50px; height: 26px; flex-shrink: 0; }
+.toggle-switch input { opacity: 0; width: 0; height: 0; }
+.slider { position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: var(--border-color); transition: .4s; border-radius: 26px; }
+.slider:before { position: absolute; content: ""; height: 20px; width: 20px; left: 3px; bottom: 3px; background-color: white; transition: .4s; border-radius: 50%; }
+input:checked + .slider { background-color: var(--accent-color); }
+input:checked + .slider:before { transform: translateX(24px); }
+input:focus-visible + .slider { box-shadow: 0 0 1px var(--accent-color); outline: 2px solid var(--accent-color); outline-offset: 1px; }
 
 /* --- Channel Grid (General) --- */
-.channel-grid {
-    display: grid;
-    /* Responsive columns: Start with 1, increase for larger screens */
-    grid-template-columns: 1fr;
-    gap: 20px; padding: 0 10px 50px;
-    display: none; /* Hidden by default, shown when active */
-}
-/* Grid Columns adjustments based on screen size and specific tabs */
-@media (min-width: 640px) { /* Small screens and up */
-     /* Most grids go to 2 columns */
-    .channel-grid#PT, .channel-grid#UK, .channel-grid#ES,
-    .channel-grid#ALL, .channel-grid#Favorites { grid-template-columns: repeat(2, 1fr); }
-     /* Matches grid remains single column */
-    #Matches.channel-grid {
-        grid-template-columns: 1fr;
-    }
-}
-@media (min-width: 1024px) { /* Medium screens and up */
-     /* Most grids go to 3 columns */
-    .channel-grid#PT, .channel-grid#UK, .channel-grid#ES,
-    .channel-grid#ALL, .channel-grid#Favorites { grid-template-columns: repeat(3, 1fr); }
-     /* Matches grid stays single column */
-     #Matches.channel-grid {
-        /* No max-width needed */
-    }
-}
-@media (min-width: 1280px) { /* Large screens and up */
-     /* Most grids go to 4 columns */
-    .channel-grid#PT, .channel-grid#UK, .channel-grid#ES,
-    .channel-grid#ALL, .channel-grid#Favorites { grid-template-columns: repeat(4, 1fr); }
-}
-
-/* Show active grid */
+.channel-grid { display: grid; grid-template-columns: 1fr; gap: 20px; padding: 0 10px 50px; display: none; }
+@media (min-width: 640px) { .channel-grid#PT, .channel-grid#UK, .channel-grid#ES, .channel-grid#ALL, .channel-grid#Favorites { grid-template-columns: repeat(2, 1fr); } #Matches.channel-grid { grid-template-columns: 1fr; } }
+@media (min-width: 1024px) { .channel-grid#PT, .channel-grid#UK, .channel-grid#ES, .channel-grid#ALL, .channel-grid#Favorites { grid-template-columns: repeat(3, 1fr); } }
+@media (min-width: 1280px) { .channel-grid#PT, .channel-grid#UK, .channel-grid#ES, .channel-grid#ALL, .channel-grid#Favorites { grid-template-columns: repeat(4, 1fr); } }
 .channel-grid.active { display: grid; }
 
 /* --- Channel Box (General Styling) --- */
-.channel-box {
-    background: var(--bg-secondary); border-radius: 10px; padding: 15px;
-    cursor: pointer; transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
-    border: 1px solid transparent; /* Start with transparent border for smooth transition */
-    position: relative; overflow: hidden;
-    display: flex; /* Use flexbox for vertical centering if needed */
-    flex-direction: column; /* Stack header/info vertically */
-}
-/* Specific styling for MATCH boxes when NOT expanded (full width in Matches/ALL tabs) */
-/* This rule ensures unexpanded matches still take full width of their container */
-#Matches .channel-box[id^="match-"]:not(.expanded),
-#ALL .channel-box[id^="match-"]:not(.expanded) {
-    grid-column: 1 / -1; /* Span full grid width */
-     width: 100%; /* Take full width of the grid column */
-     margin: auto; /* Center horizontally if grid has padding */
-}
-/* Channel boxes in ALL/Favorites should behave like normal grid items */
-#ALL .channel-box:not([id^="match-"]):not(.expanded),
-#Favorites .channel-box:not(.expanded) {
-    grid-column: auto / span 1; width: auto; max-width: none; margin: 0;
-}
-/* Hide filtered-out boxes */
+.channel-box { background: var(--bg-secondary); border-radius: 10px; padding: 15px; cursor: pointer; transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease; border: 1px solid transparent; position: relative; overflow: hidden; display: flex; flex-direction: column; }
+#Matches .channel-box[id^="match-"]:not(.expanded), #ALL .channel-box[id^="match-"]:not(.expanded) { grid-column: 1 / -1; width: 100%; margin: auto; }
+#ALL .channel-box:not([id^="match-"]):not(.expanded), #Favorites .channel-box:not(.expanded) { grid-column: auto / span 1; width: auto; max-width: none; margin: 0; }
 .channel-box.hidden { display: none; }
-
-/* Hover/Focus effect for non-expanded boxes - Conditionally applied */
-@media (hover: hover) { /* Apply only on devices that support hover */
-    .channel-box:not(.expanded):hover {
-        transform: translateY(-4px);
-        box-shadow: 0 6px 18px rgba(0, 0, 0, 0.4);
-        border-color: var(--border-color-active);
-    }
-}
-
-/* Focus style for keyboard/D-pad navigation */
-.channel-box:not(.expanded):focus-visible {
-    outline: 2px solid var(--accent-color); /* Clear focus outline */
-    outline-offset: 2px;
-    border-color: var(--border-color-active);
-    box-shadow: 0 0 0 3px rgba(229, 9, 20, 0.3); /* Optional outer glow */
-}
-
+@media (hover: hover) { .channel-box:not(.expanded):hover { transform: translateY(-4px); box-shadow: 0 6px 18px rgba(0, 0, 0, 0.4); border-color: var(--border-color-active); } }
+.channel-box:not(.expanded):focus-visible { outline: 2px solid var(--accent-color); outline-offset: 2px; border-color: var(--border-color-active); box-shadow: 0 0 0 3px rgba(229, 9, 20, 0.3); }
 
 /* --- Favorite Button (Star Icon) --- */
-.favorite-button {
-    position: absolute; top: 10px; right: 10px;
-    background: none; border: none; padding: 5px; cursor: pointer;
-    z-index: 5; /* Above other content */
-    color: var(--text-secondary); transition: color 0.2s ease;
-}
-.favorite-button svg { width: 20px; height: 20px; fill: none; stroke: currentColor; stroke-width: 1.5; pointer-events: none; /* Prevent SVG from capturing clicks */ }
+.favorite-button { position: absolute; top: 10px; right: 10px; background: none; border: none; padding: 5px; cursor: pointer; z-index: 5; color: var(--text-secondary); transition: color 0.2s ease; }
+.favorite-button svg { width: 20px; height: 20px; fill: none; stroke: currentColor; stroke-width: 1.5; pointer-events: none; }
 .favorite-button:hover { color: var(--text-primary); }
-.favorite-button:focus-visible { /* Style for keyboard focus */
-    outline: 2px solid var(--favorite-color);
-    outline-offset: 1px;
-    border-radius: 4px; /* Add radius to outline */
-}
+.favorite-button:focus-visible { outline: 2px solid var(--favorite-color); outline-offset: 1px; border-radius: 4px; }
 .favorite-button.is-favorite { color: var(--favorite-color); }
-.favorite-button.is-favorite svg { fill: currentColor; stroke-width: 0; } /* Fill when favorited */
+.favorite-button.is-favorite svg { fill: currentColor; stroke-width: 0; }
 
 /* --- Channel Header --- */
-.channel-header {
-    display: flex;           /* Enable Flexbox */
-    align-items: center;     /* Vertically center items */
-    justify-content: center; /* Horizontally center items */
-    gap: 10px; text-align: center; min-height: 40px; /* Ensure consistent height */
-    cursor: pointer;
-    width: 100%; /* Ensure header takes full width */
-}
-/* Matches Header Layout (adjust gap if needed) */
+.channel-header { display: flex; align-items: center; justify-content: center; gap: 10px; text-align: center; min-height: 40px; cursor: pointer; width: 100%; }
 .channel-box[id^="match-"] .channel-header { justify-content: center; gap: 15px; }
-/* Logo styling for MATCHES */
-.match-logo {
-    height: 40px; width: 40px; object-fit: contain; /* Scale nicely */
-    flex-shrink: 0; border-radius: 4px; display: inline-block; vertical-align: middle;
-}
-/* Title */
-.channel-header h3 {
-    font-size: 1.1em; font-weight: 600; margin: 0;
-    word-break: break-word; /* Prevent long names overflowing */
-    text-align: center; /* Ensure text itself is centered */
-    flex-grow: 0; /* Don't allow title to grow excessively */
-    flex-shrink: 1; /* Allow title to shrink if needed */
-    padding: 0 5px; /* Small padding around text */
-    /* Add padding to account for the favorite button space */
-    padding-right: 35px; /* Add space on the right for the button */
-    padding-left: 35px;  /* Add equal space on the left for balance */
-    box-sizing: border-box; /* Include padding in the element's total width/height */
-}
-/* Spacing around match titles */
-.channel-box[id^="match-"] .channel-header h3 {
-    margin-left: 5px; margin-right: 5px;
-    /* No extra padding needed here as logos provide visual balance */
-    padding-left: 5px;
-    padding-right: 5px;
-}
-
+.match-logo { height: 40px; width: 40px; object-fit: contain; flex-shrink: 0; border-radius: 4px; display: inline-block; vertical-align: middle; }
+.channel-header h3 { font-size: 1.1em; font-weight: 600; margin: 0; word-break: break-word; text-align: center; flex-grow: 0; flex-shrink: 1; padding: 0 5px; padding-right: 35px; padding-left: 35px; box-sizing: border-box; }
+.channel-box[id^="match-"] .channel-header h3 { margin-left: 5px; margin-right: 5px; padding-left: 5px; padding-right: 5px; }
 
 /* Channel Info (for Matches) */
-.channel-info {
-    font-size: 0.8em; color: var(--text-secondary); text-align: center;
-    margin-top: 8px; margin-bottom: 0; font-weight: 500; cursor: pointer;
-    display: block; /* Shown by default, hidden via CSS below */
-}
-/* Hide info section for regular channels */
+.channel-info { font-size: 0.8em; color: var(--text-secondary); text-align: center; margin-top: 8px; margin-bottom: 0; font-weight: 500; cursor: pointer; display: block; }
 .channel-box:not([id^="match-"]) .channel-info { display: none; }
 .channel-info span { margin: 0 5px; }
 
 /* --- Expanded Channel Box --- */
-.channel-box.expanded {
-    grid-column: 1 / -1; /* Force item to span all columns of its parent grid */
-    width: auto;         /* Allow the item to naturally fill the spanned columns */
-    margin: 20px 0;   /* Center vertically, remove horizontal auto margin */
-    position: relative;    /* Keep relative for z-index */
-    cursor: default; background: var(--bg-tertiary);
-    padding-bottom: 20px; z-index: 10; /* Bring to front */
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
-    border: 2px solid var(--accent-color); overflow: visible;
-    display: flex !important; /* Use flex, override .hidden if needed */
-    flex-direction: column; /* Stack content vertically */
-    outline: none; /* Remove focus outline when expanded */
-}
-/* Non-clickable header/info when expanded */
-.channel-box.expanded .channel-header,
-.channel-box.expanded .channel-info { cursor: default; }
+.channel-box.expanded { grid-column: 1 / -1; width: auto; margin: 20px 0; position: relative; cursor: default; background: var(--bg-tertiary); padding-bottom: 20px; z-index: 10; box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5); border: 2px solid var(--accent-color); overflow: visible; display: flex !important; flex-direction: column; outline: none; }
+.channel-box.expanded .channel-header, .channel-box.expanded .channel-info { cursor: default; }
 
 /* --- Player Area --- */
 .iframe-container { margin-top: 18px; display: none; width: 100%; }
 .channel-box.expanded .iframe-container { display: block; }
-.player-area {
-    position: relative; width: 100%; aspect-ratio: 16 / 9; /* Maintain aspect ratio */
-    background-color: #000; border-radius: 8px; overflow: hidden;
-    margin-bottom: 18px; min-height: 200px; /* Minimum height */
-    display: flex; justify-content: center; align-items: center; /* Center loader/message */
-}
-.player-area iframe, .player-area video {
-    position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-    border: none; display: none; /* Hidden until active */
-    object-fit: contain; /* Ensure video fits without cropping */
-}
-.player-area iframe.active, .player-area video.active { display: block; } /* Show active player */
-/* Message displayed within the player area (errors, info) */
-.player-message {
-    color: var(--text-secondary); font-size: 0.9em; padding: 20px;
-    text-align: center; display: none; /* Hidden by default */
-    max-width: 80%; /* Prevent message being too wide */
-}
+.player-area { position: relative; width: 100%; aspect-ratio: 16 / 9; background-color: #000; border-radius: 8px; overflow: hidden; margin-bottom: 18px; min-height: 200px; display: flex; justify-content: center; align-items: center; }
+.player-area iframe, .player-area video { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: none; display: none; object-fit: contain; }
+.player-area iframe.active, .player-area video.active { display: block; }
+.player-message { color: var(--text-secondary); font-size: 0.9em; padding: 20px; text-align: center; display: none; max-width: 80%; }
 .player-message.visible { display: block; }
 .player-message strong { color: var(--text-primary); display: block; margin-bottom: 5px; font-weight: 600; }
 .player-message span { font-size: 0.9em; display: block; margin-top: 5px; line-height: 1.4; }
-.player-message button { margin-top: 15px; } /* Spacing for Try Next button */
-/* Loading spinner */
-.loader {
-    width: 40px; height: 40px; border-radius: 50%;
-    border: 4px solid var(--border-color); border-top-color: var(--accent-color);
-    animation: spin 1s linear infinite; display: none; /* Hidden by default */
-}
+.player-message button { margin-top: 15px; }
+.loader { width: 40px; height: 40px; border-radius: 50%; border: 4px solid var(--border-color); border-top-color: var(--accent-color); animation: spin 1s linear infinite; display: none; }
 .loader.visible { display: block; }
 @keyframes spin { to { transform: rotate(360deg); } }
-/* Adjust player size for larger screens */
 @media (min-width: 768px) { .channel-box.expanded .player-area { min-height: 400px; max-height: 70vh; } }
 @media (min-width: 1024px) { .channel-box.expanded .player-area { min-height: 480px; } }
 
 /* --- Stream Buttons --- */
 .stream-buttons { text-align: center; margin-top: 15px; margin-bottom: 15px; padding: 0 10px; }
-.stream-buttons div { margin-bottom: 10px; } /* Spacing for language groups */
-.stream-buttons strong { /* Language label (PT:, UK:) */
-    color: var(--text-secondary); font-size: 0.85em; margin-right: 8px;
-    font-weight: 600; text-transform: uppercase; display: inline-block; /* Keep on same line as first button */
-}
-.stream-button {
-    background: var(--bg-secondary); color: var(--text-primary);
-    border: 1px solid var(--border-color); padding: 7px 18px; border-radius: 20px;
-    cursor: pointer; font-size: 0.85em; font-weight: 500;
-    transition: all 0.2s ease; display: inline-block; margin: 4px; /* Spacing between buttons */
-    vertical-align: middle; /* Align with label */
-}
-.stream-button:hover, .stream-button:focus-visible { /* Added focus-visible */
-    background: #4a4a4a; border-color: #5a5a5a; outline: none;
-}
+.stream-buttons div { margin-bottom: 10px; }
+.stream-buttons strong { color: var(--text-secondary); font-size: 0.85em; margin-right: 8px; font-weight: 600; text-transform: uppercase; display: inline-block; }
+.stream-button { background: var(--bg-secondary); color: var(--text-primary); border: 1px solid var(--border-color); padding: 7px 18px; border-radius: 20px; cursor: pointer; font-size: 0.85em; font-weight: 500; transition: all 0.2s ease; display: inline-block; margin: 4px; vertical-align: middle; }
+.stream-button:hover, .stream-button:focus-visible { background: #4a4a4a; border-color: #5a5a5a; outline: none; }
 .stream-button.active { background: var(--accent-color); color: white; border-color: var(--accent-color); font-weight: 600; }
-/* "Try Next Source" button styling */
-.try-next-button {
-    background: var(--info-color); color: white; border: none;
-    padding: 8px 15px; border-radius: 6px; cursor: pointer;
-    font-size: 0.85em; font-weight: 500; transition: background-color 0.2s ease;
-}
-.try-next-button:hover, .try-next-button:focus-visible { /* Added focus-visible */
-    background-color: #2563eb; outline: none; /* Darker blue */
-}
+.try-next-button { background: var(--info-color); color: white; border: none; padding: 8px 15px; border-radius: 6px; cursor: pointer; font-size: 0.85em; font-weight: 500; transition: background-color 0.2s ease; }
+.try-next-button:hover, .try-next-button:focus-visible { background-color: #2563eb; outline: none; }
 
 /* --- Disclaimer inside Expanded Box --- */
 .box-disclaimer { font-size: 0.7em; color: #888; text-align: center; padding: 0 15px; margin-top: 10px; line-height: 1.4; display: none; }
@@ -404,106 +156,29 @@ footer { text-align: center; color: var(--text-secondary); font-size: 0.8em; pad
 .footer-disclaimer { font-size: 0.75em; margin-top: 15px; padding: 0 20px; max-width: 800px; margin-left: auto; margin-right: auto; line-height: 1.5; color: #888; }
 
 /* --- General Loading/Error/Info Messages (outside grids) --- */
-.status-message {
-    text-align: center; padding: 30px 20px; /* Reduced padding */
-    color: var(--text-secondary); font-size: 1em; font-weight: 500;
-    border-radius: 8px; margin: 20px auto; max-width: 600px;
-    line-height: 1.5;
-}
+.status-message { text-align: center; padding: 30px 20px; color: var(--text-secondary); font-size: 1em; font-weight: 500; border-radius: 8px; margin: 20px auto; max-width: 600px; line-height: 1.5; }
 .status-message.loading { background-color: var(--bg-secondary); border: 1px dashed var(--border-color); }
 .status-message.error { background-color: rgba(248, 113, 113, 0.1); border: 1px solid var(--error-color); color: var(--error-color); }
-/* Info message used for empty states within grids */
 .status-message.info { background-color: rgba(59, 130, 246, 0.1); border: 1px solid var(--info-color); color: var(--info-color); }
 .status-message strong { color: var(--text-primary); display: block; margin-bottom: 10px; font-size: 1.1em; }
-.status-message span { display: block; font-size: 0.9em; } /* For sub-text in error messages */
-
+.status-message span { display: block; font-size: 0.9em; }
 
 /* --- Responsive Adjustments --- */
-@media (max-width: 767px) { /* Apply below 768px */
-     /* Grids become single column (already default, but ensures override) */
-     .channel-grid { grid-template-columns: 1fr; }
-     .channel-box { padding: 15px; }
-     .stream-button { padding: 6px 15px; font-size: 0.8em; }
-     header img { max-width: 160px; }
-     .tabs { gap: 10px; margin-bottom: 15px; } /* Adjust spacing */
-     .toggles-container { margin-bottom: 25px; gap: 8px;} /* Adjust spacing */
-     .tab-button { padding: 8px 15px; font-size: 0.85em; }
-     /* Ensure match boxes take full width */
-     #Matches .channel-box[id^="match-"]:not(.expanded),
-     #ALL .channel-box[id^="match-"]:not(.expanded) { max-width: 100%; }
-     /* Adjust match header layout */
-     #Matches .channel-header, #ALL .channel-box[id^="match-"] .channel-header { gap: 10px; }
-     .match-logo { height: 32px; width: 32px; }
-     .channel-info { font-size: 0.75em;}
-     .channel-box[id^="match-"] .channel-header h3 { margin: 0 5px; font-size: 1em; } /* Reduce margin/size */
-     .favorite-button { top: 8px; right: 8px; }
-     .favorite-button svg { width: 18px; height: 18px; }
-     /* Adjust padding for smaller screens */
-     .channel-header h3 { padding-left: 30px; padding-right: 30px; }
-}
-@media (max-width: 480px) { /* Apply below 480px */
-    .container { padding: 0 10px; }
-    header img { max-width: 140px; }
-    .tabs { gap: 8px; margin-bottom: 15px; }
-    .toggles-container { margin-bottom: 25px; gap: 8px;}
-    .tab-button { padding: 7px 12px; }
-    .channel-box { padding: 12px; }
-    .channel-header h3 { font-size: 1em;}
-    .channel-box[id^="match-"] .channel-header h3 { margin: 0 5px;}
-    .match-logo { height: 30px; width: 30px; }
-    /* Stack language label above buttons */
-    .stream-buttons strong { display: block; margin-bottom: 5px; margin-right: 0; text-align: center; }
-    .stream-buttons div { text-align: center; } /* Center buttons under label */
-    .player-area { min-height: 200px; }
-    #search-input { padding: 10px 15px; font-size: 0.95em; }
-     .channel-info { font-size: 0.7em;}
-     .footer-disclaimer { font-size: 0.7em; }
-     .box-disclaimer { font-size: 0.65em; }
-     /* Adjust padding for smallest screens */
-     .channel-header h3 { padding-left: 25px; padding-right: 25px; }
-     /* Adjust toggle label font size */
-     .toggle-switch-container label[for] { font-size: 0.85em; } /* Target only text label */
-}
+@media (max-width: 767px) { .channel-grid { grid-template-columns: 1fr; } .channel-box { padding: 15px; } .stream-button { padding: 6px 15px; font-size: 0.8em; } header img { max-width: 160px; } .tabs { gap: 10px; margin-bottom: 15px; } .toggles-container { margin-bottom: 25px; gap: 8px;} .tab-button { padding: 8px 15px; font-size: 0.85em; } #Matches .channel-box[id^="match-"]:not(.expanded), #ALL .channel-box[id^="match-"]:not(.expanded) { max-width: 100%; } #Matches .channel-header, #ALL .channel-box[id^="match-"] .channel-header { gap: 10px; } .match-logo { height: 32px; width: 32px; } .channel-info { font-size: 0.75em;} .channel-box[id^="match-"] .channel-header h3 { margin: 0 5px; font-size: 1em; } .favorite-button { top: 8px; right: 8px; } .favorite-button svg { width: 18px; height: 18px; } .channel-header h3 { padding-left: 30px; padding-right: 30px; } }
+@media (max-width: 480px) { .container { padding: 0 10px; } header img { max-width: 140px; } .tabs { gap: 8px; margin-bottom: 15px; } .toggles-container { margin-bottom: 25px; gap: 8px;} .tab-button { padding: 7px 12px; } .channel-box { padding: 12px; } .channel-header h3 { font-size: 1em;} .channel-box[id^="match-"] .channel-header h3 { margin: 0 5px;} .match-logo { height: 30px; width: 30px; } .stream-buttons strong { display: block; margin-bottom: 5px; margin-right: 0; text-align: center; } .stream-buttons div { text-align: center; } .player-area { min-height: 200px; } #search-input { padding: 10px 15px; font-size: 0.95em; } .channel-info { font-size: 0.7em;} .footer-disclaimer { font-size: 0.7em; } .box-disclaimer { font-size: 0.65em; } .channel-header h3 { padding-left: 25px; padding-right: 25px; } .toggle-switch-container label[for] { font-size: 0.85em; } }
 
-/* Styles specific to player.html body to override index.html styles */
+/* ========================================= */
+/* --- Styles specific to player.html --- */
+/* ========================================= */
+
 body.player-page {
-    padding: 20px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    min-height: 100vh;
-}
-
-/* Container for player.html content */
-.player-page-container {
-    width: 100%;
-    max-width: 1200px;
-    background-color: var(--bg-secondary);
-    border-radius: 10px;
-    padding: 20px;
-    box-shadow: 0 5px 15px rgba(0,0,0,0.3);
-}
-
-/* Header specific to player.html */
-.player-page-header {
-    text-align: center;
-    margin-bottom: 20px;
-    padding-bottom: 15px;
-    border-bottom: 1px solid var(--border-color);
-}
-.player-page-header h1 {
-    font-size: 1.8em;
-    font-weight: 700;
-    color: var(--text-primary);
-    margin: 0;
-}
-
-/* Footer specific to player.html */
-.player-page-footer {
-    text-align: center;
-    margin-top: 30px;
-    font-size: 0.8em;
-    color: var(--text-secondary);
+    padding: 0; /* Remove body padding */
+    display: flex; /* Use flex for main layout */
+    flex-direction: column; /* Stack player above controls */
+    height: 100vh; /* Full viewport height */
+    overflow: hidden; /* Prevent scrollbars on body */
+    padding-bottom: 0; /* Override default padding */
+    background-color: var(--bg-primary); /* Ensure background covers */
 }
 
 /* Hide elements from index.html when on player.html */
@@ -515,32 +190,150 @@ body.player-page .channel-grid,
 body.player-page footer:not(.player-page-footer) { /* Hide original footer */
     display: none !important;
 }
+/* Hide loading/error messages specific to player page initially */
+body.player-page #player-page-loading,
+body.player-page #player-page-error {
+    position: fixed; /* Center them on the viewport */
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 100; /* Ensure they are on top */
+    width: 90%; /* Limit width */
+    max-width: 500px;
+    /* Ensure background matches */
+    background-color: var(--bg-secondary);
+    border: 1px dashed var(--border-color);
+}
+body.player-page #player-page-error {
+     background-color: rgba(248, 113, 113, 0.1);
+     border: 1px solid var(--error-color);
+     color: var(--error-color);
+}
 
-/* Override styles for the reused .channel-box on player.html */
-body.player-page .channel-box.expanded {
-    grid-column: auto;
-    margin: 0;
-    border: none;
-    background: transparent;
-    box-shadow: none;
-    padding: 0;
-    cursor: default;
+
+/* Style the main content wrapper on player page */
+body.player-page #player-page-content {
+    flex-grow: 1; /* Allow content to take remaining height */
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: 100%; /* Ensure it tries to fill height */
+    padding: 0; /* No padding on the main wrapper */
+    background-color: var(--bg-primary); /* Match body background */
 }
-body.player-page .channel-box.expanded .channel-header,
-body.player-page .channel-box.expanded .channel-info,
-body.player-page .channel-box.expanded .favorite-button {
-    display: none; /* Hide elements not relevant on player page */
-}
-body.player-page .channel-box.expanded .iframe-container {
-    margin-top: 0; /* Remove top margin */
-}
-body.player-page .channel-box.expanded .box-disclaimer {
-    margin-top: 15px;
-}
+
+/* Player Area takes most of the space */
 body.player-page .player-area {
-    margin-bottom: 25px; /* Ensure spacing below player */
-}
-body.player-page .stream-buttons {
-    margin-bottom: 20px; /* Ensure spacing below buttons */
+    flex-grow: 1; /* Player takes available vertical space */
+    width: 100%;
+    height: auto; /* Height determined by flex-grow */
+    /* Remove max-height or set to a larger value if needed */
+    /* max-height: calc(100vh - 100px); */
+    aspect-ratio: initial; /* Override aspect ratio for full height */
+    border-radius: 0; /* No rounded corners */
+    margin-bottom: 10px; /* Space between player and buttons */
+    background-color: #000; /* Ensure black background */
+    position: relative; /* Needed for absolute positioning of children */
+    overflow: hidden; /* Hide anything overflowing */
 }
 
+/* Ensure video/iframe fill the player area */
+body.player-page .player-area iframe,
+body.player-page .player-area video {
+    border-radius: 0; /* Remove border radius */
+    object-fit: contain; /* Keep contain to avoid cropping */
+    position: absolute; /* Ensure they fill the container */
+    top: 0; left: 0; width: 100%; height: 100%;
+    display: none; /* Hide initially */
+}
+body.player-page .player-area iframe.active,
+body.player-page .player-area video.active {
+    display: block; /* Show active player */
+}
+
+
+/* Stream Buttons container styling */
+body.player-page .stream-buttons {
+    flex-shrink: 0; /* Prevent buttons container from shrinking */
+    padding: 5px 10px; /* Reduced padding */
+    margin: 0; /* Remove margins */
+    background-color: var(--bg-secondary); /* Optional: Background for controls area */
+    width: 100%;
+    text-align: center;
+    overflow-x: auto; /* Allow horizontal scrolling if many buttons */
+    white-space: nowrap; /* Keep buttons on one line */
+}
+body.player-page .stream-buttons div {
+     display: inline-block; /* Keep language groups inline */
+     margin-bottom: 0; /* Remove bottom margin */
+     margin-right: 15px; /* Space between language groups */
+}
+body.player-page .stream-buttons strong {
+    margin-right: 5px; /* Slightly less space */
+    color: var(--text-secondary);
+    font-size: 0.8em; /* Match button size */
+}
+body.player-page .stream-button {
+    margin: 2px 3px; /* Tighter spacing */
+    padding: 5px 15px; /* Slightly smaller buttons */
+    font-size: 0.8em;
+}
+
+/* Disclaimer styling */
+body.player-page .box-disclaimer {
+    flex-shrink: 0; /* Prevent disclaimer from shrinking */
+    padding: 5px 15px; /* Reduced padding */
+    margin: 0; /* Remove margins */
+    font-size: 0.65em; /* Smaller text */
+    background-color: var(--bg-secondary); /* Match button background */
+    color: var(--text-secondary);
+    width: 100%;
+    text-align: center;
+    border-top: 1px solid var(--border-color); /* Optional separator */
+    display: block; /* Ensure it's visible */
+}
+
+/* Remove styles specific to the old player page container/header/footer */
+.player-page-container,
+.player-page-header,
+.player-page-footer {
+    display: none !important;
+}
+
+/* Override expanded box styles when on player page */
+body.player-page .channel-box.expanded {
+    display: none !important; /* Hide the wrapper div entirely */
+}
+
+/* Ensure player message is centered within player area */
+body.player-page .player-message {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 80%;
+    max-width: 400px;
+    background-color: rgba(0, 0, 0, 0.7); /* Semi-transparent background */
+    padding: 15px;
+    border-radius: 8px;
+    z-index: 5; /* Above video/iframe */
+    color: var(--text-primary); /* Ensure text is visible */
+}
+body.player-page .player-message strong {
+    color: var(--text-primary);
+}
+body.player-page .player-message span {
+    color: var(--text-secondary);
+}
+body.player-page .try-next-button {
+    margin-top: 10px;
+}
+
+
+body.player-page .loader {
+     position: absolute;
+     top: 50%;
+     left: 50%;
+     transform: translate(-50%, -50%);
+     z-index: 6; /* Above message */
+}
