@@ -186,9 +186,6 @@
         }
         /* Spacing around match titles */
         .channel-box[id^="match-"] .channel-header h3 { margin-left: 5px; margin-right: 5px; flex-grow: 0;} /* Don't let match titles grow excessively */
-        /* Center channel title when no logo is present */
-        /* .channel-box:not([id^="match-"]) .channel-header h3 { } */ /* No specific rule needed if header is centered */
-
 
         /* Channel Info (for Matches) */
         .channel-info {
@@ -202,18 +199,18 @@
 
         /* --- Expanded Channel Box --- */
         .channel-box.expanded {
-            /* **MODIFIED: Always span full width** */
-            grid-column: 1 / -1 !important; /* Span all columns, !important to override grid settings */
-            width: 100%; /* Take full width */
-            max-width: 1200px; /* Still limit maximum width on very large screens */
+            /* **MODIFIED: Ensure full width spanning and max-width** */
+            grid-column: 1 / -1 !important; /* Force span across all grid columns */
+            width: 100%; /* Occupy full width of the spanned columns */
+            max-width: 1200px; /* Limit max width on very large screens */
             margin: 20px auto; /* Center horizontally with vertical margin */
             position: relative;
             cursor: default; background: var(--bg-tertiary);
             padding-bottom: 20px; z-index: 10; /* Bring to front */
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
-            border: 2px solid var(--accent-color); overflow: visible; /* Allow potential overflows? */
-            display: flex !important; /* Override .hidden if expanded, keep flex for consistency */
-            flex-direction: column; /* Ensure content stacks vertically */
+            border: 2px solid var(--accent-color); overflow: visible;
+            display: flex !important; /* Use flex, override .hidden if needed */
+            flex-direction: column; /* Stack content vertically */
         }
         /* Non-clickable header/info when expanded */
         .channel-box.expanded .channel-header,
@@ -894,8 +891,7 @@
                     <div class="player-message" role="alert"></div>
                     <iframe allow="autoplay; fullscreen; encrypted-media; picture-in-picture"
                             allowfullscreen
-                            title="Stream Player"
-                            sandbox="allow-scripts allow-same-origin allow-presentation allow-fullscreen"></iframe>
+                            title="Stream Player"></iframe>
                     <video controls autoplay muted playsinline
                            title="Stream Player"
                            poster="${CONFIG.placeholderImage}"></video>
@@ -972,8 +968,7 @@
                     <div class="player-message" role="alert"></div>
                     <iframe allow="autoplay; fullscreen; encrypted-media; picture-in-picture"
                             allowfullscreen
-                            title="Stream Player"
-                            sandbox="allow-scripts allow-same-origin allow-presentation allow-fullscreen"></iframe>
+                            title="Stream Player"></iframe>
                     <video controls autoplay muted playsinline
                            title="Stream Player"
                            poster="${CONFIG.placeholderImage}"></video>
