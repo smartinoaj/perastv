@@ -123,7 +123,8 @@
             cursor: pointer; transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
             border: 1px solid transparent; /* Start with transparent border for smooth transition */
             position: relative; overflow: hidden;
-            display: block; /* Ensure it takes up grid space */
+            display: flex; /* Use flexbox for vertical centering if needed */
+            flex-direction: column; /* Stack header/info vertically */
         }
         /* Specific styling for MATCH boxes when NOT expanded (full width in Matches/ALL tabs) */
         #Matches .channel-box[id^="match-"]:not(.expanded),
@@ -161,9 +162,10 @@
 
         /* --- Channel Header --- */
         .channel-header {
-            display: flex; align-items: center; justify-content: center; /* Center content */
+            display: flex; align-items: center; justify-content: center; /* Center items horizontally */
             gap: 10px; text-align: center; min-height: 40px; /* Ensure consistent height */
             cursor: pointer; padding-right: 30px; /* Space for favorite button */
+            width: 100%; /* Ensure header takes full width */
         }
         /* Matches Header Layout (adjust gap if needed) */
         .channel-box[id^="match-"] .channel-header { justify-content: center; gap: 15px; }
@@ -177,14 +179,15 @@
         .channel-header h3 {
             font-size: 1.1em; font-weight: 600; margin: 0;
             word-break: break-word; /* Prevent long names overflowing */
-            text-align: center; flex-grow: 1; /* Allow title to take space */
-            flex-shrink: 1; /* Allow title to shrink if needed */
+            text-align: center;
+            flex-grow: 1; /* Allow title to take available space */
+            flex-shrink: 1;
             padding: 0 5px; /* Small padding around text */
         }
         /* Spacing around match titles */
-        .channel-box[id^="match-"] .channel-header h3 { margin-left: 5px; margin-right: 5px; flex-grow: 0;}
+        .channel-box[id^="match-"] .channel-header h3 { margin-left: 5px; margin-right: 5px; flex-grow: 0;} /* Don't let match titles grow excessively */
         /* Center channel title when no logo is present */
-        .channel-box:not([id^="match-"]) .channel-header h3 { flex-grow: 0; }
+        /* .channel-box:not([id^="match-"]) .channel-header h3 { } */ /* No specific rule needed if header is centered */
 
 
         /* Channel Info (for Matches) */
@@ -199,15 +202,18 @@
 
         /* --- Expanded Channel Box --- */
         .channel-box.expanded {
-            width: 100%; max-width: 1200px; margin: 20px auto; /* Add vertical margin */
+            /* **MODIFIED: Always span full width** */
+            grid-column: 1 / -1 !important; /* Span all columns, !important to override grid settings */
+            width: 100%; /* Take full width */
+            max-width: 1200px; /* Still limit maximum width on very large screens */
+            margin: 20px auto; /* Center horizontally with vertical margin */
             position: relative;
-            /* Span across columns dynamically based on parent grid */
-            grid-column: 1 / -1; /* Default to full span, adjust if needed */
             cursor: default; background: var(--bg-tertiary);
             padding-bottom: 20px; z-index: 10; /* Bring to front */
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
             border: 2px solid var(--accent-color); overflow: visible; /* Allow potential overflows? */
-            display: block !important; /* Override .hidden if expanded */
+            display: flex !important; /* Override .hidden if expanded, keep flex for consistency */
+            flex-direction: column; /* Ensure content stacks vertically */
         }
         /* Non-clickable header/info when expanded */
         .channel-box.expanded .channel-header,
