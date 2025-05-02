@@ -199,13 +199,12 @@
 
         /* --- Expanded Channel Box --- */
         .channel-box.expanded {
-            /* **MODIFIED: Ensure it takes full width within container, centered** */
-            width: 100%; /* Take full available width */
-            max-width: 1200px; /* Limit max width on very large screens */
-            margin: 20px auto; /* Center horizontally with vertical margin */
-            /* Override grid placement */
-            grid-column: auto; /* Reset grid column */
-            position: relative; /* Keep relative for z-index */
+            /* **MODIFIED: Force span and auto width** */
+            grid-column: 1 / -1; /* Force item to span all columns of its parent grid */
+            width: auto;         /* Allow the item to naturally fill the spanned columns */
+            max-width: 1200px;   /* Still limit maximum width on very large screens */
+            margin: 20px auto;   /* Center horizontally within the spanned columns */
+            position: relative;    /* Keep relative for z-index */
             cursor: default; background: var(--bg-tertiary);
             padding-bottom: 20px; z-index: 10; /* Bring to front */
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
