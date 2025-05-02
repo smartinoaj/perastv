@@ -386,10 +386,8 @@ body.player-page .loader {
 
 .player-area .custom-fullscreen-btn {
     position: absolute;
-    /* --- UPDATED: Position top-right --- */
     top: 10px;
     right: 10px;
-    /* --- End Update --- */
     z-index: 10; /* Ensure it's above the iframe/video */
     background-color: rgba(42, 42, 42, 0.7);
     border: none;
@@ -399,12 +397,24 @@ body.player-page .loader {
     cursor: pointer;
     line-height: 0; /* Align SVG nicely */
     transition: background-color 0.2s ease, opacity 0.2s ease;
-    opacity: 0.7;
+    /* --- UPDATED: Start with opacity 0 for fade-in on hover --- */
+    opacity: 0;
     display: none; /* Hide initially */
+    pointer-events: none; /* Prevent interaction when invisible */
 }
 
-.player-area:hover .custom-fullscreen-btn,
-.player-area .custom-fullscreen-btn:focus-visible {
+/* Show button only when iframe or video is active */
+.player-area iframe.active + .custom-fullscreen-btn, /* Assumes button is AFTER iframe */
+.player-area video.active + .custom-fullscreen-btn { /* Assumes button is AFTER video */
+     display: block;
+     pointer-events: auto; /* Allow interaction when displayed */
+}
+
+/* --- UPDATED: Fade in on hover (only when NOT fullscreen) --- */
+.player-area:hover iframe.active:not(:fullscreen):not(:-webkit-full-screen):not(:-moz-full-screen):not(:-ms-fullscreen) + .custom-fullscreen-btn,
+.player-area:hover video.active:not(:fullscreen):not(:-webkit-full-screen):not(:-moz-full-screen):not(:-ms-fullscreen) + .custom-fullscreen-btn,
+.player-area iframe.active:not(:fullscreen):not(:-webkit-full-screen):not(:-moz-full-screen):not(:-ms-fullscreen) + .custom-fullscreen-btn:focus-visible,
+.player-area video.active:not(:fullscreen):not(:-webkit-full-screen):not(:-moz-full-screen):not(:-ms-fullscreen) + .custom-fullscreen-btn:focus-visible {
     opacity: 1; /* Show on hover/focus */
 }
 
@@ -417,19 +427,15 @@ body.player-page .loader {
     outline-offset: 1px;
 }
 
-/* Show button only when iframe or video is active */
-.player-area iframe.active + .custom-fullscreen-btn, /* Assumes button is AFTER iframe */
-.player-area video.active + .custom-fullscreen-btn { /* Assumes button is AFTER video */
-     display: block;
-}
-
 /* Hide button if player message is visible */
 .player-area .player-message.visible ~ .custom-fullscreen-btn { /* Assumes button is AFTER message */
     display: none;
+    opacity: 0;
+    pointer-events: none;
 }
 
-/* Styles for when the *element* itself is fullscreen (more specific) */
-/* Note: these might not always apply depending on browser/API quirks */
+/* --- UPDATED: Styles for when the *element* itself is fullscreen --- */
+/* Ensure button is always visible (opacity 1) when its sibling iframe/video is fullscreen */
 iframe:fullscreen + .custom-fullscreen-btn,
 video:fullscreen + .custom-fullscreen-btn,
 iframe:-webkit-full-screen + .custom-fullscreen-btn,
@@ -438,19 +444,17 @@ iframe:-moz-full-screen + .custom-fullscreen-btn,
 video:-moz-full-screen + .custom-fullscreen-btn,
 iframe:-ms-fullscreen + .custom-fullscreen-btn,
 video:-ms-fullscreen + .custom-fullscreen-btn {
-     /* You can style the button differently here if needed */
-     /* e.g., change background or ensure it's visible */
-     opacity: 1;
-     background-color: rgba(20, 20, 20, 0.8);
+     opacity: 1; /* Always visible when element is fullscreen */
+     background-color: rgba(20, 20, 20, 0.8); /* Optional: different background */
+     display: block; /* Ensure it's displayed */
+     pointer-events: auto; /* Ensure it's interactive */
 }
 
 /* Adjust button position slightly on smaller screens */
 @media (max-width: 480px) {
     .player-area .custom-fullscreen-btn {
-        /* --- UPDATED: Position top-right --- */
         top: 5px;
         right: 5px;
-        /* --- End Update --- */
         padding: 6px;
     }
     .player-area .custom-fullscreen-btn svg {
