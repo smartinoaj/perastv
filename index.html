@@ -81,9 +81,31 @@
         #password-overlay.hidden {
              display: none;
         }
+        /* Style for the fallback message if window.close fails */
+        #devtools-detected-message {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: var(--bg-primary);
+            color: var(--error-color);
+            z-index: 2000; /* Above everything */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            font-size: 1.5em;
+            padding: 20px;
+            display: none; /* Hidden by default */
+        }
     </style>
     </head>
 <body>
+
+<div id="devtools-detected-message">
+    Developer Tools detected. Please close them and refresh the page.
+</div>
 
 <div id="password-overlay" class="hidden">
     <form id="password-form">
@@ -135,7 +157,9 @@
             <strong>Disclaimer:</strong> PerasTV does not host any video content. All streams are embedded from external, publicly available sources found on the internet. We are not responsible for the legality, accuracy, or quality of the content provided by these third-party sites. Users are advised to respect copyright laws and use this service responsibly. Stream availability is not guaranteed.
         </p>
     </footer>
-</div> <script>
+</div> <script src="config.js"></script>
+
+<script>
     // --- Console Access Deterrents (Run Immediately) ---
     /**
      * Adds event listeners to attempt to block right-click, common dev console shortcuts,
@@ -145,8 +169,8 @@
     function setupConsoleDeterrents() {
         let devToolsOpened = false; // Flag to prevent multiple actions
         let detectionIntervalId = null; // Store interval ID
-        const devToolsCheckInterval = 750; // Check more frequently (e.g., every 0.75 seconds)
-        const redirectLoopInterval = 100; // Interval for aggressive redirect loop (milliseconds)
+        const devToolsCheckInterval = 1000; // Check every second
+        const devToolsMessageEl = document.getElementById('devtools-detected-message');
 
         // --- Block Context Menu ---
         document.addEventListener('contextmenu', (event) => {
@@ -187,11 +211,11 @@
             }
         });
 
-        // --- Aggressive Action Function ---
+        // --- Action Function ---
         function triggerDevToolsAction() {
             if (devToolsOpened) return; // Already triggered
             devToolsOpened = true; // Set flag immediately
-            console.warn(`Developer Tools detected! Triggering aggressive action...`);
+            console.warn(`Developer Tools detected! Attempting to close window...`);
 
             // Stop the regular detection interval
             if (detectionIntervalId) {
@@ -199,36 +223,43 @@
                 detectionIntervalId = null;
             }
 
-            // Start a persistent loop to make the page unusable
-            setInterval(() => {
-                try {
-                    // Try redirecting constantly
-                    window.location.replace('about:blank');
-                } catch (e) {
-                    // If redirect fails, try blanking the body
-                    try {
-                        document.body.innerHTML = '';
-                    } catch (err) {
-                        // Last resort, maybe an infinite loop (can crash tab)
-                        // while(true) {}
-                    }
-                }
-                // Optionally trigger debugger repeatedly to make debugging harder
-                // try { debugger; } catch(e) {}
-            }, redirectLoopInterval); // Run very frequently
-
-            // Initial immediate action
+            // Attempt to close the window/tab
+            // IMPORTANT: This will likely FAIL in most modern browsers for tabs not opened by script.
             try {
-                window.location.replace('about:blank');
+                window.close();
+                // If window.close() succeeded, the script might stop here.
+                // If it failed, the browser might show a console error, and we proceed to the fallback.
+                console.log("window.close() attempted.");
+
+                // Fallback: If window.close() didn't work after a short delay, show the message
+                setTimeout(() => {
+                     // Check flag again in case close() worked asynchronously but slowly
+                    if (devToolsOpened && devToolsMessageEl) {
+                        devToolsMessageEl.style.display = 'flex';
+                    }
+                    // Optional: Try redirecting as a secondary fallback
+                    // window.location.replace('about:blank');
+                }, 100); // Wait 100ms to see if close worked
+
             } catch (e) {
-                 document.body.innerHTML = '<h1 style="color:red;text-align:center;margin-top:50px;">Developer Tools detected. Please close them to continue.</h1>';
+                console.error("window.close() failed:", e);
+                 // Show fallback message immediately if close throws an error
+                 if (devToolsMessageEl) {
+                    devToolsMessageEl.style.display = 'flex';
+                 }
             }
         }
 
 
         // --- DevTools Detection Function (called by interval) ---
         function detectDevTools() {
-            if (devToolsOpened) return; // Stop checking if already detected
+            if (devToolsOpened) { // If already detected, ensure the interval is stopped
+                 if (detectionIntervalId) {
+                    clearInterval(detectionIntervalId);
+                    detectionIntervalId = null;
+                 }
+                 return;
+            }
 
             const threshold = 160; // Milliseconds threshold for debugger pause detection
             const startTime = performance.now();
@@ -252,14 +283,13 @@
         // Start the detection interval
         detectionIntervalId = setInterval(detectDevTools, devToolsCheckInterval);
 
-        console.log("Console access deterrents initialized (including aggressive detection loop).");
+        console.log("Console access deterrents initialized (attempting window.close).");
     }
     // --- Initialize Deterrents Immediately ---
     setupConsoleDeterrents();
 
 
-    
-    const CORRECT_PASSWORD = "ptv";
+
     const AUTH_KEY = 'perasTvAuthenticated'; // Key for sessionStorage
 
     const passwordOverlay = document.getElementById('password-overlay');
@@ -275,30 +305,38 @@
         mainContainer.style.display = 'block'; // Show main content
         initializeApp(); // Initialize the app directly
     } else {
-        console.log("Authentication required.");
-        passwordOverlay.classList.remove('hidden'); // Show the password overlay
-        passwordInput.focus(); // Focus the input field
+        if (typeof SITE_PASSWORD === 'undefined') {
+             console.error("ERROR: SITE_PASSWORD is not defined. Make sure config.js is loaded correctly and defines SITE_PASSWORD.");
+             // Display an error message to the user instead of the password prompt
+             passwordOverlay.innerHTML = '<p style="color:var(--error-color); text-align:center;">Configuration Error: Password not set.</p>';
+             passwordOverlay.classList.remove('hidden'); // Ensure the overlay is visible to show the error
+        } else {
+            console.log("Authentication required.");
+            passwordOverlay.classList.remove('hidden'); // Show the password overlay
+            passwordInput.focus(); // Focus the input field
 
-        // --- Add listener only if authentication is needed ---
-        passwordForm.addEventListener('submit', (event) => {
-            event.preventDefault(); // Stop form from submitting the traditional way
-            const enteredPassword = passwordInput.value;
+            // --- Add listener only if authentication is needed ---
+            passwordForm.addEventListener('submit', (event) => {
+                event.preventDefault(); // Stop form from submitting the traditional way
+                const enteredPassword = passwordInput.value;
 
-            if (enteredPassword === CORRECT_PASSWORD) {
-                // Password is correct
-                console.log("Password correct.");
-                sessionStorage.setItem(AUTH_KEY, 'true'); // Store auth status for the session
-                passwordOverlay.classList.add('hidden'); // Hide the overlay
-                mainContainer.style.display = 'block'; // Show the main content
-                initializeApp(); // Run the main application logic
-            } else {
-                // Password is incorrect
-                console.log("Incorrect password entered.");
-                passwordError.textContent = 'Incorrect Password';
-                passwordInput.value = ''; // Clear the input
-                passwordInput.focus(); // Set focus back to input
-            }
-        });
+                // Use SITE_PASSWORD from config.js for comparison
+                if (enteredPassword === SITE_PASSWORD) {
+                    // Password is correct
+                    console.log("Password correct.");
+                    sessionStorage.setItem(AUTH_KEY, 'true'); // Store auth status for the session
+                    passwordOverlay.classList.add('hidden'); // Hide the overlay
+                    mainContainer.style.display = 'block'; // Show the main content
+                    initializeApp(); // Run the main application logic
+                } else {
+                    // Password is incorrect
+                    console.log("Incorrect password entered.");
+                    passwordError.textContent = 'Incorrect Password';
+                    passwordInput.value = ''; // Clear the input
+                    passwordInput.focus(); // Set focus back to input
+                }
+            });
+        }
     }
 
 
