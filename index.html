@@ -199,11 +199,10 @@
 
         /* --- Expanded Channel Box --- */
         .channel-box.expanded {
-            /* **MODIFIED: Force span and auto width** */
-            grid-column: 1 / -1; /* Force item to span all columns of its parent grid */
-            width: auto;         /* Allow the item to naturally fill the spanned columns */
+            /* **MODIFIED: Set explicit width relative to container, centered** */
+            width: 95%;          /* Use a percentage of the container width */
             max-width: 1200px;   /* Still limit maximum width on very large screens */
-            margin: 20px auto;   /* Center horizontally within the spanned columns */
+            margin: 20px auto;   /* Center horizontally with vertical margin */
             position: relative;    /* Keep relative for z-index */
             cursor: default; background: var(--bg-tertiary);
             padding-bottom: 20px; z-index: 10; /* Bring to front */
@@ -211,6 +210,8 @@
             border: 2px solid var(--accent-color); overflow: visible;
             display: flex !important; /* Use flex, override .hidden if needed */
             flex-direction: column; /* Stack content vertically */
+            /* Ensure it's no longer treated as a grid item in its original position */
+            grid-column: auto;
         }
         /* Non-clickable header/info when expanded */
         .channel-box.expanded .channel-header,
@@ -320,7 +321,7 @@
              .favorite-button { top: 8px; right: 8px; }
              .favorite-button svg { width: 18px; height: 18px; }
              /* Ensure expanded box still has reasonable max-width on mobile */
-             .channel-box.expanded { max-width: 95%; }
+             .channel-box.expanded { max-width: 95%; width: 95%; } /* Adjust width for mobile */
         }
         @media (max-width: 480px) { /* Apply below 480px */
             .container { padding: 0 10px; }
