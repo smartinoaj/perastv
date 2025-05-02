@@ -116,8 +116,7 @@
                      <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
                  </svg>
                  </button>
-            <button class="tab-button" data-tab="ALL" role="tab" aria-controls="ALL" aria-selected="true">ALL</button>
-            <button class="tab-button" data-tab="PT" role="tab" aria-controls="PT" aria-selected="false">PT</button>
+            <button class="tab-button" data-tab="ALL" role="tab" aria-controls="ALL" aria-selected="false">ALL</button> <button class="tab-button" data-tab="PT" role="tab" aria-controls="PT" aria-selected="false">PT</button>
             <button class="tab-button" data-tab="UK" role="tab" aria-controls="UK" aria-selected="false">UK</button>
             <button class="tab-button" data-tab="ES" role="tab" aria-controls="ES" aria-selected="false">ES</button>
             <button class="tab-button" data-tab="Matches" role="tab" aria-controls="Matches" aria-selected="false">Matches</button>
@@ -192,7 +191,7 @@
     setupConsoleDeterrents();
 
 
-    const PERSONAL_USE_B64 = "cHR2";
+    const PERSONAL_USE_B64 = "cHR2"; 
     const AUTH_KEY = 'perasTvAuthenticated'; // Key for sessionStorage
 
     const passwordOverlay = document.getElementById('password-overlay');
@@ -1048,9 +1047,15 @@
 
             // --- Update Tab Button Styles and Accessibility Attributes ---
             tabsContainerElement.querySelectorAll('.tab-button').forEach(btn => {
-                const isButtonActive = btn.dataset.tab === tabIdToShow;
-                btn.classList.toggle('active', isButtonActive); // Add/remove 'active' class
-                btn.setAttribute('aria-selected', isButtonActive ? 'true' : 'false'); // Set ARIA selected state
+                // Explicitly remove active class first
+                btn.classList.remove('active');
+                // Then add it only to the target button
+                if (btn.dataset.tab === tabIdToShow) {
+                    btn.classList.add('active');
+                    btn.setAttribute('aria-selected', 'true');
+                } else {
+                    btn.setAttribute('aria-selected', 'false');
+                }
             });
 
             // --- Update Grid Visibility and Focusability ---
