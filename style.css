@@ -81,41 +81,41 @@ header img { max-width: 200px; height: auto; }
 .toggles-container {
     display: flex;
     flex-direction: column; /* Stack toggles vertically */
-    align-items: center; /* Center items horizontally */
-    gap: 10px; /* Space between toggles */
+    align-items: center; /* Center the containers horizontally */
+    gap: 10px; /* Space between toggle rows */
     margin-bottom: 35px; /* Space below the section */
     padding: 0 10px;
 }
 
 /* Individual Toggle Container */
 .toggle-switch-container {
-    display: flex;
-    align-items: center;
-    /* MODIFIED: Use space-between to push label and switch apart */
-    justify-content: space-between;
-    gap: 10px;
-    width: 100%; /* Allow taking width */
-    max-width: 300px; /* MODIFIED: Reduced max-width slightly for better centering appearance */
+    display: flex; /* Use flex to layout label and switch */
+    align-items: center; /* Vertically align label and switch */
+    justify-content: center; /* Center the group within its max-width */
+    gap: 10px; /* Space between the switch and the text label */
+    width: 100%; /* Allow container to take available width */
+    max-width: 300px; /* Set a max-width to control centering */
 }
 
 /* Toggle Switch Label Text */
-/* MODIFIED: Removed flex-grow, added specific alignment */
-.toggle-switch-container label[for] { /* Target only the text label */
+.toggle-switch-container label[for] {
     font-size: 0.9em;
     color: var(--text-secondary);
     cursor: pointer;
     user-select: none; /* Prevent text selection */
-    text-align: left; /* Ensure text aligns left */
-    /* No flex-grow needed with space-between */
+    text-align: left; /* Align text to the left */
+    /* The label will naturally sit next to the switch due to flex 'gap' */
 }
 
 /* The Switch Wrapper (the <label> containing the input and slider) */
 .toggle-switch {
     position: relative;
     display: inline-block;
-    width: 50px; /* Width of the switch */
-    height: 26px; /* Height of the switch */
-    flex-shrink: 0; /* Prevent shrinking */
+    width: 50px; /* Fixed width of the switch */
+    height: 26px; /* Fixed height of the switch */
+    flex-shrink: 0; /* Prevent the switch itself from shrinking */
+    /* Optional: If you want the switch to appear first visually */
+    /* order: -1; */
 }
 
 .toggle-switch input {
