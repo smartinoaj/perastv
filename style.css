@@ -51,7 +51,7 @@ header img { max-width: 200px; height: auto; }
 #search-input:-ms-input-placeholder { text-align: center; }
 
 /* --- Tabs --- */
-.tabs { display: flex; justify-content: center; gap: 12px; margin-bottom: 40px; flex-wrap: wrap; padding: 0 10px; }
+.tabs { display: flex; justify-content: center; gap: 12px; margin-bottom: 20px; /* Reduced margin-bottom */ flex-wrap: wrap; padding: 0 10px; }
 .tab-button {
     background: transparent; color: var(--text-secondary);
     border: 1px solid var(--border-color); padding: 10px 25px; cursor: pointer;
@@ -76,6 +76,69 @@ header img { max-width: 200px; height: auto; }
 .tab-button[data-tab="Favorites"]:hover .tab-icon, .tab-button[data-tab="Favorites"]:focus-visible .tab-icon { fill: var(--bg-secondary); }
 .tab-button[data-tab="Favorites"].active { background: var(--favorite-color); color: var(--bg-secondary); border-color: var(--favorite-color); }
 .tab-button[data-tab="Favorites"].active .tab-icon { fill: var(--bg-secondary); }
+
+/* --- NEW: Toggle Switch Styles --- */
+.toggle-switch-container {
+    display: flex;
+    align-items: center;
+    justify-content: center; /* Center the toggle */
+    margin-top: 0; /* Adjust spacing relative to tabs */
+    margin-bottom: 35px; /* Space below toggle */
+    gap: 10px;
+}
+.toggle-switch-container label {
+    font-size: 0.9em;
+    color: var(--text-secondary);
+    cursor: pointer;
+    user-select: none; /* Prevent text selection */
+}
+.toggle-switch {
+    position: relative;
+    display: inline-block;
+    width: 50px; /* Width of the switch */
+    height: 26px; /* Height of the switch */
+    flex-shrink: 0; /* Prevent shrinking in flex container */
+}
+.toggle-switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+.slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: var(--border-color); /* Off state color */
+    transition: .4s;
+    border-radius: 26px; /* Rounded switch */
+}
+.slider:before {
+    position: absolute;
+    content: "";
+    height: 20px; /* Size of the knob */
+    width: 20px;
+    left: 3px; /* Position of the knob */
+    bottom: 3px;
+    background-color: white;
+    transition: .4s;
+    border-radius: 50%; /* Circular knob */
+}
+input:checked + .slider {
+    background-color: var(--accent-color); /* On state color */
+}
+input:focus-visible + .slider { /* Style for keyboard focus */
+     box-shadow: 0 0 1px var(--accent-color);
+     outline: 2px solid var(--accent-color);
+     outline-offset: 1px;
+}
+input:checked + .slider:before {
+    transform: translateX(24px); /* Move knob to the right */
+}
+/* --- End of New Toggle Switch Styles --- */
+
 
 /* --- Channel Grid (General) --- */
 .channel-grid {
@@ -334,7 +397,8 @@ footer { text-align: center; color: var(--text-secondary); font-size: 0.8em; pad
      .channel-box { padding: 15px; }
      .stream-button { padding: 6px 15px; font-size: 0.8em; }
      header img { max-width: 160px; }
-     .tabs { gap: 10px; margin-bottom: 30px; }
+     .tabs { gap: 10px; margin-bottom: 15px; } /* Adjust spacing */
+     .toggle-switch-container { margin-bottom: 25px; } /* Adjust spacing */
      .tab-button { padding: 8px 15px; font-size: 0.85em; }
      /* Ensure match boxes take full width */
      #Matches .channel-box[id^="match-"]:not(.expanded),
@@ -352,7 +416,8 @@ footer { text-align: center; color: var(--text-secondary); font-size: 0.8em; pad
 @media (max-width: 480px) { /* Apply below 480px */
     .container { padding: 0 10px; }
     header img { max-width: 140px; }
-    .tabs { gap: 8px; }
+    .tabs { gap: 8px; margin-bottom: 15px; }
+    .toggle-switch-container { margin-bottom: 25px; }
     .tab-button { padding: 7px 12px; }
     .channel-box { padding: 12px; }
     .channel-header h3 { font-size: 1em;}

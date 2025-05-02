@@ -11,8 +11,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="style.css">
-    <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
+    <link rel="stylesheet" href="style.css"> <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
     <style>
         /* --- Password Protection Styles --- */
         #password-overlay {
@@ -88,6 +87,66 @@
         #devtools-detected-message {
             display: none;
         }
+
+        /* --- New Tab Toggle Switch Styles --- */
+        .toggle-switch-container {
+            display: flex;
+            align-items: center;
+            justify-content: center; /* Center the toggle */
+            margin-top: -15px; /* Adjust spacing relative to tabs */
+            margin-bottom: 30px;
+            gap: 10px;
+        }
+        .toggle-switch-container label {
+            font-size: 0.9em;
+            color: var(--text-secondary);
+            cursor: pointer;
+        }
+        .toggle-switch {
+            position: relative;
+            display: inline-block;
+            width: 50px; /* Width of the switch */
+            height: 26px; /* Height of the switch */
+        }
+        .toggle-switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: var(--border-color); /* Off state color */
+            transition: .4s;
+            border-radius: 26px; /* Rounded switch */
+        }
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 20px; /* Size of the knob */
+            width: 20px;
+            left: 3px; /* Position of the knob */
+            bottom: 3px;
+            background-color: white;
+            transition: .4s;
+            border-radius: 50%; /* Circular knob */
+        }
+        input:checked + .slider {
+            background-color: var(--accent-color); /* On state color */
+        }
+        input:focus-visible + .slider { /* Style for keyboard focus */
+             box-shadow: 0 0 1px var(--accent-color);
+             outline: 2px solid var(--accent-color);
+             outline-offset: 1px;
+        }
+        input:checked + .slider:before {
+            transform: translateX(24px); /* Move knob to the right */
+        }
+
         /* Reminder: Optimize images (logos) for faster loading */
         /* Consider using tools like TinyPNG or Squoosh */
     </style>
@@ -127,6 +186,13 @@
             <button class="tab-button" data-tab="Matches" role="tab" aria-controls="Matches" aria-selected="false">Matches</button>
         </div>
 
+        <div class="toggle-switch-container">
+            <label class="toggle-switch">
+                <input type="checkbox" id="open-in-new-tab-toggle">
+                <span class="slider"></span>
+            </label>
+            <label for="open-in-new-tab-toggle">Open streams in new tab</label>
+        </div>
         <div id="loadingMessage" class="status-message loading" role="status">Loading channels...</div>
         <div id="fetchErrorMessage" class="status-message error" role="alert" style="display: none;"></div>
 
@@ -278,7 +344,8 @@
             lastTabKey: 'perasTvLastTab', // localStorage key for remembering the last active tab
             favoritesKey: 'perasTvFavorites', // localStorage key for storing favorite item IDs
             // *** OPTIMIZATION: Increased iframe timeout for slower loading sources ***
-            iframeLoadTimeoutMs: 35000 // Timeout (ms) for waiting for an iframe stream to load (was 15000)
+            iframeLoadTimeoutMs: 35000, // Timeout (ms) for waiting for an iframe stream to load (was 15000)
+            openInNewTabKey: 'perasTvOpenInNewTab' // localStorage key for the new tab toggle state
         };
 
         // --- DOM Element References ---
@@ -290,6 +357,7 @@
         const lastUpdatedTimestampElement = document.getElementById('lastUpdated');
         const initialLoadingMessageElement = document.getElementById('loadingMessage');
         const dataFetchErrorMessageElement = document.getElementById('fetchErrorMessage');
+        const openInNewTabToggleElement = document.getElementById('open-in-new-tab-toggle'); // NEW: Toggle switch element
 
         // --- Application State ---
         // Use meaningful variable names
@@ -300,6 +368,7 @@
         let searchDebounceTimerId = null;     // Timer ID for debouncing search input
         let activeTabId = 'ALL';            // ID ('ALL', 'PT', 'Favorites', etc.) of the currently active tab
         let favoriteItemIds = [];                 // Array to hold favorite item IDs (e.g., 'match-0', 'PT-channel-2')
+        let openInNewTabEnabled = false;         // NEW: State for the new tab toggle
 
         // --- Disclaimer Text (used inside expanded boxes) ---
         const BOX_DISCLAIMER_TEXT = `
@@ -309,7 +378,8 @@
 
         // --- Initial Setup (Run only once after password or session check) ---
         loadFavoritesFromStorage(); // Load favorites from localStorage first
-        setupGlobalEventListeners();     // Set up tab clicks, search, keyboard shortcuts
+        loadNewTabToggleState();     // NEW: Load the toggle state from localStorage
+        setupGlobalEventListeners();     // Set up tab clicks, search, keyboard shortcuts, AND the new toggle
         // Console deterrents are already set up outside this function
         updateTimestampDisplay();         // Display initial time
         setInterval(updateTimestampDisplay, 60000); // Update time every minute
@@ -410,6 +480,35 @@
             }
         }
 
+        // --- NEW: New Tab Toggle Management ---
+
+        /**
+         * Loads the 'Open in New Tab' toggle state from localStorage.
+         * Updates the `openInNewTabEnabled` variable and the toggle switch's visual state.
+         */
+        function loadNewTabToggleState() {
+            const storedState = localStorage.getItem(CONFIG.openInNewTabKey);
+            // Default to false if nothing is stored or if the value is not 'true'
+            openInNewTabEnabled = (storedState === 'true');
+            // Update the checkbox's checked state to match the loaded value
+            if (openInNewTabToggleElement) {
+                openInNewTabToggleElement.checked = openInNewTabEnabled;
+            }
+            console.log(`Loaded 'Open in New Tab' state: ${openInNewTabEnabled}`);
+        }
+
+        /**
+         * Saves the current 'Open in New Tab' toggle state to localStorage.
+         */
+        function saveNewTabToggleState() {
+            try {
+                localStorage.setItem(CONFIG.openInNewTabKey, openInNewTabEnabled);
+                console.log(`Saved 'Open in New Tab' state: ${openInNewTabEnabled}`);
+            } catch (error) {
+                console.error("Error saving 'Open in New Tab' state to localStorage:", error);
+            }
+        }
+
 
         // --- Event Listener Setup ---
 
@@ -436,6 +535,16 @@
                     filterVisibleContent(event.target.value); // Call the filtering function
                 }, CONFIG.searchDebounceMs);
             });
+
+            // --- NEW: Open in New Tab Toggle Listener ---
+            if (openInNewTabToggleElement) {
+                openInNewTabToggleElement.addEventListener('change', (event) => {
+                    openInNewTabEnabled = event.target.checked; // Update the state variable
+                    saveNewTabToggleState(); // Save the new state to localStorage
+                    console.log(`'Open in New Tab' toggled: ${openInNewTabEnabled}`);
+                    // Optional: Provide feedback to the user? (e.g., a small temporary message)
+                });
+            }
 
             // --- Global Keydown Listener (Handles Navigation and Activation) ---
             // Note: F12 and other dev tool shortcuts are handled in setupConsoleDeterrents
@@ -955,6 +1064,7 @@
 
          /**
           * Creates a single stream source button element with its click handler.
+          * **MODIFIED:** Click handler now checks the `openInNewTabEnabled` state.
           * @param {string} label - Text label for the button (e.g., 'PM', 'DL', 'Source 1').
           * @param {string} url - The stream URL associated with this button.
           * @param {HTMLDivElement} parentBoxElement - The parent channel/match box element.
@@ -967,11 +1077,25 @@
             buttonElement.dataset.streamUrl = url; // Store URL for easy access
             // Note: tabindex is not explicitly set here; focus managed within expanded box.
 
-            // --- Add Click Event Listener ---
+            // --- MODIFIED Click Event Listener ---
             buttonElement.onclick = (event) => {
                 event.stopPropagation(); // IMPORTANT: Prevent the click from bubbling up and toggling the box expansion
-                console.log(`Stream button clicked: ${label} (${url})`); // Added log
-                loadStreamIntoPlayer(buttonElement, url, parentBoxElement); // Call function to load the stream
+
+                // Check the state of the 'Open in New Tab' toggle
+                if (openInNewTabEnabled) {
+                    // --- Open in New Tab ---
+                    console.log(`Opening stream in new tab: ${label} (${url})`);
+                    window.open(url, '_blank'); // Open the URL in a new tab/window
+
+                    // Optional: Briefly highlight the button to indicate action
+                    buttonElement.classList.add('active');
+                    setTimeout(() => buttonElement.classList.remove('active'), 500);
+
+                } else {
+                    // --- Load in Embedded Player (Original Behavior) ---
+                    console.log(`Loading stream in player: ${label} (${url})`);
+                    loadStreamIntoPlayer(buttonElement, url, parentBoxElement); // Call function to load the stream
+                }
             };
             return buttonElement;
         }
@@ -1229,7 +1353,7 @@
             boxElement.tabIndex = -1; // Remove from main grid tab flow when expanded
             currentlyExpandedBoxElement = boxElement; // Update global tracker
 
-            populateStreamsAndLoadFirst(boxElement); // Load stream buttons and attempt to play
+            populateStreamsAndLoadFirst(boxElement); // Load stream buttons and attempt to play (if toggle is off)
 
             // --- Smooth Scroll into View ---
             setTimeout(() => {
@@ -1305,7 +1429,7 @@
 
         /**
          * Populates the stream buttons container within an expanded box based on its stored sources data.
-         * Attempts to automatically load the first available stream.
+         * Attempts to automatically load the first available stream *if the 'Open in New Tab' toggle is OFF*.
          * @param {HTMLDivElement} boxElement - The expanded box element.
          */
         function populateStreamsAndLoadFirst(boxElement) {
@@ -1374,19 +1498,19 @@
                     });
                 }
 
-                // --- Append Buttons and Load First Stream ---
+                // --- Append Buttons and Load First Stream (Conditionally) ---
                 streamButtonsContainer.appendChild(fragment);
 
                 if (streamCount === 0) {
                     displayNoStreamsAvailable(playerAreaElement, streamButtonsContainer);
-                    clearPlayerStateInBox(boxElement);
-                } else if (firstStreamUrl && firstStreamButtonElement) {
+                    clearPlayerStateInBox(boxElement); // Ensure player area is cleared
+                } else if (firstStreamUrl && firstStreamButtonElement && !openInNewTabEnabled) { // MODIFIED: Only auto-load if toggle is OFF
                      // Automatically load the first stream ONLY if it's the initial expansion
-                     // (Avoid reloading if just switching tabs or collapsing/re-expanding)
+                     // AND the new tab toggle is OFF.
                      const videoEl = boxElement.querySelector('video');
                      const iframeEl = boxElement.querySelector('iframe');
                      if (!videoEl.classList.contains('active') && !iframeEl.classList.contains('active')) {
-                        console.log("Auto-loading first stream on initial expansion.");
+                        console.log("Auto-loading first stream on initial expansion (toggle is OFF).");
                         loadStreamIntoPlayer(firstStreamButtonElement, firstStreamUrl, boxElement);
                      } else {
                         console.log("Skipping auto-load, player already active or was active.");
@@ -1399,6 +1523,10 @@
                             });
                         }
                      }
+                } else if (openInNewTabEnabled) {
+                    console.log("Skipping auto-load because 'Open in New Tab' is enabled.");
+                    // Optionally display a message indicating auto-load is skipped
+                    displayMessageInPlayerArea(playerAreaElement, `<strong>Select a source</strong><span>'Open in new tab' is active. Click a button to open the stream.</span>`, false);
                 } else {
                      console.error("Inconsistency: Streams counted, but no first URL/Button element found.", boxElement.id);
                      displayNoStreamsAvailable(playerAreaElement, streamButtonsContainer);
@@ -1428,11 +1556,12 @@
         }
 
 
-        // --- Stream Handling ---
+        // --- Stream Handling (Only used when openInNewTabEnabled is false) ---
 
         /**
          * Loads the selected stream URL into the appropriate player (HLS or iframe).
          * Handles UI updates (loader, button states, messages).
+         * **NOTE:** This function is only called if `openInNewTabEnabled` is false.
          * @param {HTMLButtonElement | null} clickedButtonElement - The button that was clicked (null if called programmatically for the first stream).
          * @param {string} streamUrl - The URL of the stream to load.
          * @param {HTMLDivElement} parentBoxElement - The parent channel/match box element.
@@ -1441,6 +1570,11 @@
             // --- Validate Inputs ---
             if (!parentBoxElement || !streamUrl || typeof streamUrl !== 'string') {
                 console.error("loadStreamIntoPlayer called with invalid parameters:", { streamUrl, parentBoxElement });
+                return;
+            }
+            // --- Exit if New Tab Toggle is On (Safety Check) ---
+            if (openInNewTabEnabled) {
+                console.warn("loadStreamIntoPlayer called, but 'Open in New Tab' is enabled. Aborting.");
                 return;
             }
 
@@ -1538,6 +1672,8 @@
                 currentHlsInstance = null;
             } else if (currentHlsInstance) {
                  console.log("   HLS instance exists but is not attached to this video element.");
+                 // Optionally destroy anyway if it shouldn't linger
+                 // currentHlsInstance.destroy(); currentHlsInstance = null;
             }
 
             // --- Reset Iframe ---
@@ -1614,8 +1750,8 @@
             // --- Set Message Content ---
             messageContainerElement.innerHTML = messageHtml;
 
-            // --- Add "Try Next" Button ---
-            if (showTryNextButton && failedUrl && parentBoxElement) {
+            // --- Add "Try Next" Button (Only if toggle is OFF) ---
+            if (showTryNextButton && failedUrl && parentBoxElement && !openInNewTabEnabled) { // MODIFIED: Check toggle state
                 const nextButtonElement = findNextAvailableStreamButton(failedUrl, parentBoxElement);
 
                 if (nextButtonElement) {
@@ -1639,6 +1775,8 @@
                     noMoreSourcesSpan.textContent = '(No more sources available)';
                     messageContainerElement.appendChild(noMoreSourcesSpan);
                 }
+            } else if (showTryNextButton && openInNewTabEnabled) {
+                 console.log("   'Try Next Source' button skipped because 'Open in New Tab' is enabled.");
             }
 
             // --- Make the Message Visible ---
@@ -1673,6 +1811,7 @@
         /**
          * Loads an HLS (.m3u8) stream into a video element using HLS.js or native browser support.
          * Handles HLS.js instance management, event listeners, and error reporting.
+         * **NOTE:** This function is only called if `openInNewTabEnabled` is false.
          * @param {string} hlsUrl - The HLS stream URL (.m3u8).
          * @param {HTMLVideoElement} videoElement - The <video> element to attach the stream to.
          * @param {HTMLDivElement} playerAreaElement - The containing player area element for UI updates.
@@ -1699,32 +1838,24 @@
                 // Create a new HLS instance
                 currentHlsInstance = new Hls({
                     // *** OPTIMIZATION: Adjusted HLS config (experimental) ***
-                    // Reduced liveSyncDurationCount to potentially decrease startup latency.
-                    // Default is 3. Lower values might increase stalling risk if network is unstable. Monitor!
                     liveSyncDurationCount: 2,
-                    // Timeouts (slightly increased from defaults for potentially slower networks/sources)
                     manifestLoadingTimeOut: 15000, // default 10000
                     levelLoadingTimeOut: 15000,    // default 10000
                     fragLoadingTimeOut: 20000,     // default 20000
-                    // Retries (slightly increased)
                     manifestLoadErrorMaxRetry: 3,  // default 1
                     levelLoadErrorMaxRetry: 4,     // default 3
                     fragLoadErrorMaxRetry: 5,      // default 4
-                    // enableWorker: false // Try disabling worker for simpler debugging if needed
                 });
                 console.log("   HLS.js: New instance created with custom config.");
 
                 // --- HLS.js Event Listeners ---
-                // Store listeners to remove them later if needed (though destroy() should handle this)
                 const hlsErrorListener = (event, data) => {
-                     // Check if this listener belongs to the *current* active instance for this video
                      if (!currentHlsInstance || currentHlsInstance.media !== videoElement) {
                          console.log("   HLS.js: Ignoring ERROR from an old/inactive instance.");
                          return;
                      }
                     console.error('   HLS.js Error:', { event, type: data.type, details: data.details, fatal: data.fatal, url: data.url });
                     let userMessage = `<strong>Stream Error</strong> (${data.details || 'Unknown HLS error'}).`;
-                    // More specific error handling
                     switch (data.type) {
                         case Hls.ErrorTypes.NETWORK_ERROR:
                             userMessage = `<strong>Network Error</strong> (${data.details}). Check connection or try another source.`;
@@ -1735,38 +1866,32 @@
                         case Hls.ErrorTypes.MEDIA_ERROR:
                              if (data.details === 'bufferStalledError' && !data.fatal) {
                                  console.warn("   HLS.js: Buffer stalled (non-fatal), attempting recovery...");
-                                 return; // Don't show fatal error for recoverable stall
+                                 return;
                              } else if (data.details === 'fragParsingError') {
                                   userMessage = `<strong>Media Error</strong> (Corrupted segment). Stream data might be invalid.`;
                              } else {
                                   userMessage = `<strong>Media Playback Error</strong> (${data.details}). Stream data might be invalid.`;
                              }
                             break;
-                        case Hls.ErrorTypes.MUX_ERROR:
-                            userMessage = `<strong>Media Error</strong> (Muxing/Demuxing issue: ${data.details}).`;
-                            break;
-                        case Hls.ErrorTypes.OTHER_ERROR:
-                             userMessage = `<strong>Stream Error</strong> (Other: ${data.details}).`;
-                             break;
+                        case Hls.ErrorTypes.MUX_ERROR: userMessage = `<strong>Media Error</strong> (Muxing/Demuxing issue: ${data.details}).`; break;
+                        case Hls.ErrorTypes.OTHER_ERROR: userMessage = `<strong>Stream Error</strong> (Other: ${data.details}).`; break;
                     }
                      if (data.fatal) {
                         console.error("   HLS.js: Fatal error occurred. Cleaning up.");
                         displayMessageInPlayerArea(playerAreaElement, userMessage, true, hlsUrl, parentBoxElement);
-                        // Ensure destruction happens *after* displaying message and only for the correct instance
                         if (currentHlsInstance && currentHlsInstance.media === videoElement) {
                              console.log("   HLS.js: Destroying instance due to fatal error.");
                              currentHlsInstance.destroy();
                              currentHlsInstance = null;
                         }
                         videoElement.classList.remove('active');
-                        videoElement.poster = CONFIG.placeholderImage; // Reset poster on fatal error
+                        videoElement.poster = CONFIG.placeholderImage;
                      } else {
                          console.warn("   HLS.js: Non-fatal error occurred:", data.details);
                      }
                 };
 
                 const hlsManifestParsedListener = () => {
-                     // Check if this listener belongs to the *current* active instance for this video
                      if (!currentHlsInstance || currentHlsInstance.media !== videoElement) {
                          console.log("   HLS.js: Ignoring MANIFEST_PARSED from an old/inactive instance.");
                          return;
@@ -1774,12 +1899,11 @@
                     console.log("   HLS.js: Manifest parsed successfully.");
                     playerAreaElement.querySelector('.loader').classList.remove('visible');
                     videoElement.classList.add('active');
-                    videoElement.muted = true; // Ensure muted for autoplay policies
+                    videoElement.muted = true;
                     videoElement.play().then(() => {
                          console.log("   HLS.js: Playback initiated via play().");
                     }).catch(error => {
                          console.error("   HLS.js: videoElement.play() failed:", error);
-                         // Only show message if this is still the active instance
                          if (currentHlsInstance && currentHlsInstance.media === videoElement) {
                              if (error.name === 'NotAllowedError') {
                                  displayMessageInPlayerArea(playerAreaElement, `<strong>Playback Paused</strong><span>Click the play button in the video player to start.</span>`, false);
@@ -1787,7 +1911,7 @@
                                  displayMessageInPlayerArea(playerAreaElement, `<strong>Playback Error</strong><span>Could not start video (${error.name}).</span>`, true, hlsUrl, parentBoxElement);
                                  videoElement.classList.remove('active');
                              }
-                             playerAreaElement.querySelector('.loader').classList.remove('visible'); // Hide loader on play error too
+                             playerAreaElement.querySelector('.loader').classList.remove('visible');
                          }
                     });
                 };
@@ -1795,7 +1919,6 @@
                 currentHlsInstance.on(Hls.Events.ERROR, hlsErrorListener);
                 currentHlsInstance.on(Hls.Events.MANIFEST_PARSED, hlsManifestParsedListener);
 
-                // Attach Media and Load Source
                 console.log("   HLS.js: Attaching media and loading source:", hlsUrl);
                 currentHlsInstance.attachMedia(videoElement);
                 currentHlsInstance.loadSource(hlsUrl);
@@ -1803,19 +1926,13 @@
             // --- Use Native HLS Support ---
             } else if (videoElement.canPlayType('application/vnd.apple.mpegurl')) {
                 console.log("   Native HLS: Supported. Using native playback.");
-                // Ensure any old HLS instance is destroyed if switching from HLS.js to native
                 if (currentHlsInstance) {
                     console.log("   Native HLS: Destroying lingering HLS.js instance.");
                     currentHlsInstance.destroy();
                     currentHlsInstance = null;
                 }
-                // No need to clone node, just set src directly after clearing previous state
-                // videoElement was already reset in clearPlayerStateInBox
 
-                // --- Native HLS Event Listeners ---
-                // Use functions to easily remove later if needed, though setting src usually handles it
                 const handleNativeLoadedMetadata = () => {
-                    // Check if the src is still the one we intended to load
                     if (videoElement.getAttribute('src') === hlsUrl) {
                         console.log("   Native HLS: Metadata loaded.");
                         playerAreaElement.querySelector('.loader').classList.remove('visible');
@@ -1825,7 +1942,6 @@
                              console.log("   Native HLS: Playback initiated via play().");
                         }).catch(error => {
                             console.error("   Native HLS: videoElement.play() failed:", error);
-                            // Check src again before showing error
                             if (videoElement.getAttribute('src') === hlsUrl) {
                                 if (error.name === 'NotAllowedError') {
                                     displayMessageInPlayerArea(playerAreaElement, `<strong>Playback Paused</strong><span>Click the play button to start.</span>`, false);
@@ -1841,32 +1957,27 @@
                     }
                 };
                 const handleNativeError = () => {
-                     // Check if the src is still the one we intended to load
                      if (videoElement.getAttribute('src') === hlsUrl) {
                          console.error("   Native HLS: Playback error occurred.");
                          const error = videoElement.error;
                          const errorMessage = error ? (error.message || `code ${error.code}`) : 'Unknown error';
                          displayMessageInPlayerArea(playerAreaElement, `<strong>Stream Error</strong><span>Native HLS failed: ${errorMessage}.</span>`, true, hlsUrl, parentBoxElement);
                          videoElement.classList.remove('active');
-                         videoElement.poster = CONFIG.placeholderImage; // Reset poster on error
+                         videoElement.poster = CONFIG.placeholderImage;
                          playerAreaElement.querySelector('.loader').classList.remove('visible');
                      } else {
                           console.log("   Native HLS: Ignoring error for a different src.");
                      }
                 };
 
-                // Remove previous listeners before adding new ones
                 videoElement.removeEventListener('loadedmetadata', handleNativeLoadedMetadata);
                 videoElement.removeEventListener('error', handleNativeError);
-                // Add new listeners
                 videoElement.addEventListener('loadedmetadata', handleNativeLoadedMetadata);
                 videoElement.addEventListener('error', handleNativeError);
 
-
-                // Set Source and Load
                 console.log("   Native HLS: Setting video src and calling load():", hlsUrl);
                 videoElement.src = hlsUrl;
-                videoElement.load(); // Important for native HLS
+                videoElement.load();
 
             // --- HLS Not Supported ---
             } else {
@@ -1881,6 +1992,7 @@
         /**
          * Loads a non-HLS URL into an iframe element.
          * Includes timeout handling for cases where the iframe might be blocked or unresponsive.
+         * **NOTE:** This function is only called if `openInNewTabEnabled` is false.
          * @param {string} iframeUrl - The URL to load in the iframe.
          * @param {HTMLIFrameElement} iframeElement - The <iframe> element.
          * @param {HTMLDivElement} playerAreaElement - The containing player area element for UI updates.
@@ -1889,9 +2001,8 @@
             const parentBoxElement = iframeElement.closest('.channel-box');
             console.log("   Iframe: Loading stream:", iframeUrl);
             let iframeLoadTimeoutId = null;
-            let isLoadSuccessful = false; // Flag to track if onload fired
+            let isLoadSuccessful = false;
 
-            // Ensure any HLS instance is destroyed if switching to iframe
             if (currentHlsInstance) {
                  console.log("   Iframe: Destroying lingering HLS.js instance.");
                  currentHlsInstance.destroy();
@@ -1900,19 +2011,16 @@
 
             const cleanupIframeLoad = () => {
                 clearTimeout(iframeLoadTimeoutId);
-                // Remove listeners to prevent them firing for subsequent loads
                 iframeElement.onload = null;
                 iframeElement.onerror = null;
             };
 
             const handleIframeLoadFailure = (reason) => {
                 cleanupIframeLoad();
-                 // Only show error if the src is still the one we attempted to load
                  if (iframeElement.getAttribute('src') === iframeUrl) {
                      console.error(`   Iframe: Failed to load (${reason}). URL: ${iframeUrl}`);
                      displayMessageInPlayerArea(playerAreaElement, `<strong>Stream Error</strong><span>${reason}. It might be offline or blocked.</span>`, true, iframeUrl, parentBoxElement);
                      iframeElement.classList.remove('active');
-                     // Don't reset src here, keep the failed URL for context? Or reset? Let's reset.
                      iframeElement.src = 'about:blank';
                      playerAreaElement.querySelector('.loader').classList.remove('visible');
                  } else {
@@ -1920,32 +2028,26 @@
                  }
             };
 
-            // Set timeout using the configured value
             iframeLoadTimeoutId = setTimeout(() => {
-                 // Check if onload has *not* fired and if the src is still the target URL
                  if (!isLoadSuccessful && iframeElement.getAttribute('src') === iframeUrl) {
-                    handleIframeLoadFailure(`Load timeout (${CONFIG.iframeLoadTimeoutMs / 1000}s)`); // Include timeout duration in message
+                    handleIframeLoadFailure(`Load timeout (${CONFIG.iframeLoadTimeoutMs / 1000}s)`);
                  } else if (!isLoadSuccessful) {
                      console.log("   Iframe: Timeout occurred, but src has changed or load was successful. Ignoring timeout.");
                  }
-            }, CONFIG.iframeLoadTimeoutMs); // Use configured timeout value
+            }, CONFIG.iframeLoadTimeoutMs);
 
-            // Assign event handlers
             iframeElement.onload = () => {
-                // Check if this onload corresponds to the URL we are trying to load
                 if (iframeElement.getAttribute('src') === iframeUrl) {
                      console.log("   Iframe: onload event fired successfully for:", iframeUrl);
-                     isLoadSuccessful = true; // Mark as successful
-                     cleanupIframeLoad(); // Clear timeout and remove listeners
+                     isLoadSuccessful = true;
+                     cleanupIframeLoad();
                      playerAreaElement.querySelector('.loader').classList.remove('visible');
-                     iframeElement.classList.add('active'); // Show the iframe
-                 } else if (iframeElement.getAttribute('src') !== 'about:blank') { // Ignore onload for about:blank
+                     iframeElement.classList.add('active');
+                 } else if (iframeElement.getAttribute('src') !== 'about:blank') {
                      console.log(`   Iframe: onload fired, but for a different src (${iframeElement.getAttribute('src')}). Ignoring.`);
-                     // Don't cleanup or mark successful if it's for a different load
                  }
             };
             iframeElement.onerror = () => {
-                 // Check if this onerror corresponds to the URL we are trying to load
                  if (iframeElement.getAttribute('src') === iframeUrl) {
                     handleIframeLoadFailure("onError event fired");
                  } else {
@@ -1953,7 +2055,6 @@
                  }
             };
 
-            // Set the src attribute - this initiates the load
             console.log("   Iframe: Setting src attribute.");
             iframeElement.src = iframeUrl;
         }
