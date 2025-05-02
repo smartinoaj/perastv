@@ -162,12 +162,17 @@
 
         /* --- Channel Header --- */
         .channel-header {
-            display: flex; align-items: center; justify-content: center; /* Center items horizontally */
+            /* --- MODIFIED: Added Flexbox for centering --- */
+            display: flex;           /* Enable Flexbox */
+            align-items: center;     /* Vertically center items */
+            justify-content: center; /* Horizontally center items */
+            /* --- End Modification --- */
             gap: 10px; text-align: center; min-height: 40px; /* Ensure consistent height */
             cursor: pointer; padding-right: 30px; /* Space for favorite button */
             width: 100%; /* Ensure header takes full width */
         }
         /* Matches Header Layout (adjust gap if needed) */
+        /* Kept justify-content: center here, redundant but harmless */
         .channel-box[id^="match-"] .channel-header { justify-content: center; gap: 15px; }
         /* Logo styling for MATCHES */
         .match-logo {
@@ -179,13 +184,16 @@
         .channel-header h3 {
             font-size: 1.1em; font-weight: 600; margin: 0;
             word-break: break-word; /* Prevent long names overflowing */
-            text-align: center;
-            flex-grow: 1; /* Allow title to take available space */
-            flex-shrink: 1;
+            text-align: center; /* Ensure text itself is centered */
+            /* --- MODIFIED: Adjusted flex properties --- */
+            flex-grow: 0; /* Don't allow title to grow excessively, especially with logos */
+            flex-shrink: 1; /* Allow title to shrink if needed */
+            /* --- End Modification --- */
             padding: 0 5px; /* Small padding around text */
         }
         /* Spacing around match titles */
-        .channel-box[id^="match-"] .channel-header h3 { margin-left: 5px; margin-right: 5px; flex-grow: 0;} /* Don't let match titles grow excessively */
+        /* Removed redundant flex-grow: 0 from here as it's now in the general h3 rule */
+        .channel-box[id^="match-"] .channel-header h3 { margin-left: 5px; margin-right: 5px; }
 
         /* Channel Info (for Matches) */
         .channel-info {
@@ -199,10 +207,11 @@
 
         /* --- Expanded Channel Box --- */
         .channel-box.expanded {
-            /* **MODIFIED: Set explicit width relative to container, centered** */
-            width: 95%;          /* Use a percentage of the container width */
+            /* **MODIFIED: Force span and auto width** */
+            grid-column: 1 / -1; /* Force item to span all columns of its parent grid */
+            width: auto;         /* Allow the item to naturally fill the spanned columns */
             max-width: 1200px;   /* Still limit maximum width on very large screens */
-            margin: 20px auto;   /* Center horizontally with vertical margin */
+            margin: 20px auto;   /* Center horizontally within the spanned columns */
             position: relative;    /* Keep relative for z-index */
             cursor: default; background: var(--bg-tertiary);
             padding-bottom: 20px; z-index: 10; /* Bring to front */
@@ -210,8 +219,6 @@
             border: 2px solid var(--accent-color); overflow: visible;
             display: flex !important; /* Use flex, override .hidden if needed */
             flex-direction: column; /* Stack content vertically */
-            /* Ensure it's no longer treated as a grid item in its original position */
-            grid-column: auto;
         }
         /* Non-clickable header/info when expanded */
         .channel-box.expanded .channel-header,
@@ -321,7 +328,7 @@
              .favorite-button { top: 8px; right: 8px; }
              .favorite-button svg { width: 18px; height: 18px; }
              /* Ensure expanded box still has reasonable max-width on mobile */
-             .channel-box.expanded { max-width: 95%; width: 95%; } /* Adjust width for mobile */
+             .channel-box.expanded { max-width: 95%; }
         }
         @media (max-width: 480px) { /* Apply below 480px */
             .container { padding: 0 10px; }
