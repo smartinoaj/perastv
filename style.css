@@ -77,33 +77,52 @@ header img { max-width: 200px; height: auto; }
 .tab-button[data-tab="Favorites"].active { background: var(--favorite-color); color: var(--bg-secondary); border-color: var(--favorite-color); }
 .tab-button[data-tab="Favorites"].active .tab-icon { fill: var(--bg-secondary); }
 
-/* --- NEW: Toggle Switch Styles --- */
+/* --- Toggle Switches Section --- */
+.toggles-container {
+    display: flex;
+    flex-direction: column; /* Stack toggles vertically */
+    align-items: center; /* Center items horizontally */
+    gap: 10px; /* Space between toggles */
+    margin-bottom: 35px; /* Space below the section */
+    padding: 0 10px;
+}
+
+/* Individual Toggle Container */
 .toggle-switch-container {
     display: flex;
     align-items: center;
-    justify-content: center; /* Center the toggle */
-    margin-top: 0; /* Adjust spacing relative to tabs */
-    margin-bottom: 35px; /* Space below toggle */
+    justify-content: center; /* Center within its own line */
     gap: 10px;
+    width: 100%; /* Allow centering within the flex column */
+    max-width: 350px; /* Optional: Limit width */
 }
+
+/* Toggle Switch Label Text */
 .toggle-switch-container label {
     font-size: 0.9em;
     color: var(--text-secondary);
     cursor: pointer;
     user-select: none; /* Prevent text selection */
+    text-align: left; /* Align text to the left */
+    flex-grow: 1; /* Allow label to take available space */
 }
+
+/* The Switch */
 .toggle-switch {
     position: relative;
     display: inline-block;
     width: 50px; /* Width of the switch */
     height: 26px; /* Height of the switch */
-    flex-shrink: 0; /* Prevent shrinking in flex container */
+    flex-shrink: 0; /* Prevent shrinking */
 }
+
 .toggle-switch input {
     opacity: 0;
     width: 0;
     height: 0;
 }
+
+/* The Slider Track */
 .slider {
     position: absolute;
     cursor: pointer;
@@ -115,6 +134,8 @@ header img { max-width: 200px; height: auto; }
     transition: .4s;
     border-radius: 26px; /* Rounded switch */
 }
+
+/* The Slider Knob */
 .slider:before {
     position: absolute;
     content: "";
@@ -126,18 +147,23 @@ header img { max-width: 200px; height: auto; }
     transition: .4s;
     border-radius: 50%; /* Circular knob */
 }
+
+/* Checked State */
 input:checked + .slider {
     background-color: var(--accent-color); /* On state color */
 }
+
+input:checked + .slider:before {
+    transform: translateX(24px); /* Move knob to the right */
+}
+
+/* Focus State */
 input:focus-visible + .slider { /* Style for keyboard focus */
      box-shadow: 0 0 1px var(--accent-color);
      outline: 2px solid var(--accent-color);
      outline-offset: 1px;
 }
-input:checked + .slider:before {
-    transform: translateX(24px); /* Move knob to the right */
-}
-/* --- End of New Toggle Switch Styles --- */
+/* --- End of Toggle Switch Styles --- */
 
 
 /* --- Channel Grid (General) --- */
@@ -398,7 +424,7 @@ footer { text-align: center; color: var(--text-secondary); font-size: 0.8em; pad
      .stream-button { padding: 6px 15px; font-size: 0.8em; }
      header img { max-width: 160px; }
      .tabs { gap: 10px; margin-bottom: 15px; } /* Adjust spacing */
-     .toggle-switch-container { margin-bottom: 25px; } /* Adjust spacing */
+     .toggles-container { margin-bottom: 25px; gap: 8px;} /* Adjust spacing */
      .tab-button { padding: 8px 15px; font-size: 0.85em; }
      /* Ensure match boxes take full width */
      #Matches .channel-box[id^="match-"]:not(.expanded),
@@ -417,7 +443,7 @@ footer { text-align: center; color: var(--text-secondary); font-size: 0.8em; pad
     .container { padding: 0 10px; }
     header img { max-width: 140px; }
     .tabs { gap: 8px; margin-bottom: 15px; }
-    .toggle-switch-container { margin-bottom: 25px; }
+    .toggles-container { margin-bottom: 25px; gap: 8px;}
     .tab-button { padding: 7px 12px; }
     .channel-box { padding: 12px; }
     .channel-header h3 { font-size: 1em;}
@@ -433,4 +459,85 @@ footer { text-align: center; color: var(--text-secondary); font-size: 0.8em; pad
      .box-disclaimer { font-size: 0.65em; }
      /* Adjust padding for smallest screens */
      .channel-header h3 { padding-left: 25px; padding-right: 25px; }
+     /* Adjust toggle label font size */
+     .toggle-switch-container label { font-size: 0.85em; }
+}
+
+/* Styles specific to player.html body to override index.html styles */
+body.player-page {
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-height: 100vh;
+}
+
+/* Container for player.html content */
+.player-page-container {
+    width: 100%;
+    max-width: 1200px;
+    background-color: var(--bg-secondary);
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+}
+
+/* Header specific to player.html */
+.player-page-header {
+    text-align: center;
+    margin-bottom: 20px;
+    padding-bottom: 15px;
+    border-bottom: 1px solid var(--border-color);
+}
+.player-page-header h1 {
+    font-size: 1.8em;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin: 0;
+}
+
+/* Footer specific to player.html */
+.player-page-footer {
+    text-align: center;
+    margin-top: 30px;
+    font-size: 0.8em;
+    color: var(--text-secondary);
+}
+
+/* Hide elements from index.html when on player.html */
+body.player-page header,
+body.player-page .search-container,
+body.player-page .tabs,
+body.player-page .toggles-container,
+body.player-page .channel-grid,
+body.player-page footer:not(.player-page-footer) { /* Hide original footer */
+    display: none !important;
+}
+
+/* Override styles for the reused .channel-box on player.html */
+body.player-page .channel-box.expanded {
+    grid-column: auto;
+    margin: 0;
+    border: none;
+    background: transparent;
+    box-shadow: none;
+    padding: 0;
+    cursor: default;
+}
+body.player-page .channel-box.expanded .channel-header,
+body.player-page .channel-box.expanded .channel-info,
+body.player-page .channel-box.expanded .favorite-button {
+    display: none; /* Hide elements not relevant on player page */
+}
+body.player-page .channel-box.expanded .iframe-container {
+    margin-top: 0; /* Remove top margin */
+}
+body.player-page .channel-box.expanded .box-disclaimer {
+    margin-top: 15px;
+}
+body.player-page .player-area {
+    margin-bottom: 25px; /* Ensure spacing below player */
+}
+body.player-page .stream-buttons {
+    margin-bottom: 20px; /* Ensure spacing below buttons */
 }
