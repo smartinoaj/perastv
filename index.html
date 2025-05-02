@@ -81,36 +81,20 @@
         #password-overlay.hidden {
              display: none;
         }
-        /* Style for the fallback message if window.close fails */
-        #devtools-detected-message {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: var(--bg-primary);
-            color: var(--error-color);
-            z-index: 2000; /* Above everything */
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            text-align: center;
-            font-size: 1.5em;
-            padding: 20px;
-            display: none; /* Hidden by default */
-        }
+        /* Style for the fallback message if window.close fails (Not used in this version) */
+        /* #devtools-detected-message { ... } */
     </style>
     </head>
 <body>
 
-<div id="devtools-detected-message">
+<div id="devtools-detected-message" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: var(--bg-primary); color: var(--error-color); z-index: 2000; display: flex; justify-content: center; align-items: center; text-align: center; font-size: 1.5em; padding: 20px;">
     Developer Tools detected. Please close them and refresh the page.
 </div>
 
+
 <div id="password-overlay" class="hidden">
     <form id="password-form">
-        <label for="password-input">Enter Password</label>
-        <input type="password" id="password-input" required>
+        <label for="password-input">Enter Access Key</label> <input type="password" id="password-input" required>
         <button type="submit" id="password-submit">Enter</button>
         <p id="password-error"></p>
     </form>
@@ -160,60 +144,20 @@
 </div> <script>
     // --- Console Access Deterrents (Run Immediately) ---
     /**
-     * Adds event listeners to attempt to block right-click, common dev console shortcuts,
-     * and detect dev tools opening via debugger timing or window resize.
+     * Attempts to detect dev tools opening via debugger timing or window resize
+     * and redirects to about:blank if detected.
      * Note: This is a deterrent, not foolproof security.
      */
     function setupConsoleDeterrents() {
         let devToolsOpened = false; // Flag to prevent multiple actions
         let detectionIntervalId = null; // Store interval ID
         const devToolsCheckInterval = 1000; // Check every second
-        const devToolsMessageEl = document.getElementById('devtools-detected-message');
-
-        // --- Block Context Menu ---
-        document.addEventListener('contextmenu', (event) => {
-            console.log("Context menu blocked.");
-            event.preventDefault();
-        });
-
-        // --- Block Common Keyboard Shortcuts ---
-        document.addEventListener('keydown', (event) => {
-            let blocked = false;
-            // Block F12
-            if (event.key === 'F12' || event.keyCode === 123) {
-                blocked = true;
-            }
-            // Block Ctrl+Shift+I
-            else if (event.ctrlKey && event.shiftKey && (event.key === 'I' || event.keyCode === 73)) {
-                blocked = true;
-            }
-            // Block Ctrl+Shift+J
-            else if (event.ctrlKey && event.shiftKey && (event.key === 'J' || event.keyCode === 74)) {
-                blocked = true;
-            }
-            // Block Ctrl+Shift+C
-            else if (event.ctrlKey && event.shiftKey && (event.key === 'C' || event.keyCode === 67)) {
-                 blocked = true;
-            }
-            // Block Ctrl+U
-            else if (event.ctrlKey && (event.key === 'U' || event.keyCode === 85)) {
-                blocked = true;
-            }
-
-            if (blocked) {
-                console.log(`DevTools shortcut (${event.key}, Ctrl:${event.ctrlKey}, Shift:${event.shiftKey}) detected - attempting block.`);
-                event.preventDefault();
-                // Trigger detection immediately if shortcut is pressed
-                triggerDevToolsAction(); // Call the action function directly
-                return false;
-            }
-        });
 
         // --- Action Function ---
         function triggerDevToolsAction() {
             if (devToolsOpened) return; // Already triggered
             devToolsOpened = true; // Set flag immediately
-            console.warn(`Developer Tools detected! Attempting to close window...`);
+            console.warn(`Developer Tools detected! Redirecting...`);
 
             // Stop the regular detection interval
             if (detectionIntervalId) {
@@ -221,33 +165,15 @@
                 detectionIntervalId = null;
             }
 
-            // Attempt to close the window/tab
-            // IMPORTANT: This will likely FAIL in most modern browsers for tabs not opened by script.
+            // Attempt to redirect to a blank page
             try {
-                window.close();
-                // If window.close() succeeded, the script might stop here.
-                // If it failed, the browser might show a console error, and we proceed to the fallback.
-                console.log("window.close() attempted.");
-
-                // Fallback: If window.close() didn't work after a short delay, show the message
-                setTimeout(() => {
-                     // Check flag again in case close() worked asynchronously but slowly
-                    if (devToolsOpened && devToolsMessageEl) {
-                        devToolsMessageEl.style.display = 'flex';
-                    }
-                    // Optional: Try redirecting as a secondary fallback
-                    // window.location.replace('about:blank');
-                }, 100); // Wait 100ms to see if close worked
-
+                window.location.replace('about:blank');
             } catch (e) {
-                console.error("window.close() failed:", e);
-                 // Show fallback message immediately if close throws an error
-                 if (devToolsMessageEl) {
-                    devToolsMessageEl.style.display = 'flex';
-                 }
+                console.error("Redirect failed:", e);
+                // Fallback: Make the page unusable if redirect fails
+                 document.body.innerHTML = '<h1 style="color:red;text-align:center;margin-top:50px;">Developer Tools detected. Please close them to continue.</h1>';
             }
         }
-
 
         // --- DevTools Detection Function (called by interval) ---
         function detectDevTools() {
@@ -281,13 +207,14 @@
         // Start the detection interval
         detectionIntervalId = setInterval(detectDevTools, devToolsCheckInterval);
 
-        console.log("Console access deterrents initialized (attempting window.close).");
+        console.log("Console access deterrents initialized (redirect on detect).");
     }
     // --- Initialize Deterrents Immediately ---
     setupConsoleDeterrents();
 
 
-    const SITE_PASSWORD_B64 = "cHR2";
+
+    const PERSONAL_USE_B64 = "cHR2"; 
     const AUTH_KEY = 'perasTvAuthenticated'; // Key for sessionStorage
 
     const passwordOverlay = document.getElementById('password-overlay');
@@ -303,11 +230,11 @@
         mainContainer.style.display = 'block'; // Show main content
         initializeApp(); // Initialize the app directly
     } else {
-        // Check if SITE_PASSWORD_B64 is set correctly
-        if (typeof SITE_PASSWORD_B64 === 'undefined' || SITE_PASSWORD_B64 === "PASTE_YOUR_BASE64_PASSWORD_HERE" || SITE_PASSWORD_B64 === "") {
-             console.error("ERROR: SITE_PASSWORD_B64 is not set correctly in the script. Please generate the Base64 password and paste it.");
+        // Check if PERSONAL_USE_B64 is set correctly
+        if (typeof PERSONAL_USE_B64 === 'undefined' || PERSONAL_USE_B64 === "PASTE_YOUR_BASE64_PASSWORD_HERE" || PERSONAL_USE_B64 === "") {
+             console.error("ERROR: PERSONAL_USE_B64 is not set correctly in the script. Please generate the Base64 password and paste it.");
              // Display an error message to the user instead of the password prompt
-             passwordOverlay.innerHTML = '<p style="color:var(--error-color); text-align:center;">Configuration Error: Password not set.</p>';
+             passwordOverlay.innerHTML = '<p style="color:var(--error-color); text-align:center;">Configuration Error: Access key not set.</p>'; // Updated error message
              passwordOverlay.classList.remove('hidden'); // Ensure the overlay is visible to show the error
         } else {
             console.log("Authentication required.");
@@ -317,29 +244,29 @@
             // --- Add listener only if authentication is needed ---
             passwordForm.addEventListener('submit', (event) => {
                 event.preventDefault(); // Stop form from submitting the traditional way
-                const enteredPassword = passwordInput.value;
-                let correctPassword = "";
+                const enteredValue = passwordInput.value; // Changed variable name
+                let correctKey = ""; // Changed variable name
                 try {
-                    // Decode the Base64 password
-                    correctPassword = atob(SITE_PASSWORD_B64);
+                    // Decode the Base64 key
+                    correctKey = atob(PERSONAL_USE_B64); // Use the new variable name here
                 } catch (e) {
-                    console.error("Error decoding Base64 password:", e);
+                    console.error("Error decoding Base64 entry key:", e);
                     passwordError.textContent = 'Configuration Error';
                     return; // Stop if decoding fails
                 }
 
-                // Compare entered password with the decoded password
-                if (enteredPassword === correctPassword) {
-                    // Password is correct
-                    console.log("Password correct.");
+                // Compare entered value with the decoded key
+                if (enteredValue === correctKey) {
+                    // Key is correct
+                    console.log("Access key correct.");
                     sessionStorage.setItem(AUTH_KEY, 'true'); // Store auth status for the session
                     passwordOverlay.classList.add('hidden'); // Hide the overlay
                     mainContainer.style.display = 'block'; // Show the main content
                     initializeApp(); // Run the main application logic
                 } else {
-                    // Password is incorrect
-                    console.log("Incorrect password entered.");
-                    passwordError.textContent = 'Incorrect Password';
+                    // Key is incorrect
+                    console.log("Incorrect access key entered.");
+                    passwordError.textContent = 'Incorrect Access Key'; // Updated error message
                     passwordInput.value = ''; // Clear the input
                     passwordInput.focus(); // Set focus back to input
                 }
