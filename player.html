@@ -15,10 +15,13 @@
 
 <div id="player-page-content" style="display: none; width: 100%; height: 100%; display: flex; flex-direction: column;">
 
-    <div class="player-area"> <div class="loader"></div>
+    <div class="player-area">
+        <div class="loader"></div>
         <div class="player-message" role="alert"></div>
         <iframe allow="autoplay; fullscreen; encrypted-media; picture-in-picture" allowfullscreen title="Stream Player"></iframe>
         <video controls autoplay muted playsinline title="Stream Player"></video>
+        <button class="custom-fullscreen-btn" aria-label="Enter Fullscreen" title="Enter Fullscreen">
+            </button>
     </div>
 
     <div class="stream-buttons">
@@ -42,6 +45,11 @@
             iframeLoadTimeoutMs: 35000
         };
 
+        // --- SVG Icons for Fullscreen Button ---
+        const SVG_ENTER_FULLSCREEN = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" width="20px" height="20px"> <path d="M7 14H5v5h5v-2H7v-3zm-2-4h2V7h3V5H5v5zm12 7h-3v2h5v-5h-2v3zM14 5v2h3v3h2V5h-5z"/> </svg>`;
+        const SVG_EXIT_FULLSCREEN = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" width="20px" height="20px"> <path d="M5 16h3v3h2v-5H5v2zm3-8H5v2h5V5H8v3zm6 11h2v-3h3v-2h-5v5zm2-11V5h-2v5h5V8h-3z"/> </svg>`;
+
+
         // --- DOM Elements ---
         const loadingElement = document.getElementById('player-page-loading');
         const errorElement = document.getElementById('player-page-error');
@@ -53,6 +61,8 @@
         const iframeElement = contentElement.querySelector('iframe');
         const loaderElement = contentElement.querySelector('.loader');
         const messageContainerElement = contentElement.querySelector('.player-message');
+        // --- NEW: Custom fullscreen button ---
+        const customFullscreenButton = playerAreaElement.querySelector('.custom-fullscreen-btn');
 
         // --- State ---
         let currentHlsInstance = null;
@@ -68,6 +78,7 @@
                 return;
             }
             console.log("Player page loading for item:", itemId);
+            setupCustomFullscreenButton(); // --- NEW: Setup listener
             loadItemDataAndInitialize(itemId);
         });
 
@@ -251,6 +262,9 @@
             if (videoElement) { videoElement.pause(); if (videoElement.hasAttribute('src')) videoElement.removeAttribute('src'); if (videoElement.currentSrc) videoElement.load(); videoElement.classList.remove('active'); videoElement.poster = CONFIG.placeholderImage; }
             if (loaderElement) loaderElement.classList.remove('visible'); if (messageContainerElement) messageContainerElement.classList.remove('visible');
             streamButtonsContainer.querySelectorAll('.stream-button.active').forEach(b => b.classList.remove('active'));
+            // --- NEW: Hide custom fullscreen button ---
+            if (customFullscreenButton) customFullscreenButton.style.display = 'none';
+            updateFullscreenButtonState(); // Reset icon
         }
 
         function displayMessageInPlayerArea(playerArea, messageHtml, showTryNextButton, failedUrl = null) { /* ... (keep existing code - simplified Try Next) ... */
@@ -261,6 +275,9 @@
                  if (nextButtonElement) { const tryNextBtn = document.createElement('button'); tryNextBtn.className = 'try-next-button'; tryNextBtn.textContent = 'Try Next Source'; tryNextBtn.onclick = (event) => { event.stopPropagation(); nextButtonElement.click(); }; messageContainerElement.appendChild(document.createElement('br')); messageContainerElement.appendChild(tryNextBtn); }
                  else { const noMoreSpan = document.createElement('span'); noMoreSpan.style.cssText = 'font-size:0.8em;margin-top:10px;display:block;'; noMoreSpan.textContent = '(No more sources available)'; messageContainerElement.appendChild(noMoreSpan); }
              } messageContainerElement.classList.add('visible');
+             // --- NEW: Hide custom fullscreen button ---
+             if (customFullscreenButton) customFullscreenButton.style.display = 'none';
+             updateFullscreenButtonState(); // Reset icon
         }
 
         function findNextAvailableStreamButton(failedUrl) { /* ... (keep existing code - simplified) ... */
@@ -284,6 +301,9 @@
                  videoEl.removeEventListener('loadedmetadata', handleNativeLoadedMetadata); videoEl.removeEventListener('error', handleNativeError); videoEl.addEventListener('loadedmetadata', handleNativeLoadedMetadata); videoEl.addEventListener('error', handleNativeError);
                  videoEl.src = hlsUrl; videoEl.load();
             } else { displayMessageInPlayerArea(playerArea, `<strong>Unsupported Stream</strong><span>Browser cannot play HLS.</span>`, false); videoEl.classList.remove('active'); videoEl.poster = CONFIG.placeholderImage; playerArea.querySelector('.loader').classList.remove('visible'); }
+            // --- NEW: Show custom fullscreen button ---
+            if (customFullscreenButton) customFullscreenButton.style.display = 'block';
+            updateFullscreenButtonState();
         }
 
         function loadUrlIntoIframe(iframeUrl, iframeEl, playerArea) { /* ... (keep existing code) ... */
@@ -295,7 +315,96 @@
             iframeEl.onload = () => { if (iframeEl.getAttribute('src') === iframeUrl) { isLoadSuccessful = true; cleanup(); playerArea.querySelector('.loader').classList.remove('visible'); iframeEl.classList.add('active'); } else if (iframeEl.getAttribute('src') !== 'about:blank') { /* ignore */ } };
             iframeEl.onerror = () => { if (iframeEl.getAttribute('src') === iframeUrl) handleFailure("onError event fired"); };
             iframeEl.src = iframeUrl;
+            // --- NEW: Show custom fullscreen button ---
+            if (customFullscreenButton) customFullscreenButton.style.display = 'block';
+            updateFullscreenButtonState();
         }
+
+        // --- NEW: Custom Fullscreen Logic ---
+        /**
+         * Sets up the event listener for the custom fullscreen button.
+         */
+        function setupCustomFullscreenButton() {
+            if (!customFullscreenButton) return;
+
+            // Set initial icon
+            updateFullscreenButtonState();
+
+            customFullscreenButton.onclick = () => {
+                // Determine which element is active and should be fullscreened
+                const elementToFullscreen = iframeElement.classList.contains('active') ? iframeElement : (videoElement.classList.contains('active') ? videoElement : null);
+
+                if (!elementToFullscreen) {
+                    console.warn("No active element (iframe/video) found to fullscreen on player page.");
+                    return;
+                }
+
+                toggleBrowserFullscreen(elementToFullscreen);
+            };
+
+            // Listen for fullscreen changes to update button icon
+            document.addEventListener('fullscreenchange', updateFullscreenButtonState);
+            document.addEventListener('webkitfullscreenchange', updateFullscreenButtonState);
+            document.addEventListener('mozfullscreenchange', updateFullscreenButtonState);
+            document.addEventListener('MSFullscreenChange', updateFullscreenButtonState);
+        }
+
+        /**
+         * Toggles fullscreen mode for a given element using the Fullscreen API.
+         * @param {HTMLElement} element The element to make fullscreen (iframe or video).
+         */
+        function toggleBrowserFullscreen(element) {
+            if (!element) return;
+
+            if (!document.fullscreenElement && !document.webkitFullscreenElement && !document.mozFullScreenElement && !document.msFullscreenElement) {
+                // --- Enter Fullscreen ---
+                console.log("Requesting fullscreen for element:", element);
+                if (element.requestFullscreen) {
+                    element.requestFullscreen().catch(err => console.error(`Error attempting to enable full-screen mode: ${err.message} (${err.name})`));
+                } else if (element.webkitRequestFullscreen) { /* Safari */
+                    element.webkitRequestFullscreen();
+                } else if (element.mozRequestFullScreen) { /* Firefox */
+                    element.mozRequestFullScreen();
+                } else if (element.msRequestFullscreen) { /* IE11 */
+                    element.msRequestFullscreen();
+                }
+            } else {
+                // --- Exit Fullscreen ---
+                console.log("Exiting fullscreen.");
+                if (document.exitFullscreen) {
+                    document.exitFullscreen();
+                } else if (document.webkitExitFullscreen) { /* Safari */
+                    document.webkitExitFullscreen();
+                } else if (document.mozCancelFullScreen) { /* Firefox */
+                    document.mozCancelFullScreen();
+                } else if (document.msExitFullscreen) { /* IE11 */
+                    document.msExitFullscreen();
+                }
+            }
+        }
+
+        /**
+         * Updates the appearance (icon, label) of the custom fullscreen button
+         * based on the current fullscreen state of the document.
+         */
+        function updateFullscreenButtonState() {
+            if (!customFullscreenButton) return;
+
+            const isFullscreenActive = !!(document.fullscreenElement || document.webkitFullscreenElement || document.mozFullScreenElement || document.msFullscreenElement);
+
+            if (isFullscreenActive) {
+                customFullscreenButton.innerHTML = SVG_EXIT_FULLSCREEN;
+                customFullscreenButton.setAttribute('aria-label', 'Exit Fullscreen');
+                customFullscreenButton.setAttribute('title', 'Exit Fullscreen');
+            } else {
+                customFullscreenButton.innerHTML = SVG_ENTER_FULLSCREEN;
+                customFullscreenButton.setAttribute('aria-label', 'Enter Fullscreen');
+                customFullscreenButton.setAttribute('title', 'Enter Fullscreen');
+            }
+             console.log("Player page fullscreen state changed. Is active:", isFullscreenActive);
+        }
+        // --- End NEW Custom Fullscreen Logic ---
+
 
     })(); // End of IIFE
 </script>

@@ -269,6 +269,10 @@
         // --- Disclaimer Text ---
         const BOX_DISCLAIMER_TEXT = `Disclaimer: This site embeds content from external sources. We do not host streams. Availability and quality not guaranteed. Use responsibly.`;
 
+        // --- SVG Icons for Fullscreen Button ---
+        const SVG_ENTER_FULLSCREEN = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" width="20px" height="20px"> <path d="M7 14H5v5h5v-2H7v-3zm-2-4h2V7h3V5H5v5zm12 7h-3v2h5v-5h-2v3zM14 5v2h3v3h2V5h-5z"/> </svg>`;
+        const SVG_EXIT_FULLSCREEN = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" width="20px" height="20px"> <path d="M5 16h3v3h2v-5H5v2zm3-8H5v2h5V5H8v3zm6 11h2v-3h3v-2h-5v5zm2-11V5h-2v5h5V8h-3z"/> </svg>`;
+
         // --- Initial Setup ---
         loadFavoritesFromStorage();
         loadToggleStates(); // Load state for both toggles
@@ -309,10 +313,22 @@
             // Keyboard
             document.addEventListener('keydown', (event) => { /* ... (keep existing keyboard nav logic, box activation moved) ... */
                  if (event.key === 'Escape' && currentlyExpandedBoxElement) { collapseItemBox(currentlyExpandedBoxElement); }
+                 // --- NEW: Handle Escape key for fullscreen exit ---
+                 if (event.key === 'Escape' && (document.fullscreenElement || document.webkitFullscreenElement || document.mozFullScreenElement || document.msFullscreenElement)) {
+                     // Browser usually handles this, but we can ensure our state updates
+                     updateFullscreenButtonState();
+                 }
+                 // --- End NEW ---
                  const focusableElements = getFocusableElementsInActiveGrid(); const currentIndex = focusableElements.indexOf(document.activeElement);
                  if (['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight'].includes(event.key)) { if (document.activeElement && document.activeElement.closest('.channel-box') && !currentlyExpandedBoxElement) { event.preventDefault(); let nextIndex = -1; const activeGrid = document.getElementById(activeTabId); const numCols = activeGrid ? getComputedStyle(activeGrid).gridTemplateColumns.split(' ').length : 1; switch (event.key) { case 'ArrowDown': nextIndex = currentIndex + numCols; break; case 'ArrowUp': nextIndex = currentIndex - numCols; break; case 'ArrowRight': nextIndex = (currentIndex + 1) % numCols === 0 && numCols > 1 ? -1 : currentIndex + 1; break; case 'ArrowLeft': nextIndex = currentIndex % numCols === 0 && numCols > 1 ? -1 : currentIndex - 1; break; } if (nextIndex >= 0 && nextIndex < focusableElements.length) { focusableElements[nextIndex].focus(); } } else if (!document.activeElement || document.activeElement === document.body || document.activeElement === searchInputElement || document.activeElement.closest('.tabs')) { focusableElements[0]?.focus(); } }
                  if (event.key === 'Enter' || event.key === 'Ok') { if (document.activeElement && document.activeElement.classList.contains('stream-button')) { event.preventDefault(); document.activeElement.click(); } else if (document.activeElement && document.activeElement.classList.contains('tab-button')) { event.preventDefault(); document.activeElement.click(); } else if (document.activeElement && document.activeElement.classList.contains('favorite-button')) { event.preventDefault(); document.activeElement.click(); } }
             });
+            // --- NEW: Listen for fullscreen changes globally ---
+            document.addEventListener('fullscreenchange', updateFullscreenButtonState);
+            document.addEventListener('webkitfullscreenchange', updateFullscreenButtonState);
+            document.addEventListener('mozfullscreenchange', updateFullscreenButtonState);
+            document.addEventListener('MSFullscreenChange', updateFullscreenButtonState);
+            // --- End NEW ---
         }
         function getFocusableElementsInActiveGrid() { /* ... (keep existing code) ... */
             const activeGrid = document.getElementById(activeTabId); if (!activeGrid) return []; return Array.from(activeGrid.querySelectorAll(':scope > .channel-box:not(.hidden):not(.expanded)'));
@@ -336,19 +352,97 @@
         }
 
         // --- Element Creation ---
-        function createChannelBoxElement(channelData, uniqueItemId) { /* ... (keep existing code) ... */
-            if (!channelData || !uniqueItemId || !channelData.name || !Array.isArray(channelData.srcs)) return null; const { name, srcs } = channelData; const boxElement = document.createElement('div'); boxElement.className = 'channel-box'; boxElement.id = uniqueItemId; boxElement.tabIndex = 0; boxElement.dataset.itemName = name; boxElement.dataset.itemType = 'channel'; boxElement.dataset.sources = JSON.stringify(srcs); boxElement.dataset.itemId = uniqueItemId; const isFavorite = favoriteItemIds.includes(uniqueItemId); boxElement.innerHTML = `<button class="favorite-button ${isFavorite ? 'is-favorite' : ''}" aria-label="${isFavorite ? 'Remove from' : 'Add to'} Favorites" aria-pressed="${isFavorite}" tabindex="-1"> <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg></button><div class="channel-header" id="${uniqueItemId}-header" aria-expanded="false" aria-controls="${uniqueItemId}-content"><h3>${name}</h3></div><div class="channel-info"></div><div class="iframe-container" id="${uniqueItemId}-content" role="region" aria-labelledby="${uniqueItemId}-header"><div class="player-area"><div class="loader"></div><div class="player-message" role="alert"></div><iframe allow="autoplay; fullscreen; encrypted-media; picture-in-picture" allowfullscreen title="Stream Player"></iframe><video controls autoplay muted playsinline title="Stream Player" poster="${CONFIG.placeholderImage}"></video></div><div class="stream-buttons"></div><p class="box-disclaimer">${BOX_DISCLAIMER_TEXT}</p></div>`; return boxElement;
+        function createChannelBoxElement(channelData, uniqueItemId) {
+            if (!channelData || !uniqueItemId || !channelData.name || !Array.isArray(channelData.srcs)) return null;
+            const { name, srcs } = channelData;
+            const boxElement = document.createElement('div');
+            boxElement.className = 'channel-box';
+            boxElement.id = uniqueItemId;
+            boxElement.tabIndex = 0;
+            boxElement.dataset.itemName = name;
+            boxElement.dataset.itemType = 'channel';
+            boxElement.dataset.sources = JSON.stringify(srcs);
+            boxElement.dataset.itemId = uniqueItemId;
+            const isFavorite = favoriteItemIds.includes(uniqueItemId);
+            // --- UPDATED: Added custom-fullscreen-btn ---
+            boxElement.innerHTML = `
+                <button class="favorite-button ${isFavorite ? 'is-favorite' : ''}" aria-label="${isFavorite ? 'Remove from' : 'Add to'} Favorites" aria-pressed="${isFavorite}" tabindex="-1">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+                </button>
+                <div class="channel-header" id="${uniqueItemId}-header" aria-expanded="false" aria-controls="${uniqueItemId}-content">
+                    <h3>${name}</h3>
+                </div>
+                <div class="channel-info"></div>
+                <div class="iframe-container" id="${uniqueItemId}-content" role="region" aria-labelledby="${uniqueItemId}-header">
+                    <div class="player-area">
+                        <div class="loader"></div>
+                        <div class="player-message" role="alert"></div>
+                        <iframe allow="autoplay; fullscreen; encrypted-media; picture-in-picture" allowfullscreen title="Stream Player"></iframe>
+                        <video controls autoplay muted playsinline title="Stream Player" poster="${CONFIG.placeholderImage}"></video>
+                        <button class="custom-fullscreen-btn" aria-label="Enter Fullscreen" title="Enter Fullscreen">
+                            ${SVG_ENTER_FULLSCREEN}
+                        </button>
+                    </div>
+                    <div class="stream-buttons"></div>
+                    <p class="box-disclaimer">${BOX_DISCLAIMER_TEXT}</p>
+                </div>`;
+            return boxElement;
         }
-        function createMatchBoxElement(matchData, uniqueItemId) { /* ... (keep existing code) ... */
-             if (!matchData || !uniqueItemId || !matchData.team1 || !matchData.team2) return null; const { team1, team2, logo1 = '', logo2 = '', time = '', league = '', pt = [], uk = [], es = [] } = matchData; const boxElement = document.createElement('div'); boxElement.className = 'channel-box'; boxElement.id = uniqueItemId; boxElement.tabIndex = 0; const matchTitle = `${team1} vs ${team2}`; boxElement.dataset.itemName = matchTitle; boxElement.dataset.searchTerms = `${team1} ${team2} ${league}`.toLowerCase(); boxElement.dataset.itemType = 'match'; const allSources = { pt: pt || [], uk: uk || [], es: es || [] }; boxElement.dataset.sources = JSON.stringify(allSources); boxElement.dataset.itemId = uniqueItemId; const isFavorite = favoriteItemIds.includes(uniqueItemId); const createLogoHtml = (logoUrl, altText) => logoUrl ? `<img src="${logoUrl}" alt="${altText} logo" class="match-logo" loading="lazy" onerror="this.style.display='none'; this.onerror=null;">` : '<span class="match-logo" aria-label="No logo available" style="display: inline-block; width: 40px;"></span>'; boxElement.innerHTML = `<button class="favorite-button ${isFavorite ? 'is-favorite' : ''}" aria-label="${isFavorite ? 'Remove from' : 'Add to'} Favorites" aria-pressed="${isFavorite}" tabindex="-1"> <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg></button><div class="channel-header" id="${uniqueItemId}-header" aria-expanded="false" aria-controls="${uniqueItemId}-content"> ${createLogoHtml(logo1, team1)} <h3>${matchTitle}</h3> ${createLogoHtml(logo2, team2)}</div><div class="channel-info">${league ? `<span>${league}</span>` : ''} ${league && time ? '<span aria-hidden="true"> | </span>' : ''} ${time ? `<span>${time}</span>` : ''}</div><div class="iframe-container" id="${uniqueItemId}-content" role="region" aria-labelledby="${uniqueItemId}-header"><div class="player-area"><div class="loader"></div><div class="player-message" role="alert"></div><iframe allow="autoplay; fullscreen; encrypted-media; picture-in-picture" allowfullscreen title="Stream Player"></iframe><video controls autoplay muted playsinline title="Stream Player" poster="${CONFIG.placeholderImage}"></video></div><div class="stream-buttons"></div><p class="box-disclaimer">${BOX_DISCLAIMER_TEXT}</p></div>`; return boxElement;
+
+        function createMatchBoxElement(matchData, uniqueItemId) {
+             if (!matchData || !uniqueItemId || !matchData.team1 || !matchData.team2) return null;
+             const { team1, team2, logo1 = '', logo2 = '', time = '', league = '', pt = [], uk = [], es = [] } = matchData;
+             const boxElement = document.createElement('div');
+             boxElement.className = 'channel-box';
+             boxElement.id = uniqueItemId;
+             boxElement.tabIndex = 0;
+             const matchTitle = `${team1} vs ${team2}`;
+             boxElement.dataset.itemName = matchTitle;
+             boxElement.dataset.searchTerms = `${team1} ${team2} ${league}`.toLowerCase();
+             boxElement.dataset.itemType = 'match';
+             const allSources = { pt: pt || [], uk: uk || [], es: es || [] };
+             boxElement.dataset.sources = JSON.stringify(allSources);
+             boxElement.dataset.itemId = uniqueItemId;
+             const isFavorite = favoriteItemIds.includes(uniqueItemId);
+             const createLogoHtml = (logoUrl, altText) => logoUrl ? `<img src="${logoUrl}" alt="${altText} logo" class="match-logo" loading="lazy" onerror="this.style.display='none'; this.onerror=null;">` : '<span class="match-logo" aria-label="No logo available" style="display: inline-block; width: 40px;"></span>';
+             // --- UPDATED: Added custom-fullscreen-btn ---
+             boxElement.innerHTML = `
+                <button class="favorite-button ${isFavorite ? 'is-favorite' : ''}" aria-label="${isFavorite ? 'Remove from' : 'Add to'} Favorites" aria-pressed="${isFavorite}" tabindex="-1">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+                </button>
+                <div class="channel-header" id="${uniqueItemId}-header" aria-expanded="false" aria-controls="${uniqueItemId}-content">
+                    ${createLogoHtml(logo1, team1)}
+                    <h3>${matchTitle}</h3>
+                    ${createLogoHtml(logo2, team2)}
+                </div>
+                <div class="channel-info">
+                    ${league ? `<span>${league}</span>` : ''}
+                    ${league && time ? '<span aria-hidden="true"> | </span>' : ''}
+                    ${time ? `<span>${time}</span>` : ''}
+                </div>
+                <div class="iframe-container" id="${uniqueItemId}-content" role="region" aria-labelledby="${uniqueItemId}-header">
+                    <div class="player-area">
+                        <div class="loader"></div>
+                        <div class="player-message" role="alert"></div>
+                        <iframe allow="autoplay; fullscreen; encrypted-media; picture-in-picture" allowfullscreen title="Stream Player"></iframe>
+                        <video controls autoplay muted playsinline title="Stream Player" poster="${CONFIG.placeholderImage}"></video>
+                         <button class="custom-fullscreen-btn" aria-label="Enter Fullscreen" title="Enter Fullscreen">
+                             ${SVG_ENTER_FULLSCREEN}
+                         </button>
+                    </div>
+                    <div class="stream-buttons"></div>
+                    <p class="box-disclaimer">${BOX_DISCLAIMER_TEXT}</p>
+                </div>`;
+             return boxElement;
         }
+
         function createStreamSourceButton(label, url, parentBoxElement) { /* ... (keep existing code - handles 3 toggle states) ... */
            const buttonElement = document.createElement('button'); buttonElement.className = 'stream-button'; buttonElement.textContent = label || 'Source'; buttonElement.dataset.streamUrl = url; buttonElement.onclick = (event) => { event.stopPropagation(); const itemId = parentBoxElement.dataset.itemId; if (openInPlayerPageEnabled && itemId) { const playerPageUrl = `player.html?item=${encodeURIComponent(itemId)}`; console.log(`Opening player page in new tab: ${label} (${playerPageUrl})`); window.open(playerPageUrl, '_blank'); buttonElement.classList.add('active'); setTimeout(() => buttonElement.classList.remove('active'), 500); } else if (openInNewTabEnabled) { console.log(`Opening source in new tab: ${label} (${url})`); window.open(url, '_blank'); buttonElement.classList.add('active'); setTimeout(() => buttonElement.classList.remove('active'), 500); } else { console.log(`Loading stream in player: ${label} (${url})`); loadStreamIntoPlayer(buttonElement, url, parentBoxElement); } }; return buttonElement;
        }
 
         // --- Event Listener Setup for Channel Boxes ---
         function addChannelBoxEventListeners(scopeElement = document) { /* ... (keep existing code - handles box click/activation based on toggle) ... */
-             if (!scopeElement) return; scopeElement.querySelectorAll('.channel-box:not([data-listener-added="true"])').forEach(boxElement => { const headerElement = boxElement.querySelector('.channel-header'); const infoElement = boxElement.querySelector('.channel-info'); const favoriteButtonElement = boxElement.querySelector('.favorite-button'); const boxId = boxElement.id; const itemId = boxElement.dataset.itemId; const handleBoxClick = (event) => { if (event.target.closest('.favorite-button')) return; if (openInPlayerPageEnabled && itemId) { const playerPageUrl = `player.html?item=${encodeURIComponent(itemId)}`; console.log(`Box clicked: Opening player page in new tab (${playerPageUrl})`); window.open(playerPageUrl, '_blank'); } else { console.log("Box clicked: Expanding/Collapsing box."); toggleItemBoxExpansion(boxElement); } }; if (headerElement) headerElement.addEventListener('click', handleBoxClick); if (infoElement && getComputedStyle(infoElement).display !== 'none') { infoElement.addEventListener('click', handleBoxClick); } if (favoriteButtonElement && boxId) { favoriteButtonElement.addEventListener('click', (event) => { event.stopPropagation(); toggleFavoriteStatus(boxId, favoriteButtonElement); }); } else if (!boxId) { console.warn("Could not attach favorite listener: Box ID missing.", boxElement); } boxElement.addEventListener('keydown', (event) => { if ((event.key === 'Enter' || event.key === 'Ok') && !boxElement.classList.contains('expanded')) { event.preventDefault(); if (openInPlayerPageEnabled && itemId) { const playerPageUrl = `player.html?item=${encodeURIComponent(itemId)}`; console.log(`Box activated (keyboard): Opening player page in new tab (${playerPageUrl})`); window.open(playerPageUrl, '_blank'); } else { console.log("Box activated (keyboard): Expanding box."); toggleItemBoxExpansion(boxElement); } } }); boxElement.dataset.listenerAdded = 'true'; });
+             if (!scopeElement) return; scopeElement.querySelectorAll('.channel-box:not([data-listener-added="true"])').forEach(boxElement => { const headerElement = boxElement.querySelector('.channel-header'); const infoElement = boxElement.querySelector('.channel-info'); const favoriteButtonElement = boxElement.querySelector('.favorite-button'); const boxId = boxElement.id; const itemId = boxElement.dataset.itemId; const handleBoxClick = (event) => { if (event.target.closest('.favorite-button') || event.target.closest('.custom-fullscreen-btn')) return; /* MODIFIED: Ignore fullscreen btn click */ if (openInPlayerPageEnabled && itemId) { const playerPageUrl = `player.html?item=${encodeURIComponent(itemId)}`; console.log(`Box clicked: Opening player page in new tab (${playerPageUrl})`); window.open(playerPageUrl, '_blank'); } else { console.log("Box clicked: Expanding/Collapsing box."); toggleItemBoxExpansion(boxElement); } }; if (headerElement) headerElement.addEventListener('click', handleBoxClick); if (infoElement && getComputedStyle(infoElement).display !== 'none') { infoElement.addEventListener('click', handleBoxClick); } if (favoriteButtonElement && boxId) { favoriteButtonElement.addEventListener('click', (event) => { event.stopPropagation(); toggleFavoriteStatus(boxId, favoriteButtonElement); }); } else if (!boxId) { console.warn("Could not attach favorite listener: Box ID missing.", boxElement); } boxElement.addEventListener('keydown', (event) => { if ((event.key === 'Enter' || event.key === 'Ok') && !boxElement.classList.contains('expanded')) { event.preventDefault(); if (openInPlayerPageEnabled && itemId) { const playerPageUrl = `player.html?item=${encodeURIComponent(itemId)}`; console.log(`Box activated (keyboard): Opening player page in new tab (${playerPageUrl})`); window.open(playerPageUrl, '_blank'); } else { console.log("Box activated (keyboard): Expanding box."); toggleItemBoxExpansion(boxElement); } } }); boxElement.dataset.listenerAdded = 'true'; });
         }
 
         // --- Tab Management ---
@@ -369,23 +463,24 @@
         /**
          * Expands a box.
          * **MODIFIED:** Conditionally hides player area if 'Open source in new tab' is ON.
+         * **MODIFIED:** Calls setupCustomFullscreen.
          * @param {HTMLDivElement} boxElement - The box element to expand.
          */
         function expandItemBox(boxElement) {
             if (!boxElement) return;
             const playerAreaElement = boxElement.querySelector('.player-area');
 
-            // --- NEW: Hide/Show Player Area based on Toggle ---
+            // --- Hide/Show Player Area based on Toggle ---
             if (playerAreaElement) {
-                if (openInNewTabEnabled) {
-                    console.log("   Hiding player area because 'Open source in new tab' is ON.");
+                if (openInNewTabEnabled || openInPlayerPageEnabled) { // MODIFIED: Also hide if player page toggle is on
+                    console.log("   Hiding player area because a 'new tab' toggle is ON.");
                     playerAreaElement.style.display = 'none'; // Hide player
                 } else {
                     console.log("   Ensuring player area is visible.");
                     playerAreaElement.style.display = 'flex'; // Ensure player is visible (flex centers loader/msg)
                 }
             }
-            // --- End of New Logic ---
+            // --- End of Logic ---
 
             boxElement.classList.add('expanded');
             boxElement.classList.remove('hidden'); // Ensure it's visible
@@ -393,6 +488,7 @@
             currentlyExpandedBoxElement = boxElement; // Update global tracker
 
             populateStreamsAndLoadFirst(boxElement); // Load stream buttons and attempt to play (if needed)
+            setupCustomFullscreen(boxElement); // --- NEW: Setup the fullscreen button listener ---
 
             // --- Smooth Scroll into View ---
             setTimeout(() => {
@@ -425,11 +521,11 @@
             const streamButtonsContainer = boxElement.querySelector('.stream-buttons');
             if (streamButtonsContainer) streamButtonsContainer.innerHTML = ''; // Clear buttons
 
-            // --- NEW: Reset Player Area Display ---
+            // --- Reset Player Area Display ---
             if (playerAreaElement) {
                 playerAreaElement.style.display = ''; // Reset display (will default to CSS 'flex')
             }
-            // --- End of New Logic ---
+            // --- End of Logic ---
 
             // Update accessibility attribute
             const headerElement = boxElement.querySelector('.channel-header');
@@ -456,19 +552,124 @@
         }
         function clearPlayerStateInBox(boxElement) { /* ... (keep existing code) ... */
              if (!boxElement) return; const playerAreaElement = boxElement.querySelector('.player-area'); if (!playerAreaElement) return; const videoElement = playerAreaElement.querySelector('video'); const iframeElement = playerAreaElement.querySelector('iframe'); const loaderElement = playerAreaElement.querySelector('.loader'); const messageContainerElement = playerAreaElement.querySelector('.player-message'); if (currentHlsInstance && videoElement && currentHlsInstance.media === videoElement) { try { currentHlsInstance.destroy(); } catch (e) {} currentHlsInstance = null; } if (iframeElement) { if (iframeElement.getAttribute('src') && iframeElement.getAttribute('src') !== 'about:blank') iframeElement.src = 'about:blank'; iframeElement.classList.remove('active'); } if (videoElement) { videoElement.pause(); if (videoElement.hasAttribute('src')) videoElement.removeAttribute('src'); if (videoElement.currentSrc) videoElement.load(); videoElement.classList.remove('active'); videoElement.poster = CONFIG.placeholderImage; } if (loaderElement) loaderElement.classList.remove('visible'); if (messageContainerElement) messageContainerElement.classList.remove('visible'); const streamButtonsContainer = boxElement.querySelector('.stream-buttons'); if (streamButtonsContainer) streamButtonsContainer.querySelectorAll('.stream-button.active').forEach(b => b.classList.remove('active'));
+             // --- NEW: Ensure custom fullscreen button is hidden when player clears ---
+             const fsBtn = playerAreaElement.querySelector('.custom-fullscreen-btn');
+             if (fsBtn) fsBtn.style.display = 'none';
+             // --- End NEW ---
         }
         function displayMessageInPlayerArea(playerAreaElement, messageHtml, showTryNextButton, failedUrl = null, parentBoxElement = null) { /* ... (keep existing code - checks toggles for Try Next btn) ... */
              const messageContainerElement = playerAreaElement?.querySelector('.player-message'); const loaderElement = playerAreaElement?.querySelector('.loader'); const videoElement = playerAreaElement?.querySelector('video'); const iframeElement = playerAreaElement?.querySelector('iframe'); if (!messageContainerElement || !loaderElement || !playerAreaElement) return; if (videoElement) videoElement.classList.remove('active'); if (iframeElement) iframeElement.classList.remove('active'); loaderElement.classList.remove('visible'); messageContainerElement.innerHTML = messageHtml; if (showTryNextButton && failedUrl && parentBoxElement && !openInNewTabEnabled && !openInPlayerPageEnabled) { const nextButtonElement = findNextAvailableStreamButton(failedUrl, parentBoxElement); if (nextButtonElement) { const tryNextBtn = document.createElement('button'); tryNextBtn.className = 'try-next-button'; tryNextBtn.textContent = 'Try Next Source'; tryNextBtn.onclick = (event) => { event.stopPropagation(); nextButtonElement.click(); }; messageContainerElement.appendChild(document.createElement('br')); messageContainerElement.appendChild(tryNextBtn); } else { const noMoreSpan = document.createElement('span'); noMoreSpan.style.cssText = 'font-size:0.8em;margin-top:10px;display:block;'; noMoreSpan.textContent = '(No more sources available)'; messageContainerElement.appendChild(noMoreSpan); } } else if (showTryNextButton && (openInNewTabEnabled || openInPlayerPageEnabled)) { console.log("   'Try Next Source' button skipped (toggle enabled)."); } messageContainerElement.classList.add('visible');
+             // --- NEW: Hide custom fullscreen button when message shows ---
+             const fsBtn = playerAreaElement.querySelector('.custom-fullscreen-btn');
+             if (fsBtn) fsBtn.style.display = 'none';
+             // --- End NEW ---
         }
         function findNextAvailableStreamButton(failedUrl, parentBoxElement) { /* ... (keep existing code) ... */
              if (!failedUrl || !parentBoxElement) return null; const allButtonsInBox = parentBoxElement.querySelectorAll('.stream-button'); let foundFailedButton = false; for (let i = 0; i < allButtonsInBox.length; i++) { const currentButton = allButtonsInBox[i]; if (currentButton.dataset.streamUrl === failedUrl) foundFailedButton = true; else if (foundFailedButton) return currentButton; } return null;
         }
         function loadHlsStreamIntoVideo(hlsUrl, videoElement, playerAreaElement) { /* ... (keep existing code, including safety check) ... */
             if (openInNewTabEnabled || openInPlayerPageEnabled) { console.warn("loadHlsStreamIntoVideo called, but toggle enabled. Aborting."); return; } const parentBoxElement = videoElement.closest('.channel-box'); videoElement.poster = CONFIG.placeholderImage; if (Hls.isSupported()) { if (currentHlsInstance && currentHlsInstance.media === videoElement) { currentHlsInstance.destroy(); currentHlsInstance = null; } else if (currentHlsInstance) { currentHlsInstance.destroy(); currentHlsInstance = null; } currentHlsInstance = new Hls({ liveSyncDurationCount: 2, manifestLoadingTimeOut: 15000, levelLoadingTimeOut: 15000, fragLoadingTimeOut: 20000, manifestLoadErrorMaxRetry: 3, levelLoadErrorMaxRetry: 4, fragLoadErrorMaxRetry: 5 }); const hlsErrorListener = (event, data) => { if (!currentHlsInstance || currentHlsInstance.media !== videoElement) return; console.error('HLS.js Error:', data.type, data.details, data.fatal); let userMessage = `Stream Error (${data.details || 'Unknown'}).`; if (data.type === Hls.ErrorTypes.NETWORK_ERROR) userMessage = `Network Error (${data.details}).`; else if (data.type === Hls.ErrorTypes.MEDIA_ERROR && data.details !== 'bufferStalledError') userMessage = `Media Error (${data.details}).`; if (data.fatal) { displayMessageInPlayerArea(playerAreaElement, `<strong>${userMessage}</strong>`, true, hlsUrl, parentBoxElement); if (currentHlsInstance && currentHlsInstance.media === videoElement) { currentHlsInstance.destroy(); currentHlsInstance = null; } videoElement.classList.remove('active'); videoElement.poster = CONFIG.placeholderImage; } }; const hlsManifestParsedListener = () => { if (!currentHlsInstance || currentHlsInstance.media !== videoElement) return; playerAreaElement.querySelector('.loader').classList.remove('visible'); videoElement.classList.add('active'); videoElement.muted = true; videoElement.play().catch(error => { if (currentHlsInstance && currentHlsInstance.media === videoElement) { displayMessageInPlayerArea(playerAreaElement, `<strong>Playback Error</strong><span>${error.name === 'NotAllowedError' ? 'Click play to start.' : error.message}</span>`, error.name !== 'NotAllowedError', hlsUrl, parentBoxElement); if(error.name !== 'NotAllowedError') videoElement.classList.remove('active'); playerAreaElement.querySelector('.loader').classList.remove('visible'); } }); }; currentHlsInstance.on(Hls.Events.ERROR, hlsErrorListener); currentHlsInstance.on(Hls.Events.MANIFEST_PARSED, hlsManifestParsedListener); currentHlsInstance.attachMedia(videoElement); currentHlsInstance.loadSource(hlsUrl); } else if (videoElement.canPlayType('application/vnd.apple.mpegurl')) { if (currentHlsInstance) { currentHlsInstance.destroy(); currentHlsInstance = null; } const handleNativeLoadedMetadata = () => { if (videoElement.getAttribute('src') !== hlsUrl) return; playerAreaElement.querySelector('.loader').classList.remove('visible'); videoElement.classList.add('active'); videoElement.muted = true; videoElement.play().catch(error => { if(videoElement.getAttribute('src') === hlsUrl){ displayMessageInPlayerArea(playerAreaElement, `<strong>Playback Error</strong><span>${error.name==='NotAllowedError'?'Click play.':error.message}</span>`, error.name !== 'NotAllowedError', hlsUrl, parentBoxElement); if(error.name !== 'NotAllowedError') videoElement.classList.remove('active'); playerAreaElement.querySelector('.loader').classList.remove('visible'); } }); }; const handleNativeError = () => { if (videoElement.getAttribute('src') !== hlsUrl) return; const err = videoElement.error; const msg = err ? (err.message || `code ${err.code}`) : 'Unknown'; displayMessageInPlayerArea(playerAreaElement, `<strong>Stream Error</strong><span>Native HLS failed: ${msg}.</span>`, true, hlsUrl, parentBoxElement); videoElement.classList.remove('active'); videoElement.poster = CONFIG.placeholderImage; playerAreaElement.querySelector('.loader').classList.remove('visible'); }; videoElement.removeEventListener('loadedmetadata', handleNativeLoadedMetadata); videoElement.removeEventListener('error', handleNativeError); videoElement.addEventListener('loadedmetadata', handleNativeLoadedMetadata); videoElement.addEventListener('error', handleNativeError); videoElement.src = hlsUrl; videoElement.load(); } else { displayMessageInPlayerArea(playerAreaElement, `<strong>Unsupported Stream</strong><span>Browser cannot play HLS (.m3u8).</span>`, false); videoElement.classList.remove('active'); videoElement.poster = CONFIG.placeholderImage; playerAreaElement.querySelector('.loader').classList.remove('visible'); }
+             // --- NEW: Show custom fullscreen button after loading attempt ---
+             const fsBtn = playerAreaElement.querySelector('.custom-fullscreen-btn');
+             if (fsBtn) fsBtn.style.display = 'block';
+             updateFullscreenButtonState(); // Update icon based on current state
+             // --- End NEW ---
         }
         function loadUrlIntoIframe(iframeUrl, iframeElement, playerAreaElement) { /* ... (keep existing code, including safety check) ... */
             if (openInNewTabEnabled || openInPlayerPageEnabled) { console.warn("loadUrlIntoIframe called, but toggle enabled. Aborting."); return; } const parentBoxElement = iframeElement.closest('.channel-box'); let iframeLoadTimeoutId = null; let isLoadSuccessful = false; if (currentHlsInstance) { currentHlsInstance.destroy(); currentHlsInstance = null; } const cleanupIframeLoad = () => { clearTimeout(iframeLoadTimeoutId); iframeElement.onload = null; iframeElement.onerror = null; }; const handleIframeLoadFailure = (reason) => { cleanupIframeLoad(); if (iframeElement.getAttribute('src') === iframeUrl) { displayMessageInPlayerArea(playerAreaElement, `<strong>Stream Error</strong><span>${reason}. Might be offline/blocked.</span>`, true, iframeUrl, parentBoxElement); iframeElement.classList.remove('active'); iframeElement.src = 'about:blank'; playerAreaElement.querySelector('.loader').classList.remove('visible'); } }; iframeLoadTimeoutId = setTimeout(() => { if (!isLoadSuccessful && iframeElement.getAttribute('src') === iframeUrl) handleIframeLoadFailure(`Load timeout (${CONFIG.iframeLoadTimeoutMs / 1000}s)`); }, CONFIG.iframeLoadTimeoutMs); iframeElement.onload = () => { if (iframeElement.getAttribute('src') === iframeUrl) { isLoadSuccessful = true; cleanupIframeLoad(); playerAreaElement.querySelector('.loader').classList.remove('visible'); iframeElement.classList.add('active'); } else if (iframeElement.getAttribute('src') !== 'about:blank') { /* ignore */ } }; iframeElement.onerror = () => { if (iframeElement.getAttribute('src') === iframeUrl) handleIframeLoadFailure("onError event fired"); }; iframeElement.src = iframeUrl;
+             // --- NEW: Show custom fullscreen button after loading attempt ---
+             const fsBtn = playerAreaElement.querySelector('.custom-fullscreen-btn');
+             if (fsBtn) fsBtn.style.display = 'block';
+             updateFullscreenButtonState(); // Update icon based on current state
+             // --- End NEW ---
         }
+
+        // --- NEW: Custom Fullscreen Logic ---
+        /**
+         * Sets up the event listener for the custom fullscreen button within a box.
+         * @param {HTMLDivElement} boxElement The channel/match box element.
+         */
+        function setupCustomFullscreen(boxElement) {
+            const btn = boxElement.querySelector('.custom-fullscreen-btn');
+            const iframe = boxElement.querySelector('iframe');
+            const video = boxElement.querySelector('video');
+
+            if (btn && (iframe || video)) {
+                btn.onclick = (event) => {
+                    event.stopPropagation(); // Prevent box collapse/expand
+
+                    // Determine which element is active and should be fullscreened
+                    const elementToFullscreen = iframe?.classList.contains('active') ? iframe : (video?.classList.contains('active') ? video : null);
+
+                    if (!elementToFullscreen) {
+                        console.warn("No active element (iframe/video) found to fullscreen in box:", boxElement.id);
+                        return;
+                    }
+
+                    toggleBrowserFullscreen(elementToFullscreen);
+                };
+            } else {
+                console.warn("Could not find fullscreen button or player elements in box:", boxElement.id);
+            }
+        }
+
+        /**
+         * Toggles fullscreen mode for a given element using the Fullscreen API.
+         * @param {HTMLElement} element The element to make fullscreen (iframe or video).
+         */
+        function toggleBrowserFullscreen(element) {
+            if (!element) return;
+
+            if (!document.fullscreenElement && !document.webkitFullscreenElement && !document.mozFullScreenElement && !document.msFullscreenElement) {
+                // --- Enter Fullscreen ---
+                console.log("Requesting fullscreen for element:", element);
+                if (element.requestFullscreen) {
+                    element.requestFullscreen().catch(err => console.error(`Error attempting to enable full-screen mode: ${err.message} (${err.name})`));
+                } else if (element.webkitRequestFullscreen) { /* Safari */
+                    element.webkitRequestFullscreen();
+                } else if (element.mozRequestFullScreen) { /* Firefox */
+                    element.mozRequestFullScreen();
+                } else if (element.msRequestFullscreen) { /* IE11 */
+                    element.msRequestFullscreen();
+                }
+            } else {
+                // --- Exit Fullscreen ---
+                console.log("Exiting fullscreen.");
+                if (document.exitFullscreen) {
+                    document.exitFullscreen();
+                } else if (document.webkitExitFullscreen) { /* Safari */
+                    document.webkitExitFullscreen();
+                } else if (document.mozCancelFullScreen) { /* Firefox */
+                    document.mozCancelFullScreen();
+                } else if (document.msExitFullscreen) { /* IE11 */
+                    document.msExitFullscreen();
+                }
+            }
+        }
+
+        /**
+         * Updates the appearance (icon, label) of all visible custom fullscreen buttons
+         * based on the current fullscreen state of the document.
+         */
+        function updateFullscreenButtonState() {
+            const isFullscreenActive = !!(document.fullscreenElement || document.webkitFullscreenElement || document.mozFullScreenElement || document.msFullscreenElement);
+            const buttons = document.querySelectorAll('.custom-fullscreen-btn');
+
+            buttons.forEach(btn => {
+                if (isFullscreenActive) {
+                    btn.innerHTML = SVG_EXIT_FULLSCREEN;
+                    btn.setAttribute('aria-label', 'Exit Fullscreen');
+                    btn.setAttribute('title', 'Exit Fullscreen');
+                } else {
+                    btn.innerHTML = SVG_ENTER_FULLSCREEN;
+                    btn.setAttribute('aria-label', 'Enter Fullscreen');
+                    btn.setAttribute('title', 'Enter Fullscreen');
+                }
+            });
+             console.log("Fullscreen state changed. Is active:", isFullscreenActive);
+        }
+        // --- End NEW Custom Fullscreen Logic ---
+
 
         // --- Utility Functions ---
         function updateTimestampDisplay() { /* ... (keep existing code) ... */

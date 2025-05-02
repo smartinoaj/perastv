@@ -380,3 +380,77 @@ body.player-page .loader {
      z-index: 6; /* Above message */
 }
 
+/* ========================================= */
+/* --- NEW: Custom Fullscreen Button Styles --- */
+/* ========================================= */
+
+.player-area .custom-fullscreen-btn {
+    position: absolute;
+    bottom: 10px; /* Adjust as needed */
+    right: 10px;  /* Adjust as needed */
+    z-index: 10; /* Ensure it's above the iframe/video */
+    background-color: rgba(42, 42, 42, 0.7);
+    border: none;
+    color: white;
+    padding: 8px;
+    border-radius: 4px;
+    cursor: pointer;
+    line-height: 0; /* Align SVG nicely */
+    transition: background-color 0.2s ease, opacity 0.2s ease;
+    opacity: 0.7;
+    display: none; /* Hide initially */
+}
+
+.player-area:hover .custom-fullscreen-btn,
+.player-area .custom-fullscreen-btn:focus-visible {
+    opacity: 1; /* Show on hover/focus */
+}
+
+.player-area .custom-fullscreen-btn:hover {
+     background-color: rgba(62, 62, 62, 0.9);
+}
+
+.player-area .custom-fullscreen-btn:focus-visible {
+    outline: 2px solid var(--accent-color);
+    outline-offset: 1px;
+}
+
+/* Show button only when iframe or video is active */
+.player-area iframe.active + .custom-fullscreen-btn, /* Assumes button is AFTER iframe */
+.player-area video.active + .custom-fullscreen-btn { /* Assumes button is AFTER video */
+     display: block;
+}
+
+/* Hide button if player message is visible */
+.player-area .player-message.visible ~ .custom-fullscreen-btn { /* Assumes button is AFTER message */
+    display: none;
+}
+
+/* Styles for when the *element* itself is fullscreen (more specific) */
+/* Note: these might not always apply depending on browser/API quirks */
+iframe:fullscreen + .custom-fullscreen-btn,
+video:fullscreen + .custom-fullscreen-btn,
+iframe:-webkit-full-screen + .custom-fullscreen-btn,
+video:-webkit-full-screen + .custom-fullscreen-btn,
+iframe:-moz-full-screen + .custom-fullscreen-btn,
+video:-moz-full-screen + .custom-fullscreen-btn,
+iframe:-ms-fullscreen + .custom-fullscreen-btn,
+video:-ms-fullscreen + .custom-fullscreen-btn {
+     /* You can style the button differently here if needed */
+     /* e.g., change background or ensure it's visible */
+     opacity: 1;
+     background-color: rgba(20, 20, 20, 0.8);
+}
+
+/* Adjust button position slightly on smaller screens */
+@media (max-width: 480px) {
+    .player-area .custom-fullscreen-btn {
+        bottom: 5px;
+        right: 5px;
+        padding: 6px;
+    }
+    .player-area .custom-fullscreen-btn svg {
+        width: 18px;
+        height: 18px;
+    }
+}
