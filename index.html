@@ -81,20 +81,20 @@
         #password-overlay.hidden {
              display: none;
         }
-        /* Style for the fallback message if window.close fails (Not used in this version) */
-        /* #devtools-detected-message { ... } */
+        /* Fallback message div - not actively used but kept for structure */
+        #devtools-detected-message {
+            display: none;
+        }
     </style>
     </head>
 <body>
 
-<div id="devtools-detected-message" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: var(--bg-primary); color: var(--error-color); z-index: 2000; display: flex; justify-content: center; align-items: center; text-align: center; font-size: 1.5em; padding: 20px;">
-    Developer Tools detected. Please close them and refresh the page.
-</div>
-
+<div id="devtools-detected-message"></div>
 
 <div id="password-overlay" class="hidden">
     <form id="password-form">
-        <label for="password-input">Enter Access Key</label> <input type="password" id="password-input" required>
+        <label for="password-input">Enter Access Key</label>
+        <input type="password" id="password-input" required>
         <button type="submit" id="password-submit">Enter</button>
         <p id="password-error"></p>
     </form>
@@ -144,77 +144,55 @@
 </div> <script>
     // --- Console Access Deterrents (Run Immediately) ---
     /**
-     * Attempts to detect dev tools opening via debugger timing or window resize
-     * and redirects to about:blank if detected.
-     * Note: This is a deterrent, not foolproof security.
+     * Adds event listeners to attempt to block right-click and common dev console shortcuts.
+     * Note: This is a basic deterrent, not foolproof security.
      */
     function setupConsoleDeterrents() {
-        let devToolsOpened = false; // Flag to prevent multiple actions
-        let detectionIntervalId = null; // Store interval ID
-        const devToolsCheckInterval = 1000; // Check every second
+        // --- Block Context Menu ---
+        document.addEventListener('contextmenu', (event) => {
+            console.log("Context menu blocked.");
+            event.preventDefault();
+        });
 
-        // --- Action Function ---
-        function triggerDevToolsAction() {
-            if (devToolsOpened) return; // Already triggered
-            devToolsOpened = true; // Set flag immediately
-            console.warn(`Developer Tools detected! Redirecting...`);
-
-            // Stop the regular detection interval
-            if (detectionIntervalId) {
-                clearInterval(detectionIntervalId);
-                detectionIntervalId = null;
+        // --- Block Common Keyboard Shortcuts ---
+        document.addEventListener('keydown', (event) => {
+            let blocked = false;
+            // Block F12
+            if (event.key === 'F12' || event.keyCode === 123) {
+                blocked = true;
+            }
+            // Block Ctrl+Shift+I
+            else if (event.ctrlKey && event.shiftKey && (event.key === 'I' || event.keyCode === 73)) {
+                blocked = true;
+            }
+            // Block Ctrl+Shift+J
+            else if (event.ctrlKey && event.shiftKey && (event.key === 'J' || event.keyCode === 74)) {
+                blocked = true;
+            }
+            // Block Ctrl+Shift+C
+            else if (event.ctrlKey && event.shiftKey && (event.key === 'C' || event.keyCode === 67)) {
+                 blocked = true;
+            }
+            // Block Ctrl+U
+            else if (event.ctrlKey && (event.key === 'U' || event.keyCode === 85)) {
+                blocked = true;
             }
 
-            // Attempt to redirect to a blank page
-            try {
-                window.location.replace('about:blank');
-            } catch (e) {
-                console.error("Redirect failed:", e);
-                // Fallback: Make the page unusable if redirect fails
-                 document.body.innerHTML = '<h1 style="color:red;text-align:center;margin-top:50px;">Developer Tools detected. Please close them to continue.</h1>';
+            if (blocked) {
+                console.log(`DevTools shortcut (${event.key}, Ctrl:${event.ctrlKey}, Shift:${event.shiftKey}) detected - attempting block.`);
+                event.preventDefault();
+                // No further action (like redirect or close) is taken here.
+                return false;
             }
-        }
+        });
 
-        // --- DevTools Detection Function (called by interval) ---
-        function detectDevTools() {
-            if (devToolsOpened) { // If already detected, ensure the interval is stopped
-                 if (detectionIntervalId) {
-                    clearInterval(detectionIntervalId);
-                    detectionIntervalId = null;
-                 }
-                 return;
-            }
-
-            const threshold = 160; // Milliseconds threshold for debugger pause detection
-            const startTime = performance.now();
-
-            // Trigger debugger statement - this will pause execution ONLY if DevTools is open
-            try { debugger; } catch(e) {}
-
-            const endTime = performance.now();
-            const timeDifference = endTime - startTime;
-
-            // Check if debugger pause was significant OR if dimensions suggest docked dev tools
-            const isDebuggerPaused = timeDifference > threshold;
-            const isResized = (window.outerWidth - window.innerWidth > 150) || (window.outerHeight - window.innerHeight > 150);
-
-            if (isDebuggerPaused || isResized) {
-                // Call the action function if detected
-                triggerDevToolsAction();
-            }
-        }
-
-        // Start the detection interval
-        detectionIntervalId = setInterval(detectDevTools, devToolsCheckInterval);
-
-        console.log("Console access deterrents initialized (redirect on detect).");
+        console.log("Basic console access deterrents initialized (context menu/shortcuts).");
     }
     // --- Initialize Deterrents Immediately ---
     setupConsoleDeterrents();
 
 
-
-    const PERSONAL_USE_B64 = "cHR2"; 
+    const PERSONAL_USE_B64 = "cHR2";
     const AUTH_KEY = 'perasTvAuthenticated'; // Key for sessionStorage
 
     const passwordOverlay = document.getElementById('password-overlay');
