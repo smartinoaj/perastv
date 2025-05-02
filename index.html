@@ -12,419 +12,263 @@
     <style>
         /* --- CSS Variables (Theme) --- */
         :root {
-            /* True Grayscale/Black Theme */
-            --bg-primary: #0a0a0a; /* Near black */
-            --bg-secondary: #1a1a1a; /* Very dark gray */
-            --bg-tertiary: #2a2a2a; /* Dark gray */
-            --accent-color: #e50914; /* Netflix-like red */
-            --text-primary: #ffffff; /* White */
-            --text-secondary: #a0a0a0; /* Medium gray */
-            --border-color: #3a3a3a; /* Gray for borders */
-            --border-color-active: #6b7280; /* Lighter border for hover/focus */
-            --error-color: #f87171; /* Light red for errors */
+            /* Theme Colors */
+            --bg-primary: #0a0a0a;
+            --bg-secondary: #1a1a1a;
+            --bg-tertiary: #2a2a2a;
+            --accent-color: #e50914;
+            --text-primary: #ffffff;
+            --text-secondary: #a0a0a0;
+            --border-color: #3a3a3a;
+            --border-color-active: #6b7280;
+            --error-color: #f87171;
+            --favorite-color: #facc15; /* Gold/Yellow for favorite star */
             --font-sans: 'Inter', sans-serif;
         }
 
         /* --- Basic Reset & Body Styling --- */
         *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-        html {
-            scroll-behavior: smooth;
-            height: 100%; /* Ensure html takes full height */
-        }
+        html { scroll-behavior: smooth; height: 100%; }
         body {
             background-color: var(--bg-primary); color: var(--text-primary);
             font-family: var(--font-sans); line-height: 1.6;
-            overscroll-behavior-y: contain; /* Prevent pull-to-refresh on mobile */
+            overscroll-behavior-y: contain;
             -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale;
-            min-height: 100vh; /* Ensure body takes at least full viewport height */
-            padding-bottom: 120px; /* Increased padding for footer content */
-            position: relative; /* Needed for footer positioning */
+            min-height: 100vh;
+            padding-bottom: 120px;
+            position: relative;
         }
         .container { max-width: 1600px; margin: 0 auto; padding: 0 20px; }
 
-        /* --- Main Layout: Header --- */
+        /* --- Header --- */
         header { text-align: center; padding: 30px 0 20px; }
-        header img { max-width: 200px; height: auto; } /* Logo size */
+        header img { max-width: 200px; height: auto; }
 
         /* --- Search Bar --- */
-        .search-container {
-            display: flex;
-            justify-content: center;
-            margin-bottom: 30px;
-            padding: 0 15px;
-        }
+        .search-container { display: flex; justify-content: center; margin-bottom: 30px; padding: 0 15px; }
         #search-input {
-            padding: 12px 18px;
-            font-size: 1em;
-            border-radius: 25px; /* Pill shape */
-            border: 1px solid var(--border-color);
-            background-color: var(--bg-secondary);
-            color: var(--text-primary);
-            width: 100%;
-            max-width: 500px; /* Limit search bar width */
-            transition: all 0.2s ease;
-            text-align: center; /* Center the text and placeholder */
+            padding: 12px 18px; font-size: 1em; border-radius: 25px;
+            border: 1px solid var(--border-color); background-color: var(--bg-secondary);
+            color: var(--text-primary); width: 100%; max-width: 500px;
+            transition: all 0.2s ease; text-align: center;
         }
-        #search-input:focus {
-            outline: none;
-            border-color: var(--border-color-active);
-            background-color: var(--bg-tertiary);
-        }
+        #search-input:focus { outline: none; border-color: var(--border-color-active); background-color: var(--bg-tertiary); }
         #search-input::placeholder { color: var(--text-secondary); text-align: center; }
-        /* Cross-browser placeholder centering */
         #search-input::-webkit-input-placeholder { text-align: center; }
         #search-input:-moz-placeholder { text-align: center; }
         #search-input::-moz-placeholder { text-align: center; }
         #search-input:-ms-input-placeholder { text-align: center; }
 
-
         /* --- Tabs --- */
-        .tabs {
-            display: flex; justify-content: center; gap: 12px;
-            margin-bottom: 40px; flex-wrap: wrap; /* Allow wrapping on small screens */
-            padding: 0 10px;
-        }
+        .tabs { display: flex; justify-content: center; gap: 12px; margin-bottom: 40px; flex-wrap: wrap; padding: 0 10px; }
         .tab-button {
             background: transparent; color: var(--text-secondary);
             border: 1px solid var(--border-color); padding: 10px 25px; cursor: pointer;
             border-radius: 20px; font-size: 0.9em; font-weight: 600;
             transition: all 0.2s ease; text-transform: uppercase; letter-spacing: 0.5px;
+            display: inline-flex; /* Align icon and text */
+            align-items: center;
+            gap: 6px; /* Space between icon and text */
+        }
+        .tab-button .tab-icon { /* Style for icons in tab buttons */
+            width: 1em;
+            height: 1em;
+            fill: currentColor; /* Use button's text color */
         }
         .tab-button:hover { background: var(--bg-tertiary); color: var(--text-primary); border-color: var(--bg-tertiary); }
         .tab-button.active { background: var(--accent-color); color: white; border-color: var(--accent-color); }
+        .tab-button.active .tab-icon { fill: white; } /* Ensure icon is white when active */
+
 
         /* --- Channel Grid (General) --- */
         .channel-grid {
             display: grid;
-            /* Default: Auto-fill columns, min 260px wide */
             grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-            gap: 20px; padding: 0 10px 50px; /* Add bottom padding */
-            display: none; /* Hidden by default, shown by JS */
+            gap: 20px; padding: 0 10px 50px;
+            display: none; /* Hidden by default */
         }
-        /* --- Grid Column Adjustments for Non-Match/Non-ALL Tabs --- */
-        @media (min-width: 768px) { /* Medium screens (tablets) */
-            .channel-grid:not(#Matches):not(#ALL) {
-                 grid-template-columns: repeat(2, 1fr); /* 2 columns */
-            }
-            /* ALL tab also uses 2 columns on medium */
-            #ALL.channel-grid {
-                 grid-template-columns: repeat(2, 1fr);
-            }
+        /* Grid Columns for specific tabs */
+        @media (min-width: 768px) {
+            .channel-grid:not(#Matches):not(#Favorites) { grid-template-columns: repeat(2, 1fr); }
+            #Favorites.channel-grid { grid-template-columns: repeat(2, 1fr); } /* Favorites uses multi-col */
         }
-        @media (min-width: 1024px) { /* Large screens (desktops) */
-             .channel-grid:not(#Matches):not(#ALL) {
-                 grid-template-columns: repeat(3, 1fr); /* 3 columns */
-            }
-             /* ALL tab also uses 3 columns on large */
-            #ALL.channel-grid {
-                 grid-template-columns: repeat(3, 1fr);
-            }
+        @media (min-width: 1024px) {
+             .channel-grid:not(#Matches):not(#Favorites) { grid-template-columns: repeat(3, 1fr); }
+             #Favorites.channel-grid { grid-template-columns: repeat(3, 1fr); } /* Favorites uses multi-col */
         }
-
-        /* --- Grid Layout for Matches Tab --- */
+        /* Grid Layout for Matches Tab */
         #Matches.channel-grid {
-             grid-template-columns: 1fr; /* Always single column */
-             max-width: 1000px; /* Limit width of the single column */
-             margin: 0 auto; /* Center the grid */
+             grid-template-columns: 1fr; max-width: 1000px; margin: 0 auto;
         }
-
         /* Show active grid */
         .channel-grid.active { display: grid; }
-
 
         /* --- Channel Box (General Styling) --- */
         .channel-box {
             background: var(--bg-secondary); border-radius: 10px; padding: 15px;
             cursor: pointer; transition: all 0.3s ease;
             border: 1px solid var(--bg-secondary); position: relative; overflow: hidden;
-            display: block; /* Default state */
+            display: block;
         }
-
-        /* --- Styling for MATCH boxes within the MATCHES grid (NOT Expanded) --- */
+        /* Styling for MATCH boxes within the MATCHES grid (NOT Expanded) */
         #Matches .channel-box[id^="match-"]:not(.expanded) {
-            grid-column: 1 / -1; /* Span all columns (of the 1-column grid) */
-            width: 95%;
-            max-width: 1000px;
-            margin-left: auto;
-            margin-right: auto;
+            grid-column: 1 / -1; width: 95%; max-width: 1000px; margin: auto;
         }
-
-        /* --- Styling for MATCH boxes within the ALL grid (NOT Expanded) --- */
+        /* Match boxes within ALL grid */
         #ALL .channel-box[id^="match-"]:not(.expanded) {
-            grid-column: 1 / -1; /* Force span all columns of the multi-column grid */
-            width: 95%;          /* Set width relative to the full grid width */
-            max-width: 1000px;    /* Apply the same max-width as in #Matches */
-            margin-left: auto;   /* Center it */
-            margin-right: auto;
+            grid-column: 1 / -1; width: 95%; max-width: 1000px; margin: auto;
         }
-
-        /* --- Styling for CHANNEL boxes within the ALL grid (NOT Expanded) --- */
+        /* Channel boxes within ALL grid */
         #ALL .channel-box:not([id^="match-"]):not(.expanded) {
-            grid-column: auto / span 1; /* Explicitly take one cell */
-            width: auto; /* Reset any potential overrides */
-            max-width: none;
-            margin-left: 0;
-            margin-right: 0;
+            grid-column: auto / span 1; width: auto; max-width: none; margin: 0;
+        }
+        /* Boxes within Favorites grid */
+        #Favorites .channel-box:not(.expanded) {
+            grid-column: auto / span 1; width: auto; max-width: none; margin: 0;
+        }
+        /* Match boxes within Favorites grid (ensure they behave like channels there) */
+        #Favorites .channel-box[id^="match-"]:not(.expanded) {
+             grid-column: auto / span 1; width: auto; max-width: none; margin: 0;
         }
 
 
-        /* Hide filtered-out boxes using JS */
-        .channel-box.hidden {
-             display: none;
+        /* Hide filtered-out boxes */
+        .channel-box.hidden { display: none; }
+        /* Hover effect */
+        .channel-box:not(.expanded):hover { transform: translateY(-4px); box-shadow: 0 6px 18px rgba(0, 0, 0, 0.4); border-color: var(--border-color-active); }
+
+        /* --- Favorite Button (Star Icon) --- */
+        .favorite-button {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: none;
+            border: none;
+            padding: 5px;
+            cursor: pointer;
+            z-index: 5; /* Above header content */
+            color: var(--text-secondary); /* Default color (outline) */
+            transition: color 0.2s ease;
+        }
+        .favorite-button svg {
+            width: 20px;
+            height: 20px;
+            fill: none; /* Outline */
+            stroke: currentColor; /* Use button color for stroke */
+            stroke-width: 1.5;
+        }
+        .favorite-button:hover {
+            color: var(--text-primary); /* Lighter on hover */
+        }
+        .favorite-button.is-favorite {
+            color: var(--favorite-color); /* Gold/Yellow when favorite */
+        }
+        .favorite-button.is-favorite svg {
+            fill: currentColor; /* Fill with button color when favorite */
+            stroke-width: 0; /* No stroke when filled */
         }
 
-        /* Hover effect for non-expanded boxes */
-        .channel-box:not(.expanded):hover {
-            transform: translateY(-4px); /* Slight lift effect */
-            box-shadow: 0 6px 18px rgba(0, 0, 0, 0.4);
-            border-color: var(--border-color-active);
-        }
 
-        /* --- Channel Header (Inside Box) --- */
-        .channel-header {
-            display: flex; align-items: center;
-            justify-content: center; /* Center channel name by default */
-            gap: 10px; text-align: center; min-height: 35px; cursor: pointer;
-        }
-         /* --- Matches Header Layout (Applies to match boxes everywhere) --- */
-        .channel-box[id^="match-"] .channel-header {
-             justify-content: center; /* Center team names/logos */
-             gap: 0; /* Remove gap, use margins on h3 */
-             text-align: center;
-        }
-        /* Logo styling (used for match logos) */
-        .match-logo {
-            height: 40px; width: 40px; /* Logo size */
-            object-fit: contain; /* Prevent distortion */
-            flex-shrink: 0; /* Prevent shrinking */
-            border-radius: 4px; /* Slightly rounded corners */
-            display: inline-block; /* Align with text */
-            vertical-align: middle;
-        }
-        /* Ensure match logos within header use specific styling if needed */
-        .channel-header img.match-logo {
-             height: 40px;
-             width: auto; /* Allow width to adjust based on height */
-             object-fit: contain;
-        }
-        /* Channel/Match Title */
-        .channel-header h3 {
-            font-size: 1.1em;
-            font-weight: 600; margin: 0;
-            word-break: break-word; /* Prevent long names overflowing */
-            text-align: center;
-            flex-grow: 0; /* Don't grow */
-            flex-shrink: 1; /* Allow shrinking if needed */
-        }
-        /* Add horizontal margin for match titles to create space from logos */
-        .channel-box[id^="match-"] .channel-header h3 {
-            margin-left: 25px;
-            margin-right: 25px;
-        }
-        /* Reset margins for non-match titles */
-         .channel-box:not([id^="match-"]) .channel-header h3 {
-             margin-left: 0;
-             margin-right: 0;
-         }
+        /* --- Channel Header --- */
+        .channel-header { display: flex; align-items: center; justify-content: center; gap: 10px; text-align: center; min-height: 35px; cursor: pointer; }
+        /* Matches Header Layout */
+        .channel-box[id^="match-"] .channel-header { justify-content: center; gap: 0; text-align: center; }
+        /* Logo styling */
+        .match-logo { height: 40px; width: 40px; object-fit: contain; flex-shrink: 0; border-radius: 4px; display: inline-block; vertical-align: middle; }
+        .channel-header img.match-logo { height: 40px; width: auto; object-fit: contain; }
+        /* Title */
+        .channel-header h3 { font-size: 1.1em; font-weight: 600; margin: 0; word-break: break-word; text-align: center; flex-grow: 0; flex-shrink: 1; }
+        .channel-box[id^="match-"] .channel-header h3 { margin-left: 25px; margin-right: 25px; }
+         .channel-box:not([id^="match-"]) .channel-header h3 { margin-left: 0; margin-right: 0; }
 
-        /* Channel Info (League/Time for Matches) */
-        .channel-info {
-            font-size: 0.8em;
-            color: var(--text-secondary);
-            text-align: center; /* Center info text */
-            margin-top: 8px; /* Space below header */
-            margin-left: 0; /* Reset potential inherited margins */
-            margin-bottom: 0;
-            font-weight: 500; cursor: pointer; /* Make clickable to toggle */
-            display: block; /* Default for matches */
-        }
-        /* Hide info section for non-match boxes */
-        .channel-box:not([id^="match-"]) .channel-info {
-            display: none;
-        }
-        .channel-info span { margin: 0 5px; } /* Spacing around separator */
+        /* Channel Info */
+        .channel-info { font-size: 0.8em; color: var(--text-secondary); text-align: center; margin-top: 8px; margin-left: 0; margin-bottom: 0; font-weight: 500; cursor: pointer; display: block; }
+        .channel-box:not([id^="match-"]) .channel-info { display: none; }
+        .channel-info span { margin: 0 5px; }
 
-        /* --- Expanded Channel Box Styling (General) --- */
+        /* --- Expanded Channel Box --- */
         .channel-box.expanded {
-            width: 100%; /* Take full width of its grid cell(s) */
-            max-width: 1200px; /* Max width for expanded view */
-            margin-left: auto; /* Center if grid column is wider */
-            margin-right: auto;
-            position: relative; /* Keep in flow for centering */
-            grid-column: auto / span 1; /* Default span */
-            cursor: default;
-            background: var(--bg-tertiary);
-            padding-bottom: 20px; z-index: 10;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
-            border: 2px solid var(--accent-color);
-            overflow: visible;
-            display: block !important; /* Override .hidden */
+            width: 100%; max-width: 1200px; margin: auto;
+            position: relative; grid-column: auto / span 1; /* Default span */
+            cursor: default; background: var(--bg-tertiary);
+            padding-bottom: 20px; z-index: 10; box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            border: 2px solid var(--accent-color); overflow: visible; display: block !important;
         }
-        /* Override column span for expanded boxes in multi-column grids (excluding #Matches) */
+        /* Column spanning for expanded boxes */
         @media (min-width: 768px) {
-            .channel-grid.active:not(#Matches) .channel-box.expanded {
-                grid-column: auto / span 2;
-            }
+            .channel-grid.active:not(#Matches) .channel-box.expanded { grid-column: auto / span 2; }
         }
         @media (min-width: 1024px) {
-             .channel-grid.active:not(#Matches) .channel-box.expanded {
-                grid-column: auto / span 3;
-            }
+             .channel-grid.active:not(#Matches) .channel-box.expanded { grid-column: auto / span 3; }
         }
-
-        /* Specific Styling for EXPANDED MATCH boxes within the ALL grid */
-        #ALL .channel-box[id^="match-"].expanded {
-             grid-column: 1 / -1; /* Force full span */
-             max-width: 1200px; /* Consistent max-width */
-             margin-left: auto;
-             margin-right: auto;
+        /* Expanded matches span full width */
+        #ALL .channel-box[id^="match-"].expanded,
+        #Matches .channel-box[id^="match-"].expanded {
+             grid-column: 1 / -1; max-width: 1200px; margin: auto;
         }
-        /* Ensure expanded matches in the #Matches grid don't try to span multiple columns */
-         #Matches .channel-box[id^="match-"].expanded {
-             grid-column: 1 / -1; /* Stay in the single column */
-             max-width: 1200px; /* Consistent max-width */
-             margin-left: auto;
-             margin-right: auto;
-         }
-
-
-        /* Make header/info non-clickable when expanded */
+        /* Non-clickable header/info when expanded */
         .channel-box.expanded .channel-header,
         .channel-box.expanded .channel-info { cursor: default; }
 
-        /* --- Player Area (Inside Expanded Box) --- */
+        /* --- Player Area --- */
         .iframe-container { margin-top: 18px; display: none; width: 100%; }
-        /* Show container when box is expanded */
         .channel-box.expanded .iframe-container { display: block; }
-        .player-area {
-            position: relative; width: 100%; aspect-ratio: 16 / 9; /* Maintain 16:9 */
-            background-color: #000; border-radius: 8px; overflow: hidden;
-            margin-bottom: 18px; min-height: 200px; /* Minimum height on mobile */
-            /* Center loader/messages */
-            display: flex; justify-content: center; align-items: center;
-        }
-        /* Player elements (iframe/video) */
-        .player-area iframe, .player-area video {
-            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-            border: none; display: none; /* Hidden by default */
-            object-fit: contain; /* Fit video within player area */
-        }
-        /* Show active player */
+        .player-area { position: relative; width: 100%; aspect-ratio: 16 / 9; background-color: #000; border-radius: 8px; overflow: hidden; margin-bottom: 18px; min-height: 200px; display: flex; justify-content: center; align-items: center; }
+        .player-area iframe, .player-area video { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: none; display: none; object-fit: contain; }
         .player-area iframe.active, .player-area video.active { display: block; }
-        /* Message area (for errors, instructions) */
-        .player-message {
-            color: var(--text-secondary); font-size: 0.9em; padding: 20px;
-            text-align: center; display: none; /* Hidden by default */
-        }
+        .player-message { color: var(--text-secondary); font-size: 0.9em; padding: 20px; text-align: center; display: none; }
         .player-message.visible { display: block; }
         .player-message strong { color: var(--text-primary); display: block; margin-bottom: 5px; }
-        .player-message button { margin-top: 15px; } /* Spacing for 'Try Next' button */
-        /* Loading spinner */
-        .loader {
-            width: 40px; height: 40px; border-radius: 50%;
-            border: 4px solid var(--border-color);
-            border-top-color: var(--accent-color); /* Accent color for spinner */
-            animation: spin 1s linear infinite;
-            display: none; /* Hidden by default */
-        }
+        .player-message button { margin-top: 15px; }
+        .loader { width: 40px; height: 40px; border-radius: 50%; border: 4px solid var(--border-color); border-top-color: var(--accent-color); animation: spin 1s linear infinite; display: none; }
         .loader.visible { display: block; }
         @keyframes spin { to { transform: rotate(360deg); } }
-
-        /* Responsive player height adjustments */
         @media (min-width: 768px) { .channel-box.expanded .player-area { min-height: 400px; max-height: 70vh; } }
         @media (min-width: 1024px) { .channel-box.expanded .player-area { min-height: 480px; } }
 
-        /* --- Stream Buttons (Inside Expanded Box) --- */
-        .stream-buttons { text-align: center; margin-top: 15px; margin-bottom: 15px; } /* Added margin-bottom */
-        /* Language group styling (for matches) */
+        /* --- Stream Buttons --- */
+        .stream-buttons { text-align: center; margin-top: 15px; margin-bottom: 15px; }
         .stream-buttons div { margin-bottom: 10px; }
-        .stream-buttons strong {
-            color: var(--text-secondary); font-size: 0.85em; margin-right: 8px;
-            font-weight: 600; text-transform: uppercase;
-        }
-        /* Individual stream button */
-        .stream-button {
-            background: var(--bg-secondary); color: var(--text-primary);
-            border: 1px solid var(--border-color); padding: 7px 18px;
-            border-radius: 20px; cursor: pointer; font-size: 0.85em;
-            font-weight: 500; transition: all 0.2s ease;
-            display: inline-block; /* Allow multiple buttons per line */
-            margin: 4px; /* Spacing between buttons */
-        }
+        .stream-buttons strong { color: var(--text-secondary); font-size: 0.85em; margin-right: 8px; font-weight: 600; text-transform: uppercase; }
+        .stream-button { background: var(--bg-secondary); color: var(--text-primary); border: 1px solid var(--border-color); padding: 7px 18px; border-radius: 20px; cursor: pointer; font-size: 0.85em; font-weight: 500; transition: all 0.2s ease; display: inline-block; margin: 4px; }
         .stream-button:hover { background: #4a4a4a; border-color: #5a5a5a; }
-        /* Active stream button */
-        .stream-button.active {
-            background: var(--accent-color); color: white;
-            border-color: var(--accent-color); font-weight: 600;
-        }
-        /* 'Try Next' button shown on error */
-        .try-next-button {
-            background: var(--accent-color); color: white;
-            border: none; padding: 8px 15px; border-radius: 6px;
-            cursor: pointer; font-size: 0.85em; font-weight: 500;
-            transition: background-color 0.2s ease;
-        }
-        .try-next-button:hover { background-color: #b80710; } /* Darker red on hover */
+        .stream-button.active { background: var(--accent-color); color: white; border-color: var(--accent-color); font-weight: 600; }
+        .try-next-button { background: var(--accent-color); color: white; border: none; padding: 8px 15px; border-radius: 6px; cursor: pointer; font-size: 0.85em; font-weight: 500; transition: background-color 0.2s ease; }
+        .try-next-button:hover { background-color: #b80710; }
 
-        /* --- Disclaimer inside Expanded Box --- */
-        .box-disclaimer {
-            font-size: 0.7em; /* Even smaller */
-            color: #888; /* Lighter gray */
-            text-align: center;
-            padding: 0 15px; /* Padding */
-            margin-top: 10px; /* Space above */
-            line-height: 1.4;
-            display: none; /* Hidden by default */
-        }
-        .channel-box.expanded .box-disclaimer {
-            display: block; /* Show only when box is expanded */
-        }
-
+        /* --- Disclaimer inside Box --- */
+        .box-disclaimer { font-size: 0.7em; color: #888; text-align: center; padding: 0 15px; margin-top: 10px; line-height: 1.4; display: none; }
+        .channel-box.expanded .box-disclaimer { display: block; }
 
         /* --- Footer --- */
-        footer {
-            text-align: center; color: var(--text-secondary); font-size: 0.8em;
-            padding: 20px 0;
-            width: 100%;
-            margin-top: 40px; /* Space above footer */
-        }
-        /* Style for the footer disclaimer text */
-        .footer-disclaimer {
-            font-size: 0.75em; /* Slightly smaller */
-            margin-top: 15px; /* Space above disclaimer */
-            padding: 0 20px; /* Add horizontal padding */
-            max-width: 800px; /* Limit width for readability */
-            margin-left: auto;
-            margin-right: auto;
-            line-height: 1.5; /* Adjust line spacing */
-            color: #888; /* Lighter gray */
-        }
+        footer { text-align: center; color: var(--text-secondary); font-size: 0.8em; padding: 20px 0; width: 100%; margin-top: 40px; }
+        .footer-disclaimer { font-size: 0.75em; margin-top: 15px; padding: 0 20px; max-width: 800px; margin-left: auto; margin-right: auto; line-height: 1.5; color: #888; }
 
-        /* --- Loading/Error States (General Page Load) --- */
+        /* --- Loading/Error States --- */
         .loading-message, .error-message { text-align: center; padding: 50px 20px; color: var(--text-secondary); font-size: 1em; font-weight: 500; }
 
         /* --- Responsive Adjustments --- */
-        @media (max-width: 767px) { /* Mobile screens */
+        @media (max-width: 767px) {
              .channel-grid { grid-template-columns: 1fr; }
-             .channel-grid.active .channel-box.expanded {
-                 grid-column: auto / span 1;
-             }
+             .channel-grid.active .channel-box.expanded { grid-column: auto / span 1; }
              .channel-box { padding: 15px; }
              .stream-button { padding: 6px 15px; font-size: 0.8em; }
              header img { max-width: 160px; }
              .tabs { gap: 10px; margin-bottom: 30px; }
-             .tab-button { padding: 8px 20px; font-size: 0.85em; }
+             .tab-button { padding: 8px 15px; font-size: 0.85em; } /* Adjusted padding for icon */
              #Matches.channel-grid { max-width: 100%; }
              #Matches .channel-header { gap: 10px; }
              .match-logo, #Matches .channel-header img.match-logo { height: 32px; width: 32px; }
              .channel-info { font-size: 0.75em;}
              .channel-box[id^="match-"] .channel-header h3 { margin: 0 15px; }
+             .favorite-button { top: 8px; right: 8px; } /* Adjust favorite button position */
+             .favorite-button svg { width: 18px; height: 18px; }
         }
-        @media (max-width: 480px) { /* Very small screens */
+        @media (max-width: 480px) {
             .container { padding: 0 10px; }
             header img { max-width: 140px; }
             .tabs { gap: 8px; }
-            .tab-button { padding: 7px 15px; }
+            .tab-button { padding: 7px 12px; } /* Adjusted padding */
             .channel-box { padding: 12px; }
             .channel-header h3 { font-size: 1em;}
             .channel-box[id^="match-"] .channel-header h3 { margin: 0 10px;}
@@ -433,8 +277,8 @@
             .player-area { min-height: 200px; }
             #search-input { padding: 10px 15px; font-size: 0.95em; }
              .channel-info { font-size: 0.7em;}
-             .footer-disclaimer { font-size: 0.7em; } /* Adjust footer disclaimer size */
-             .box-disclaimer { font-size: 0.65em; } /* Adjust box disclaimer size */
+             .footer-disclaimer { font-size: 0.7em; }
+             .box-disclaimer { font-size: 0.65em; }
         }
 
     </style>
@@ -451,6 +295,11 @@
     </div>
 
     <div class="tabs">
+        <button class="tab-button" data-tab="Favorites">
+             <svg class="tab-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                 <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
+             </svg>
+             </button>
         <button class="tab-button" data-tab="ALL">ALL</button>
         <button class="tab-button" data-tab="PT">PT</button>
         <button class="tab-button" data-tab="UK">UK</button>
@@ -461,6 +310,7 @@
     <div id="loadingMessage" class="loading-message">Loading channels...</div>
     <div id="fetchErrorMessage" class="error-message" style="display: none;"></div>
 
+    <div id="Favorites" class="channel-grid"></div>
     <div id="ALL" class="channel-grid"></div>
     <div id="PT" class="channel-grid"></div>
     <div id="UK" class="channel-grid"></div>
@@ -469,7 +319,8 @@
 
 </div> <footer>
     <p id="lastUpdated"></p>
-    <p class="footer-disclaimer"> PerasTV Official DISCLAIMER : None of the videos are hosted by this
+    <p class="footer-disclaimer">
+        PerasTV Official DISCLAIMER : None of the videos are hosted by this
         site. Streams hosted from different sites, where sources available over
         Internet are embedded here. This site is not responsible for the
         legality of the content. For legal issues, please contact appropriate
@@ -486,7 +337,8 @@
         matchesUrl: "matches.json",
         placeholderImage: 'data:image/svg+xml;charset=UTF-8,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="9" viewBox="0 0 16 9"><rect width="16" height="9" fill="%23000000"/></svg>',
         searchDebounceMs: 300,
-        lastTabKey: 'perasTvLastTab'
+        lastTabKey: 'perasTvLastTab',
+        favoritesKey: 'perasTvFavorites' // LocalStorage key for favorites
     };
 
     // --- DOM Element References ---
@@ -503,7 +355,8 @@
     let matchesData = [];
     let currentlyExpandedBox = null;
     let searchDebounceTimer = null;
-    let activeTabId = 'ALL'; // Default active tab ID set to ALL
+    let activeTabId = 'ALL'; // Default active tab ID
+    let favorites = []; // Array to hold favorite IDs
 
     // --- Disclaimer Text ---
     const DISCLAIMER_TEXT = `
@@ -516,17 +369,79 @@
 
     // --- Initialization ---
     document.addEventListener('DOMContentLoaded', () => {
+        loadFavorites(); // Load favorites from localStorage first
         setupEventListeners();
         updateTimestamp();
         loadData();
     });
 
+    // --- Load Favorites from LocalStorage ---
+    function loadFavorites() {
+        const storedFavorites = localStorage.getItem(CONFIG.favoritesKey);
+        if (storedFavorites) {
+            try {
+                favorites = JSON.parse(storedFavorites);
+                if (!Array.isArray(favorites)) { // Basic validation
+                    favorites = [];
+                }
+            } catch (e) {
+                console.error("Error parsing favorites from localStorage:", e);
+                favorites = [];
+            }
+        } else {
+            favorites = [];
+        }
+        console.log("Loaded favorites:", favorites);
+    }
+
+    // --- Save Favorites to LocalStorage ---
+    function saveFavorites() {
+        try {
+            localStorage.setItem(CONFIG.favoritesKey, JSON.stringify(favorites));
+            console.log("Saved favorites:", favorites);
+        } catch (e) {
+            console.error("Error saving favorites to localStorage:", e);
+        }
+    }
+
+    // --- Toggle Favorite Status ---
+    function toggleFavorite(itemId, starButton) {
+        const index = favorites.indexOf(itemId);
+        if (index > -1) {
+            // Item is favorite, remove it
+            favorites.splice(index, 1);
+            starButton.classList.remove('is-favorite');
+            starButton.setAttribute('aria-pressed', 'false'); // Accessibility
+        } else {
+            // Item is not favorite, add it
+            favorites.push(itemId);
+            starButton.classList.add('is-favorite');
+            starButton.setAttribute('aria-pressed', 'true'); // Accessibility
+        }
+        saveFavorites(); // Save updated list to localStorage
+
+        // Re-render the favorites tab if it's currently active
+        if (activeTabId === 'Favorites') {
+            renderFavoritesTab();
+        } else {
+             // If another tab is active, ensure the star state is updated on the corresponding
+             // box in the main tabs if it exists (e.g., toggling fav from ALL tab)
+             const otherBoxStar = document.querySelector(`.channel-box#${itemId} .favorite-button`);
+             if (otherBoxStar && otherBoxStar !== starButton) {
+                 otherBoxStar.classList.toggle('is-favorite', index === -1); // Add if newly favorited, remove if unfavorited
+                 otherBoxStar.setAttribute('aria-pressed', index === -1 ? 'true' : 'false');
+             }
+        }
+    }
+
+
     // --- Event Listener Setup ---
     function setupEventListeners() {
         // Tabs
         tabsContainer.addEventListener('click', (event) => {
-            if (event.target.classList.contains('tab-button')) {
-                showTab(event.target.dataset.tab);
+            const button = event.target.closest('.tab-button');
+            if (button) {
+                showTab(button.dataset.tab);
             }
         });
 
@@ -545,6 +460,7 @@
                  toggleExpansion(currentlyExpandedBox);
             }
         });
+        // Note: Favorite button listeners are added in addChannelBoxEventListeners
     }
 
     // --- Data Fetching & Initial Rendering ---
@@ -565,12 +481,12 @@
             channelsData = await channelsRes.json();
             matchesData = await matchesRes.json();
 
-            renderAllChannels(); // Render content into ALL grids
+            renderAllGrids(); // Render content into ALL grids (including Favorites)
             loadingMessage.style.display = 'none';
 
             // Restore last tab preference or default to ALL
-            const lastTab = localStorage.getItem(CONFIG.lastTabKey) || 'ALL'; // Default to ALL
-            showTab(lastTab); // ShowTab handles setting the active classes
+            const lastTab = localStorage.getItem(CONFIG.lastTabKey) || 'ALL';
+            showTab(lastTab);
 
         } catch (error) {
             console.error("Failed to load channel or match data:", error);
@@ -581,99 +497,142 @@
     }
 
     // --- Rendering Functions ---
-    function renderAllChannels() {
+    // Renamed and updated to render all grids including Favorites
+    function renderAllGrids() {
+        renderSpecificGrid('PT', channelsData.PT || []);
+        renderSpecificGrid('UK', channelsData.UK || []);
+        renderSpecificGrid('ES', channelsData.ES || []);
+        renderSpecificGrid('Matches', matchesData || []);
+        renderAllTab(); // Populate the ALL tab
+        renderFavoritesTab(); // Populate the Favorites tab
+        addChannelBoxEventListeners(); // Add listeners AFTER all grids are populated
+    }
+
+    // Renders items for a specific grid (PT, UK, ES, Matches)
+    function renderSpecificGrid(gridId, items) {
+        const grid = document.getElementById(gridId);
+        if (!grid) return;
+        grid.innerHTML = ''; // Clear grid
+
+        if (!items || items.length === 0) {
+            grid.innerHTML = `<p class="loading-message">No ${gridId === 'Matches' ? 'matches' : 'channels'} available.</p>`;
+            return;
+        }
+
+        items.forEach((item, index) => {
+            let uniqueId, box;
+            if (gridId === 'Matches') {
+                uniqueId = `match-${index}`;
+                box = createMatchBoxElement(item, uniqueId);
+            } else {
+                uniqueId = `${gridId}-channel-${index}`;
+                box = createChannelBoxElement(item, uniqueId);
+            }
+            grid.appendChild(box);
+        });
+    }
+
+    // Populates the ALL tab
+    function renderAllTab() {
         const allGrid = document.getElementById('ALL');
         if (!allGrid) return;
+        allGrid.innerHTML = ''; // Clear grid
 
-        allGrid.innerHTML = ''; // Clear ALL grid initially
-
-        // 1. Render Matches to ALL grid and Matches grid
+        // 1. Matches
         const matches = matchesData || [];
-        renderMatchChannels(matches); // Renders only to #Matches grid now
-
-        // Append match boxes to ALL grid
         if (matches.length > 0) {
             matches.forEach((match, index) => {
                 const uniqueId = `match-${index}`;
                 const box = createMatchBoxElement(match, uniqueId);
-                box.dataset.itemType = 'match';
                 allGrid.appendChild(box);
             });
         }
 
-        // 2. Render PT Channels to ALL grid and PT grid
+        // 2. PT Channels
         const ptChannels = channelsData.PT || [];
-        renderChannels('PT', ptChannels); // Renders to #PT grid
         if (ptChannels.length > 0) {
              ptChannels.forEach((channel, index) => {
                 const uniqueId = `PT-channel-${index}`;
                 const box = createChannelBoxElement(channel, uniqueId);
-                box.dataset.itemType = 'channel';
                 allGrid.appendChild(box);
             });
         }
 
-        // 3. Render UK Channels to ALL grid and UK grid
+        // 3. UK Channels
         const ukChannels = channelsData.UK || [];
-        renderChannels('UK', ukChannels); // Renders to #UK grid
          if (ukChannels.length > 0) {
              ukChannels.forEach((channel, index) => {
                 const uniqueId = `UK-channel-${index}`;
                 const box = createChannelBoxElement(channel, uniqueId);
-                 box.dataset.itemType = 'channel';
                 allGrid.appendChild(box);
             });
         }
 
-        // 4. Render ES Channels to ALL grid and ES grid
+        // 4. ES Channels
         const esChannels = channelsData.ES || [];
-        renderChannels('ES', esChannels); // Renders to #ES grid
          if (esChannels.length > 0) {
              esChannels.forEach((channel, index) => {
                 const uniqueId = `ES-channel-${index}`;
                 const box = createChannelBoxElement(channel, uniqueId);
-                box.dataset.itemType = 'channel';
                 allGrid.appendChild(box);
             });
         }
-
-        addChannelBoxEventListeners(); // Add listeners after all boxes are in DOM
+         // If ALL tab is empty after trying all sections
+         if (allGrid.children.length === 0) {
+             allGrid.innerHTML = '<p class="loading-message">No content available.</p>';
+         }
     }
 
-    // Renders channel boxes for a specific language tab (PT, UK, ES)
-    function renderChannels(tabId, channels) {
-        const grid = document.getElementById(tabId);
-        if (!grid) return;
-        grid.innerHTML = '';
-        if (!channels || channels.length === 0) {
-            grid.innerHTML = '<p class="loading-message">No channels available.</p>';
+    // Renders the Favorites tab based on the 'favorites' array
+    function renderFavoritesTab() {
+        const favGrid = document.getElementById('Favorites');
+        if (!favGrid) return;
+        favGrid.innerHTML = ''; // Clear previous favorites
+
+        if (favorites.length === 0) {
+            favGrid.innerHTML = '<p class="loading-message">No favorites added yet. Click the star icon on any channel or match.</p>';
             return;
         }
-        channels.forEach((channel, index) => {
-            const uniqueId = `${tabId}-channel-${index}`;
-            const box = createChannelBoxElement(channel, uniqueId);
-            grid.appendChild(box);
+
+        favorites.forEach(favId => {
+            // Find the original data for this favorite ID
+            let itemData = null;
+            let isMatch = favId.startsWith('match-');
+            let itemIndex = parseInt(favId.split('-').pop()); // Get index
+
+            if (isMatch) {
+                if (matchesData && matchesData[itemIndex]) {
+                    itemData = matchesData[itemIndex];
+                }
+            } else {
+                const prefix = favId.split('-')[0]; // PT, UK, ES
+                if (channelsData[prefix] && channelsData[prefix][itemIndex]) {
+                    itemData = channelsData[prefix][itemIndex];
+                }
+            }
+
+            // If data found, create and append the box
+            if (itemData) {
+                const box = isMatch
+                    ? createMatchBoxElement(itemData, favId)
+                    : createChannelBoxElement(itemData, favId);
+                favGrid.appendChild(box);
+            } else {
+                console.warn("Could not find data for favorite ID:", favId);
+                // Optionally remove invalid ID from favorites here
+                // const indexToRemove = favorites.indexOf(favId);
+                // if (indexToRemove > -1) favorites.splice(indexToRemove, 1);
+                // saveFavorites();
+            }
         });
+
+        // Re-add listeners to the newly created boxes in the Favorites tab
+        addChannelBoxEventListeners();
     }
 
-    // Renders match boxes ONLY to the #Matches grid
-    function renderMatchChannels(matches) {
-        const grid = document.getElementById('Matches');
-        if (!grid) return;
-        grid.innerHTML = '';
-         if (!matches || matches.length === 0) {
-            grid.innerHTML = '<p class="loading-message">No matches available.</p>';
-            return;
-        }
-        matches.forEach((match, index) => {
-             const uniqueId = `match-${index}`;
-            const box = createMatchBoxElement(match, uniqueId);
-            grid.appendChild(box);
-        });
-    }
 
     // --- Element Creation ---
-    // MODIFIED: Added disclaimer paragraph to innerHTML
+    // MODIFIED: Add favorite button and check initial state
     function createChannelBoxElement(channel, uniqueId) {
         const { name, srcs = [] } = channel;
         const box = document.createElement('div');
@@ -682,11 +641,19 @@
         box.dataset.sources = JSON.stringify(srcs);
         box.id = uniqueId;
 
+        const isFavorite = favorites.includes(uniqueId); // Check if it's a favorite
+
         box.innerHTML = `
+            <button class="favorite-button ${isFavorite ? 'is-favorite' : ''}" aria-label="Toggle Favorite" aria-pressed="${isFavorite}">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                    <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
+                </svg>
+            </button>
             <div class="channel-header" id="${uniqueId}-header" aria-expanded="false" aria-controls="${uniqueId}-player-container">
                 <h3>${name}</h3>
             </div>
-            <div class="channel-info"></div> <div class="iframe-container" id="${uniqueId}-player-container" role="region" aria-labelledby="${uniqueId}-header">
+            <div class="channel-info"></div>
+            <div class="iframe-container" id="${uniqueId}-player-container" role="region" aria-labelledby="${uniqueId}-header">
                 <div class="player-area">
                     <div class="loader"></div>
                     <div class="player-message"></div>
@@ -699,7 +666,7 @@
         `;
         return box;
     }
-     // MODIFIED: Added disclaimer paragraph to innerHTML
+     // MODIFIED: Add favorite button and check initial state
      function createMatchBoxElement(match, uniqueId) {
         const { team1, team2, logo1 = '', logo2 = '', time = '', league = '', pt = [], uk = [], es = [] } = match;
         const box = document.createElement('div');
@@ -711,13 +678,21 @@
         box.dataset.sources = JSON.stringify(allSources);
         box.id = uniqueId;
 
+        const isFavorite = favorites.includes(uniqueId); // Check if it's a favorite
+
         box.innerHTML = `
+             <button class="favorite-button ${isFavorite ? 'is-favorite' : ''}" aria-label="Toggle Favorite" aria-pressed="${isFavorite}">
+                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                     <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
+                 </svg>
+             </button>
             <div class="channel-header" id="${uniqueId}-header" aria-expanded="false" aria-controls="${uniqueId}-player-container">
                  ${logo1 ? `<img src="${logo1}" alt="${team1} logo" class="match-logo">` : '<span class="match-logo"></span>'}
                  <h3>${matchTitle}</h3>
                  ${logo2 ? `<img src="${logo2}" alt="${team2} logo" class="match-logo">` : '<span class="match-logo"></span>'}
             </div>
-            <div class="channel-info"> ${league ? `<span>${league}</span>` : ''}
+            <div class="channel-info">
+                ${league ? `<span>${league}</span>` : ''}
                 ${league && time ? '<span>|</span>' : ''}
                 ${time ? `<span>${time}</span>` : ''}
             </div>
@@ -751,35 +726,48 @@
 
 
     // --- Event Listener Setup for Channel Boxes ---
+    // MODIFIED: Add listener for favorite button
     function addChannelBoxEventListeners() {
          document.querySelectorAll('.channel-box').forEach(box => {
+            // Prevent adding listeners multiple times
             if (box.dataset.listenerAdded === 'true') return;
 
             const header = box.querySelector('.channel-header');
             const info = box.querySelector('.channel-info');
+            const favButton = box.querySelector('.favorite-button');
 
+            // Toggle Expansion Listener
             const toggleHandler = (event) => {
-                 if (!event.target.closest('.stream-button')) {
+                 // Ensure click is not on the favorite button
+                 if (!event.target.closest('.favorite-button') && !event.target.closest('.stream-button')) {
                     toggleExpansion(box);
                  }
             };
-
             if (header) header.addEventListener('click', toggleHandler);
-            // Add listener only if info is visible (matches)
             if (info && getComputedStyle(info).display !== 'none') {
                  info.addEventListener('click', toggleHandler);
             }
 
+            // Favorite Button Listener
+            if (favButton) {
+                favButton.addEventListener('click', (event) => {
+                    event.stopPropagation(); // Prevent triggering expansion
+                    toggleFavorite(box.id, favButton);
+                });
+            }
+
+            // Click listener on the box itself (less likely needed now)
             box.addEventListener('click', (event) => {
                 const isExpanded = box.classList.contains('expanded');
                 const isClickOnPlayerArea = event.target.closest('.iframe-container');
                 const isClickOnHeaderOrInfo = event.target.closest('.channel-header') || event.target.closest('.channel-info');
+                const isClickOnFavButton = event.target.closest('.favorite-button');
 
-                if (!isExpanded && !isClickOnPlayerArea && !isClickOnHeaderOrInfo) {
+                if (!isExpanded && !isClickOnPlayerArea && !isClickOnHeaderOrInfo && !isClickOnFavButton) {
                    // Potentially toggle here if needed
                 }
             });
-            box.dataset.listenerAdded = 'true';
+            box.dataset.listenerAdded = 'true'; // Mark listeners as added
         });
     }
 
@@ -800,48 +788,67 @@
         }
 
         localStorage.setItem(CONFIG.lastTabKey, tabId);
+
+        // If switching to Favorites tab, ensure it's up-to-date
+        if (tabId === 'Favorites') {
+            renderFavoritesTab();
+        }
+
         filterChannels(searchInput.value); // Re-apply filter after tab switch
     }
 
     // --- Search Filtering ---
+    // MODIFIED: Handle filtering within Favorites tab
     function filterChannels(searchTerm) {
         const term = searchTerm.toLowerCase().trim();
+        const isSearching = term !== '';
 
-        document.querySelectorAll('.channel-box').forEach(box => {
+        // Determine which boxes to iterate over based on active tab and search state
+        let boxesToFilter;
+        if (isSearching) {
+            // Global search: check all boxes
+            boxesToFilter = document.querySelectorAll('.channel-box');
+        } else if (activeTabId === 'Favorites') {
+            // No search, Favorites tab active: only check boxes within #Favorites grid
+            boxesToFilter = document.querySelectorAll('#Favorites .channel-box');
+        } else {
+            // No search, other tab active: only check boxes within that tab's grid
+            boxesToFilter = document.querySelectorAll(`#${activeTabId} .channel-box`);
+        }
+
+
+        boxesToFilter.forEach(box => {
             const channelName = box.dataset.channelName?.toLowerCase() || '';
             const searchTerms = box.dataset.searchTerms?.toLowerCase() || '';
             const isMatch = channelName.includes(term) || searchTerms.includes(term);
 
             let isVisible = false;
-            if (term === '') {
-                // No search: visibility depends on active tab
-                const parentGrid = box.closest('.channel-grid');
-                isVisible = parentGrid && parentGrid.id === activeTabId;
+            if (!isSearching) {
+                // If not searching, the box is visible by default (already filtered by tab)
+                isVisible = true;
             } else {
-                // Search active: visibility depends on matching term
+                // If searching, visibility depends on matching the term
                 isVisible = isMatch;
             }
 
             // Hide or show box
-            if (box.classList.contains('expanded') && term !== '') {
-                 box.classList.remove('hidden'); // Keep expanded box visible
+            if (box.classList.contains('expanded') && isSearching) {
+                 box.classList.remove('hidden'); // Keep expanded box visible during search
             } else {
                  box.classList.toggle('hidden', !isVisible);
             }
 
             // Collapse box if hidden (only when search is cleared)
-            if (!isVisible && box.classList.contains('expanded') && term === '') {
+            if (!isVisible && box.classList.contains('expanded') && !isSearching) {
                  collapseBox(box);
             }
         });
 
          // Show/Hide grids based on visible children during active search
          channelGrids.forEach(grid => {
-            if (term !== '') {
-                const hasVisibleChildren = Array.from(grid.children).some(child =>
-                    child.classList.contains('channel-box') && !child.classList.contains('hidden')
-                );
-                grid.classList.toggle('active', hasVisibleChildren);
+            if (isSearching) {
+                const hasVisibleChildren = Array.from(grid.querySelectorAll('.channel-box:not(.hidden)')).length > 0;
+                grid.classList.toggle('active', hasVisibleChildren); // Show if it has results
             } else {
                  grid.classList.toggle('active', grid.id === activeTabId); // Standard tab visibility
             }
@@ -871,9 +878,7 @@
         box.classList.remove('hidden'); // Ensure visible
         currentlyExpandedBox = box;
         populateAndLoadFirstStream(box);
-
-        // Reset grid-column style (CSS rules will handle spanning)
-        box.style.gridColumn = '';
+        box.style.gridColumn = ''; // Reset inline style (CSS rules handle span)
 
         setTimeout(() => {
              box.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
@@ -897,7 +902,10 @@
         if(header) {
             header.setAttribute('aria-expanded', 'false');
         }
-        filterChannels(searchInput.value); // Re-apply filter
+        // Re-apply filter only if search is currently empty
+        if(searchInput.value === '') {
+            filterChannels('');
+        }
     }
 
     function populateAndLoadFirstStream(box) {
@@ -1081,42 +1089,25 @@
         if (Hls.isSupported()) {
             console.log("HLS.js supported. Initializing...");
              if (hlsInstance && hlsInstance.media === videoElement) {
-                 console.log("Destroying previous HLS instance attached to this video element.");
                  hlsInstance.destroy();
                  hlsInstance = null;
              } else if (hlsInstance && hlsInstance.media !== videoElement) {
-                 console.log("Keeping existing HLS instance attached to a different video element.");
+                 // Keep instance for other box
              }
 
-            hlsInstance = new Hls({
-                 manifestLoadingTimeOut: 10000,
-                 levelLoadingTimeOut: 10000,
-                 fragLoadingTimeOut: 15000,
-                 fragLoadingMaxRetry: 4,
-                 levelLoadingMaxRetry: 4,
-                 manifestLoadingMaxRetry: 2,
-            });
+            hlsInstance = new Hls({ /* Config */ });
 
             hlsInstance.on(Hls.Events.ERROR, function (event, data) {
                 console.error('HLS.js Error:', event, data);
                  if (data.fatal && hlsInstance && videoElement === hlsInstance.media) {
-                     console.log(`Fatal HLS error occurred in box ${currentBox.id}`);
                      let userMessage = `<strong>Stream Error</strong> (${data.details}).`;
-                     if (data.type === Hls.ErrorTypes.NETWORK_ERROR) {
-                         userMessage = `<strong>Network Error</strong> loading stream (${data.details}). Check connection or try another source.`;
-                     } else if (data.type === Hls.ErrorTypes.MEDIA_ERROR) {
-                         userMessage = `<strong>Media Playback Error</strong> (${data.details}). The stream might be corrupted or incompatible.`;
-                     } else {
-                         userMessage = `<strong>Stream Error</strong> (${data.type} - ${data.details}). The stream could not be loaded.`;
-                     }
+                     if (data.type === Hls.ErrorTypes.NETWORK_ERROR) userMessage = `<strong>Network Error</strong> loading stream (${data.details}). Check connection or try another source.`;
+                     else if (data.type === Hls.ErrorTypes.MEDIA_ERROR) userMessage = `<strong>Media Playback Error</strong> (${data.details}).`;
+                     else userMessage = `<strong>Stream Error</strong> (${data.type} - ${data.details}).`;
                      showPlayerMessage(playerArea, userMessage, true, url, currentBox);
-                     hlsInstance.destroy();
-                     hlsInstance = null;
-                     videoElement.classList.remove('active');
-                     videoElement.poster = '';
-                 } else if (!data.fatal) {
-                     console.warn("Non-fatal HLS error:", data.details);
-                 }
+                     hlsInstance.destroy(); hlsInstance = null;
+                     videoElement.classList.remove('active'); videoElement.poster = '';
+                 } else if (!data.fatal) { console.warn("Non-fatal HLS error:", data.details); }
             });
 
             hlsInstance.loadSource(url);
@@ -1124,21 +1115,15 @@
 
             hlsInstance.on(Hls.Events.MANIFEST_PARSED, function() {
                  if (hlsInstance && videoElement === hlsInstance.media) {
-                    console.log("HLS Manifest parsed, attempting to play...");
+                    console.log("HLS Manifest parsed...");
                     playerArea.querySelector('.loader').classList.remove('visible');
                     videoElement.classList.add('active');
                     videoElement.muted = true;
-                    videoElement.play().then(() => {
-                        console.log("Playback started successfully via HLS.js.");
-                    }).catch(e => {
-                         console.error("HLS.js video play failed:", e);
-                         if (e.name === 'NotAllowedError') {
-                             showPlayerMessage(playerArea, `<strong>Playback Paused</strong><br>Browser requires interaction. Click the play button on the video.`, false);
-                         } else {
-                              showPlayerMessage(playerArea, `<strong>Playback Error</strong><br>${e.message}`, true, url, currentBox);
-                         }
-                         videoElement.classList.remove('active');
-                         playerArea.querySelector('.loader').classList.remove('visible');
+                    videoElement.play().catch(e => {
+                         console.error("HLS.js play failed:", e);
+                         if (e.name === 'NotAllowedError') showPlayerMessage(playerArea, `<strong>Playback Paused</strong><br>Browser requires interaction. Click the play button.`, false);
+                         else showPlayerMessage(playerArea, `<strong>Playback Error</strong><br>${e.message}`, true, url, currentBox);
+                         videoElement.classList.remove('active'); playerArea.querySelector('.loader').classList.remove('visible');
                     });
                  }
             });
@@ -1148,9 +1133,7 @@
             const newVideo = videoElement.cloneNode(true);
             videoElement.parentNode.replaceChild(newVideo, videoElement);
             videoElement = newVideo;
-
             videoElement.src = url;
-
             videoElement.oncanplay = () => {
                  if (videoElement.getAttribute('src') === url) {
                     playerArea.querySelector('.loader').classList.remove('visible');
@@ -1158,88 +1141,58 @@
                     videoElement.muted = true;
                     videoElement.play().catch(e => {
                         console.error("Native HLS play failed:", e);
-                        if (e.name === 'NotAllowedError') {
-                            showPlayerMessage(playerArea, `<strong>Playback Paused</strong><br>Browser requires interaction. Click play.`, false);
-                        } else {
-                           showPlayerMessage(playerArea, `<strong>Native HLS Playback Error</strong><br>${e.message}`, true, url, currentBox);
-                        }
-                         videoElement.classList.remove('active');
-                         playerArea.querySelector('.loader').classList.remove('visible');
+                        if (e.name === 'NotAllowedError') showPlayerMessage(playerArea, `<strong>Playback Paused</strong><br>Browser requires interaction. Click play.`, false);
+                        else showPlayerMessage(playerArea, `<strong>Native HLS Playback Error</strong><br>${e.message}`, true, url, currentBox);
+                         videoElement.classList.remove('active'); playerArea.querySelector('.loader').classList.remove('visible');
                     });
                  }
             };
             videoElement.onerror = () => {
                  if (videoElement.getAttribute('src') === url) {
                      console.error("Native HLS playback error.");
-                     showPlayerMessage(playerArea, `<strong>Stream Error</strong><br>Could not load native HLS stream. It might be invalid or blocked.`, true, url, currentBox);
-                     videoElement.classList.remove('active');
-                     videoElement.poster = '';
-                     playerArea.querySelector('.loader').classList.remove('visible');
-                 } else {
-                     console.log("Ignoring native HLS error for a different src.");
-                 }
+                     showPlayerMessage(playerArea, `<strong>Stream Error</strong><br>Could not load native HLS stream.`, true, url, currentBox);
+                     videoElement.classList.remove('active'); videoElement.poster = ''; playerArea.querySelector('.loader').classList.remove('visible');
+                 } else { console.log("Ignoring native HLS error for a different src."); }
             };
              videoElement.load();
-
-
         } else {
             console.error("HLS is not supported by this browser.");
-            showPlayerMessage(playerArea, `<strong>Error:</strong> HLS playback is not supported in your browser.`, false);
-            videoElement.classList.remove('active'); videoElement.poster = '';
-            playerArea.querySelector('.loader').classList.remove('visible');
+            showPlayerMessage(playerArea, `<strong>Error:</strong> HLS playback is not supported.`, false);
+            videoElement.classList.remove('active'); videoElement.poster = ''; playerArea.querySelector('.loader').classList.remove('visible');
         }
     }
     function loadIframeStream(url, iframeElement, playerArea) {
         const currentBox = iframeElement.closest('.channel-box');
         console.log("Loading iframe stream...");
-
         let iframeLoadTimeout = setTimeout(() => {
              console.warn("Iframe load timeout reached for:", url);
              try {
-                  if (!iframeElement.contentDocument || iframeElement.contentDocument.URL === 'about:blank' || iframeElement.getAttribute('src') !== url ) {
-                        throw new Error("Iframe content not accessible or didn't load.");
-                  }
+                  if (!iframeElement.contentDocument || iframeElement.contentDocument.URL === 'about:blank' || iframeElement.getAttribute('src') !== url ) throw new Error("Iframe content not accessible or didn't load.");
                   console.log("Iframe seems loaded despite timeout (likely cross-origin).");
-                   playerArea.querySelector('.loader').classList.remove('visible');
-                   iframeElement.classList.add('active');
-
+                   playerArea.querySelector('.loader').classList.remove('visible'); iframeElement.classList.add('active');
              } catch (e) {
                   console.error("Iframe failed to load within timeout.");
                   showPlayerMessage(playerArea, `<strong>Stream Error</strong><br>The source took too long to load or might be blocked.`, true, url, currentBox);
-                  iframeElement.classList.remove('active');
-                  iframeElement.src = 'about:blank';
-                  playerArea.querySelector('.loader').classList.remove('visible');
+                  iframeElement.classList.remove('active'); iframeElement.src = 'about:blank'; playerArea.querySelector('.loader').classList.remove('visible');
              }
         }, 15000);
-
-
         iframeElement.onload = () => {
             clearTimeout(iframeLoadTimeout);
             if (iframeElement.getAttribute('src') === url) {
                  console.log("Iframe onload event fired for:", url);
-                 playerArea.querySelector('.loader').classList.remove('visible');
-                 iframeElement.classList.add('active');
-             } else {
-                 console.log("Iframe onload fired for a different src, ignoring:", iframeElement.getAttribute('src'));
-             }
+                 playerArea.querySelector('.loader').classList.remove('visible'); iframeElement.classList.add('active');
+             } else { console.log("Iframe onload fired for a different src, ignoring."); }
         };
-
         iframeElement.onerror = () => {
              clearTimeout(iframeLoadTimeout);
              if (iframeElement.getAttribute('src') === url) {
                  console.error("Iframe onerror event fired for:", url);
-                 showPlayerMessage(playerArea, `<strong>Stream Error</strong><br>Failed to load iframe source. It might be blocked or unavailable.`, true, url, currentBox);
-                 iframeElement.classList.remove('active');
-                 iframeElement.src = 'about:blank';
-                 playerArea.querySelector('.loader').classList.remove('visible');
-             } else {
-                 console.log("Iframe onerror fired for a different src, ignoring.");
-             }
+                 showPlayerMessage(playerArea, `<strong>Stream Error</strong><br>Failed to load iframe source.`, true, url, currentBox);
+                 iframeElement.classList.remove('active'); iframeElement.src = 'about:blank'; playerArea.querySelector('.loader').classList.remove('visible');
+             } else { console.log("Iframe onerror fired for a different src, ignoring."); }
         };
-
         iframeElement.src = url;
     }
-
 
     // --- Utility Functions ---
     function updateTimestamp() {
@@ -1249,12 +1202,8 @@
     function debounce(func, wait) {
         let timeout;
         return function executedFunction(...args) {
-            const later = () => {
-                clearTimeout(timeout);
-                func(...args);
-            };
-            clearTimeout(timeout);
-            timeout = setTimeout(later, wait);
+            const later = () => { clearTimeout(timeout); func(...args); };
+            clearTimeout(timeout); timeout = setTimeout(later, wait);
         };
     }
 
