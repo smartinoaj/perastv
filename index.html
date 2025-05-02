@@ -167,11 +167,11 @@
         }
         /* Matches Header Layout (adjust gap if needed) */
         .channel-box[id^="match-"] .channel-header { justify-content: center; gap: 15px; }
-        /* Logo styling */
+        /* Logo styling for MATCHES */
         .match-logo {
             height: 40px; width: 40px; object-fit: contain; /* Scale nicely */
             flex-shrink: 0; border-radius: 4px; display: inline-block; vertical-align: middle;
-            background-color: rgba(255, 255, 255, 0.05); /* Slight background for empty logos */
+            /* REMOVED background-color */
         }
         /* Title */
         .channel-header h3 {
@@ -183,6 +183,9 @@
         }
         /* Spacing around match titles */
         .channel-box[id^="match-"] .channel-header h3 { margin-left: 5px; margin-right: 5px; flex-grow: 0;}
+        /* Center channel title when no logo is present */
+        .channel-box:not([id^="match-"]) .channel-header h3 { flex-grow: 0; }
+
 
         /* Channel Info (for Matches) */
         .channel-info {
@@ -842,7 +845,8 @@
 
     /**
      * Creates the HTML element (DIV) for a single channel box.
-     * @param {object} channelData - Channel data object { name, logo?, srcs: [{ label, url }] }.
+     * **MODIFIED: Does NOT include channel logos.**
+     * @param {object} channelData - Channel data object { name, srcs: [{ label, url }] }. Logo property is ignored.
      * @param {string} uniqueItemId - The unique identifier for this channel box element (e.g., 'PT-channel-0').
      * @returns {HTMLDivElement | null} The created channel box element or null on error.
      */
@@ -852,7 +856,8 @@
              console.error("Invalid channel data provided for creating element:", { id: uniqueItemId, data: channelData });
              return null; // Return null if data is insufficient
         }
-        const { name, logo, srcs } = channelData;
+        // Destructure needed properties, ignoring 'logo'
+        const { name, srcs } = channelData;
 
         const boxElement = document.createElement('div');
         boxElement.className = 'channel-box';
@@ -864,13 +869,7 @@
 
         const isFavorite = favoriteItemIds.includes(uniqueItemId); // Check if this ID is in the favorites array
 
-        // --- Create Logo HTML (with error handling) ---
-        // Hide broken images gracefully
-        const logoHtml = logo
-            ? `<img src="${logo}" alt="" class="match-logo" style="margin-right: 10px;" onerror="this.style.display='none'; this.onerror=null;">`
-            : ''; // No logo element if URL is missing
-
-        // --- Construct Inner HTML ---
+        // --- Construct Inner HTML (NO LOGO) ---
         boxElement.innerHTML = `
             <button class="favorite-button ${isFavorite ? 'is-favorite' : ''}"
                     aria-label="${isFavorite ? 'Remove from' : 'Add to'} Favorites"
@@ -880,7 +879,6 @@
                 </svg>
             </button>
             <div class="channel-header" id="${uniqueItemId}-header" aria-expanded="false" aria-controls="${uniqueItemId}-content">
-                ${logoHtml}
                 <h3>${name}</h3>
             </div>
             <div class="channel-info"></div>
@@ -906,6 +904,7 @@
 
      /**
       * Creates the HTML element (DIV) for a single match box.
+      * **MODIFIED: Uses helper that no longer adds background to placeholder spans.**
       * @param {object} matchData - Match data object { team1, team2, logo1?, logo2?, time?, league?, pt:[], uk:[], es:[] }.
       * @param {string} uniqueItemId - The unique identifier for this match box element (e.g., 'match-0').
       * @returns {HTMLDivElement | null} The created match box element or null on error.
@@ -938,8 +937,8 @@
         const createLogoHtml = (logoUrl, altText) => {
             return logoUrl
                 ? `<img src="${logoUrl}" alt="${altText} logo" class="match-logo" onerror="this.style.display='none'; this.onerror=null;">`
-                // Provide a styled placeholder if no logo URL exists
-                : '<span class="match-logo" aria-label="No logo available" style="display: inline-block; width: 40px; background-color: rgba(255,255,255,0.05);"></span>';
+                // Provide a styled placeholder span if no logo URL exists (NO background)
+                : '<span class="match-logo" aria-label="No logo available" style="display: inline-block; width: 40px;"></span>';
         };
 
         // --- Construct Inner HTML ---
@@ -1944,6 +1943,3 @@
 
 </body>
 </html>
-```
-
-Make sure to replace the entire content of your `index.html` file with this code. Remember to test it thoroughly, especially the stream loading and favorite functionality, to ensure everything works as expected in your environme
