@@ -5,6 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Peras TV</title>
     <link rel="icon" type="image/png" href="ptv.png">
+
+    <link rel="preconnect" href="https://playmatch.live">
+    <link rel="preconnect" href="https://thedaddy.to">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -85,6 +88,8 @@
         #devtools-detected-message {
             display: none;
         }
+        /* Reminder: Optimize images (logos) for faster loading */
+        /* Consider using tools like TinyPNG or Squoosh */
     </style>
     </head>
 <body>
@@ -140,7 +145,8 @@
             <strong>Disclaimer:</strong> PerasTV does not host any video content. All streams are embedded from external, publicly available sources found on the internet. We are not responsible for the legality, accuracy, or quality of the content provided by these third-party sites. Users are advised to respect copyright laws and use this service responsibly. Stream availability is not guaranteed.
         </p>
     </footer>
-</div> <script>
+</div>
+<script>
     // --- Console Access Deterrents (Run Immediately) ---
     /**
      * Adds event listeners to attempt to block right-click and common dev console shortcuts.
@@ -191,7 +197,7 @@
     setupConsoleDeterrents();
 
 
-    const PERSONAL_USE_B64 = "cHR2"; 
+    const PERSONAL_USE_B64 = "cHR2";
     const AUTH_KEY = 'perasTvAuthenticated'; // Key for sessionStorage
 
     const passwordOverlay = document.getElementById('password-overlay');
@@ -271,7 +277,8 @@
             searchDebounceMs: 300,      // Delay (ms) for search input before filtering
             lastTabKey: 'perasTvLastTab', // localStorage key for remembering the last active tab
             favoritesKey: 'perasTvFavorites', // localStorage key for storing favorite item IDs
-            iframeLoadTimeoutMs: 20000 // Timeout (ms) for waiting for an iframe stream to load
+            // *** OPTIMIZATION: Reduced iframe timeout for faster feedback on failure ***
+            iframeLoadTimeoutMs: 15000 // Timeout (ms) for waiting for an iframe stream to load (was 20000)
         };
 
         // --- DOM Element References ---
@@ -902,6 +909,7 @@
             // --- Helper function for Logo HTML (adds loading="lazy") ---
             const createLogoHtml = (logoUrl, altText) => {
                 return logoUrl
+                    // Reminder: Optimize team logos referenced here (e.g., img/teams/mancity.png)
                     ? `<img src="${logoUrl}" alt="${altText} logo" class="match-logo" loading="lazy" onerror="this.style.display='none'; this.onerror=null;">` // Added loading="lazy"
                     // Provide a styled placeholder span if no logo URL exists (NO background)
                     : '<span class="match-logo" aria-label="No logo available" style="display: inline-block; width: 40px;"></span>';
@@ -1690,17 +1698,21 @@
 
                 // Create a new HLS instance
                 currentHlsInstance = new Hls({
-                    // Configuration options...
-                    manifestLoadingTimeOut: 15000,
-                    levelLoadingTimeOut: 15000,
-                    fragLoadingTimeOut: 20000,
-                    manifestLoadErrorMaxRetry: 2,
-                    levelLoadErrorMaxRetry: 3,
-                    fragLoadErrorMaxRetry: 4,
-                    liveSyncDurationCount: 3, // Default: 3; lower might reduce latency but increase stalling risk
+                    // *** OPTIMIZATION: Adjusted HLS config (experimental) ***
+                    // Reduced liveSyncDurationCount to potentially decrease startup latency.
+                    // Default is 3. Lower values might increase stalling risk if network is unstable. Monitor!
+                    liveSyncDurationCount: 2,
+                    // Timeouts (slightly increased from defaults for potentially slower networks/sources)
+                    manifestLoadingTimeOut: 15000, // default 10000
+                    levelLoadingTimeOut: 15000,    // default 10000
+                    fragLoadingTimeOut: 20000,     // default 20000
+                    // Retries (slightly increased)
+                    manifestLoadErrorMaxRetry: 3,  // default 1
+                    levelLoadErrorMaxRetry: 4,     // default 3
+                    fragLoadErrorMaxRetry: 5,      // default 4
                     // enableWorker: false // Try disabling worker for simpler debugging if needed
                 });
-                console.log("   HLS.js: New instance created.");
+                console.log("   HLS.js: New instance created with custom config.");
 
                 // --- HLS.js Event Listeners ---
                 // Store listeners to remove them later if needed (though destroy() should handle this)
@@ -1908,15 +1920,15 @@
                  }
             };
 
-            // Set timeout
+            // Set timeout using the configured value
             iframeLoadTimeoutId = setTimeout(() => {
                  // Check if onload has *not* fired and if the src is still the target URL
                  if (!isLoadSuccessful && iframeElement.getAttribute('src') === iframeUrl) {
-                    handleIframeLoadFailure("Load timeout");
+                    handleIframeLoadFailure(`Load timeout (${CONFIG.iframeLoadTimeoutMs / 1000}s)`); // Include timeout duration in message
                  } else if (!isLoadSuccessful) {
                      console.log("   Iframe: Timeout occurred, but src has changed or load was successful. Ignoring timeout.");
                  }
-            }, CONFIG.iframeLoadTimeoutMs);
+            }, CONFIG.iframeLoadTimeoutMs); // Use configured timeout value
 
             // Assign event handlers
             iframeElement.onload = () => {
@@ -1927,9 +1939,9 @@
                      cleanupIframeLoad(); // Clear timeout and remove listeners
                      playerAreaElement.querySelector('.loader').classList.remove('visible');
                      iframeElement.classList.add('active'); // Show the iframe
-                 } else {
+                 } else if (iframeElement.getAttribute('src') !== 'about:blank') { // Ignore onload for about:blank
                      console.log(`   Iframe: onload fired, but for a different src (${iframeElement.getAttribute('src')}). Ignoring.`);
-                     // Don't cleanup or mark successful if it's for a different load (e.g., about:blank)
+                     // Don't cleanup or mark successful if it's for a different load
                  }
             };
             iframeElement.onerror = () => {
