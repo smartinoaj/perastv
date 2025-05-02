@@ -243,7 +243,9 @@
                  if (document.activeElement && document.activeElement.closest('.channel-box') && !currentlyExpandedBoxElement) {
                     event.preventDefault(); // Prevent default scrolling
                     let nextIndex = -1;
-                    const numCols = getComputedStyle(document.getElementById(activeTabId)).gridTemplateColumns.split(' ').length;
+                    const activeGrid = document.getElementById(activeTabId);
+                    const numCols = activeGrid ? getComputedStyle(activeGrid).gridTemplateColumns.split(' ').length : 1;
+
 
                     switch (event.key) {
                         case 'ArrowDown':
@@ -255,12 +257,14 @@
                         case 'ArrowRight':
                              nextIndex = currentIndex + 1;
                              // Basic boundary check (doesn't handle wrapping perfectly)
-                             if ((currentIndex + 1) % numCols === 0) nextIndex = -1; // Don't wrap right for now
+                             if ((currentIndex + 1) % numCols === 0 && numCols > 1) nextIndex = -1; // Don't wrap right for now if multiple columns
+                             else if (numCols === 1) nextIndex = currentIndex + 1; // Allow moving right in single column
                             break;
                         case 'ArrowLeft':
                              nextIndex = currentIndex - 1;
                              // Basic boundary check
-                             if (currentIndex % numCols === 0) nextIndex = -1; // Don't wrap left for now
+                             if (currentIndex % numCols === 0 && numCols > 1) nextIndex = -1; // Don't wrap left for now if multiple columns
+                             else if (numCols === 1) nextIndex = currentIndex -1; // Allow moving left in single column
                             break;
                     }
 
@@ -268,8 +272,8 @@
                     if (nextIndex >= 0 && nextIndex < focusableElements.length) {
                         focusableElements[nextIndex].focus();
                     }
-                 } else if (!document.activeElement || document.activeElement === document.body) {
-                     // If nothing is focused, focus the first item in the grid
+                 } else if (!document.activeElement || document.activeElement === document.body || document.activeElement === searchInputElement || document.activeElement.closest('.tabs')) {
+                     // If nothing is focused, or search/tabs are focused, focus the first item in the grid
                      focusableElements[0]?.focus();
                  }
                  // TODO: Add logic to navigate between tabs, search bar, and expanded player controls.
@@ -286,8 +290,11 @@
                  } else if (document.activeElement && document.activeElement.classList.contains('tab-button')) {
                     event.preventDefault();
                     document.activeElement.click(); // Activate the focused tab button
+                 } else if (document.activeElement && document.activeElement.classList.contains('favorite-button')) {
+                     event.preventDefault();
+                     document.activeElement.click(); // Activate favorite button
                  }
-                 // TODO: Handle Enter/OK on favorite button, player controls etc.
+                 // TODO: Handle Enter/OK on player controls etc.
             }
         });
 
@@ -752,6 +759,7 @@
         // --- Add Click Event Listener ---
         buttonElement.onclick = (event) => {
             event.stopPropagation(); // IMPORTANT: Prevent the click from bubbling up and toggling the box expansion
+            console.log(`Stream button clicked: ${label} (${url})`); // Added log
             loadStreamIntoPlayer(buttonElement, url, parentBoxElement); // Call function to load the stream
         };
         return buttonElement;
@@ -1034,9 +1042,9 @@
         }
 
         // --- Clean Up Player and Buttons ---
-        clearPlayerStateInBox(boxElement);
+        clearPlayerStateInBox(boxElement); // Ensure player is fully cleared
         const streamButtonsContainer = boxElement.querySelector('.stream-buttons');
-        if (streamButtonsContainer) streamButtonsContainer.innerHTML = '';
+        if (streamButtonsContainer) streamButtonsContainer.innerHTML = ''; // Clear buttons
 
         // Update accessibility attribute
         const headerElement = boxElement.querySelector('.channel-header');
@@ -1156,7 +1164,24 @@
                 displayNoStreamsAvailable(playerAreaElement, streamButtonsContainer);
                 clearPlayerStateInBox(boxElement);
             } else if (firstStreamUrl && firstStreamButtonElement) {
-                 loadStreamIntoPlayer(firstStreamButtonElement, firstStreamUrl, boxElement);
+                 // Automatically load the first stream ONLY if it's the initial expansion
+                 // (Avoid reloading if just switching tabs or collapsing/re-expanding)
+                 const videoEl = boxElement.querySelector('video');
+                 const iframeEl = boxElement.querySelector('iframe');
+                 if (!videoEl.classList.contains('active') && !iframeEl.classList.contains('active')) {
+                    console.log("Auto-loading first stream on initial expansion.");
+                    loadStreamIntoPlayer(firstStreamButtonElement, firstStreamUrl, boxElement);
+                 } else {
+                    console.log("Skipping auto-load, player already active or was active.");
+                    // Ensure the correct button is marked active if a stream *is* playing
+                    const activeSrc = videoEl.classList.contains('active') ? videoEl.src : (iframeEl.classList.contains('active') ? iframeEl.src : null);
+                    if (activeSrc) {
+                        const buttons = streamButtonsContainer.querySelectorAll('.stream-button');
+                        buttons.forEach(btn => {
+                            btn.classList.toggle('active', btn.dataset.streamUrl === activeSrc);
+                        });
+                    }
+                 }
             } else {
                  console.error("Inconsistency: Streams counted, but no first URL/Button element found.", boxElement.id);
                  displayNoStreamsAvailable(playerAreaElement, streamButtonsContainer);
@@ -1202,20 +1227,24 @@
             return;
         }
 
-        console.log(`Attempting to load stream in box ${parentBoxElement.id}: ${streamUrl}`);
+        console.log(`>>> loadStreamIntoPlayer START for box ${parentBoxElement.id}: ${streamUrl}`);
         const playerAreaElement = parentBoxElement.querySelector('.player-area');
         const loaderElement = playerAreaElement?.querySelector('.loader');
         const messageContainerElement = playerAreaElement?.querySelector('.player-message');
+        const iframeElement = playerAreaElement?.querySelector('iframe');
+        const videoElement = playerAreaElement?.querySelector('video');
 
-        if (!playerAreaElement || !loaderElement || !messageContainerElement) {
-            console.error("Player area elements (area, loader, message) not found in box:", parentBoxElement.id);
+        if (!playerAreaElement || !loaderElement || !messageContainerElement || !iframeElement || !videoElement) {
+            console.error("Player area elements (area, loader, message, iframe, video) not found in box:", parentBoxElement.id);
             return;
         }
 
         // --- Prepare UI for Loading ---
+        console.log("   Clearing previous player state...");
         clearPlayerStateInBox(parentBoxElement); // Crucial: Stop previous stream, clear HLS/iframe
         messageContainerElement.classList.remove('visible'); // Hide previous messages
         loaderElement.classList.add('visible');       // Show loading spinner
+        console.log("   UI prepared for loading (loader visible).");
 
         // --- Update Button Styles ---
         const streamButtonsContainer = parentBoxElement.querySelector('.stream-buttons');
@@ -1224,42 +1253,40 @@
         }
         if (clickedButtonElement) {
             clickedButtonElement.classList.add('active');
+            console.log(`   Button "${clickedButtonElement.textContent}" marked active.`);
         }
 
-        // --- Get Player Elements ---
-        const iframeElement = playerAreaElement.querySelector('iframe');
-        const videoElement = playerAreaElement.querySelector('video');
-
-        if (!iframeElement || !videoElement) {
-            console.error("Could not find player elements (iframe/video) in box:", parentBoxElement.id);
-            loaderElement.classList.remove('visible');
-            displayMessageInPlayerArea(playerAreaElement, `<strong>Internal Error</strong><span>Player elements missing.</span>`, false);
-            return;
-        }
 
         // --- Basic URL Format Check ---
         if (!streamUrl.startsWith('http://') && !streamUrl.startsWith('https://')) {
-            console.error("Invalid stream URL protocol:", streamUrl);
+            console.error("   Invalid stream URL protocol:", streamUrl);
             loaderElement.classList.remove('visible');
             displayMessageInPlayerArea(playerAreaElement, `<strong>Invalid URL</strong><span>Stream link must start with http or https.</span>`, true, streamUrl, parentBoxElement);
+            console.log("<<< loadStreamIntoPlayer END (Invalid URL)");
             return;
         }
 
         // --- Determine Stream Type and Load ---
-        try {
-            const urlObject = new URL(streamUrl);
-            if (urlObject.pathname.toLowerCase().endsWith('.m3u8')) {
-                 console.log("Detected HLS stream (.m3u8).");
-                loadHlsStreamIntoVideo(streamUrl, videoElement, playerAreaElement);
-            } else {
-                 console.log("Detected standard stream (loading in iframe).");
-                loadUrlIntoIframe(streamUrl, iframeElement, playerAreaElement);
+        // Add a tiny delay to allow the browser to process the state clearing (especially iframe about:blank)
+        setTimeout(() => {
+            console.log("   Starting stream load (after small delay)...");
+            try {
+                const urlObject = new URL(streamUrl);
+                if (urlObject.pathname.toLowerCase().endsWith('.m3u8')) {
+                     console.log("   Detected HLS stream (.m3u8). Calling loadHlsStreamIntoVideo...");
+                    loadHlsStreamIntoVideo(streamUrl, videoElement, playerAreaElement);
+                } else {
+                     console.log("   Detected standard stream. Calling loadUrlIntoIframe...");
+                    loadUrlIntoIframe(streamUrl, iframeElement, playerAreaElement);
+                }
+            } catch (error) {
+                console.error("   Error processing stream URL:", error);
+                loaderElement.classList.remove('visible');
+                displayMessageInPlayerArea(playerAreaElement, `<strong>URL Error</strong><span>Could not process the stream link.</span>`, true, streamUrl, parentBoxElement);
             }
-        } catch (error) {
-            console.error("Error processing stream URL:", error);
-            loaderElement.classList.remove('visible');
-            displayMessageInPlayerArea(playerAreaElement, `<strong>URL Error</strong><span>Could not process the stream link.</span>`, true, streamUrl, parentBoxElement);
-        }
+             console.log("<<< loadStreamIntoPlayer END (Load initiated)");
+        }, 50); // 50ms delay - adjust if needed
+
     }
 
      /**
@@ -1270,8 +1297,12 @@
       */
      function clearPlayerStateInBox(boxElement) {
         if (!boxElement) return;
+        console.log(`--- clearPlayerStateInBox START for box: ${boxElement.id}`);
         const playerAreaElement = boxElement.querySelector('.player-area');
-        if (!playerAreaElement) return;
+        if (!playerAreaElement) {
+            console.log("   Player area not found. Exiting clear.");
+            return;
+        }
 
         const videoElement = playerAreaElement.querySelector('video');
         const iframeElement = playerAreaElement.querySelector('iframe');
@@ -1280,39 +1311,61 @@
 
         // --- Stop and Destroy HLS Instance ---
         if (currentHlsInstance && videoElement && currentHlsInstance.media === videoElement) {
-            console.log(`Destroying active HLS instance for box: ${boxElement.id}`);
-            currentHlsInstance.destroy();
+            console.log(`   Destroying active HLS instance...`);
+            try {
+                currentHlsInstance.destroy();
+                console.log("   HLS instance destroyed.");
+            } catch (e) {
+                console.error("   Error destroying HLS instance:", e);
+            }
             currentHlsInstance = null;
+        } else if (currentHlsInstance) {
+             console.log("   HLS instance exists but is not attached to this video element.");
         }
 
         // --- Reset Iframe ---
         if (iframeElement) {
-             iframeElement.src = 'about:blank';
-             iframeElement.classList.remove('active');
+             // Check if src is already blank to avoid unnecessary navigation
+             if (iframeElement.getAttribute('src') && iframeElement.getAttribute('src') !== 'about:blank') {
+                 console.log("   Resetting iframe src to about:blank");
+                 iframeElement.src = 'about:blank';
+             } else {
+                 console.log("   Iframe src already blank or null.");
+             }
+             iframeElement.classList.remove('active'); // Hide iframe
         }
 
         // --- Reset Video Element ---
         if (videoElement) {
+             console.log("   Resetting video element...");
              videoElement.pause();
-             videoElement.removeAttribute('src');
-             // Detach HLS event listeners if they were added natively (less common now with HLS.js focus)
-             // videoElement.onloadedmetadata = null;
-             // videoElement.onerror = null;
-             videoElement.load();
-             videoElement.classList.remove('active');
-             videoElement.poster = CONFIG.placeholderImage;
+             // Check if src exists before removing
+             if (videoElement.hasAttribute('src')) {
+                 videoElement.removeAttribute('src');
+                 console.log("   Video src attribute removed.");
+             }
+             // Only call load() if src was actually removed or changed to prevent unnecessary network requests
+             if (videoElement.currentSrc) { // Check if it thinks it still has a source
+                 console.log("   Calling videoElement.load() to reset state.");
+                 videoElement.load();
+             } else {
+                 console.log("   Skipping videoElement.load() as currentSrc is empty.");
+             }
+             videoElement.classList.remove('active'); // Hide video
+             videoElement.poster = CONFIG.placeholderImage; // Reset poster
+             console.log("   Video element reset complete.");
         }
 
         // --- Reset UI Indicators ---
         if (loaderElement) loaderElement.classList.remove('visible');
         if (messageContainerElement) messageContainerElement.classList.remove('visible');
 
-        // --- Deactivate Stream Buttons ---
+        // --- Deactivate Stream Buttons (already done in loadStreamIntoPlayer, but safe to repeat) ---
         const streamButtonsContainer = boxElement.querySelector('.stream-buttons');
         if (streamButtonsContainer) {
             streamButtonsContainer.querySelectorAll('.stream-button.active').forEach(b => b.classList.remove('active'));
         }
-        console.log(`Player state cleared for box: ${boxElement.id}`);
+        console.log(`--- clearPlayerStateInBox END for box: ${boxElement.id}`);
     }
 
     /**
@@ -1334,6 +1387,7 @@
              console.error("Cannot display player message - essential elements missing.");
              return;
         }
+        console.log("Displaying message in player area:", messageHtml.substring(0, 100) + "..."); // Log message start
 
         // --- Hide Player & Loader ---
         if (videoElement) videoElement.classList.remove('active');
@@ -1348,16 +1402,19 @@
             const nextButtonElement = findNextAvailableStreamButton(failedUrl, parentBoxElement);
 
             if (nextButtonElement) {
+                console.log("   Adding 'Try Next Source' button.");
                 const tryNextBtn = document.createElement('button');
                 tryNextBtn.className = 'try-next-button';
                 tryNextBtn.textContent = 'Try Next Source';
                 tryNextBtn.onclick = (event) => {
                     event.stopPropagation();
+                    console.log("   'Try Next Source' button clicked.");
                     nextButtonElement.click(); // Simulate click on the next button
                 };
                 messageContainerElement.appendChild(document.createElement('br'));
                 messageContainerElement.appendChild(tryNextBtn);
             } else {
+                console.log("   No next source available to try.");
                 const noMoreSourcesSpan = document.createElement('span');
                 noMoreSourcesSpan.style.fontSize = '0.8em';
                 noMoreSourcesSpan.style.marginTop = '10px';
@@ -1388,9 +1445,11 @@
             if (currentButton.dataset.streamUrl === failedUrl) {
                 foundFailedButton = true;
             } else if (foundFailedButton) {
+                console.log("   Found next stream button:", currentButton.textContent);
                 return currentButton; // Return the next button
             }
         }
+        console.log("   No next stream button found after the failed one.");
         return null; // No next button found
     }
 
@@ -1403,140 +1462,197 @@
      */
      function loadHlsStreamIntoVideo(hlsUrl, videoElement, playerAreaElement) {
         const parentBoxElement = videoElement.closest('.channel-box');
-        videoElement.poster = CONFIG.placeholderImage;
+        videoElement.poster = CONFIG.placeholderImage; // Ensure poster is set initially
 
         // --- Use HLS.js if supported ---
         if (Hls.isSupported()) {
-            console.log("HLS.js is supported. Initializing new instance...");
+            console.log("   HLS.js: Supported. Initializing new instance...");
 
-             // Destroy previous instance if it exists and is attached to this element
+             // Destroy previous instance if it exists and is attached to *this specific video element*
              if (currentHlsInstance && currentHlsInstance.media === videoElement) {
-                 console.log(`Destroying existing HLS.js instance for video in box: ${parentBoxElement?.id}`);
+                 console.log(`   HLS.js: Destroying existing HLS.js instance for video in box: ${parentBoxElement?.id}`);
                  currentHlsInstance.destroy();
+                 currentHlsInstance = null; // Ensure it's nullified
+             } else if (currentHlsInstance) {
+                  console.log(`   HLS.js: Existing instance found, but not attached to this video element. Destroying anyway for safety.`);
+                  currentHlsInstance.destroy(); // Destroy any lingering instance
+                  currentHlsInstance = null;
              }
+
+            // Create a new HLS instance
             currentHlsInstance = new Hls({
+                // Configuration options...
                 manifestLoadingTimeOut: 15000,
                 levelLoadingTimeOut: 15000,
                 fragLoadingTimeOut: 20000,
                 manifestLoadErrorMaxRetry: 2,
                 levelLoadErrorMaxRetry: 3,
                 fragLoadErrorMaxRetry: 4,
-                liveSyncDurationCount: 3,
+                liveSyncDurationCount: 3, // Default: 3; lower might reduce latency but increase stalling risk
+                // enableWorker: false // Try disabling worker for simpler debugging if needed
             });
+            console.log("   HLS.js: New instance created.");
 
             // --- HLS.js Event Listeners ---
-            currentHlsInstance.on(Hls.Events.ERROR, function (event, data) {
+            // Store listeners to remove them later if needed (though destroy() should handle this)
+            const hlsErrorListener = (event, data) => {
+                 // Check if this listener belongs to the *current* active instance for this video
                  if (!currentHlsInstance || currentHlsInstance.media !== videoElement) {
-                     console.log("Ignoring HLS error from an old/inactive instance.");
+                     console.log("   HLS.js: Ignoring ERROR from an old/inactive instance.");
                      return;
                  }
-                console.error('HLS.js Error:', { event, type: data.type, details: data.details, fatal: data.fatal });
+                console.error('   HLS.js Error:', { event, type: data.type, details: data.details, fatal: data.fatal, url: data.url });
                 let userMessage = `<strong>Stream Error</strong> (${data.details || 'Unknown HLS error'}).`;
+                // More specific error handling
                 switch (data.type) {
                     case Hls.ErrorTypes.NETWORK_ERROR:
                         userMessage = `<strong>Network Error</strong> (${data.details}). Check connection or try another source.`;
+                        if (data.details === 'manifestLoadTimeOut' || data.details === 'manifestLoadError') {
+                            userMessage = `<strong>Stream Unavailable</strong> (Manifest ${data.details}). The source might be offline.`;
+                        }
                         break;
                     case Hls.ErrorTypes.MEDIA_ERROR:
                          if (data.details === 'bufferStalledError' && !data.fatal) {
-                             console.warn("HLS buffer stalled (non-fatal), attempting recovery...");
+                             console.warn("   HLS.js: Buffer stalled (non-fatal), attempting recovery...");
                              return; // Don't show fatal error for recoverable stall
+                         } else if (data.details === 'fragParsingError') {
+                              userMessage = `<strong>Media Error</strong> (Corrupted segment). Stream data might be invalid.`;
+                         } else {
+                              userMessage = `<strong>Media Playback Error</strong> (${data.details}). Stream data might be invalid.`;
                          }
-                         userMessage = `<strong>Media Playback Error</strong> (${data.details}). Stream data might be invalid.`;
                         break;
+                    case Hls.ErrorTypes.MUX_ERROR:
+                        userMessage = `<strong>Media Error</strong> (Muxing/Demuxing issue: ${data.details}).`;
+                        break;
+                    case Hls.ErrorTypes.OTHER_ERROR:
+                         userMessage = `<strong>Stream Error</strong> (Other: ${data.details}).`;
+                         break;
                 }
                  if (data.fatal) {
-                    console.error("Fatal HLS error occurred. Cleaning up.");
+                    console.error("   HLS.js: Fatal error occurred. Cleaning up.");
                     displayMessageInPlayerArea(playerAreaElement, userMessage, true, hlsUrl, parentBoxElement);
-                    // Ensure destruction happens *after* displaying message
+                    // Ensure destruction happens *after* displaying message and only for the correct instance
                     if (currentHlsInstance && currentHlsInstance.media === videoElement) {
+                         console.log("   HLS.js: Destroying instance due to fatal error.");
                          currentHlsInstance.destroy();
                          currentHlsInstance = null;
                     }
                     videoElement.classList.remove('active');
-                    videoElement.poster = '';
+                    videoElement.poster = CONFIG.placeholderImage; // Reset poster on fatal error
                  } else {
-                     console.warn("Non-fatal HLS error occurred:", data.details);
+                     console.warn("   HLS.js: Non-fatal error occurred:", data.details);
                  }
-            });
+            };
 
-            currentHlsInstance.on(Hls.Events.MANIFEST_PARSED, function() {
-                 if (currentHlsInstance && currentHlsInstance.media === videoElement) {
-                    console.log("HLS Manifest parsed successfully.");
-                    playerAreaElement.querySelector('.loader').classList.remove('visible');
-                    videoElement.classList.add('active');
-                    videoElement.muted = true;
-                    videoElement.play().then(() => {
-                         console.log("HLS playback initiated via play().");
-                    }).catch(error => {
-                         console.error("HLS videoElement.play() failed:", error);
+            const hlsManifestParsedListener = () => {
+                 // Check if this listener belongs to the *current* active instance for this video
+                 if (!currentHlsInstance || currentHlsInstance.media !== videoElement) {
+                     console.log("   HLS.js: Ignoring MANIFEST_PARSED from an old/inactive instance.");
+                     return;
+                 }
+                console.log("   HLS.js: Manifest parsed successfully.");
+                playerAreaElement.querySelector('.loader').classList.remove('visible');
+                videoElement.classList.add('active');
+                videoElement.muted = true; // Ensure muted for autoplay policies
+                videoElement.play().then(() => {
+                     console.log("   HLS.js: Playback initiated via play().");
+                }).catch(error => {
+                     console.error("   HLS.js: videoElement.play() failed:", error);
+                     // Only show message if this is still the active instance
+                     if (currentHlsInstance && currentHlsInstance.media === videoElement) {
                          if (error.name === 'NotAllowedError') {
                              displayMessageInPlayerArea(playerAreaElement, `<strong>Playback Paused</strong><span>Click the play button in the video player to start.</span>`, false);
                          } else {
                              displayMessageInPlayerArea(playerAreaElement, `<strong>Playback Error</strong><span>Could not start video (${error.name}).</span>`, true, hlsUrl, parentBoxElement);
                              videoElement.classList.remove('active');
                          }
-                         playerAreaElement.querySelector('.loader').classList.remove('visible');
-                    });
-                 }
-            });
+                         playerAreaElement.querySelector('.loader').classList.remove('visible'); // Hide loader on play error too
+                     }
+                });
+            };
+
+            currentHlsInstance.on(Hls.Events.ERROR, hlsErrorListener);
+            currentHlsInstance.on(Hls.Events.MANIFEST_PARSED, hlsManifestParsedListener);
 
             // Attach Media and Load Source
+            console.log("   HLS.js: Attaching media and loading source:", hlsUrl);
             currentHlsInstance.attachMedia(videoElement);
             currentHlsInstance.loadSource(hlsUrl);
 
         // --- Use Native HLS Support ---
         } else if (videoElement.canPlayType('application/vnd.apple.mpegurl')) {
-            console.log("Using native browser HLS support.");
-            // Replace node for clean state (important for native)
-            const newVideoElement = videoElement.cloneNode(true);
-            videoElement.parentNode?.replaceChild(newVideoElement, videoElement);
-            videoElement = newVideoElement; // Update reference
+            console.log("   Native HLS: Supported. Using native playback.");
+            // Ensure any old HLS instance is destroyed if switching from HLS.js to native
+            if (currentHlsInstance) {
+                console.log("   Native HLS: Destroying lingering HLS.js instance.");
+                currentHlsInstance.destroy();
+                currentHlsInstance = null;
+            }
+            // No need to clone node, just set src directly after clearing previous state
+            // videoElement was already reset in clearPlayerStateInBox
 
             // --- Native HLS Event Listeners ---
-            videoElement.onloadedmetadata = () => {
+            // Use functions to easily remove later if needed, though setting src usually handles it
+            const handleNativeLoadedMetadata = () => {
+                // Check if the src is still the one we intended to load
                 if (videoElement.getAttribute('src') === hlsUrl) {
-                    console.log("Native HLS metadata loaded.");
+                    console.log("   Native HLS: Metadata loaded.");
                     playerAreaElement.querySelector('.loader').classList.remove('visible');
                     videoElement.classList.add('active');
                     videoElement.muted = true;
                     videoElement.play().then(() => {
-                         console.log("Native HLS playback initiated via play().");
+                         console.log("   Native HLS: Playback initiated via play().");
                     }).catch(error => {
-                        console.error("Native HLS videoElement.play() failed:", error);
-                        if (error.name === 'NotAllowedError') {
-                            displayMessageInPlayerArea(playerAreaElement, `<strong>Playback Paused</strong><span>Click the play button to start.</span>`, false);
-                        } else {
-                            displayMessageInPlayerArea(playerAreaElement, `<strong>Playback Error</strong><span>Native HLS failed (${error.name}).</span>`, true, hlsUrl, parentBoxElement);
-                            videoElement.classList.remove('active');
+                        console.error("   Native HLS: videoElement.play() failed:", error);
+                        // Check src again before showing error
+                        if (videoElement.getAttribute('src') === hlsUrl) {
+                            if (error.name === 'NotAllowedError') {
+                                displayMessageInPlayerArea(playerAreaElement, `<strong>Playback Paused</strong><span>Click the play button to start.</span>`, false);
+                            } else {
+                                displayMessageInPlayerArea(playerAreaElement, `<strong>Playback Error</strong><span>Native HLS failed (${error.name}).</span>`, true, hlsUrl, parentBoxElement);
+                                videoElement.classList.remove('active');
+                            }
+                            playerAreaElement.querySelector('.loader').classList.remove('visible');
                         }
-                        playerAreaElement.querySelector('.loader').classList.remove('visible');
                     });
+                } else {
+                     console.log("   Native HLS: Ignoring loadedmetadata for a different src.");
                 }
             };
-            videoElement.onerror = () => {
+            const handleNativeError = () => {
+                 // Check if the src is still the one we intended to load
                  if (videoElement.getAttribute('src') === hlsUrl) {
-                     console.error("Native HLS playback error occurred.");
+                     console.error("   Native HLS: Playback error occurred.");
                      const error = videoElement.error;
                      const errorMessage = error ? (error.message || `code ${error.code}`) : 'Unknown error';
                      displayMessageInPlayerArea(playerAreaElement, `<strong>Stream Error</strong><span>Native HLS failed: ${errorMessage}.</span>`, true, hlsUrl, parentBoxElement);
                      videoElement.classList.remove('active');
-                     videoElement.poster = '';
+                     videoElement.poster = CONFIG.placeholderImage; // Reset poster on error
                      playerAreaElement.querySelector('.loader').classList.remove('visible');
                  } else {
-                      console.log("Ignoring native HLS error for a different src.");
+                      console.log("   Native HLS: Ignoring error for a different src.");
                  }
             };
 
+            // Remove previous listeners before adding new ones
+            videoElement.removeEventListener('loadedmetadata', handleNativeLoadedMetadata);
+            videoElement.removeEventListener('error', handleNativeError);
+            // Add new listeners
+            videoElement.addEventListener('loadedmetadata', handleNativeLoadedMetadata);
+            videoElement.addEventListener('error', handleNativeError);
+
+
             // Set Source and Load
+            console.log("   Native HLS: Setting video src and calling load():", hlsUrl);
             videoElement.src = hlsUrl;
-            videoElement.load();
+            videoElement.load(); // Important for native HLS
 
         // --- HLS Not Supported ---
         } else {
             console.error("HLS playback is not supported by this browser.");
             displayMessageInPlayerArea(playerAreaElement, `<strong>Unsupported Stream</strong><span>Your browser cannot play HLS (.m3u8) streams.</span>`, false);
             videoElement.classList.remove('active');
-            videoElement.poster = '';
+            videoElement.poster = CONFIG.placeholderImage;
             playerAreaElement.querySelector('.loader').classList.remove('visible');
         }
     }
@@ -1550,48 +1666,74 @@
      */
     function loadUrlIntoIframe(iframeUrl, iframeElement, playerAreaElement) {
         const parentBoxElement = iframeElement.closest('.channel-box');
-        console.log("Loading iframe stream...");
+        console.log("   Iframe: Loading stream:", iframeUrl);
         let iframeLoadTimeoutId = null;
+        let isLoadSuccessful = false; // Flag to track if onload fired
+
+        // Ensure any HLS instance is destroyed if switching to iframe
+        if (currentHlsInstance) {
+             console.log("   Iframe: Destroying lingering HLS.js instance.");
+             currentHlsInstance.destroy();
+             currentHlsInstance = null;
+        }
 
         const cleanupIframeLoad = () => {
             clearTimeout(iframeLoadTimeoutId);
+            // Remove listeners to prevent them firing for subsequent loads
+            iframeElement.onload = null;
+            iframeElement.onerror = null;
         };
 
         const handleIframeLoadFailure = (reason) => {
             cleanupIframeLoad();
-             if (iframeElement.getAttribute('src') === iframeUrl || iframeElement.getAttribute('src') === 'about:blank') {
-                 console.error(`Iframe failed to load: ${reason}`);
-                 displayMessageInPlayerArea(playerAreaElement, `<strong>Stream Error</strong><span>${reason}. It might be offline or blocked by browser security.</span>`, true, iframeUrl, parentBoxElement);
+             // Only show error if the src is still the one we attempted to load
+             if (iframeElement.getAttribute('src') === iframeUrl) {
+                 console.error(`   Iframe: Failed to load (${reason}). URL: ${iframeUrl}`);
+                 displayMessageInPlayerArea(playerAreaElement, `<strong>Stream Error</strong><span>${reason}. It might be offline or blocked.</span>`, true, iframeUrl, parentBoxElement);
                  iframeElement.classList.remove('active');
+                 // Don't reset src here, keep the failed URL for context? Or reset? Let's reset.
                  iframeElement.src = 'about:blank';
                  playerAreaElement.querySelector('.loader').classList.remove('visible');
              } else {
-                 console.log("Ignoring iframe failure for a different src.");
+                 console.log(`   Iframe: Failure (${reason}) ignored, src changed from ${iframeUrl} to ${iframeElement.getAttribute('src')}.`);
              }
         };
 
+        // Set timeout
         iframeLoadTimeoutId = setTimeout(() => {
-             if (iframeElement.getAttribute('src') === iframeUrl) {
+             // Check if onload has *not* fired and if the src is still the target URL
+             if (!isLoadSuccessful && iframeElement.getAttribute('src') === iframeUrl) {
                 handleIframeLoadFailure("Load timeout");
-             } else {
-                 console.log("Iframe timeout occurred, but src has changed. Ignoring.");
+             } else if (!isLoadSuccessful) {
+                 console.log("   Iframe: Timeout occurred, but src has changed or load was successful. Ignoring timeout.");
              }
         }, CONFIG.iframeLoadTimeoutMs);
 
+        // Assign event handlers
         iframeElement.onload = () => {
-            cleanupIframeLoad();
+            // Check if this onload corresponds to the URL we are trying to load
             if (iframeElement.getAttribute('src') === iframeUrl) {
-                 console.log("Iframe onload event fired successfully for:", iframeUrl);
+                 console.log("   Iframe: onload event fired successfully for:", iframeUrl);
+                 isLoadSuccessful = true; // Mark as successful
+                 cleanupIframeLoad(); // Clear timeout and remove listeners
                  playerAreaElement.querySelector('.loader').classList.remove('visible');
-                 iframeElement.classList.add('active');
+                 iframeElement.classList.add('active'); // Show the iframe
              } else {
-                 console.log("Iframe onload fired, but for a different src. Ignoring.");
+                 console.log(`   Iframe: onload fired, but for a different src (${iframeElement.getAttribute('src')}). Ignoring.`);
+                 // Don't cleanup or mark successful if it's for a different load (e.g., about:blank)
              }
         };
         iframeElement.onerror = () => {
-             handleIframeLoadFailure("onError event fired");
+             // Check if this onerror corresponds to the URL we are trying to load
+             if (iframeElement.getAttribute('src') === iframeUrl) {
+                handleIframeLoadFailure("onError event fired");
+             } else {
+                 console.log(`   Iframe: onerror fired, but for a different src (${iframeElement.getAttribute('src')}). Ignoring.`);
+             }
         };
 
+        // Set the src attribute - this initiates the load
+        console.log("   Iframe: Setting src attribute.");
         iframeElement.src = iframeUrl;
     }
 
