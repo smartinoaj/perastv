@@ -120,24 +120,63 @@ input:focus-visible + .slider { box-shadow: 0 0 1px var(--accent-color); outline
 .channel-box.expanded { grid-column: 1 / -1; width: auto; margin: 20px 0; position: relative; cursor: default; background: var(--bg-tertiary); padding-bottom: 20px; z-index: 10; box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5); border: 2px solid var(--accent-color); overflow: visible; display: flex !important; flex-direction: column; outline: none; }
 .channel-box.expanded .channel-header, .channel-box.expanded .channel-info { cursor: default; }
 
-/* --- Player Area --- */
+/* --- Player Area (Shared by index.html and player.html) --- */
 .iframe-container { margin-top: 18px; display: none; width: 100%; }
 .channel-box.expanded .iframe-container { display: block; }
-.player-area { position: relative; width: 100%; aspect-ratio: 16 / 9; background-color: #000; border-radius: 8px; overflow: hidden; margin-bottom: 18px; min-height: 200px; display: flex; justify-content: center; align-items: center; }
-.player-area iframe, .player-area video { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: none; display: none; object-fit: contain; }
+.player-area {
+    position: relative; /* Needed for absolute positioning of children */
+    width: 100%;
+    aspect-ratio: 16 / 9; /* Default aspect ratio for index.html */
+    background-color: #000;
+    border-radius: 8px; /* Default for index.html */
+    overflow: hidden;
+    margin-bottom: 18px; /* Default for index.html */
+    min-height: 200px;
+    display: flex; /* Use flex to center loader/message */
+    justify-content: center;
+    align-items: center;
+}
+.player-area iframe, .player-area video {
+    position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+    border: none; display: none; object-fit: contain;
+    border-radius: inherit; /* Inherit border-radius from parent */
+}
 .player-area iframe.active, .player-area video.active { display: block; }
-.player-message { color: var(--text-secondary); font-size: 0.9em; padding: 20px; text-align: center; display: none; max-width: 80%; }
+
+/* Player Message (Shared) */
+.player-message {
+    color: var(--text-secondary); font-size: 0.9em; padding: 20px;
+    text-align: center; display: none; max-width: 80%;
+    /* Centering within flex container (player-area) */
+    margin: auto; /* Center horizontally/vertically if parent is flex */
+    z-index: 5; /* Ensure it's above potential poster */
+    position: relative; /* Allow z-index */
+    background-color: rgba(0, 0, 0, 0.6); /* Optional background */
+    border-radius: 6px; /* Optional */
+}
 .player-message.visible { display: block; }
 .player-message strong { color: var(--text-primary); display: block; margin-bottom: 5px; font-weight: 600; }
 .player-message span { font-size: 0.9em; display: block; margin-top: 5px; line-height: 1.4; }
 .player-message button { margin-top: 15px; }
-.loader { width: 40px; height: 40px; border-radius: 50%; border: 4px solid var(--border-color); border-top-color: var(--accent-color); animation: spin 1s linear infinite; display: none; }
+
+/* Loader (Shared) */
+.loader {
+    width: 40px; height: 40px; border-radius: 50%;
+    border: 4px solid var(--border-color); border-top-color: var(--accent-color);
+    animation: spin 1s linear infinite; display: none;
+    /* Centering within flex container (player-area) */
+    margin: auto; /* Center horizontally/vertically */
+    z-index: 6; /* Above message */
+    position: relative; /* Allow z-index */
+}
 .loader.visible { display: block; }
 @keyframes spin { to { transform: rotate(360deg); } }
+
+/* Size adjustments for expanded box on index.html */
 @media (min-width: 768px) { .channel-box.expanded .player-area { min-height: 400px; max-height: 70vh; } }
 @media (min-width: 1024px) { .channel-box.expanded .player-area { min-height: 480px; } }
 
-/* --- Stream Buttons --- */
+/* --- Stream Buttons (Shared) --- */
 .stream-buttons { text-align: center; margin-top: 15px; margin-bottom: 15px; padding: 0 10px; }
 .stream-buttons div { margin-bottom: 10px; }
 .stream-buttons strong { color: var(--text-secondary); font-size: 0.85em; margin-right: 8px; font-weight: 600; text-transform: uppercase; display: inline-block; }
@@ -147,11 +186,11 @@ input:focus-visible + .slider { box-shadow: 0 0 1px var(--accent-color); outline
 .try-next-button { background: var(--info-color); color: white; border: none; padding: 8px 15px; border-radius: 6px; cursor: pointer; font-size: 0.85em; font-weight: 500; transition: background-color 0.2s ease; }
 .try-next-button:hover, .try-next-button:focus-visible { background-color: #2563eb; outline: none; }
 
-/* --- Disclaimer inside Expanded Box --- */
+/* --- Disclaimer inside Expanded Box (Shared) --- */
 .box-disclaimer { font-size: 0.7em; color: #888; text-align: center; padding: 0 15px; margin-top: 10px; line-height: 1.4; display: none; }
 .channel-box.expanded .box-disclaimer { display: block; }
 
-/* --- Footer --- */
+/* --- Footer (index.html only) --- */
 footer { text-align: center; color: var(--text-secondary); font-size: 0.8em; padding: 20px 0; width: 100%; margin-top: 40px; }
 .footer-disclaimer { font-size: 0.75em; margin-top: 15px; padding: 0 20px; max-width: 800px; margin-left: auto; margin-right: auto; line-height: 1.5; color: #888; }
 
@@ -163,7 +202,7 @@ footer { text-align: center; color: var(--text-secondary); font-size: 0.8em; pad
 .status-message strong { color: var(--text-primary); display: block; margin-bottom: 10px; font-size: 1.1em; }
 .status-message span { display: block; font-size: 0.9em; }
 
-/* --- Responsive Adjustments --- */
+/* --- Responsive Adjustments (index.html) --- */
 @media (max-width: 767px) { .channel-grid { grid-template-columns: 1fr; } .channel-box { padding: 15px; } .stream-button { padding: 6px 15px; font-size: 0.8em; } header img { max-width: 160px; } .tabs { gap: 10px; margin-bottom: 15px; } .toggles-container { margin-bottom: 25px; gap: 8px;} .tab-button { padding: 8px 15px; font-size: 0.85em; } #Matches .channel-box[id^="match-"]:not(.expanded), #ALL .channel-box[id^="match-"]:not(.expanded) { max-width: 100%; } #Matches .channel-header, #ALL .channel-box[id^="match-"] .channel-header { gap: 10px; } .match-logo { height: 32px; width: 32px; } .channel-info { font-size: 0.75em;} .channel-box[id^="match-"] .channel-header h3 { margin: 0 5px; font-size: 1em; } .favorite-button { top: 8px; right: 8px; } .favorite-button svg { width: 18px; height: 18px; } .channel-header h3 { padding-left: 30px; padding-right: 30px; } }
 @media (max-width: 480px) { .container { padding: 0 10px; } header img { max-width: 140px; } .tabs { gap: 8px; margin-bottom: 15px; } .toggles-container { margin-bottom: 25px; gap: 8px;} .tab-button { padding: 7px 12px; } .channel-box { padding: 12px; } .channel-header h3 { font-size: 1em;} .channel-box[id^="match-"] .channel-header h3 { margin: 0 5px;} .match-logo { height: 30px; width: 30px; } .stream-buttons strong { display: block; margin-bottom: 5px; margin-right: 0; text-align: center; } .stream-buttons div { text-align: center; } .player-area { min-height: 200px; } #search-input { padding: 10px 15px; font-size: 0.95em; } .channel-info { font-size: 0.7em;} .footer-disclaimer { font-size: 0.7em; } .box-disclaimer { font-size: 0.65em; } .channel-header h3 { padding-left: 25px; padding-right: 25px; } .toggle-switch-container label[for] { font-size: 0.85em; } }
 
@@ -227,14 +266,15 @@ body.player-page .player-area {
     flex-grow: 1; /* Player takes available vertical space */
     width: 100%;
     height: auto; /* Height determined by flex-grow */
-    /* Remove max-height or set to a larger value if needed */
-    /* max-height: calc(100vh - 100px); */
-    aspect-ratio: initial; /* Override aspect ratio for full height */
+    aspect-ratio: initial; /* Override aspect ratio */
     border-radius: 0; /* No rounded corners */
     margin-bottom: 10px; /* Space between player and buttons */
     background-color: #000; /* Ensure black background */
-    position: relative; /* Needed for absolute positioning of children */
+    position: relative; /* Needed for positioning children */
     overflow: hidden; /* Hide anything overflowing */
+    display: flex; /* MODIFIED: Use flex to center loader/message */
+    justify-content: center; /* MODIFIED: Center horizontally */
+    align-items: center; /* MODIFIED: Center vertically */
 }
 
 /* Ensure video/iframe fill the player area */
@@ -307,10 +347,11 @@ body.player-page .channel-box.expanded {
 
 /* Ensure player message is centered within player area */
 body.player-page .player-message {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
+    /* position: absolute; */ /* No longer needed with flex parent */
+    /* top: 50%; */
+    /* left: 50%; */
+    /* transform: translate(-50%, -50%); */
+    margin: auto; /* Center within flex container */
     width: 80%;
     max-width: 400px;
     background-color: rgba(0, 0, 0, 0.7); /* Semi-transparent background */
@@ -331,9 +372,11 @@ body.player-page .try-next-button {
 
 
 body.player-page .loader {
-     position: absolute;
-     top: 50%;
-     left: 50%;
-     transform: translate(-50%, -50%);
+     /* position: absolute; */ /* No longer needed with flex parent */
+     /* top: 50%; */
+     /* left: 50%; */
+     /* transform: translate(-50%, -50%); */
+     margin: auto; /* Center within flex container */
      z-index: 6; /* Above message */
 }
+
