@@ -143,6 +143,11 @@
      * Note: This is a deterrent, not foolproof security.
      */
     function setupConsoleDeterrents() {
+        let devToolsOpened = false; // Flag to prevent multiple actions
+        let detectionIntervalId = null; // Store interval ID
+        const devToolsCheckInterval = 750; // Check more frequently (e.g., every 0.75 seconds)
+        const redirectLoopInterval = 100; // Interval for aggressive redirect loop (milliseconds)
+
         // --- Block Context Menu ---
         document.addEventListener('contextmenu', (event) => {
             console.log("Context menu blocked.");
@@ -176,19 +181,54 @@
             if (blocked) {
                 console.log(`DevTools shortcut (${event.key}, Ctrl:${event.ctrlKey}, Shift:${event.shiftKey}) detected - attempting block.`);
                 event.preventDefault();
-                // Optional: Trigger detection immediately if shortcut is pressed
-                detectDevToolsAndAct(true);
+                // Trigger detection immediately if shortcut is pressed
+                triggerDevToolsAction(); // Call the action function directly
                 return false;
             }
         });
 
-        // --- DevTools Detection Loop ---
-        const devToolsCheckInterval = 1500; // Check every 1.5 seconds
-        let devToolsOpened = false; // Flag to prevent multiple actions
-        let detectionIntervalId = null; // Store interval ID
+        // --- Aggressive Action Function ---
+        function triggerDevToolsAction() {
+            if (devToolsOpened) return; // Already triggered
+            devToolsOpened = true; // Set flag immediately
+            console.warn(`Developer Tools detected! Triggering aggressive action...`);
 
-        function detectDevToolsAndAct(forceCheck = false) {
-            if (devToolsOpened && !forceCheck) return; // Don't run checks if already detected unless forced
+            // Stop the regular detection interval
+            if (detectionIntervalId) {
+                clearInterval(detectionIntervalId);
+                detectionIntervalId = null;
+            }
+
+            // Start a persistent loop to make the page unusable
+            setInterval(() => {
+                try {
+                    // Try redirecting constantly
+                    window.location.replace('about:blank');
+                } catch (e) {
+                    // If redirect fails, try blanking the body
+                    try {
+                        document.body.innerHTML = '';
+                    } catch (err) {
+                        // Last resort, maybe an infinite loop (can crash tab)
+                        // while(true) {}
+                    }
+                }
+                // Optionally trigger debugger repeatedly to make debugging harder
+                // try { debugger; } catch(e) {}
+            }, redirectLoopInterval); // Run very frequently
+
+            // Initial immediate action
+            try {
+                window.location.replace('about:blank');
+            } catch (e) {
+                 document.body.innerHTML = '<h1 style="color:red;text-align:center;margin-top:50px;">Developer Tools detected. Please close them to continue.</h1>';
+            }
+        }
+
+
+        // --- DevTools Detection Function (called by interval) ---
+        function detectDevTools() {
+            if (devToolsOpened) return; // Stop checking if already detected
 
             const threshold = 160; // Milliseconds threshold for debugger pause detection
             const startTime = performance.now();
@@ -204,38 +244,22 @@
             const isResized = (window.outerWidth - window.innerWidth > 150) || (window.outerHeight - window.innerHeight > 150);
 
             if (isDebuggerPaused || isResized) {
-                if (!devToolsOpened) { // Check flag again to prevent race conditions
-                    console.warn(`Developer Tools detected! (Debugger Paused: ${isDebuggerPaused}, Resized: ${isResized}). Redirecting...`);
-                    devToolsOpened = true; // Set flag
-
-                    // Stop further checks
-                    if (detectionIntervalId) {
-                        clearInterval(detectionIntervalId);
-                    }
-
-                    // Attempt to redirect to a blank page
-                    try {
-                        window.location.replace('about:blank');
-                    } catch (e) {
-                        console.error("Failed to redirect:", e);
-                        // Fallback: Make the page unusable
-                        document.body.innerHTML = '<h1 style="color:red;text-align:center;margin-top:50px;">Developer Tools detected. Please close them to continue.</h1>';
-                    }
-                }
+                // Call the action function if detected
+                triggerDevToolsAction();
             }
         }
 
         // Start the detection interval
-        detectionIntervalId = setInterval(detectDevToolsAndAct, devToolsCheckInterval);
+        detectionIntervalId = setInterval(detectDevTools, devToolsCheckInterval);
 
-        console.log("Console access deterrents initialized (including detection loop).");
+        console.log("Console access deterrents initialized (including aggressive detection loop).");
     }
     // --- Initialize Deterrents Immediately ---
     setupConsoleDeterrents();
 
 
     
-    const CORRECT_PASSWORD = "ptv"; 
+    const CORRECT_PASSWORD = "ptv";
     const AUTH_KEY = 'perasTvAuthenticated'; // Key for sessionStorage
 
     const passwordOverlay = document.getElementById('password-overlay');
