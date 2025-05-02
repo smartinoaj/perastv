@@ -271,8 +271,7 @@
 
         // --- Initial Setup ---
         loadFavoritesFromStorage();
-        loadNewTabToggleState();     // Load state for first toggle
-        loadPlayerPageToggleState(); // NEW: Load state for second toggle
+        loadToggleStates(); // Load state for both toggles
         setupGlobalEventListeners();
         updateTimestampDisplay();
         setInterval(updateTimestampDisplay, 60000);
@@ -280,7 +279,7 @@
 
 
         // --- Favorite Management ---
-        function loadFavoritesFromStorage() {
+        function loadFavoritesFromStorage() { /* ... (keep existing code) ... */
             const storedFavoritesJson = localStorage.getItem(CONFIG.favoritesKey);
             if (storedFavoritesJson) {
                 try {
@@ -295,7 +294,7 @@
             } else { favoriteItemIds = []; }
             console.log("Loaded favorites:", favoriteItemIds);
         }
-        function saveFavoritesToStorage() {
+        function saveFavoritesToStorage() { /* ... (keep existing code) ... */
             try { localStorage.setItem(CONFIG.favoritesKey, JSON.stringify(favoriteItemIds)); console.log("Saved favorites:", favoriteItemIds); }
             catch (error) { console.error("Error saving favorites:", error); }
         }
@@ -329,26 +328,37 @@
         }
 
         // --- Toggle State Management ---
-        function loadNewTabToggleState() {
-            const storedState = localStorage.getItem(CONFIG.openInNewTabKey);
-            openInNewTabEnabled = (storedState === 'true');
+        function loadToggleStates() {
+            const storedNewTabState = localStorage.getItem(CONFIG.openInNewTabKey);
+            const storedPlayerPageState = localStorage.getItem(CONFIG.openInPlayerPageKey);
+
+            // Load states, default to false
+            openInNewTabEnabled = (storedNewTabState === 'true');
+            openInPlayerPageEnabled = (storedPlayerPageState === 'true');
+
+            // Ensure only one can be true initially if both were somehow saved as true
+            if (openInNewTabEnabled && openInPlayerPageEnabled) {
+                console.warn("Both toggles were saved as active. Defaulting to 'Player Page'.");
+                openInNewTabEnabled = false; // Prioritize player page if both are true
+                saveToggleStates(); // Save the corrected state
+            }
+
+            // Update checkboxes visually
             if (openInNewTabToggleElement) openInNewTabToggleElement.checked = openInNewTabEnabled;
-            console.log(`Loaded 'Open source in new tab' state: ${openInNewTabEnabled}`);
-        }
-        function saveNewTabToggleState() {
-            try { localStorage.setItem(CONFIG.openInNewTabKey, openInNewTabEnabled); console.log(`Saved 'Open source in new tab' state: ${openInNewTabEnabled}`); }
-            catch (error) { console.error("Error saving 'Open source in new tab' state:", error); }
-        }
-        // NEW: Load/Save for Player Page Toggle
-        function loadPlayerPageToggleState() {
-            const storedState = localStorage.getItem(CONFIG.openInPlayerPageKey);
-            openInPlayerPageEnabled = (storedState === 'true');
             if (openInPlayerPageToggleElement) openInPlayerPageToggleElement.checked = openInPlayerPageEnabled;
+
+            console.log(`Loaded 'Open source in new tab' state: ${openInNewTabEnabled}`);
             console.log(`Loaded 'Open player page in new tab' state: ${openInPlayerPageEnabled}`);
         }
-        function savePlayerPageToggleState() {
-            try { localStorage.setItem(CONFIG.openInPlayerPageKey, openInPlayerPageEnabled); console.log(`Saved 'Open player page in new tab' state: ${openInPlayerPageEnabled}`); }
-            catch (error) { console.error("Error saving 'Open player page in new tab' state:", error); }
+
+        function saveToggleStates() {
+            try {
+                localStorage.setItem(CONFIG.openInNewTabKey, openInNewTabEnabled);
+                localStorage.setItem(CONFIG.openInPlayerPageKey, openInPlayerPageEnabled);
+                console.log(`Saved toggle states: NewTab=${openInNewTabEnabled}, PlayerPage=${openInPlayerPageEnabled}`);
+            } catch (error) {
+                console.error("Error saving toggle states to localStorage:", error);
+            }
         }
 
         // --- Event Listener Setup ---
@@ -363,34 +373,39 @@
                 clearTimeout(searchDebounceTimerId);
                 searchDebounceTimerId = setTimeout(() => filterVisibleContent(event.target.value), CONFIG.searchDebounceMs);
             });
-            // Toggle 1: Open Source in New Tab
+
+            // --- REFINED Toggle Listeners ---
             if (openInNewTabToggleElement) {
                 openInNewTabToggleElement.addEventListener('change', (event) => {
-                    openInNewTabEnabled = event.target.checked;
-                    saveNewTabToggleState();
-                    // If this is checked, uncheck the other toggle
-                    if (openInNewTabEnabled && openInPlayerPageToggleElement) {
+                    const isChecked = event.target.checked;
+                    openInNewTabEnabled = isChecked; // Update state
+
+                    // If this one is checked, uncheck the other
+                    if (isChecked && openInPlayerPageToggleElement) {
                         openInPlayerPageToggleElement.checked = false;
                         openInPlayerPageEnabled = false;
-                        savePlayerPageToggleState();
                     }
+                    saveToggleStates(); // Save both states
                     console.log(`'Open source in new tab' toggled: ${openInNewTabEnabled}`);
                 });
             }
-            // NEW: Toggle 2: Open Player Page in New Tab
+
             if (openInPlayerPageToggleElement) {
                 openInPlayerPageToggleElement.addEventListener('change', (event) => {
-                    openInPlayerPageEnabled = event.target.checked;
-                    savePlayerPageToggleState();
-                    // If this is checked, uncheck the other toggle
-                    if (openInPlayerPageEnabled && openInNewTabToggleElement) {
+                    const isChecked = event.target.checked;
+                    openInPlayerPageEnabled = isChecked; // Update state
+
+                    // If this one is checked, uncheck the other
+                    if (isChecked && openInNewTabToggleElement) {
                         openInNewTabToggleElement.checked = false;
                         openInNewTabEnabled = false;
-                        saveNewTabToggleState();
                     }
+                    saveToggleStates(); // Save both states
                     console.log(`'Open player page in new tab' toggled: ${openInPlayerPageEnabled}`);
                 });
             }
+            // --- End of Refined Toggle Listeners ---
+
             // Keyboard
             document.addEventListener('keydown', (event) => { /* ... (keep existing keyboard nav logic) ... */
                  if (event.key === 'Escape' && currentlyExpandedBoxElement) {
@@ -611,45 +626,27 @@
                 </div>`;
             return boxElement;
         }
-        /**
-         * Creates a single stream source button element with its click handler.
-         * **MODIFIED:** Click handler now checks BOTH toggles (`openInPlayerPageEnabled` first).
-         * @param {string} label - Text label for the button (e.g., 'PM', 'DL', 'Source 1').
-         * @param {string} url - The stream URL associated with this button.
-         * @param {HTMLDivElement} parentBoxElement - The parent channel/match box element.
-         * @returns {HTMLButtonElement} The created button element.
-         */
-        function createStreamSourceButton(label, url, parentBoxElement) {
+        function createStreamSourceButton(label, url, parentBoxElement) { /* ... (keep existing code - handles 3 toggle states) ... */
            const buttonElement = document.createElement('button');
            buttonElement.className = 'stream-button';
            buttonElement.textContent = label || 'Source';
            buttonElement.dataset.streamUrl = url; // Store original URL
 
-           // --- MODIFIED Click Event Listener ---
            buttonElement.onclick = (event) => {
                event.stopPropagation(); // Prevent box expansion toggle
-
-               const itemId = parentBoxElement.dataset.itemId; // Get the unique ID (e.g., PT-channel-0)
+               const itemId = parentBoxElement.dataset.itemId; // Get the unique ID
 
                // --- Priority 1: Open Dedicated Player Page ---
                if (openInPlayerPageEnabled && itemId) {
                    const playerPageUrl = `player.html?item=${encodeURIComponent(itemId)}`;
                    console.log(`Opening player page in new tab: ${label} (${playerPageUrl})`);
                    window.open(playerPageUrl, '_blank');
-
-                   // Optional highlight
-                   buttonElement.classList.add('active');
-                   setTimeout(() => buttonElement.classList.remove('active'), 500);
-
+                   buttonElement.classList.add('active'); setTimeout(() => buttonElement.classList.remove('active'), 500);
                // --- Priority 2: Open Original Source in New Tab ---
                } else if (openInNewTabEnabled) {
                    console.log(`Opening source in new tab: ${label} (${url})`);
                    window.open(url, '_blank');
-
-                   // Optional highlight
-                   buttonElement.classList.add('active');
-                   setTimeout(() => buttonElement.classList.remove('active'), 500);
-
+                   buttonElement.classList.add('active'); setTimeout(() => buttonElement.classList.remove('active'), 500);
                // --- Default: Load in Embedded Player ---
                } else {
                    console.log(`Loading stream in player: ${label} (${url})`);
@@ -706,7 +703,7 @@
         function filterVisibleContent(searchTerm) { /* ... (keep existing code) ... */
              const normalizedSearchTerm = searchTerm.toLowerCase().trim();
             const isSearching = normalizedSearchTerm !== '';
-            console.log(`Filtering content for term: "${normalizedSearchTerm}" on tab: ${activeTabId}`);
+            // console.log(`Filtering content for term: "${normalizedSearchTerm}" on tab: ${activeTabId}`);
             let resultsFoundInActiveTab = false;
             const activeGridElement = document.getElementById(activeTabId);
             const allBoxes = document.querySelectorAll('.channel-box');
@@ -788,13 +785,7 @@
             if (wasCurrentlyExpanded && shouldBeVisibleAfterCollapse) setTimeout(() => boxElement.focus({ preventScroll: true }), 50);
             else if (wasCurrentlyExpanded) setTimeout(() => document.getElementById(activeTabId)?.focus({ preventScroll: true }), 50);
         }
-
-        /**
-         * Populates stream buttons. Attempts auto-load ONLY if BOTH toggles are OFF.
-         * Displays message if either toggle is ON.
-         * @param {HTMLDivElement} boxElement - The expanded box element.
-         */
-        function populateStreamsAndLoadFirst(boxElement) {
+        function populateStreamsAndLoadFirst(boxElement) { /* ... (keep existing code - handles 3 toggle states) ... */
             const sourcesJson = boxElement.dataset.sources;
             const streamButtonsContainer = boxElement.querySelector('.stream-buttons');
             const playerAreaElement = boxElement.querySelector('.player-area');
@@ -806,72 +797,34 @@
             const fragment = document.createDocumentFragment();
             try {
                 const sourcesData = JSON.parse(sourcesJson);
-                // --- Populate Buttons (Logic remains the same) ---
                 if (Array.isArray(sourcesData)) { // Channel
                     sourcesData.forEach((src) => {
                         const url = typeof src === 'object' && src.url ? src.url : (typeof src === 'string' ? src : null);
                         const label = typeof src === 'object' && src.label ? src.label : `Source ${streamCount + 1}`;
-                        if (url) {
-                             if (!firstStreamUrl) firstStreamUrl = url;
-                             const button = createStreamSourceButton(label, url, boxElement);
-                             if (!firstStreamButtonElement) firstStreamButtonElement = button;
-                             fragment.appendChild(button); streamCount++;
-                        }
+                        if (url) { if (!firstStreamUrl) firstStreamUrl = url; const button = createStreamSourceButton(label, url, boxElement); if (!firstStreamButtonElement) firstStreamButtonElement = button; fragment.appendChild(button); streamCount++; }
                     });
                 } else if (typeof sourcesData === 'object' && sourcesData !== null) { // Match
                     Object.entries(sourcesData).forEach(([langKey, sourcesInLang]) => {
                         if (sourcesInLang && Array.isArray(sourcesInLang) && sourcesInLang.length > 0) {
-                            const langGroupDiv = document.createElement('div');
-                            const langLabel = document.createElement('strong'); langLabel.textContent = `${langKey.toUpperCase()}:`; langGroupDiv.appendChild(langLabel);
+                            const langGroupDiv = document.createElement('div'); const langLabel = document.createElement('strong'); langLabel.textContent = `${langKey.toUpperCase()}:`; langGroupDiv.appendChild(langLabel);
                             sourcesInLang.forEach((src) => {
                                 const url = typeof src === 'object' && src.url ? src.url : (typeof src === 'string' ? src : null);
                                 const label = typeof src === 'object' && src.label ? src.label : `Src ${streamCount + 1}`;
-                                 if (url) {
-                                     if (!firstStreamUrl) firstStreamUrl = url;
-                                     const button = createStreamSourceButton(label, url, boxElement);
-                                     if (!firstStreamButtonElement) firstStreamButtonElement = button;
-                                     langGroupDiv.appendChild(button); streamCount++;
-                                }
-                            });
-                            fragment.appendChild(langGroupDiv);
+                                 if (url) { if (!firstStreamUrl) firstStreamUrl = url; const button = createStreamSourceButton(label, url, boxElement); if (!firstStreamButtonElement) firstStreamButtonElement = button; langGroupDiv.appendChild(button); streamCount++; }
+                            }); fragment.appendChild(langGroupDiv);
                         }
                     });
                 }
                 streamButtonsContainer.appendChild(fragment);
-
-                // --- Handle Auto-load / Messages based on Toggles ---
-                if (streamCount === 0) {
-                    displayNoStreamsAvailable(playerAreaElement, streamButtonsContainer);
-                    clearPlayerStateInBox(boxElement);
-                } else if (openInPlayerPageEnabled) {
-                    console.log("Skipping auto-load: 'Open player page' is enabled.");
-                    displayMessageInPlayerArea(playerAreaElement, `<strong>Select a source</strong><span>'Open player page in new tab' is active. Click a button to open.</span>`, false);
-                    clearPlayerStateInBox(boxElement); // Clear player area as it won't be used
-                } else if (openInNewTabEnabled) {
-                    console.log("Skipping auto-load: 'Open source in new tab' is enabled.");
-                    displayMessageInPlayerArea(playerAreaElement, `<strong>Select a source</strong><span>'Open source in new tab' is active. Click a button to open.</span>`, false);
-                    clearPlayerStateInBox(boxElement); // Clear player area as it won't be used
-                } else if (firstStreamUrl && firstStreamButtonElement) {
-                     // BOTH toggles are OFF, proceed with auto-load if player isn't already active
+                if (streamCount === 0) { displayNoStreamsAvailable(playerAreaElement, streamButtonsContainer); clearPlayerStateInBox(boxElement); }
+                else if (openInPlayerPageEnabled) { console.log("Skipping auto-load: 'Open player page' enabled."); displayMessageInPlayerArea(playerAreaElement, `<strong>Select a source</strong><span>'Open player page' active. Click to open.</span>`, false); clearPlayerStateInBox(boxElement); }
+                else if (openInNewTabEnabled) { console.log("Skipping auto-load: 'Open source' enabled."); displayMessageInPlayerArea(playerAreaElement, `<strong>Select a source</strong><span>'Open source' active. Click to open.</span>`, false); clearPlayerStateInBox(boxElement); }
+                else if (firstStreamUrl && firstStreamButtonElement) {
                      const videoEl = boxElement.querySelector('video'); const iframeEl = boxElement.querySelector('iframe');
-                     if (!videoEl.classList.contains('active') && !iframeEl.classList.contains('active')) {
-                        console.log("Auto-loading first stream (both toggles OFF).");
-                        loadStreamIntoPlayer(firstStreamButtonElement, firstStreamUrl, boxElement);
-                     } else {
-                        console.log("Skipping auto-load, player already active.");
-                        // Highlight active button if needed
-                        const activeSrc = videoEl.src || iframeEl.src;
-                        if (activeSrc) streamButtonsContainer.querySelectorAll('.stream-button').forEach(btn => btn.classList.toggle('active', btn.dataset.streamUrl === activeSrc));
-                     }
-                } else {
-                     console.error("Inconsistency: Streams counted, but no first URL/Button.", boxElement.id);
-                     displayNoStreamsAvailable(playerAreaElement, streamButtonsContainer); clearPlayerStateInBox(boxElement);
-                }
-            } catch (error) {
-                console.error("Failed to parse sources/create buttons:", boxElement.id, error);
-                streamButtonsContainer.innerHTML = '<p class="status-message error">Error loading sources.</p>';
-                clearPlayerStateInBox(boxElement);
-            }
+                     if (!videoEl.classList.contains('active') && !iframeEl.classList.contains('active')) { console.log("Auto-loading first stream (toggles OFF)."); loadStreamIntoPlayer(firstStreamButtonElement, firstStreamUrl, boxElement); }
+                     else { console.log("Skipping auto-load, player active."); const activeSrc = videoEl.src || iframeEl.src; if (activeSrc) streamButtonsContainer.querySelectorAll('.stream-button').forEach(btn => btn.classList.toggle('active', btn.dataset.streamUrl === activeSrc)); }
+                } else { console.error("Inconsistency: Streams counted, no first URL/Button.", boxElement.id); displayNoStreamsAvailable(playerAreaElement, streamButtonsContainer); clearPlayerStateInBox(boxElement); }
+            } catch (error) { console.error("Failed to parse sources/create buttons:", boxElement.id, error); streamButtonsContainer.innerHTML = '<p class="status-message error">Error loading sources.</p>'; clearPlayerStateInBox(boxElement); }
         }
         function displayNoStreamsAvailable(playerAreaElement, streamButtonsContainer) { /* ... (keep existing code) ... */
              const message = 'No stream sources listed for this item.';
@@ -882,135 +835,61 @@
         // --- Stream Handling (Only used when BOTH toggles are false) ---
         function loadStreamIntoPlayer(clickedButtonElement, streamUrl, parentBoxElement) { /* ... (keep existing code, including safety check for toggles) ... */
             if (!parentBoxElement || !streamUrl || typeof streamUrl !== 'string') return;
-            // Safety Check: Abort if either toggle is ON
-            if (openInNewTabEnabled || openInPlayerPageEnabled) {
-                console.warn("loadStreamIntoPlayer called, but a new tab toggle is enabled. Aborting.");
-                clearPlayerStateInBox(parentBoxElement); // Clear player area
-                return;
-            }
+            if (openInNewTabEnabled || openInPlayerPageEnabled) { console.warn("loadStreamIntoPlayer called, but toggle enabled. Aborting."); clearPlayerStateInBox(parentBoxElement); return; }
             console.log(`>>> loadStreamIntoPlayer START for box ${parentBoxElement.id}: ${streamUrl}`);
             const playerAreaElement = parentBoxElement.querySelector('.player-area');
-            const loaderElement = playerAreaElement?.querySelector('.loader');
-            const messageContainerElement = playerAreaElement?.querySelector('.player-message');
-            const iframeElement = playerAreaElement?.querySelector('iframe');
-            const videoElement = playerAreaElement?.querySelector('video');
+            const loaderElement = playerAreaElement?.querySelector('.loader'); const messageContainerElement = playerAreaElement?.querySelector('.player-message'); const iframeElement = playerAreaElement?.querySelector('iframe'); const videoElement = playerAreaElement?.querySelector('video');
             if (!playerAreaElement || !loaderElement || !messageContainerElement || !iframeElement || !videoElement) return;
-            clearPlayerStateInBox(parentBoxElement);
-            messageContainerElement.classList.remove('visible'); loaderElement.classList.add('visible');
-            const streamButtonsContainer = parentBoxElement.querySelector('.stream-buttons');
-            if (streamButtonsContainer) streamButtonsContainer.querySelectorAll('.stream-button').forEach(b => b.classList.remove('active'));
-            if (clickedButtonElement) clickedButtonElement.classList.add('active');
-            if (!streamUrl.startsWith('http://') && !streamUrl.startsWith('https://')) {
-                loaderElement.classList.remove('visible');
-                displayMessageInPlayerArea(playerAreaElement, `<strong>Invalid URL</strong><span>Link must start with http/https.</span>`, true, streamUrl, parentBoxElement);
-                return;
-            }
-            setTimeout(() => {
-                try {
-                    const urlObject = new URL(streamUrl);
-                    if (urlObject.pathname.toLowerCase().endsWith('.m3u8')) loadHlsStreamIntoVideo(streamUrl, videoElement, playerAreaElement);
-                    else loadUrlIntoIframe(streamUrl, iframeElement, playerAreaElement);
-                } catch (error) {
-                    loaderElement.classList.remove('visible');
-                    displayMessageInPlayerArea(playerAreaElement, `<strong>URL Error</strong><span>Could not process link.</span>`, true, streamUrl, parentBoxElement);
-                }
-            }, 50);
+            clearPlayerStateInBox(parentBoxElement); messageContainerElement.classList.remove('visible'); loaderElement.classList.add('visible');
+            const streamButtonsContainer = parentBoxElement.querySelector('.stream-buttons'); if (streamButtonsContainer) streamButtonsContainer.querySelectorAll('.stream-button').forEach(b => b.classList.remove('active')); if (clickedButtonElement) clickedButtonElement.classList.add('active');
+            if (!streamUrl.startsWith('http://') && !streamUrl.startsWith('https://')) { loaderElement.classList.remove('visible'); displayMessageInPlayerArea(playerAreaElement, `<strong>Invalid URL</strong><span>Link must start with http/https.</span>`, true, streamUrl, parentBoxElement); return; }
+            setTimeout(() => { try { const urlObject = new URL(streamUrl); if (urlObject.pathname.toLowerCase().endsWith('.m3u8')) loadHlsStreamIntoVideo(streamUrl, videoElement, playerAreaElement); else loadUrlIntoIframe(streamUrl, iframeElement, playerAreaElement); } catch (error) { loaderElement.classList.remove('visible'); displayMessageInPlayerArea(playerAreaElement, `<strong>URL Error</strong><span>Could not process link.</span>`, true, streamUrl, parentBoxElement); } }, 50);
         }
         function clearPlayerStateInBox(boxElement) { /* ... (keep existing code) ... */
              if (!boxElement) return;
-            // console.log(`--- clearPlayerStateInBox START for box: ${boxElement.id}`);
             const playerAreaElement = boxElement.querySelector('.player-area'); if (!playerAreaElement) return;
-            const videoElement = playerAreaElement.querySelector('video'); const iframeElement = playerAreaElement.querySelector('iframe');
-            const loaderElement = playerAreaElement.querySelector('.loader'); const messageContainerElement = playerAreaElement.querySelector('.player-message');
-            if (currentHlsInstance && videoElement && currentHlsInstance.media === videoElement) { try { currentHlsInstance.destroy(); } catch (e) { console.error("HLS destroy error:", e); } currentHlsInstance = null; }
+            const videoElement = playerAreaElement.querySelector('video'); const iframeElement = playerAreaElement.querySelector('iframe'); const loaderElement = playerAreaElement.querySelector('.loader'); const messageContainerElement = playerAreaElement.querySelector('.player-message');
+            if (currentHlsInstance && videoElement && currentHlsInstance.media === videoElement) { try { currentHlsInstance.destroy(); } catch (e) {} currentHlsInstance = null; }
             if (iframeElement) { if (iframeElement.getAttribute('src') && iframeElement.getAttribute('src') !== 'about:blank') iframeElement.src = 'about:blank'; iframeElement.classList.remove('active'); }
             if (videoElement) { videoElement.pause(); if (videoElement.hasAttribute('src')) videoElement.removeAttribute('src'); if (videoElement.currentSrc) videoElement.load(); videoElement.classList.remove('active'); videoElement.poster = CONFIG.placeholderImage; }
             if (loaderElement) loaderElement.classList.remove('visible'); if (messageContainerElement) messageContainerElement.classList.remove('visible');
             const streamButtonsContainer = boxElement.querySelector('.stream-buttons'); if (streamButtonsContainer) streamButtonsContainer.querySelectorAll('.stream-button.active').forEach(b => b.classList.remove('active'));
-            // console.log(`--- clearPlayerStateInBox END for box: ${boxElement.id}`);
         }
-        /**
-         * Displays message. Adds "Try Next" button ONLY if BOTH toggles are OFF.
-         * @param {HTMLDivElement} playerAreaElement
-         * @param {string} messageHtml
-         * @param {boolean} showTryNextButton - Intention to show button if conditions met
-         * @param {string} [failedUrl=null]
-         * @param {HTMLDivElement} [parentBoxElement=null]
-         */
-        function displayMessageInPlayerArea(playerAreaElement, messageHtml, showTryNextButton, failedUrl = null, parentBoxElement = null) {
-             const messageContainerElement = playerAreaElement?.querySelector('.player-message');
-             const loaderElement = playerAreaElement?.querySelector('.loader');
-             const videoElement = playerAreaElement?.querySelector('video');
-             const iframeElement = playerAreaElement?.querySelector('iframe');
+        function displayMessageInPlayerArea(playerAreaElement, messageHtml, showTryNextButton, failedUrl = null, parentBoxElement = null) { /* ... (keep existing code - checks toggles for Try Next btn) ... */
+             const messageContainerElement = playerAreaElement?.querySelector('.player-message'); const loaderElement = playerAreaElement?.querySelector('.loader'); const videoElement = playerAreaElement?.querySelector('video'); const iframeElement = playerAreaElement?.querySelector('iframe');
              if (!messageContainerElement || !loaderElement || !playerAreaElement) return;
-             // console.log("Displaying message in player area:", messageHtml.substring(0, 50) + "...");
-             if (videoElement) videoElement.classList.remove('active'); if (iframeElement) iframeElement.classList.remove('active');
-             loaderElement.classList.remove('visible');
-             messageContainerElement.innerHTML = messageHtml;
-
-             // MODIFIED: Check BOTH toggles before adding "Try Next"
-             if (showTryNextButton && failedUrl && parentBoxElement && !openInNewTabEnabled && !openInPlayerPageEnabled) {
+             if (videoElement) videoElement.classList.remove('active'); if (iframeElement) iframeElement.classList.remove('active'); loaderElement.classList.remove('visible'); messageContainerElement.innerHTML = messageHtml;
+             if (showTryNextButton && failedUrl && parentBoxElement && !openInNewTabEnabled && !openInPlayerPageEnabled) { // Check BOTH toggles
                  const nextButtonElement = findNextAvailableStreamButton(failedUrl, parentBoxElement);
-                 if (nextButtonElement) {
-                     const tryNextBtn = document.createElement('button'); tryNextBtn.className = 'try-next-button'; tryNextBtn.textContent = 'Try Next Source';
-                     tryNextBtn.onclick = (event) => { event.stopPropagation(); nextButtonElement.click(); };
-                     messageContainerElement.appendChild(document.createElement('br')); messageContainerElement.appendChild(tryNextBtn);
-                 } else {
-                     const noMoreSpan = document.createElement('span'); noMoreSpan.style.cssText = 'font-size:0.8em;margin-top:10px;display:block;'; noMoreSpan.textContent = '(No more sources available)'; messageContainerElement.appendChild(noMoreSpan);
-                 }
-             } else if (showTryNextButton && (openInNewTabEnabled || openInPlayerPageEnabled)) {
-                  console.log("   'Try Next Source' button skipped because a new tab toggle is enabled.");
-             }
+                 if (nextButtonElement) { const tryNextBtn = document.createElement('button'); tryNextBtn.className = 'try-next-button'; tryNextBtn.textContent = 'Try Next Source'; tryNextBtn.onclick = (event) => { event.stopPropagation(); nextButtonElement.click(); }; messageContainerElement.appendChild(document.createElement('br')); messageContainerElement.appendChild(tryNextBtn); }
+                 else { const noMoreSpan = document.createElement('span'); noMoreSpan.style.cssText = 'font-size:0.8em;margin-top:10px;display:block;'; noMoreSpan.textContent = '(No more sources available)'; messageContainerElement.appendChild(noMoreSpan); }
+             } else if (showTryNextButton && (openInNewTabEnabled || openInPlayerPageEnabled)) { console.log("   'Try Next Source' button skipped (toggle enabled)."); }
              messageContainerElement.classList.add('visible');
         }
         function findNextAvailableStreamButton(failedUrl, parentBoxElement) { /* ... (keep existing code) ... */
-             if (!failedUrl || !parentBoxElement) return null;
-            const allButtonsInBox = parentBoxElement.querySelectorAll('.stream-button'); let foundFailedButton = false;
-            for (let i = 0; i < allButtonsInBox.length; i++) {
-                const currentButton = allButtonsInBox[i]; if (currentButton.dataset.streamUrl === failedUrl) foundFailedButton = true;
-                else if (foundFailedButton) return currentButton;
-            } return null;
+             if (!failedUrl || !parentBoxElement) return null; const allButtonsInBox = parentBoxElement.querySelectorAll('.stream-button'); let foundFailedButton = false;
+             for (let i = 0; i < allButtonsInBox.length; i++) { const currentButton = allButtonsInBox[i]; if (currentButton.dataset.streamUrl === failedUrl) foundFailedButton = true; else if (foundFailedButton) return currentButton; } return null;
         }
         function loadHlsStreamIntoVideo(hlsUrl, videoElement, playerAreaElement) { /* ... (keep existing code, including safety check) ... */
             if (openInNewTabEnabled || openInPlayerPageEnabled) { console.warn("loadHlsStreamIntoVideo called, but toggle enabled. Aborting."); return; }
-            /* ... rest of HLS loading logic ... */
-             const parentBoxElement = videoElement.closest('.channel-box'); videoElement.poster = CONFIG.placeholderImage;
+            const parentBoxElement = videoElement.closest('.channel-box'); videoElement.poster = CONFIG.placeholderImage;
             if (Hls.isSupported()) {
-                if (currentHlsInstance && currentHlsInstance.media === videoElement) { currentHlsInstance.destroy(); currentHlsInstance = null; }
-                else if (currentHlsInstance) { currentHlsInstance.destroy(); currentHlsInstance = null; }
+                if (currentHlsInstance && currentHlsInstance.media === videoElement) { currentHlsInstance.destroy(); currentHlsInstance = null; } else if (currentHlsInstance) { currentHlsInstance.destroy(); currentHlsInstance = null; }
                 currentHlsInstance = new Hls({ liveSyncDurationCount: 2, manifestLoadingTimeOut: 15000, levelLoadingTimeOut: 15000, fragLoadingTimeOut: 20000, manifestLoadErrorMaxRetry: 3, levelLoadErrorMaxRetry: 4, fragLoadErrorMaxRetry: 5 });
-                const hlsErrorListener = (event, data) => { /* ... error handling ... */
-                    if (!currentHlsInstance || currentHlsInstance.media !== videoElement) return;
-                    console.error('HLS.js Error:', data.type, data.details, data.fatal); let userMessage = `Stream Error (${data.details || 'Unknown'}).`;
-                    if (data.type === Hls.ErrorTypes.NETWORK_ERROR) userMessage = `Network Error (${data.details}).`;
-                    else if (data.type === Hls.ErrorTypes.MEDIA_ERROR && data.details !== 'bufferStalledError') userMessage = `Media Error (${data.details}).`;
-                    if (data.fatal) { displayMessageInPlayerArea(playerAreaElement, `<strong>${userMessage}</strong>`, true, hlsUrl, parentBoxElement); if (currentHlsInstance && currentHlsInstance.media === videoElement) { currentHlsInstance.destroy(); currentHlsInstance = null; } videoElement.classList.remove('active'); videoElement.poster = CONFIG.placeholderImage; }
-                };
-                const hlsManifestParsedListener = () => { /* ... manifest parsed handling ... */
-                     if (!currentHlsInstance || currentHlsInstance.media !== videoElement) return;
-                    playerAreaElement.querySelector('.loader').classList.remove('visible'); videoElement.classList.add('active'); videoElement.muted = true;
-                    videoElement.play().catch(error => { if (currentHlsInstance && currentHlsInstance.media === videoElement) { displayMessageInPlayerArea(playerAreaElement, `<strong>Playback Error</strong><span>${error.name === 'NotAllowedError' ? 'Click play to start.' : error.message}</span>`, error.name !== 'NotAllowedError', hlsUrl, parentBoxElement); if(error.name !== 'NotAllowedError') videoElement.classList.remove('active'); playerAreaElement.querySelector('.loader').classList.remove('visible'); } });
-                };
+                const hlsErrorListener = (event, data) => { if (!currentHlsInstance || currentHlsInstance.media !== videoElement) return; console.error('HLS.js Error:', data.type, data.details, data.fatal); let userMessage = `Stream Error (${data.details || 'Unknown'}).`; if (data.type === Hls.ErrorTypes.NETWORK_ERROR) userMessage = `Network Error (${data.details}).`; else if (data.type === Hls.ErrorTypes.MEDIA_ERROR && data.details !== 'bufferStalledError') userMessage = `Media Error (${data.details}).`; if (data.fatal) { displayMessageInPlayerArea(playerAreaElement, `<strong>${userMessage}</strong>`, true, hlsUrl, parentBoxElement); if (currentHlsInstance && currentHlsInstance.media === videoElement) { currentHlsInstance.destroy(); currentHlsInstance = null; } videoElement.classList.remove('active'); videoElement.poster = CONFIG.placeholderImage; } };
+                const hlsManifestParsedListener = () => { if (!currentHlsInstance || currentHlsInstance.media !== videoElement) return; playerAreaElement.querySelector('.loader').classList.remove('visible'); videoElement.classList.add('active'); videoElement.muted = true; videoElement.play().catch(error => { if (currentHlsInstance && currentHlsInstance.media === videoElement) { displayMessageInPlayerArea(playerAreaElement, `<strong>Playback Error</strong><span>${error.name === 'NotAllowedError' ? 'Click play to start.' : error.message}</span>`, error.name !== 'NotAllowedError', hlsUrl, parentBoxElement); if(error.name !== 'NotAllowedError') videoElement.classList.remove('active'); playerAreaElement.querySelector('.loader').classList.remove('visible'); } }); };
                 currentHlsInstance.on(Hls.Events.ERROR, hlsErrorListener); currentHlsInstance.on(Hls.Events.MANIFEST_PARSED, hlsManifestParsedListener);
                 currentHlsInstance.attachMedia(videoElement); currentHlsInstance.loadSource(hlsUrl);
             } else if (videoElement.canPlayType('application/vnd.apple.mpegurl')) {
-                if (currentHlsInstance) { currentHlsInstance.destroy(); currentHlsInstance = null; }
-                const handleNativeLoadedMetadata = () => { /* ... native load handling ... */
-                    if (videoElement.getAttribute('src') !== hlsUrl) return; playerAreaElement.querySelector('.loader').classList.remove('visible'); videoElement.classList.add('active'); videoElement.muted = true; videoElement.play().catch(error => { if (videoElement.getAttribute('src') === hlsUrl) { displayMessageInPlayerArea(playerAreaElement, `<strong>Playback Error</strong><span>${error.name === 'NotAllowedError' ? 'Click play.' : error.message}</span>`, error.name !== 'NotAllowedError', hlsUrl, parentBoxElement); if(error.name !== 'NotAllowedError') videoElement.classList.remove('active'); playerAreaElement.querySelector('.loader').classList.remove('visible'); } });
-                };
-                const handleNativeError = () => { /* ... native error handling ... */
-                     if (videoElement.getAttribute('src') !== hlsUrl) return; const error = videoElement.error; const msg = error ? (error.message || `code ${error.code}`) : 'Unknown'; displayMessageInPlayerArea(playerAreaElement, `<strong>Stream Error</strong><span>Native HLS failed: ${msg}.</span>`, true, hlsUrl, parentBoxElement); videoElement.classList.remove('active'); videoElement.poster = CONFIG.placeholderImage; playerAreaElement.querySelector('.loader').classList.remove('visible');
-                };
-                videoElement.removeEventListener('loadedmetadata', handleNativeLoadedMetadata); videoElement.removeEventListener('error', handleNativeError);
-                videoElement.addEventListener('loadedmetadata', handleNativeLoadedMetadata); videoElement.addEventListener('error', handleNativeError);
-                videoElement.src = hlsUrl; videoElement.load();
-            } else {
-                displayMessageInPlayerArea(playerAreaElement, `<strong>Unsupported Stream</strong><span>Browser cannot play HLS (.m3u8).</span>`, false); videoElement.classList.remove('active'); videoElement.poster = CONFIG.placeholderImage; playerAreaElement.querySelector('.loader').classList.remove('visible');
-            }
+                 if (currentHlsInstance) { currentHlsInstance.destroy(); currentHlsInstance = null; }
+                 const handleNativeLoadedMetadata = () => { if (videoElement.getAttribute('src') !== hlsUrl) return; playerAreaElement.querySelector('.loader').classList.remove('visible'); videoElement.classList.add('active'); videoElement.muted = true; videoElement.play().catch(error => { if(videoElement.getAttribute('src') === hlsUrl){ displayMessageInPlayerArea(playerAreaElement, `<strong>Playback Error</strong><span>${error.name==='NotAllowedError'?'Click play.':error.message}</span>`, error.name !== 'NotAllowedError', hlsUrl, parentBoxElement); if(error.name !== 'NotAllowedError') videoElement.classList.remove('active'); playerAreaElement.querySelector('.loader').classList.remove('visible'); } }); };
+                 const handleNativeError = () => { if (videoElement.getAttribute('src') !== hlsUrl) return; const err = videoElement.error; const msg = err ? (err.message || `code ${err.code}`) : 'Unknown'; displayMessageInPlayerArea(playerAreaElement, `<strong>Stream Error</strong><span>Native HLS failed: ${msg}.</span>`, true, hlsUrl, parentBoxElement); videoElement.classList.remove('active'); videoElement.poster = CONFIG.placeholderImage; playerAreaElement.querySelector('.loader').classList.remove('visible'); };
+                 videoElement.removeEventListener('loadedmetadata', handleNativeLoadedMetadata); videoElement.removeEventListener('error', handleNativeError); videoElement.addEventListener('loadedmetadata', handleNativeLoadedMetadata); videoElement.addEventListener('error', handleNativeError);
+                 videoElement.src = hlsUrl; videoElement.load();
+            } else { displayMessageInPlayerArea(playerAreaElement, `<strong>Unsupported Stream</strong><span>Browser cannot play HLS (.m3u8).</span>`, false); videoElement.classList.remove('active'); videoElement.poster = CONFIG.placeholderImage; playerAreaElement.querySelector('.loader').classList.remove('visible'); }
         }
         function loadUrlIntoIframe(iframeUrl, iframeElement, playerAreaElement) { /* ... (keep existing code, including safety check) ... */
             if (openInNewTabEnabled || openInPlayerPageEnabled) { console.warn("loadUrlIntoIframe called, but toggle enabled. Aborting."); return; }
-            /* ... rest of iframe loading logic ... */
              const parentBoxElement = iframeElement.closest('.channel-box'); let iframeLoadTimeoutId = null; let isLoadSuccessful = false;
             if (currentHlsInstance) { currentHlsInstance.destroy(); currentHlsInstance = null; }
             const cleanupIframeLoad = () => { clearTimeout(iframeLoadTimeoutId); iframeElement.onload = null; iframeElement.onerror = null; };
