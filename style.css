@@ -91,23 +91,25 @@ header img { max-width: 200px; height: auto; }
 .toggle-switch-container {
     display: flex;
     align-items: center;
-    justify-content: center; /* Center within its own line */
+    /* MODIFIED: Use space-between to push label and switch apart */
+    justify-content: space-between;
     gap: 10px;
-    width: 100%; /* Allow centering within the flex column */
-    max-width: 350px; /* Optional: Limit width */
+    width: 100%; /* Allow taking width */
+    max-width: 300px; /* MODIFIED: Reduced max-width slightly for better centering appearance */
 }
 
 /* Toggle Switch Label Text */
-.toggle-switch-container label {
+/* MODIFIED: Removed flex-grow, added specific alignment */
+.toggle-switch-container label[for] { /* Target only the text label */
     font-size: 0.9em;
     color: var(--text-secondary);
     cursor: pointer;
     user-select: none; /* Prevent text selection */
-    text-align: left; /* Align text to the left */
-    flex-grow: 1; /* Allow label to take available space */
+    text-align: left; /* Ensure text aligns left */
+    /* No flex-grow needed with space-between */
 }
 
-/* The Switch */
+/* The Switch Wrapper (the <label> containing the input and slider) */
 .toggle-switch {
     position: relative;
     display: inline-block;
@@ -460,7 +462,7 @@ footer { text-align: center; color: var(--text-secondary); font-size: 0.8em; pad
      /* Adjust padding for smallest screens */
      .channel-header h3 { padding-left: 25px; padding-right: 25px; }
      /* Adjust toggle label font size */
-     .toggle-switch-container label { font-size: 0.85em; }
+     .toggle-switch-container label[for] { font-size: 0.85em; } /* Target only text label */
 }
 
 /* Styles specific to player.html body to override index.html styles */
@@ -541,3 +543,4 @@ body.player-page .player-area {
 body.player-page .stream-buttons {
     margin-bottom: 20px; /* Ensure spacing below buttons */
 }
+
