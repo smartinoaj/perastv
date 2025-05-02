@@ -37,7 +37,7 @@
             overscroll-behavior-y: contain; /* Prevent pull-to-refresh on mobile */
             -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale;
             min-height: 100vh; /* Ensure body takes at least full viewport height */
-            padding-bottom: 60px; /* Add padding to prevent footer overlap */
+            padding-bottom: 120px; /* Increased padding for footer content */
             position: relative; /* Needed for footer positioning */
         }
         .container { max-width: 1600px; margin: 0 auto; padding: 0 20px; }
@@ -149,7 +149,7 @@
             margin-right: auto;
         }
 
-        /* --- MODIFIED: Styling for MATCH boxes within the ALL grid (NOT Expanded) --- */
+        /* --- Styling for MATCH boxes within the ALL grid (NOT Expanded) --- */
         #ALL .channel-box[id^="match-"]:not(.expanded) {
             grid-column: 1 / -1; /* Force span all columns of the multi-column grid */
             width: 95%;          /* Set width relative to the full grid width */
@@ -159,7 +159,6 @@
         }
 
         /* --- Styling for CHANNEL boxes within the ALL grid (NOT Expanded) --- */
-        /* Ensure they flow naturally in the multi-column grid */
         #ALL .channel-box:not([id^="match-"]):not(.expanded) {
             grid-column: auto / span 1; /* Explicitly take one cell */
             width: auto; /* Reset any potential overrides */
@@ -273,8 +272,7 @@
             }
         }
 
-        /* --- MODIFIED: Specific Styling for EXPANDED MATCH boxes within the ALL grid --- */
-        /* Ensure they also span fully and remain centered */
+        /* Specific Styling for EXPANDED MATCH boxes within the ALL grid */
         #ALL .channel-box[id^="match-"].expanded {
              grid-column: 1 / -1; /* Force full span */
              max-width: 1200px; /* Consistent max-width */
@@ -375,15 +373,24 @@
             width: 100%;
             margin-top: 40px; /* Space above footer */
         }
+        /* Style for the disclaimer text */
+        .disclaimer {
+            font-size: 0.75em; /* Slightly smaller */
+            margin-top: 15px; /* Space above disclaimer */
+            padding: 0 20px; /* Add horizontal padding */
+            max-width: 800px; /* Limit width for readability */
+            margin-left: auto;
+            margin-right: auto;
+            line-height: 1.5; /* Adjust line spacing */
+            color: #888; /* Lighter gray */
+        }
 
         /* --- Loading/Error States (General Page Load) --- */
         .loading-message, .error-message { text-align: center; padding: 50px 20px; color: var(--text-secondary); font-size: 1em; font-weight: 500; }
 
         /* --- Responsive Adjustments --- */
         @media (max-width: 767px) { /* Mobile screens */
-             /* Force 1 column for ALL grids */
              .channel-grid { grid-template-columns: 1fr; }
-             /* Ensure expanded boxes only span 1 column */
              .channel-grid.active .channel-box.expanded {
                  grid-column: auto / span 1;
              }
@@ -411,6 +418,7 @@
             .player-area { min-height: 200px; }
             #search-input { padding: 10px 15px; font-size: 0.95em; }
              .channel-info { font-size: 0.7em;}
+             .disclaimer { font-size: 0.7em; } /* Adjust disclaimer size */
         }
 
     </style>
@@ -444,10 +452,17 @@
     <div id="Matches" class="channel-grid"></div>
 
 </div> <footer>
-    <p id="lastUpdated"></p> </footer>
+    <p id="lastUpdated"></p> <p class="disclaimer">
+        PerasTV Official DISCLAIMER : None of the videos are hosted by this
+        site. Streams hosted from different sites, where sources available over
+        Internet are embedded here. This site is not responsible for the
+        legality of the content. For legal issues, please contact appropriate
+        media file owners/hosters.
+    </p>
+</footer>
 
 <script>
-    /* --- JavaScript (No changes needed from previous version) --- */
+    /* --- JavaScript (No changes needed) --- */
 
     // --- Configuration Constants ---
     const CONFIG = {
