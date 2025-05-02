@@ -98,7 +98,8 @@
              /* Most grids go to 2 columns */
             .channel-grid#PT, .channel-grid#UK, .channel-grid#ES,
             .channel-grid#ALL, .channel-grid#Favorites { grid-template-columns: repeat(2, 1fr); }
-             /* Matches grid remains single column, no max-width */
+             /* Matches grid remains single column */
+            /* --- MODIFIED: Removed max-width and margin from #Matches grid --- */
             #Matches.channel-grid {
                 grid-template-columns: 1fr;
                 /* max-width: 800px; */ /* Removed */
@@ -109,11 +110,11 @@
              /* Most grids go to 3 columns */
             .channel-grid#PT, .channel-grid#UK, .channel-grid#ES,
             .channel-grid#ALL, .channel-grid#Favorites { grid-template-columns: repeat(3, 1fr); }
-             /* Matches grid stays single column, no max-width */
-             /* --- MODIFIED: Removed empty #Matches.channel-grid rule --- */
-            /* #Matches.channel-grid { */
+             /* Matches grid stays single column */
+             /* --- MODIFIED: Removed max-width from #Matches grid --- */
+             #Matches.channel-grid {
                 /* max-width: 1000px; */ /* Removed */
-            /* } */
+            }
         }
         @media (min-width: 1280px) { /* Large screens and up */
              /* Most grids go to 4 columns */
@@ -134,6 +135,7 @@
             flex-direction: column; /* Stack header/info vertically */
         }
         /* Specific styling for MATCH boxes when NOT expanded (full width in Matches/ALL tabs) */
+        /* This rule ensures unexpanded matches still take full width of their container */
         #Matches .channel-box[id^="match-"]:not(.expanded),
         #ALL .channel-box[id^="match-"]:not(.expanded) {
             grid-column: 1 / -1; /* Span full grid width */
@@ -217,7 +219,7 @@
 
         /* --- Expanded Channel Box --- */
         .channel-box.expanded {
-            /* grid-column: 1 / -1; */ /* Removed - should fill single column grid naturally */
+            grid-column: 1 / -1; /* Force item to span all columns of its parent grid */
             width: auto;         /* Allow the item to naturally fill the spanned columns */
             /* max-width: 1200px; */ /* Removed to allow full width */
             margin: 20px 0;   /* Center vertically, remove horizontal auto margin */
