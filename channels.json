@@ -132,7 +132,9 @@
       "logo": "img/channels/benficatv.png",
       "srcs": [
         { "label": "PM", "url": "https://playmatch.live/player/PT/403" },
-        { "label": "DL", "url": "https://thedaddy.to/embed/stream-380.php" }
+        { "label": "DL", "url": "https://thedaddy.to/embed/stream-380.php" },
+        { "label": "DLHD", "url": "https://dlhd.sx/embed/stream-380.php" },
+        { "label": "DL", "url": "https://d.daddylivehd.sx/embed/stream-380.php" }
         ]
     },
     {

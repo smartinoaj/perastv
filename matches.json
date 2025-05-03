@@ -1,43 +1,10 @@
 [
   {
-    "team1": "Manchester City",
-    "logo1": "img/teams/mancity.png",
-    "team2": "Wolverhampton",
-    "logo2": "img/teams/wolves.png",
-    "time": "Sexta-Feira, 20:00",
-    "league": "Premier League", 
-    "pt": [
-      { "label": "PM", "url": "https://playmatch.live/player/PT/6079" },
-      { "label": "DL", "url": "https://thedaddy.to/embed/stream-456.php" },
-      { "label": "T4TV", "url": "https://time4tv.top/embed/channels/stream456/link1.php" },
-      { "label": "DLHD", "url": "https://dlhd.sx/embed/stream-456.php" },
-      { "label": "DL2", "url": "https://d.daddylivehd.sx/embed/stream-456.php" },
-      { "label": "SO", "url": "https://sportzonline.ps/channels/pt/eleven2.php" },
-      { "label": "TP4", "url": "https://streamtp4.com/global1.php?stream=eleven2_pt" }
-    ],
-    "uk": [
-      { "label": "PM", "url": "https://playmatch.live/player/GB/1056" },
-      { "label": "DL", "url": "https://thedaddy.to/embed/stream-38.php" },
-      { "label": "XEXP", "url": "https://xextreamplay.xyz/premiumtv/daddylivehd.php?id=38" },
-      { "label": "PM 2", "url": "https://playmatch.live/player/GB/1057" },
-      { "label": "DL 2", "url": "https://thedaddy.to/embed/stream-130.php" },
-      { "label": "XEXP 2", "url": "https://xextreamplay.xyz/premiumtv/daddylivehd.php?id=130" }
-    ],
-    "es": [
-      { "label": "PM", "url": "https://playmatch.live/player/ES/3247" },
-      { "label": "DL", "url": "https://thedaddy.to/embed/stream-445.php" },
-      { "label": "TP4", "url": "https://streamtp4.com/global1.php?stream=dazn1" },
-      { "label": "PM 2", "url": "https://playmatch.live/player/ES/3248" },
-      { "label": "DL 2", "url": "https://thedaddy.to/embed/stream-446.php" },
-      { "label": "TP4 2", "url": "https://streamtp4.com/global1.php?stream=dazn2" }
-    ]
-  },
-  {
-    "team1": "FC Porto",
-    "logo1": "img/teams/porto.png",
-    "team2": "Moreirense",
-    "logo2": "img/teams/moreirense.png",
-    "time": "Sexta-Feira, 20:15",
+    "team1": "Estoril",
+    "logo1": "img/teams/estoril.png",
+    "team2": "SL Benfica",
+    "logo2": "img/teams/slb.png",
+    "time": "Sexta-Feira, 20:30",
     "league": "Liga Portugal", 
     "pt": [
       { "label": "PM", "url": "https://playmatch.live/player/PT/406" },
@@ -46,6 +13,7 @@
       { "label": "Pop", "url": "https://popcdn.day/go.php?stream=SPT1" },
       { "label": "SO", "url": "https://sportsonline.si/channels/pt/sporttv1.php" },
       { "label": "WLS", "url": "https://welivesport.shop/esta/sporttv1pt.php" }
+
     ]
   }
 ]
