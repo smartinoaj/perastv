@@ -137,7 +137,7 @@ input:focus-visible + .slider { box-shadow: 0 0 1px var(--accent-color); outline
 /* --- Channel Grid (General) & Standings Grid --- */
 .channel-grid, .standings-grid {
     display: none; /* Hidden by default */
-    grid-template-columns: 1fr;
+    grid-template-columns: 1fr; /* Default to single column */
     gap: 20px;
     padding: 0 10px 50px;
     contain: content; /* Optimize rendering */
@@ -149,9 +149,9 @@ input:focus-visible + .slider { box-shadow: 0 0 1px var(--accent-color); outline
 @media (min-width: 1024px) { .channel-grid#PT, .channel-grid#UK, .channel-grid#ES, .channel-grid#ALL, .channel-grid#Favorites { grid-template-columns: repeat(3, 1fr); } }
 @media (min-width: 1280px) { .channel-grid#PT, .channel-grid#UK, .channel-grid#ES, .channel-grid#ALL, .channel-grid#Favorites { grid-template-columns: repeat(4, 1fr); } }
 
-/* Standings grid layout (single column usually best for iframes) */
+/* Standings grid layout (single column, centered) */
 .standings-grid {
-    grid-template-columns: 1fr;
+    grid-template-columns: 1fr; /* Ensures single column */
     max-width: 800px; /* Limit width for better readability */
     margin-left: auto;
     margin-right: auto;
@@ -250,9 +250,10 @@ body[data-theme="light"] .box-disclaimer { color: #71717a; }
     background-color: var(--bg-secondary);
     border-radius: 10px;
     padding: 20px;
-    margin-bottom: 20px; /* Add back margin for standings items */
+    margin-bottom: 20px; /* Space between standings tables */
     border: 1px solid var(--border-color);
     transition: background-color 0.3s ease, border-color 0.3s ease;
+    width: 100%; /* Ensure item takes full width of the grid column */
 }
 .standing-item h3 {
     color: var(--text-primary);
@@ -264,17 +265,18 @@ body[data-theme="light"] .box-disclaimer { color: #71717a; }
 }
 .standing-item iframe {
     width: 100%;
-    height: 500px; /* Adjust height as needed, or use aspect-ratio */
+    /* MODIFIED: Set height to 1043px as requested */
+    height: 1043px; /* Note: Fixed height might impact responsiveness */
     border: none;
     border-radius: 8px;
     background-color: #fff; /* Set a background for the iframe area */
 }
-/* Responsive iframe height */
-@media (max-width: 600px) {
+/* Responsive iframe height (Removed specific height override for smaller screens to keep 1043px) */
+/* @media (max-width: 600px) {
     .standing-item iframe {
         height: 400px;
     }
-}
+} */
 
 
 /* --- Footer (index.html only) --- */
