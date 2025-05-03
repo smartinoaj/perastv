@@ -52,40 +52,22 @@ body {
 .container { max-width: 1600px; margin: 0 auto; padding: 0 20px; }
 
 /* --- Header --- */
-header {
-    display: flex; justify-content: center; align-items: center;
-    padding: 30px 15px 20px; position: relative; min-height: 70px;
-}
+header { display: flex; justify-content: center; align-items: center; padding: 30px 15px 20px; position: relative; min-height: 70px; }
 header img { max-width: 200px; height: auto; }
 #logo-link { display: inline-block; line-height: 0; text-decoration: none; margin: 0 auto; }
 #logo-link:focus-visible { outline: 2px solid var(--accent-color); outline-offset: 3px; border-radius: 4px; }
 
 /* --- Theme Toggle Button (Left) --- */
-#theme-toggle-button {
-    position: absolute; top: 50%; left: 20px; transform: translateY(-50%);
-    background: none; border: none; padding: 8px; cursor: pointer;
-    color: var(--text-secondary); display: flex; align-items: center; justify-content: center;
-    border-radius: 50%; transition: color 0.2s ease, background-color 0.2s ease; z-index: 100;
-}
+#theme-toggle-button { position: absolute; top: 50%; left: 20px; transform: translateY(-50%); background: none; border: none; padding: 8px; cursor: pointer; color: var(--text-secondary); display: flex; align-items: center; justify-content: center; border-radius: 50%; transition: color 0.2s ease, background-color 0.2s ease; z-index: 100; }
 #theme-toggle-button svg { width: 24px; height: 24px; fill: currentColor; }
-#theme-toggle-button:hover, #theme-toggle-button:focus-visible {
-    color: var(--text-primary); background-color: var(--bg-tertiary); outline: none;
-}
+#theme-toggle-button:hover, #theme-toggle-button:focus-visible { color: var(--text-primary); background-color: var(--bg-tertiary); outline: none; }
 
 /* --- Settings Menu (Right) --- */
 .settings-container { position: absolute; top: 50%; right: 20px; transform: translateY(-50%); z-index: 100; }
-#settings-button {
-    background: none; border: none; padding: 8px; cursor: pointer;
-    color: var(--text-secondary); display: flex; align-items: center; justify-content: center;
-    border-radius: 50%; transition: color 0.2s ease, background-color 0.2s ease;
-}
+#settings-button { background: none; border: none; padding: 8px; cursor: pointer; color: var(--text-secondary); display: flex; align-items: center; justify-content: center; border-radius: 50%; transition: color 0.2s ease, background-color 0.2s ease; }
 #settings-button svg { width: 24px; height: 24px; stroke: currentColor; fill: none; stroke-width: 2; stroke-linecap: round; }
 #settings-button:hover, #settings-button:focus-visible { color: var(--text-primary); background-color: var(--bg-tertiary); outline: none; }
-#settings-panel {
-    display: none; position: absolute; top: calc(100% + 10px); right: 0;
-    background-color: var(--bg-secondary); border: 1px solid var(--border-color); border-radius: 8px;
-    box-shadow: 0 4px 15px var(--shadow-color); padding: 15px; width: 280px; z-index: 110;
-}
+#settings-panel { display: none; position: absolute; top: calc(100% + 10px); right: 0; background-color: var(--bg-secondary); border: 1px solid var(--border-color); border-radius: 8px; box-shadow: 0 4px 15px var(--shadow-color); padding: 15px; width: 280px; z-index: 110; }
 #settings-panel.visible { display: block; }
 .settings-panel-item { display: flex; align-items: center; justify-content: space-between; margin-bottom: 15px; }
 .settings-panel-item:last-child { margin-bottom: 0; }
@@ -93,12 +75,7 @@ header img { max-width: 200px; height: auto; }
 
 /* --- Search Bar --- */
 .search-container { display: flex; justify-content: center; margin-bottom: 30px; padding: 0 15px; }
-#search-input {
-    padding: 12px 18px; font-size: 1em; border-radius: 25px;
-    border: 1px solid var(--border-color); background-color: var(--bg-secondary);
-    color: var(--text-primary); width: 100%; max-width: 500px;
-    transition: all 0.2s ease; text-align: center; appearance: none;
-}
+#search-input { padding: 12px 18px; font-size: 1em; border-radius: 25px; border: 1px solid var(--border-color); background-color: var(--bg-secondary); color: var(--text-primary); width: 100%; max-width: 500px; transition: all 0.2s ease; text-align: center; appearance: none; }
 #search-input:focus { outline: none; border-color: var(--border-color-active); background-color: var(--bg-tertiary); }
 #search-input::placeholder { color: var(--text-secondary); text-align: center; }
 #search-input::-webkit-input-placeholder { text-align: center; }
@@ -108,12 +85,7 @@ header img { max-width: 200px; height: auto; }
 
 /* --- Tabs --- */
 .tabs { display: flex; justify-content: center; gap: 12px; margin-bottom: 20px; flex-wrap: wrap; padding: 0 10px; }
-.tab-button {
-    background: transparent; color: var(--text-secondary); border: 1px solid var(--border-color);
-    padding: 10px 25px; cursor: pointer; border-radius: 20px; font-size: 0.9em; font-weight: 600;
-    transition: all 0.2s ease; text-transform: uppercase; letter-spacing: 0.5px;
-    display: inline-flex; align-items: center; gap: 6px; white-space: nowrap;
-}
+.tab-button { background: transparent; color: var(--text-secondary); border: 1px solid var(--border-color); padding: 10px 25px; cursor: pointer; border-radius: 20px; font-size: 0.9em; font-weight: 600; transition: all 0.2s ease; text-transform: uppercase; letter-spacing: 0.5px; display: inline-flex; align-items: center; gap: 6px; white-space: nowrap; }
 .tab-button .tab-icon { width: 1em; height: 1em; fill: currentColor; flex-shrink: 0; }
 .tab-button:hover, .tab-button:focus-visible { background: var(--bg-tertiary); color: var(--text-primary); border-color: var(--bg-tertiary); outline: none; }
 .tab-button.active { background: var(--accent-color); color: white; border-color: var(--accent-color); }
@@ -135,37 +107,39 @@ input:checked + .slider:before { transform: translateX(24px); }
 input:focus-visible + .slider { box-shadow: 0 0 1px var(--accent-color); outline: 2px solid var(--accent-color); outline-offset: 1px; }
 
 /* --- Channel Grid (General) & Standings Grid --- */
-.channel-grid, .standings-grid {
-    display: none; /* Hidden by default */
-    grid-template-columns: 1fr;
-    gap: 20px;
-    padding: 0 10px 50px;
-    contain: content; /* Optimize rendering */
-    opacity: 0; /* Start hidden for animation */
-    animation: gridFadeIn 0.4s ease-out forwards; /* Apply animation */
-}
+.channel-grid, .standings-grid { display: none; grid-template-columns: 1fr; gap: 20px; padding: 0 10px 50px; contain: content; opacity: 0; animation: gridFadeIn 0.4s ease-out forwards; }
 /* Specific column layouts for channel grids */
 @media (min-width: 640px) { .channel-grid#PT, .channel-grid#UK, .channel-grid#ES, .channel-grid#ALL, .channel-grid#Favorites { grid-template-columns: repeat(2, 1fr); } #Matches.channel-grid { grid-template-columns: 1fr; } }
 @media (min-width: 1024px) { .channel-grid#PT, .channel-grid#UK, .channel-grid#ES, .channel-grid#ALL, .channel-grid#Favorites { grid-template-columns: repeat(3, 1fr); } }
 @media (min-width: 1280px) { .channel-grid#PT, .channel-grid#UK, .channel-grid#ES, .channel-grid#ALL, .channel-grid#Favorites { grid-template-columns: repeat(4, 1fr); } }
 
-/* Standings grid layout (single column usually best for iframes) */
+/* Standings grid layout */
 .standings-grid {
-    grid-template-columns: 1fr;
-    max-width: 800px; /* Limit width for better readability */
-    margin-left: auto;
-    margin-right: auto;
+    grid-template-columns: 1fr; /* Default single column */
+    /* max-width: 800px; Remove max-width here */
+    /* margin-left: auto; Remove auto margins */
+    /* margin-right: auto; */
+}
+@media (min-width: 1024px) { /* Apply 2 columns on larger screens */
+    .standings-grid {
+        grid-template-columns: repeat(2, 1fr);
+        max-width: 1400px; /* Adjust max-width for 2 columns */
+        margin-left: auto;
+        margin-right: auto;
+    }
+}
+@media (min-width: 1600px) { /* Optional: 3 columns on very large screens */
+    .standings-grid {
+        grid-template-columns: repeat(3, 1fr);
+        max-width: none; /* Remove max-width if container handles it */
+    }
 }
 
-.channel-grid.active, .standings-grid.active {
-    display: grid; /* Make active grid visible */
-}
+
+.channel-grid.active, .standings-grid.active { display: grid; }
 
 /* Fade-in Animation for Grids */
-@keyframes gridFadeIn {
-    from { opacity: 0; transform: translateY(10px); }
-    to { opacity: 1; transform: translateY(0); }
-}
+@keyframes gridFadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
 /* --- Channel Box (General Styling) --- */
 .channel-box { background: var(--bg-secondary); border-radius: 10px; padding: 15px; cursor: pointer; transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease, background-color 0.3s ease; border: 1px solid transparent; position: relative; overflow: hidden; display: flex; flex-direction: column; min-height: 80px; }
@@ -250,9 +224,11 @@ body[data-theme="light"] .box-disclaimer { color: #71717a; }
     background-color: var(--bg-secondary);
     border-radius: 10px;
     padding: 20px;
-    margin-bottom: 20px; /* Add back margin for standings items */
+    /* margin-bottom: 20px; Removed margin, gap handles spacing */
     border: 1px solid var(--border-color);
     transition: background-color 0.3s ease, border-color 0.3s ease;
+    display: flex; /* Use flex for inner layout */
+    flex-direction: column;
 }
 .standing-item h3 {
     color: var(--text-primary);
@@ -261,19 +237,41 @@ body[data-theme="light"] .box-disclaimer { color: #71717a; }
     margin-bottom: 15px;
     text-align: center;
     transition: color 0.3s ease;
+    flex-shrink: 0; /* Prevent title from shrinking */
 }
+.standing-item .sofascore-embed-container {
+    flex-grow: 1; /* Allow container to fill space */
+    position: relative; /* For potential absolute positioning inside */
+    min-height: 450px; /* Ensure a minimum height */
+}
+
 .standing-item iframe {
-    width: 100%;
-    height: 500px; /* Adjust height as needed, or use aspect-ratio */
+    display: block; /* Remove extra space below iframe */
+    width: 100% !important; /* Override SofaScore inline style */
+    max-width: 100% !important; /* Override SofaScore inline style */
+    height: 100% !important; /* Let container control height */
+    min-height: 450px; /* Match container min-height */
     border: none;
     border-radius: 8px;
-    background-color: #fff; /* Set a background for the iframe area */
+    background-color: #fff; /* Keep background for iframe loading */
 }
-/* Responsive iframe height */
-@media (max-width: 600px) {
-    .standing-item iframe {
-        height: 400px;
-    }
+.standing-item .sofascore-attribution {
+    font-size: 0.75em; /* Smaller font */
+    font-family: Arial, sans-serif; /* Match SofaScore style */
+    text-align: left;
+    margin-top: 10px; /* Space above attribution */
+    color: var(--text-secondary); /* Use theme color */
+    transition: color 0.3s ease;
+    flex-shrink: 0; /* Prevent shrinking */
+}
+.standing-item .sofascore-attribution a {
+    color: var(--info-color); /* Use theme color for link */
+    text-decoration: none;
+    transition: color 0.2s ease;
+}
+.standing-item .sofascore-attribution a:hover {
+    text-decoration: underline;
+    color: var(--accent-color); /* Optional: Hover color */
 }
 
 
@@ -300,8 +298,14 @@ body[data-theme="light"] .status-message.info strong { color: var(--info-color);
 #scroll-to-top-btn svg { width: 1.2em; height: 1.2em; fill: currentColor; }
 
 /* --- Responsive Adjustments (index.html) --- */
-@media (max-width: 767px) { .channel-grid { grid-template-columns: 1fr; } .channel-box { padding: 15px; } .stream-button { padding: 6px 15px; font-size: 0.8em; } header img { max-width: 160px; } .tabs { gap: 10px; margin-bottom: 15px; } .tab-button { padding: 8px 15px; font-size: 0.85em; } #Matches .channel-box[id^="match-"]:not(.expanded), #ALL .channel-box[id^="match-"]:not(.expanded) { max-width: 100%; } #Matches .channel-header, #ALL .channel-box[id^="match-"] .channel-header { gap: 10px; } .match-logo { height: 32px; width: 32px; } .channel-info { font-size: 0.75em;} .channel-box[id^="match-"] .channel-header h3 { margin: 0 5px; font-size: 1em; } .favorite-button { top: 8px; right: 8px; } .favorite-button svg { width: 18px; height: 18px; } .channel-header h3 { padding-left: 30px; padding-right: 30px; } .settings-container { right: 15px; } #theme-toggle-button { left: 15px; } #scroll-to-top-btn { bottom: 20px; right: 20px; padding: 10px; } .standings-grid { padding-left: 5px; padding-right: 5px; } .standing-item { padding: 15px; } }
-@media (max-width: 480px) { .container { padding: 0 10px; } header img { max-width: 120px; } .tabs { gap: 8px; margin-bottom: 15px; } .tab-button { padding: 7px 12px; } .channel-box { padding: 12px; } .channel-header h3 { font-size: 1em;} .channel-box[id^="match-"] .channel-header h3 { margin: 0 5px;} .match-logo { height: 30px; width: 30px; } .stream-buttons strong { display: block; margin-bottom: 5px; margin-right: 0; text-align: center; } .stream-buttons div { text-align: center; } .player-area { min-height: 200px; } #search-input { padding: 10px 15px; font-size: 0.95em; } .channel-info { font-size: 0.7em;} .footer-disclaimer { font-size: 0.7em; } .box-disclaimer { font-size: 0.65em; } .channel-header h3 { padding-left: 25px; padding-right: 25px; } .settings-container { right: 10px; } #settings-button svg { width: 22px; height: 22px; } #settings-panel { width: 250px; } .settings-panel-item label[for] { font-size: 0.85em; } #theme-toggle-button { left: 10px; } #theme-toggle-button svg { width: 22px; height: 22px; } #scroll-to-top-btn { bottom: 15px; right: 15px; padding: 8px; } .standing-item { padding: 10px; } .standing-item h3 { font-size: 1.1em; margin-bottom: 10px; } }
+@media (max-width: 1023px) { /* Adjust breakpoint for standings */
+    .standings-grid {
+        grid-template-columns: 1fr; /* Single column below 1024px */
+        max-width: 800px; /* Reset max-width */
+    }
+}
+@media (max-width: 767px) { .channel-grid { grid-template-columns: 1fr; } .channel-box { padding: 15px; } .stream-button { padding: 6px 15px; font-size: 0.8em; } header img { max-width: 160px; } .tabs { gap: 10px; margin-bottom: 15px; } .tab-button { padding: 8px 15px; font-size: 0.85em; } #Matches .channel-box[id^="match-"]:not(.expanded), #ALL .channel-box[id^="match-"]:not(.expanded) { max-width: 100%; } #Matches .channel-header, #ALL .channel-box[id^="match-"] .channel-header { gap: 10px; } .match-logo { height: 32px; width: 32px; } .channel-info { font-size: 0.75em;} .channel-box[id^="match-"] .channel-header h3 { margin: 0 5px; font-size: 1em; } .favorite-button { top: 8px; right: 8px; } .favorite-button svg { width: 18px; height: 18px; } .channel-header h3 { padding-left: 30px; padding-right: 30px; } .settings-container { right: 15px; } #theme-toggle-button { left: 15px; } #scroll-to-top-btn { bottom: 20px; right: 20px; padding: 10px; } .standings-grid { padding-left: 5px; padding-right: 5px; } .standing-item { padding: 15px; } .standing-item iframe, .standing-item .sofascore-embed-container { min-height: 400px; } }
+@media (max-width: 480px) { .container { padding: 0 10px; } header img { max-width: 120px; } .tabs { gap: 8px; margin-bottom: 15px; } .tab-button { padding: 7px 12px; } .channel-box { padding: 12px; } .channel-header h3 { font-size: 1em;} .channel-box[id^="match-"] .channel-header h3 { margin: 0 5px;} .match-logo { height: 30px; width: 30px; } .stream-buttons strong { display: block; margin-bottom: 5px; margin-right: 0; text-align: center; } .stream-buttons div { text-align: center; } .player-area { min-height: 200px; } #search-input { padding: 10px 15px; font-size: 0.95em; } .channel-info { font-size: 0.7em;} .footer-disclaimer { font-size: 0.7em; } .box-disclaimer { font-size: 0.65em; } .channel-header h3 { padding-left: 25px; padding-right: 25px; } .settings-container { right: 10px; } #settings-button svg { width: 22px; height: 22px; } #settings-panel { width: 250px; } .settings-panel-item label[for] { font-size: 0.85em; } #theme-toggle-button { left: 10px; } #theme-toggle-button svg { width: 22px; height: 22px; } #scroll-to-top-btn { bottom: 15px; right: 15px; padding: 8px; } .standing-item { padding: 10px; } .standing-item h3 { font-size: 1.1em; margin-bottom: 10px; } .standing-item iframe, .standing-item .sofascore-embed-container { min-height: 350px; } }
 
 /* ========================================= */
 /* --- Styles specific to player.html --- */

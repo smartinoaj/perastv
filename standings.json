@@ -1,27 +1,27 @@
 [
     {
-      "leagueName": "Liga Portugal Betclic",
+      "leagueName": "Liga Portugal",
       "embedUrl": "https://widgets.sofascore.com/embed/tournament/52/season/63670/standings/Liga%20Portugal?widgetTitle=Liga%20Portugal&showCompetitionLogo=true"
     },
     {
       "leagueName": "Premier League",
-      "embedUrl": "https://www.sofascore.com/tournament/football/england/premier-league/17#id:61627"
+      "embedUrl": "https://widgets.sofascore.com/embed/tournament/1/season/61627/standings/Premier%20League?widgetTitle=Premier%20League&showCompetitionLogo=true"
     },
     {
       "leagueName": "La Liga",
-      "embedUrl": "https://www.sofascore.com/tournament/football/spain/laliga/8#id:61643"
+      "embedUrl": "https://widgets.sofascore.com/embed/tournament/36/season/61643/standings/LaLiga?widgetTitle=LaLiga&showCompetitionLogo=true"
     },
     {
       "leagueName": "Bundesliga",
-      "embedUrl": "https://www.sofascore.com/tournament/football/germany/bundesliga/35#id:63516"
+      "embedUrl": "https://widgets.sofascore.com/embed/tournament/42/season/63516/standings/Bundesliga?widgetTitle=Bundesliga&showCompetitionLogo=true"
     },
     {
       "leagueName": "Serie A",
-      "embedUrl": "https://www.sofascore.com/tournament/football/italy/serie-a/23#id:63515"
+      "embedUrl": "https://widgets.sofascore.com/embed/tournament/33/season/63515/standings/Serie%20A?widgetTitle=Serie%20A&showCompetitionLogo=true"
     },
     {
       "leagueName": "Ligue 1",
-      "embedUrl": "https://www.sofascore.com/tournament/football/france/ligue-1/34#id:61736"
+      "embedUrl": "https://widgets.sofascore.com/embed/tournament/4/season/61736/standings/Ligue%201?widgetTitle=Ligue%201&showCompetitionLogo=true"
     }
   ]
-  
+    

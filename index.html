@@ -212,7 +212,7 @@
         const CONFIG = {
             channelsUrl: "channels.json",
             matchesUrl: "matches.json",
-            standingsUrl: "standings.json", // ADDED: Standings data URL
+            standingsUrl: "standings.json",
             placeholderImage: 'data:image/svg+xml;charset=UTF-8,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="9" viewBox="0 0 16 9"><rect width="16" height="9" fill="%231a1a1a"/></svg>',
             searchDebounceMs: 300,
             lastTabKey: 'perasTvLastTab',
@@ -230,7 +230,7 @@
         const searchInputElement = document.getElementById('search-input');
         const tabsContainerElement = document.querySelector('.tabs');
         const channelGridElements = document.querySelectorAll('.channel-grid');
-        const standingsGridElement = document.getElementById('Standings'); // ADDED: Standings grid ref
+        const standingsGridElement = document.getElementById('Standings');
         const lastUpdatedTimestampElement = document.getElementById('lastUpdated');
         const initialLoadingMessageElement = document.getElementById('loadingMessage');
         const dataFetchErrorMessageElement = document.getElementById('fetchErrorMessage');
@@ -246,7 +246,7 @@
         let currentHlsInstance = null;
         let allChannelsData = {};
         let allMatchesData = [];
-        let allStandingsData = []; // ADDED: State for standings
+        let allStandingsData = [];
         let currentlyExpandedBoxElement = null;
         let searchDebounceTimerId = null;
         let activeTabId = 'ALL';
@@ -272,7 +272,7 @@
         setupGlobalEventListeners();
         updateTimestampDisplay();
         setInterval(updateTimestampDisplay, 60000);
-        fetchAndRenderData(); // Includes standings fetch now
+        fetchAndRenderData();
 
         // --- Settings Loading & Applying ---
         function loadSettingsFromStorage() { /* ... keep existing ... */ const storedTheme = localStorage.getItem(CONFIG.themeKey); currentTheme = (storedTheme === 'light') ? 'light' : 'dark'; console.log(`Loaded theme: ${currentTheme}`); const storedNewTabState = localStorage.getItem(CONFIG.openInNewTabKey); const storedPlayerPageState = localStorage.getItem(CONFIG.openInPlayerPageKey); openInNewTabEnabled = (storedNewTabState === 'true'); openInPlayerPageEnabled = (storedPlayerPageState === 'true'); if (openInNewTabEnabled && openInPlayerPageEnabled) { openInNewTabEnabled = false; } if (openInNewTabToggleElement) { openInNewTabToggleElement.checked = openInNewTabEnabled; updateAriaChecked(openInNewTabToggleElement, openInNewTabEnabled); } if (openInPlayerPageToggleElement) { openInPlayerPageToggleElement.checked = openInPlayerPageEnabled; updateAriaChecked(openInPlayerPageToggleElement, openInPlayerPageEnabled); } console.log(`Loaded toggles: NewTab=${openInNewTabEnabled}, PlayerPage=${openInPlayerPageEnabled}`); }
@@ -301,36 +301,26 @@
                  const cacheBuster = `?t=${Date.now()}`;
                  const channelsUrl = CONFIG.channelsUrl + cacheBuster;
                  const matchesUrl = CONFIG.matchesUrl + cacheBuster;
-                 const standingsUrl = CONFIG.standingsUrl + cacheBuster; // ADDED
+                 const standingsUrl = CONFIG.standingsUrl + cacheBuster;
 
-                 // Fetch all data sources concurrently
                  const [channelsResponse, matchesResponse, standingsResponse] = await Promise.all([
-                     fetch(channelsUrl),
-                     fetch(matchesUrl),
-                     fetch(standingsUrl) // ADDED
+                     fetch(channelsUrl), fetch(matchesUrl), fetch(standingsUrl)
                  ]);
 
-                 // Check responses
                  if (!channelsResponse.ok) throw new Error(`Failed to load channels: ${channelsResponse.status} ${channelsResponse.statusText}`);
                  if (!matchesResponse.ok) throw new Error(`Failed to load matches: ${matchesResponse.status} ${matchesResponse.statusText}`);
-                 if (!standingsResponse.ok) throw new Error(`Failed to load standings: ${standingsResponse.status} ${standingsResponse.statusText}`); // ADDED
+                 if (!standingsResponse.ok) throw new Error(`Failed to load standings: ${standingsResponse.status} ${standingsResponse.statusText}`);
 
-                 // Parse JSON
                  allChannelsData = await channelsResponse.json();
                  allMatchesData = await matchesResponse.json();
-                 allStandingsData = await standingsResponse.json(); // ADDED
+                 allStandingsData = await standingsResponse.json();
 
-                 // Validate data
                  if (typeof allChannelsData !== 'object' || allChannelsData === null) throw new Error("Invalid channels data format.");
                  if (!Array.isArray(allMatchesData)) throw new Error("Invalid matches data format.");
-                 if (!Array.isArray(allStandingsData)) throw new Error("Invalid standings data format."); // ADDED
+                 if (!Array.isArray(allStandingsData)) throw new Error("Invalid standings data format.");
 
-                 console.log("Data fetched successfully:", { channels: allChannelsData, matches: allMatchesData, standings: allStandingsData }); // Updated log
-
-                 // Render content (including standings)
-                 renderAllContentGrids(); // This now implicitly includes standings rendering
-
-                 // Activate the correct tab
+                 console.log("Data fetched successfully:", { channels: allChannelsData, matches: allMatchesData, standings: allStandingsData });
+                 renderAllContentGrids();
                  const lastSavedTabId = localStorage.getItem(CONFIG.lastTabKey);
                  const validTabIds = Array.from(tabsContainerElement.querySelectorAll('.tab-button')).map(btn => btn.dataset.tab);
                  activateTab(validTabIds.includes(lastSavedTabId) ? lastSavedTabId : 'ALL');
@@ -358,7 +348,7 @@
              renderSpecificGridContent('Matches', allMatchesData || [], 'match');
              renderAllTabContent();
              renderFavoritesTabContent();
-             renderStandingsContent(); // ADDED: Render standings
+             renderStandingsContent(); // Render standings
              addChannelBoxEventListeners();
         }
 
@@ -369,10 +359,10 @@
         // Renders the content for the 'Favorites' tab
         function renderFavoritesTabContent() { /* ... keep existing ... */ const favoritesGridElement = document.getElementById('Favorites'); if (!favoritesGridElement) return; favoritesGridElement.innerHTML = ''; if (favoriteItemIds.length === 0) { favoritesGridElement.innerHTML = '<p class="status-message info">Favorites list is empty.<br>Click ☆ to add.</p>'; return; } const fragment = document.createDocumentFragment(); let validFavoritesFound = 0; favoriteItemIds.forEach(itemId => { let itemElement = null; if (itemId.startsWith('match-')) { const matchIndex = parseInt(itemId.split('-')[1], 10); if (!isNaN(matchIndex) && matchIndex >= 0 && matchIndex < allMatchesData.length) { itemElement = createMatchBoxElement(allMatchesData[matchIndex], itemId); } } else if (itemId.includes('-channel-')) { const parts = itemId.split('-'); const category = parts[0]; const channelIndex = parseInt(parts[parts.length - 1], 10); if (allChannelsData[category] && !isNaN(channelIndex) && channelIndex >= 0 && channelIndex < allChannelsData[category].length) { itemElement = createChannelBoxElement(allChannelsData[category][channelIndex], itemId); } } if (itemElement) { fragment.appendChild(itemElement); validFavoritesFound++; } else { console.warn(`Could not find data for favorite item ID: ${itemId}.`); } }); favoritesGridElement.appendChild(fragment); if (validFavoritesFound === 0 && favoriteItemIds.length > 0) { favoritesGridElement.innerHTML = '<p class="status-message info">Previously favorited items could not be found.</p>'; } }
 
-        // --- ADDED: Render Standings Content ---
+        // --- MODIFIED: Render Standings Content ---
         function renderStandingsContent() {
             if (!standingsGridElement) return;
-            standingsGridElement.innerHTML = ''; // Clear previous content
+            standingsGridElement.innerHTML = ''; // Clear previous
 
             if (!allStandingsData || allStandingsData.length === 0) {
                 standingsGridElement.innerHTML = '<p class="status-message info">No standings available.</p>';
@@ -381,21 +371,49 @@
 
             const fragment = document.createDocumentFragment();
             allStandingsData.forEach((standing, index) => {
-                if (standing.leagueName && standing.embedUrl) {
+                if (standing.leagueName && standing.embedUrl && standing.targetUrl) { // Check for targetUrl too
                     const itemDiv = document.createElement('div');
                     itemDiv.className = 'standing-item';
 
+                    // League Title
                     const title = document.createElement('h3');
                     title.textContent = standing.leagueName;
                     itemDiv.appendChild(title);
 
+                    // Iframe Container (for better height control)
+                    const iframeContainer = document.createElement('div');
+                    iframeContainer.className = 'sofascore-embed-container'; // Added class for styling
+
+                    // Iframe
                     const iframe = document.createElement('iframe');
+                    // Use a unique ID for each iframe if needed, e.g., `sofa-standings-${index}`
+                    // iframe.id = `sofa-standings-${index}`;
                     iframe.src = standing.embedUrl;
                     iframe.title = `${standing.leagueName} Standings`;
-                    iframe.loading = 'lazy'; // Lazy load iframes
-                    // Consider adding sandbox attributes if needed for security
-                    // iframe.sandbox = "allow-scripts allow-same-origin allow-popups";
-                    itemDiv.appendChild(iframe);
+                    iframe.loading = 'lazy';
+                    iframe.setAttribute('frameborder', '0'); // Set attributes via JS
+                    iframe.setAttribute('scrolling', 'no');
+                    // Remove inline styles from JS, control via CSS
+                    // iframe.style.height = '1043px'; // Remove these
+                    // iframe.style.maxWidth = '768px';
+                    // iframe.style.width = '100%';
+                    iframeContainer.appendChild(iframe); // Append iframe to its container
+                    itemDiv.appendChild(iframeContainer); // Append container to itemDiv
+
+                    // Attribution Div
+                    const attributionDiv = document.createElement('div');
+                    attributionDiv.className = 'sofascore-attribution'; // Use class for styling
+                    // attributionDiv.style.fontSize = '12px'; // Remove inline styles
+                    // attributionDiv.style.fontFamily = 'Arial, sans-serif';
+                    // attributionDiv.style.textAlign = 'left';
+
+                    const attributionLink = document.createElement('a');
+                    attributionLink.target = '_blank';
+                    attributionLink.href = standing.targetUrl; // Use targetUrl from JSON
+                    attributionLink.textContent = 'Sofascore';
+
+                    attributionDiv.append('Standings provided by ', attributionLink); // Use append for text nodes
+                    itemDiv.appendChild(attributionDiv);
 
                     fragment.appendChild(itemDiv);
                 } else {
@@ -414,78 +432,10 @@
         function addChannelBoxEventListeners(scopeElement = document) { /* ... keep existing ... */ if (!scopeElement) return; scopeElement.querySelectorAll('.channel-box:not([data-listener-added="true"])').forEach(boxElement => { const headerElement = boxElement.querySelector('.channel-header'); const infoElement = boxElement.querySelector('.channel-info'); const favoriteButtonElement = boxElement.querySelector('.favorite-button'); const boxId = boxElement.id; const itemId = boxElement.dataset.itemId; const handleBoxClick = (event) => { if (event.target.closest('.favorite-button') || event.target.closest('.custom-fullscreen-btn')) return; if (openInPlayerPageEnabled && itemId) { const playerPageUrl = `player.html?item=${encodeURIComponent(itemId)}`; window.open(playerPageUrl, '_blank'); } else { toggleItemBoxExpansion(boxElement); } }; if (headerElement) headerElement.addEventListener('click', handleBoxClick); if (infoElement && getComputedStyle(infoElement).display !== 'none') { infoElement.addEventListener('click', handleBoxClick); } if (favoriteButtonElement && boxId) { favoriteButtonElement.addEventListener('click', (event) => { event.stopPropagation(); toggleFavoriteStatus(boxId, favoriteButtonElement); }); } else if (!boxId) { console.warn("Could not attach favorite listener: Box ID missing.", boxElement); } boxElement.addEventListener('keydown', (event) => { if ((event.key === 'Enter' || event.key === 'Ok') && !boxElement.classList.contains('expanded')) { event.preventDefault(); if (openInPlayerPageEnabled && itemId) { const playerPageUrl = `player.html?item=${encodeURIComponent(itemId)}`; window.open(playerPageUrl, '_blank'); } else { toggleItemBoxExpansion(boxElement); } } }); boxElement.dataset.listenerAdded = 'true'; }); }
 
         // --- Tab Management ---
-        function activateTab(tabIdToShow) {
-            if (tabIdToShow === activeTabId && document.getElementById(tabIdToShow)?.classList.contains('active')) return;
-            console.log(`Activating tab: ${tabIdToShow}`); activeTabId = tabIdToShow;
-            tabsContainerElement.querySelectorAll('.tab-button').forEach(btn => { const isActive = btn.dataset.tab === tabIdToShow; btn.classList.toggle('active', isActive); btn.setAttribute('aria-selected', isActive ? 'true' : 'false'); });
-            // Handle channel grids
-            channelGridElements.forEach(grid => { const isGridActive = grid.id === tabIdToShow; grid.classList.toggle('active', isGridActive); grid.setAttribute('tabindex', isGridActive ? '0' : '-1'); });
-            // Handle standings grid
-            if (standingsGridElement) { const isStandingsActive = standingsGridElement.id === tabIdToShow; standingsGridElement.classList.toggle('active', isStandingsActive); standingsGridElement.setAttribute('tabindex', isStandingsActive ? '0' : '-1'); }
-            // Collapse any open box
-            if (currentlyExpandedBoxElement) { collapseItemBox(currentlyExpandedBoxElement); }
-            localStorage.setItem(CONFIG.lastTabKey, tabIdToShow);
-            // Re-render specific content if needed (e.g., Favorites)
-            if (tabIdToShow === 'Favorites') { renderFavoritesTabContent(); addChannelBoxEventListeners(document.getElementById('Favorites')); }
-            else if (tabIdToShow === 'Standings') { renderStandingsContent(); } // Render standings when tab is activated
-            // Apply search filter
-            filterVisibleContent(searchInputElement.value);
-            // Set focus
-            setTimeout(() => document.getElementById(tabIdToShow)?.focus({ preventScroll: true }), 50);
-        }
+        function activateTab(tabIdToShow) { /* ... keep existing ... */ if (tabIdToShow === activeTabId && document.getElementById(tabIdToShow)?.classList.contains('active')) return; console.log(`Activating tab: ${tabIdToShow}`); activeTabId = tabIdToShow; tabsContainerElement.querySelectorAll('.tab-button').forEach(btn => { const isActive = btn.dataset.tab === tabIdToShow; btn.classList.toggle('active', isActive); btn.setAttribute('aria-selected', isActive ? 'true' : 'false'); }); channelGridElements.forEach(grid => { const isGridActive = grid.id === tabIdToShow; grid.classList.toggle('active', isGridActive); grid.setAttribute('tabindex', isGridActive ? '0' : '-1'); }); if (standingsGridElement) { const isStandingsActive = standingsGridElement.id === tabIdToShow; standingsGridElement.classList.toggle('active', isStandingsActive); standingsGridElement.setAttribute('tabindex', isStandingsActive ? '0' : '-1'); } if (currentlyExpandedBoxElement) { collapseItemBox(currentlyExpandedBoxElement); } localStorage.setItem(CONFIG.lastTabKey, tabIdToShow); if (tabIdToShow === 'Favorites') { renderFavoritesTabContent(); addChannelBoxEventListeners(document.getElementById('Favorites')); } else if (tabIdToShow === 'Standings') { renderStandingsContent(); } filterVisibleContent(searchInputElement.value); setTimeout(() => document.getElementById(tabIdToShow)?.focus({ preventScroll: true }), 50); }
 
         // --- Search Filtering ---
-        function filterVisibleContent(searchTerm) {
-             const normalizedSearchTerm = searchTerm.toLowerCase().trim();
-             const searchWords = normalizedSearchTerm.split(/\s+/).filter(word => word.length > 0);
-             const isSearching = searchWords.length > 0;
-             let resultsFoundInActiveTab = false;
-             const activeGridElement = document.getElementById(activeTabId);
-             const allGrids = [...channelGridElements, standingsGridElement].filter(Boolean); // Include standings grid
-
-             // Filter channel/match boxes
-             allGrids.forEach(grid => {
-                 if (grid.id !== 'Standings') { // Only process channel/match grids here
-                     grid.querySelectorAll('.channel-box').forEach(boxElement => {
-                         const parentGridId = grid.id;
-                         const itemName = boxElement.dataset.itemName?.toLowerCase() || '';
-                         const additionalSearchTerms = boxElement.dataset.searchTerms?.toLowerCase() || '';
-                         const textToSearch = `${itemName} ${additionalSearchTerms}`;
-                         const matchesSearch = isSearching ? searchWords.every(word => textToSearch.includes(word)) : true;
-                         let shouldBeVisible = false;
-                         if (!isSearching) { shouldBeVisible = (parentGridId === activeTabId); }
-                         else {
-                             if (parentGridId === activeTabId) { shouldBeVisible = matchesSearch; }
-                             else if (activeTabId === 'ALL') { shouldBeVisible = matchesSearch; }
-                             else if (activeTabId === 'Favorites') { shouldBeVisible = matchesSearch && favoriteItemIds.includes(boxElement.id); }
-                         }
-                         if (!boxElement.classList.contains('expanded')) { boxElement.classList.toggle('hidden', !shouldBeVisible); boxElement.tabIndex = shouldBeVisible ? 0 : -1; }
-                         else { boxElement.classList.remove('hidden'); boxElement.tabIndex = -1; }
-                         if (shouldBeVisible && parentGridId === activeTabId && !boxElement.classList.contains('expanded')) { resultsFoundInActiveTab = true; }
-                     });
-                 }
-             });
-
-             // Handle Standings grid visibility based on search (hide if searching unless tab is Standings)
-             if (standingsGridElement) {
-                 const isStandingsTabActive = activeTabId === 'Standings';
-                 const shouldStandingsBeVisible = isStandingsTabActive && !isSearching; // Show only if Standings tab active AND not searching
-                 standingsGridElement.classList.toggle('hidden', !shouldStandingsBeVisible);
-                 if (shouldStandingsBeVisible) resultsFoundInActiveTab = true; // Count as results if shown
-             }
-
-             // Display "No results" message
-             if (activeGridElement) {
-                 let noResultsMsgEl = activeGridElement.querySelector('.status-message.info.no-results');
-                 if (!noResultsMsgEl && activeGridElement.id !== 'Standings') { // Don't add to standings grid
-                     noResultsMsgEl = document.createElement('p'); noResultsMsgEl.className = 'status-message info no-results'; noResultsMsgEl.style.display = 'none'; activeGridElement.prepend(noResultsMsgEl);
-                 }
-                 if (noResultsMsgEl) {
-                     if (isSearching && !resultsFoundInActiveTab && activeGridElement.id !== 'Standings') { noResultsMsgEl.innerHTML = `No results found for "<strong>${searchTerm}</strong>" in this section.`; noResultsMsgEl.style.display = 'block'; }
-                     else { noResultsMsgEl.style.display = 'none'; }
-                 }
-             }
-        }
+        function filterVisibleContent(searchTerm) { /* ... keep existing ... */ const normalizedSearchTerm = searchTerm.toLowerCase().trim(); const searchWords = normalizedSearchTerm.split(/\s+/).filter(word => word.length > 0); const isSearching = searchWords.length > 0; let resultsFoundInActiveTab = false; const activeGridElement = document.getElementById(activeTabId); const allGrids = [...channelGridElements, standingsGridElement].filter(Boolean); allGrids.forEach(grid => { if (grid.id !== 'Standings') { grid.querySelectorAll('.channel-box').forEach(boxElement => { const parentGridId = grid.id; const itemName = boxElement.dataset.itemName?.toLowerCase() || ''; const additionalSearchTerms = boxElement.dataset.searchTerms?.toLowerCase() || ''; const textToSearch = `${itemName} ${additionalSearchTerms}`; const matchesSearch = isSearching ? searchWords.every(word => textToSearch.includes(word)) : true; let shouldBeVisible = false; if (!isSearching) { shouldBeVisible = (parentGridId === activeTabId); } else { if (parentGridId === activeTabId) { shouldBeVisible = matchesSearch; } else if (activeTabId === 'ALL') { shouldBeVisible = matchesSearch; } else if (activeTabId === 'Favorites') { shouldBeVisible = matchesSearch && favoriteItemIds.includes(boxElement.id); } } if (!boxElement.classList.contains('expanded')) { boxElement.classList.toggle('hidden', !shouldBeVisible); boxElement.tabIndex = shouldBeVisible ? 0 : -1; } else { boxElement.classList.remove('hidden'); boxElement.tabIndex = -1; } if (shouldBeVisible && parentGridId === activeTabId && !boxElement.classList.contains('expanded')) { resultsFoundInActiveTab = true; } }); } }); if (standingsGridElement) { const isStandingsTabActive = activeTabId === 'Standings'; const shouldStandingsBeVisible = isStandingsTabActive && !isSearching; standingsGridElement.classList.toggle('hidden', !shouldStandingsBeVisible); if (shouldStandingsBeVisible) resultsFoundInActiveTab = true; } if (activeGridElement) { let noResultsMsgEl = activeGridElement.querySelector('.status-message.info.no-results'); if (!noResultsMsgEl && activeGridElement.id !== 'Standings') { noResultsMsgEl = document.createElement('p'); noResultsMsgEl.className = 'status-message info no-results'; noResultsMsgEl.style.display = 'none'; activeGridElement.prepend(noResultsMsgEl); } if (noResultsMsgEl) { if (isSearching && !resultsFoundInActiveTab && activeGridElement.id !== 'Standings') { noResultsMsgEl.innerHTML = `No results found for "<strong>${searchTerm}</strong>" in this section.`; noResultsMsgEl.style.display = 'block'; } else { noResultsMsgEl.style.display = 'none'; } } } }
 
         // --- Channel Box Expansion ---
         function toggleItemBoxExpansion(boxElement) { /* ... keep existing ... */ if (!boxElement) return; const isCurrentlyExpanded = boxElement.classList.contains('expanded'); const headerElement = boxElement.querySelector('.channel-header'); if (!isCurrentlyExpanded && currentlyExpandedBoxElement && currentlyExpandedBoxElement !== boxElement) { collapseItemBox(currentlyExpandedBoxElement); } if (!isCurrentlyExpanded) { expandItemBox(boxElement); if (headerElement) headerElement.setAttribute('aria-expanded', 'true'); } else { collapseItemBox(boxElement); if (headerElement) headerElement.setAttribute('aria-expanded', 'false'); } }
