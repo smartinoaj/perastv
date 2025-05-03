@@ -89,6 +89,18 @@
             display: none;
         }
 
+        /* Style for the clickable logo link */
+        #logo-link {
+            display: inline-block; /* Prevents extra space */
+            line-height: 0; /* Removes potential space below image */
+            text-decoration: none; /* Remove underline */
+        }
+        #logo-link:focus-visible {
+             outline: 2px solid var(--accent-color);
+             outline-offset: 3px;
+             border-radius: 4px; /* Optional: add radius to outline */
+        }
+
         /* Reminder: Optimize images (logos) for faster loading */
         /* Consider using tools like TinyPNG or Squoosh */
     </style>
@@ -109,7 +121,9 @@
 <div class="main-container">
     <div class="container">
         <header>
-            <img src="ptvlogo.png" alt="PERAS TV Logo">
+            <a href="index.html" id="logo-link" aria-label="Go to ALL tab / Home" role="button" tabindex="0">
+                <img src="ptvlogo.png" alt="PERAS TV Logo">
+            </a>
         </header>
 
         <div class="search-container">
@@ -268,6 +282,7 @@
         const dataFetchErrorMessageElement = document.getElementById('fetchErrorMessage');
         const openInNewTabToggleElement = document.getElementById('open-in-new-tab-toggle');
         const openInPlayerPageToggleElement = document.getElementById('open-in-player-page-toggle');
+        const logoLinkElement = document.getElementById('logo-link'); // ADDED: Reference to logo link
 
         // --- Application State ---
         let currentHlsInstance = null;      // Reference to the active HLS.js instance
@@ -290,7 +305,7 @@
         // --- Initial Setup ---
         loadFavoritesFromStorage(); // Load favorites from localStorage
         loadToggleStates();         // Load toggle states from localStorage
-        setupGlobalEventListeners(); // Set up event listeners for tabs, search, toggles, keyboard, fullscreen
+        setupGlobalEventListeners(); // Set up event listeners for tabs, search, toggles, keyboard, fullscreen, logo
         updateTimestampDisplay();   // Display initial time
         setInterval(updateTimestampDisplay, 60000); // Update time every minute
         fetchAndRenderData();       // Fetch data and render the initial view
@@ -495,6 +510,11 @@
                          event.preventDefault(); document.activeElement.click();
                      } else if (document.activeElement && document.activeElement.classList.contains('favorite-button')) {
                          event.preventDefault(); document.activeElement.click();
+                     } else if (document.activeElement === logoLinkElement) { // ADDED: Activate logo link with Enter/OK
+                         event.preventDefault();
+                         // Simulate left click behavior
+                         activateTab('ALL');
+                         window.scrollTo({ top: 0, behavior: 'smooth' });
                      }
                      // Activation of channel-box itself handled in addChannelBoxEventListeners
                  }
@@ -505,6 +525,33 @@
             document.addEventListener('webkitfullscreenchange', updateFullscreenButtonState);
             document.addEventListener('mozfullscreenchange', updateFullscreenButtonState);
             document.addEventListener('MSFullscreenChange', updateFullscreenButtonState);
+
+            // ADDED: Logo Click Listener
+            if (logoLinkElement) {
+                logoLinkElement.addEventListener('click', (event) => {
+                    // Check for middle mouse button click (button === 1)
+                    // or Ctrl/Cmd + Left Click
+                    if (event.button === 1 || event.ctrlKey || event.metaKey) {
+                        // Allow default behavior (opens link in new tab)
+                        return;
+                    }
+                    // Prevent default navigation for left click
+                    event.preventDefault();
+                    // Activate the 'ALL' tab
+                    activateTab('ALL');
+                    // Scroll to top smoothly
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                });
+
+                // Prevent default behavior for auxclick (middle mouse button)
+                // to avoid potential navigation conflicts if JS fails
+                logoLinkElement.addEventListener('auxclick', (event) => {
+                     if (event.button === 1) {
+                         // Allow default behavior (handled by browser)
+                         // event.preventDefault(); // Optionally prevent default if you want full control
+                     }
+                });
+            }
         }
 
         // Helper to get focusable channel boxes in the currently active grid
