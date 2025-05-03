@@ -94,6 +94,11 @@
             display: inline-block; /* Prevents extra space */
             line-height: 0; /* Removes potential space below image */
             text-decoration: none; /* Remove underline */
+            /* Center the logo link if settings icon pushes it */
+            margin: 0 auto; /* Auto margins for centering */
+            /* Adjust if settings icon is present */
+            padding-left: 40px; /* Make space for settings icon on the left */
+            padding-right: 40px; /* Balance padding */
         }
         #logo-link:focus-visible {
              outline: 2px solid var(--accent-color);
@@ -105,9 +110,7 @@
         /* Consider using tools like TinyPNG or Squoosh */
     </style>
     </head>
-<body>
-
-<div id="devtools-detected-message"></div>
+<body> <div id="devtools-detected-message"></div>
 
 <div id="password-overlay" class="hidden">
     <form id="password-form">
@@ -124,6 +127,37 @@
             <a href="index.html" id="logo-link" aria-label="Go to ALL tab / Home" role="button" tabindex="0">
                 <img src="ptvlogo.png" alt="PERAS TV Logo">
             </a>
+
+            <div class="settings-container">
+                <button id="settings-button" aria-label="Open Settings Menu" aria-haspopup="true" aria-expanded="false">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M19.479 10.092C19.272 8.808 18.699 7.668 17.81 6.78L19.83 4.76a.75.75 0 0 0-1.06-1.06l-2.02 2.02c-.888-.89-2.028-1.462-3.312-1.67V1.75a.75.75 0 0 0-1.5 0v2.301c-1.284.208-2.424.78-3.312 1.67L6.59 4.76a.75.75 0 1 0-1.06 1.06l2.02 2.02c-.89.888-1.462 2.028-1.67 3.312H3.58a.75.75 0 0 0 0 1.5h2.3c.208 1.284.78 2.424 1.67 3.312l-2.02 2.02a.75.75 0 0 0 1.06 1.06l2.02-2.02c.888.89 2.028 1.462 3.312 1.67v2.301a.75.75 0 0 0 1.5 0v-2.3c1.284-.208 2.424-.78 3.312-1.67l2.02 2.02a.75.75 0 0 0 1.06-1.06l-2.02-2.02c.89-.888 1.462-2.028 1.67-3.312h2.301a.75.75 0 0 0 0-1.5h-2.3Zm-7.48 2.908a3 3 0 1 0 0-6 3 3 0 0 0 0 6Z"/>
+                    </svg>
+                </button>
+                <div id="settings-panel" role="menu">
+                    <div class="settings-panel-item" role="menuitemcheckbox" aria-checked="false">
+                        <label for="theme-toggle">Light Theme</label>
+                        <label class="toggle-switch">
+                            <input type="checkbox" id="theme-toggle">
+                            <span class="slider"></span>
+                        </label>
+                    </div>
+                    <div class="settings-panel-item" role="menuitemcheckbox" aria-checked="false">
+                        <label for="open-in-new-tab-toggle">Open source in new tab</label>
+                        <label class="toggle-switch">
+                            <input type="checkbox" id="open-in-new-tab-toggle">
+                            <span class="slider"></span>
+                        </label>
+                    </div>
+                    <div class="settings-panel-item" role="menuitemcheckbox" aria-checked="false">
+                        <label for="open-in-player-page-toggle">Open player page in new tab</label>
+                        <label class="toggle-switch">
+                            <input type="checkbox" id="open-in-player-page-toggle">
+                            <span class="slider"></span>
+                        </label>
+                    </div>
+                </div>
+            </div>
         </header>
 
         <div class="search-container">
@@ -141,24 +175,6 @@
             <button class="tab-button" data-tab="UK" role="tab" aria-controls="UK" aria-selected="false">UK</button>
             <button class="tab-button" data-tab="ES" role="tab" aria-controls="ES" aria-selected="false">ES</button>
             <button class="tab-button" data-tab="Matches" role="tab" aria-controls="Matches" aria-selected="false">Matches</button>
-        </div>
-
-        <div class="toggles-container">
-            <div class="toggle-switch-container" id="toggle-new-tab-container">
-                <label class="toggle-switch">
-                    <input type="checkbox" id="open-in-new-tab-toggle">
-                    <span class="slider"></span>
-                </label>
-                <label for="open-in-new-tab-toggle">Open source in new tab</label>
-            </div>
-
-            <div class="toggle-switch-container" id="toggle-player-page-container">
-                <label class="toggle-switch">
-                    <input type="checkbox" id="open-in-player-page-toggle">
-                    <span class="slider"></span>
-                </label>
-                <label for="open-in-player-page-toggle">Open player page in new tab</label>
-            </div>
         </div>
 
         <div id="loadingMessage" class="status-message loading" role="status">Loading channels...</div>
@@ -270,7 +286,8 @@
             favoritesKey: 'perasTvFavorites',   // localStorage key for favorites
             iframeLoadTimeoutMs: 35000,     // Timeout for iframe loading
             openInNewTabKey: 'perasTvOpenInNewTab', // localStorage key for 'Open source in new tab' toggle
-            openInPlayerPageKey: 'perasTvOpenPlayerPage' // localStorage key for 'Open player page' toggle
+            openInPlayerPageKey: 'perasTvOpenPlayerPage', // localStorage key for 'Open player page' toggle
+            themeKey: 'perasTvTheme' // ADDED: localStorage key for theme preference
         };
 
         // --- DOM Element References ---
@@ -280,9 +297,14 @@
         const lastUpdatedTimestampElement = document.getElementById('lastUpdated');
         const initialLoadingMessageElement = document.getElementById('loadingMessage');
         const dataFetchErrorMessageElement = document.getElementById('fetchErrorMessage');
-        const openInNewTabToggleElement = document.getElementById('open-in-new-tab-toggle');
-        const openInPlayerPageToggleElement = document.getElementById('open-in-player-page-toggle');
-        const logoLinkElement = document.getElementById('logo-link'); // ADDED: Reference to logo link
+        const logoLinkElement = document.getElementById('logo-link');
+        // Settings Menu Elements
+        const settingsButtonElement = document.getElementById('settings-button');
+        const settingsPanelElement = document.getElementById('settings-panel');
+        const themeToggleElement = document.getElementById('theme-toggle'); // New theme toggle
+        const openInNewTabToggleElement = document.getElementById('open-in-new-tab-toggle'); // Now inside panel
+        const openInPlayerPageToggleElement = document.getElementById('open-in-player-page-toggle'); // Now inside panel
+        const bodyElement = document.body; // Reference to body for theme switching
 
         // --- Application State ---
         let currentHlsInstance = null;      // Reference to the active HLS.js instance
@@ -294,6 +316,7 @@
         let favoriteItemIds = [];           // Array of IDs for favorited items
         let openInNewTabEnabled = false;    // State of the 'Open source in new tab' toggle
         let openInPlayerPageEnabled = false; // State of the 'Open player page' toggle
+        let isLightThemeEnabled = false;    // ADDED: State for light theme
 
         // --- Disclaimer Text ---
         const BOX_DISCLAIMER_TEXT = `Disclaimer: This site embeds content from external sources. We do not host streams. Availability and quality not guaranteed. Use responsibly.`;
@@ -304,8 +327,9 @@
 
         // --- Initial Setup ---
         loadFavoritesFromStorage(); // Load favorites from localStorage
-        loadToggleStates();         // Load toggle states from localStorage
-        setupGlobalEventListeners(); // Set up event listeners for tabs, search, toggles, keyboard, fullscreen, logo
+        loadSettingsFromStorage(); // MODIFIED: Load all settings (toggles + theme)
+        applyTheme();              // ADDED: Apply the loaded theme immediately
+        setupGlobalEventListeners(); // Set up event listeners for tabs, search, keyboard, fullscreen, logo, settings
         updateTimestampDisplay();   // Display initial time
         setInterval(updateTimestampDisplay, 60000); // Update time every minute
         fetchAndRenderData();       // Fetch data and render the initial view
@@ -382,37 +406,71 @@
             }
         }
 
-        // --- Toggle State Management ---
-        function loadToggleStates() {
+        // --- Settings Management (Theme & Toggles) ---
+        /** Loads theme and toggle states from localStorage */
+        function loadSettingsFromStorage() {
+            // Load Theme
+            const storedTheme = localStorage.getItem(CONFIG.themeKey);
+            isLightThemeEnabled = (storedTheme === 'light'); // Default to dark if null/invalid
+
+            // Load Toggles
             const storedNewTabState = localStorage.getItem(CONFIG.openInNewTabKey);
             const storedPlayerPageState = localStorage.getItem(CONFIG.openInPlayerPageKey);
-
-            // Read states, default to false
             openInNewTabEnabled = (storedNewTabState === 'true');
             openInPlayerPageEnabled = (storedPlayerPageState === 'true');
 
-            // Ensure only one toggle can be active at a time (Player Page takes precedence if both were saved as true)
+            // Ensure mutual exclusivity for new tab toggles
             if (openInNewTabEnabled && openInPlayerPageEnabled) {
-                console.warn("Both toggles were saved as active. Defaulting to 'Player Page'.");
+                console.warn("Both 'new tab' toggles were saved as active. Defaulting to 'Player Page'.");
                 openInNewTabEnabled = false;
-                saveToggleStates(); // Correct the stored state
+                // Don't save here, saveSettings will handle it later if needed
             }
 
-            // Update checkbox states based on loaded values
+            // Update Checkbox States
+            if (themeToggleElement) themeToggleElement.checked = isLightThemeEnabled;
             if (openInNewTabToggleElement) openInNewTabToggleElement.checked = openInNewTabEnabled;
             if (openInPlayerPageToggleElement) openInPlayerPageToggleElement.checked = openInPlayerPageEnabled;
 
+            // Update ARIA attributes for toggles in the panel
+            updateAriaChecked(themeToggleElement, isLightThemeEnabled);
+            updateAriaChecked(openInNewTabToggleElement, openInNewTabEnabled);
+            updateAriaChecked(openInPlayerPageToggleElement, openInPlayerPageEnabled);
+
+
+            console.log(`Loaded Theme: ${isLightThemeEnabled ? 'light' : 'dark'}`);
             console.log(`Loaded 'Open source in new tab' state: ${openInNewTabEnabled}`);
             console.log(`Loaded 'Open player page in new tab' state: ${openInPlayerPageEnabled}`);
         }
 
-        function saveToggleStates() {
+        /** Saves the current theme and toggle states to localStorage */
+        function saveSettingsToStorage() {
             try {
+                // Save Theme
+                localStorage.setItem(CONFIG.themeKey, isLightThemeEnabled ? 'light' : 'dark');
+                // Save Toggles
                 localStorage.setItem(CONFIG.openInNewTabKey, openInNewTabEnabled);
                 localStorage.setItem(CONFIG.openInPlayerPageKey, openInPlayerPageEnabled);
-                console.log(`Saved toggle states: NewTab=${openInNewTabEnabled}, PlayerPage=${openInPlayerPageEnabled}`);
+                console.log(`Saved Settings: Theme=${isLightThemeEnabled ? 'light' : 'dark'}, NewTab=${openInNewTabEnabled}, PlayerPage=${openInPlayerPageEnabled}`);
             } catch (error) {
-                console.error("Error saving toggle states to localStorage:", error);
+                console.error("Error saving settings to localStorage:", error);
+            }
+        }
+
+        /** Applies the current theme state to the body element */
+        function applyTheme() {
+            if (isLightThemeEnabled) {
+                bodyElement.setAttribute('data-theme', 'light');
+            } else {
+                bodyElement.removeAttribute('data-theme');
+            }
+            console.log(`Applied theme: ${isLightThemeEnabled ? 'light' : 'dark'}`);
+        }
+
+        /** Helper to update aria-checked attribute on toggle containers */
+        function updateAriaChecked(toggleInputElement, isChecked) {
+            const container = toggleInputElement?.closest('[role="menuitemcheckbox"]');
+            if (container) {
+                container.setAttribute('aria-checked', isChecked ? 'true' : 'false');
             }
         }
 
@@ -432,42 +490,87 @@
                 }, CONFIG.searchDebounceMs);
             });
 
-            // Toggle switch changes (ensure mutual exclusivity)
+            // --- Settings Menu Listeners ---
+            if (settingsButtonElement && settingsPanelElement) {
+                // Toggle settings panel visibility
+                settingsButtonElement.addEventListener('click', (event) => {
+                    event.stopPropagation(); // Prevent body click listener from closing immediately
+                    const isVisible = settingsPanelElement.classList.toggle('visible');
+                    settingsButtonElement.setAttribute('aria-expanded', isVisible ? 'true' : 'false');
+                });
+
+                // Close settings panel when clicking outside
+                document.addEventListener('click', (event) => {
+                    if (!settingsPanelElement.contains(event.target) && !settingsButtonElement.contains(event.target)) {
+                        if (settingsPanelElement.classList.contains('visible')) {
+                             settingsPanelElement.classList.remove('visible');
+                             settingsButtonElement.setAttribute('aria-expanded', 'false');
+                        }
+                    }
+                });
+
+                 // Close settings panel with Escape key
+                 document.addEventListener('keydown', (event) => {
+                     if (event.key === 'Escape' && settingsPanelElement.classList.contains('visible')) {
+                         settingsPanelElement.classList.remove('visible');
+                         settingsButtonElement.setAttribute('aria-expanded', 'false');
+                         settingsButtonElement.focus(); // Return focus to the button
+                     }
+                 });
+            }
+
+            // --- Toggle Switch Listeners (Inside Settings Panel) ---
+            // Theme Toggle
+            if (themeToggleElement) {
+                themeToggleElement.addEventListener('change', (event) => {
+                    isLightThemeEnabled = event.target.checked;
+                    applyTheme(); // Apply the new theme
+                    saveSettingsToStorage(); // Save the preference
+                    updateAriaChecked(themeToggleElement, isLightThemeEnabled);
+                });
+            }
+            // Open Source in New Tab Toggle
             if (openInNewTabToggleElement) {
                 openInNewTabToggleElement.addEventListener('change', (event) => {
                     const isChecked = event.target.checked;
                     openInNewTabEnabled = isChecked;
-                    // If this toggle is turned ON, turn the other OFF
+                    // Ensure mutual exclusivity
                     if (isChecked && openInPlayerPageToggleElement) {
                         openInPlayerPageToggleElement.checked = false;
                         openInPlayerPageEnabled = false;
+                        updateAriaChecked(openInPlayerPageToggleElement, false);
                     }
-                    saveToggleStates(); // Save the updated states
+                    saveSettingsToStorage();
+                    updateAriaChecked(openInNewTabToggleElement, isChecked);
                     console.log(`'Open source in new tab' toggled: ${openInNewTabEnabled}`);
                 });
             }
+            // Open Player Page in New Tab Toggle
             if (openInPlayerPageToggleElement) {
                 openInPlayerPageToggleElement.addEventListener('change', (event) => {
                     const isChecked = event.target.checked;
                     openInPlayerPageEnabled = isChecked;
-                    // If this toggle is turned ON, turn the other OFF
+                    // Ensure mutual exclusivity
                     if (isChecked && openInNewTabToggleElement) {
                         openInNewTabToggleElement.checked = false;
                         openInNewTabEnabled = false;
+                         updateAriaChecked(openInNewTabToggleElement, false);
                     }
-                    saveToggleStates(); // Save the updated states
+                    saveSettingsToStorage();
+                    updateAriaChecked(openInPlayerPageToggleElement, isChecked);
                     console.log(`'Open player page in new tab' toggled: ${openInPlayerPageEnabled}`);
                 });
             }
 
+
             // Keyboard navigation and interaction
             document.addEventListener('keydown', (event) => {
-                 // Collapse expanded box on Escape key
-                 if (event.key === 'Escape' && currentlyExpandedBoxElement) {
+                 // Collapse expanded box on Escape key (unless settings panel is open)
+                 if (event.key === 'Escape' && currentlyExpandedBoxElement && !settingsPanelElement.classList.contains('visible')) {
                      collapseItemBox(currentlyExpandedBoxElement);
                  }
 
-                 // Handle Escape key for fullscreen exit (browser usually handles this, but we ensure our state updates)
+                 // Handle Escape key for fullscreen exit
                  if (event.key === 'Escape' && (document.fullscreenElement || document.webkitFullscreenElement || document.mozFullScreenElement || document.msFullscreenElement)) {
                      updateFullscreenButtonState(); // Update button icon/state
                  }
@@ -477,22 +580,20 @@
                  const currentIndex = focusableElements.indexOf(document.activeElement);
 
                  if (['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight'].includes(event.key)) {
-                     // Only navigate if focus is within a non-expanded channel box
-                     if (document.activeElement && document.activeElement.closest('.channel-box') && !currentlyExpandedBoxElement) {
+                     // Only navigate if focus is within a non-expanded channel box and settings are closed
+                     if (document.activeElement && document.activeElement.closest('.channel-box') && !currentlyExpandedBoxElement && !settingsPanelElement.classList.contains('visible')) {
                          event.preventDefault(); // Prevent page scrolling
                          let nextIndex = -1;
                          const activeGrid = document.getElementById(activeTabId);
-                         // Determine number of columns for up/down navigation
                          const numCols = activeGrid ? getComputedStyle(activeGrid).gridTemplateColumns.split(' ').length : 1;
 
                          switch (event.key) {
                              case 'ArrowDown': nextIndex = currentIndex + numCols; break;
                              case 'ArrowUp': nextIndex = currentIndex - numCols; break;
-                             case 'ArrowRight': nextIndex = (currentIndex + 1) % numCols === 0 && numCols > 1 ? -1 : currentIndex + 1; break; // Don't wrap right?
-                             case 'ArrowLeft': nextIndex = currentIndex % numCols === 0 && numCols > 1 ? -1 : currentIndex - 1; break; // Don't wrap left?
+                             case 'ArrowRight': nextIndex = (currentIndex + 1) % numCols === 0 && numCols > 1 ? -1 : currentIndex + 1; break;
+                             case 'ArrowLeft': nextIndex = currentIndex % numCols === 0 && numCols > 1 ? -1 : currentIndex - 1; break;
                          }
 
-                         // Focus the next element if it exists
                          if (nextIndex >= 0 && nextIndex < focusableElements.length) {
                              focusableElements[nextIndex].focus();
                          }
@@ -510,11 +611,13 @@
                          event.preventDefault(); document.activeElement.click();
                      } else if (document.activeElement && document.activeElement.classList.contains('favorite-button')) {
                          event.preventDefault(); document.activeElement.click();
-                     } else if (document.activeElement === logoLinkElement) { // ADDED: Activate logo link with Enter/OK
+                     } else if (document.activeElement === logoLinkElement) {
                          event.preventDefault();
-                         // Simulate left click behavior
                          activateTab('ALL');
                          window.scrollTo({ top: 0, behavior: 'smooth' });
+                     } else if (document.activeElement === settingsButtonElement) {
+                         event.preventDefault();
+                         settingsButtonElement.click(); // Open/close settings menu
                      }
                      // Activation of channel-box itself handled in addChannelBoxEventListeners
                  }
@@ -526,30 +629,16 @@
             document.addEventListener('mozfullscreenchange', updateFullscreenButtonState);
             document.addEventListener('MSFullscreenChange', updateFullscreenButtonState);
 
-            // ADDED: Logo Click Listener
+            // Logo Click Listener
             if (logoLinkElement) {
                 logoLinkElement.addEventListener('click', (event) => {
-                    // Check for middle mouse button click (button === 1)
-                    // or Ctrl/Cmd + Left Click
-                    if (event.button === 1 || event.ctrlKey || event.metaKey) {
-                        // Allow default behavior (opens link in new tab)
-                        return;
-                    }
-                    // Prevent default navigation for left click
+                    if (event.button === 1 || event.ctrlKey || event.metaKey) { return; }
                     event.preventDefault();
-                    // Activate the 'ALL' tab
                     activateTab('ALL');
-                    // Scroll to top smoothly
                     window.scrollTo({ top: 0, behavior: 'smooth' });
                 });
-
-                // Prevent default behavior for auxclick (middle mouse button)
-                // to avoid potential navigation conflicts if JS fails
                 logoLinkElement.addEventListener('auxclick', (event) => {
-                     if (event.button === 1) {
-                         // Allow default behavior (handled by browser)
-                         // event.preventDefault(); // Optionally prevent default if you want full control
-                     }
+                     if (event.button === 1) { /* Allow default middle click */ }
                 });
             }
         }
