@@ -8,6 +8,7 @@
         { "label": "DL", "url": "https://thedaddy.to/embed/stream-49.php" },
         { "label": "T4TV", "url": "https://time4tv.top/embed/channels/stream49/link1.php" },
         { "label": "AC", "url": "https://antenacentral.store/sport1pt.php" },
+        { "label": "SP4", "url": "https://streamtp4.com/global1.php?stream=sportv_1pt" },
         { "label": "Pop", "url": "https://popcdn.day/go.php?stream=SPT1" },
         { "label": "SO", "url": "https://sportsonline.si/channels/pt/sporttv1.php" },
         { "label": "WLS", "url": "https://welivesport.shop/esta/sporttv1pt.php" }
@@ -21,6 +22,7 @@
         { "label": "DL", "url": "https://thedaddy.to/embed/stream-74.php" },
         { "label": "T4TV", "url": "https://time4tv.top/embed/channels/stream74/link1.php" },
         { "label": "AC", "url": "https://antenacentral.store/sport2pt.php" },
+        { "label": "SP4", "url": "https://streamtp4.com/global1.php?stream=sportv_2pt" },
         { "label": "SO", "url": "https://sportzonline.ps/channels/pt/sporttv2.php" },
         { "label": "WLS", "url": "https://welivesport.shop/esta/sporttv2pt.php" }
       ]
@@ -33,7 +35,7 @@
          { "label": "DL", "url": "https://thedaddy.to/embed/stream-454.php" },
          { "label": "T4TV", "url": "https://time4tv.top/embed/channels/stream454/link1.php" },
          { "label": "AC", "url": "https://antenacentral.store/sport3pt.php" },
-         { "label": "TP4", "url": "https://streamtp4.com/global1.php?stream=sportv_3pt" },
+         { "label": "SP4", "url": "https://streamtp4.com/global1.php?stream=sportv_3pt" },
          { "label": "SO", "url": "https://sportzonline.ps/channels/pt/sporttv3.php" }
       ]
     },
@@ -45,7 +47,7 @@
         { "label": "DL", "url": "https://thedaddy.to/embed/stream-289.php" },
         { "label": "T4TV", "url": "https://time4tv.top/embed/channels/stream289/link1.php" },
         { "label": "AC", "url": "https://antenacentral.store/sport4pt.php" },
-        { "label": "TP4", "url": "https://streamtp4.com/global1.php?stream=sportv_4pt" }
+        { "label": "SP4", "url": "https://streamtp4.com/global1.php?stream=sportv_4pt" }
       ]
     },
     {
@@ -56,6 +58,7 @@
         { "label": "DL", "url": "https://thedaddy.to/embed/stream-290.php" },
         { "label": "T4TV", "url": "https://time4tv.top/embed/channels/stream290/link1.php" },
         { "label": "AC", "url": "https://antenacentral.store/sport5pt.php" },
+        { "label": "SP4", "url": "https://streamtp4.com/global1.php?stream=sporttv5" },
         { "label": "DLHD", "url": "https://dlhd.sx/embed/stream-290.php" },
         { "label": "SO", "url": "https://sportzonline.ps/channels/pt/sporttv5.php" },
         { "label": "WLS", "url": "https://welivesport.shop/esta/sporttv5pt.php" }
@@ -68,7 +71,7 @@
         { "label": "PM", "url": "https://playmatch.live/player/PT/3294" },
         { "label": "DL", "url": "https://thedaddy.to/embed/stream-291.php" },
         { "label": "AC", "url": "https://antenacentral.store/sport6pt.php" },
-        { "label": "TP4", "url": "https://streamtp4.com/global1.php?stream=sportv_6pt" }
+        { "label": "SP4", "url": "https://streamtp4.com/global1.php?stream=sporttv6" }
       ]
     },
     {
@@ -86,7 +89,7 @@
         { "label": "DL", "url": "https://thedaddy.to/embed/stream-455.php" },
         { "label": "T4TV", "url": "https://time4tv.top/embed/channels/stream455/link1.php" },
         { "label": "AC", "url": "https://antenacentral.store/dazn1pt.php" },
-        { "label": "TP4", "url": "https://streamtp4.com/global1.php?stream=eleven1_pt" },
+        { "label": "SP4", "url": "https://streamtp4.com/global1.php?stream=eleven1_pt" },
         { "label": "SO", "url": "https://sportzonline.ps/channels/pt/eleven1.php" }
       ]
     },
@@ -101,7 +104,7 @@
         { "label": "DLHD", "url": "https://dlhd.sx/embed/stream-456.php" },
         { "label": "DL2", "url": "https://d.daddylivehd.sx/embed/stream-456.php" },
         { "label": "SO", "url": "https://sportzonline.ps/channels/pt/eleven2.php" },
-        { "label": "TP4", "url": "https://streamtp4.com/global1.php?stream=eleven2_pt" }
+        { "label": "SP4", "url": "https://streamtp4.com/global1.php?stream=eleven2_pt" }
       ]
     },
     {
@@ -111,6 +114,7 @@
         { "label": "PM", "url": "https://playmatch.live/player/PT/6080" },
         { "label": "DL", "url": "https://thedaddy.to/embed/stream-457.php" },
         { "label": "AC", "url": "https://antenacentral.store/dazn3pt.php" },
+        { "label": "SP4", "url": "https://streamtp4.com/global1.php?stream=eleven3_pt" },
         { "label": "WLS", "url": "https://welivesport.shop/esta/eleven3pt.php" }
       ]
     },
@@ -122,6 +126,7 @@
         { "label": "DL", "url": "https://thedaddy.to/embed/stream-458.php" },
         { "label": "T4TV", "url": "https://time4tv.top/embed/channels/stream458/link1.php" },
         { "label": "AC", "url": "https://antenacentral.store/dazn4pt.php" },
+        { "label": "SP4", "url": "https://streamtp4.com/global1.php?stream=eleven4_pt" },
         { "label": "WLS", "url": "https://welivesport.shop/esta/eleven4pt.php" }
       ]
     },
@@ -131,7 +136,8 @@
       "srcs": [
         { "label": "PM", "url": "https://playmatch.live/player/PT/6082" },
         { "label": "DL", "url": "https://thedaddy.to/embed/stream-459.php" },
-        { "label": "AC", "url": "https://antenacentral.store/dazn5pt.php" }
+        { "label": "AC", "url": "https://antenacentral.store/dazn5pt.php" },
+        { "label": "SP4", "url": "https://streamtp4.com/global1.php?stream=eleven5_pt" }
       ]
     },
     {
@@ -158,7 +164,9 @@
       "logo": "img/channels/canal11.png",
       "srcs": [
         { "label": "PM", "url": "https://playmatch.live/player/PT/2717" },
-        { "label": "Dzeko", "url": "https://dzeko11.pro/source/64" }
+        { "label": "Dzeko", "url": "https://dzeko11.pro/source/64" },
+        { "label": "SP4", "url": "https://streamtp4.com/global1.php?stream=canal11_pt" }
+
       ]
     },
     {
@@ -200,7 +208,7 @@
             { "label": "DL", "url": "https://thedaddy.to/embed/stream-31.php" },
             { "label": "T4TV", "url": "https://time4tv.top/embed/channels/stream31/link1.php" },
             { "label": "AC", "url": "hhttps://antenacentral.store/maxtnt1.php" },
-            { "label": "TP4", "url": "https://streamtp4.com/global1.php?stream=tnt_1_gb" },
+            { "label": "SP4", "url": "https://streamtp4.com/global1.php?stream=tnt_1_gb" },
             { "label": "SMLB", "url": "https://soccermlbstream.top/extra/1.php" },
             { "label": "DL1", "url": "https://daddylivehd1.click/embed/stream-31.php" }
           ]
@@ -213,7 +221,7 @@
             { "label": "DL", "url": "https://thedaddy.to/embed/stream-32.php" },
             { "label": "T4TV", "url": "https://time4tv.top/embed/channels/stream32/link1.php" },
             { "label": "AC", "url": "https://antenacentral.store/maxtnt2.php" },
-            { "label": "TP4", "url": "https://streamtp4.com/global1.php?stream=tnt_2_gb" }
+            { "label": "SP4", "url": "https://streamtp4.com/global1.php?stream=tnt_2_gb" }
           ]
     },
     {
@@ -224,6 +232,7 @@
             { "label": "DL", "url": "https://thedaddy.to/embed/stream-130.php" },
             { "label": "T4TV", "url": "https://time4tv.top/embed/channels/stream33/link1.php" },
             { "label": "AC", "url": "https://antenacentral.store/maxtnt3.php" },
+            { "label": "SP4", "url": "https://streamtp4.com/global1.php?stream=tnt_3_gb" },
             { "label": "XEXP", "url": "https://xextreamplay.xyz/premiumtv/daddylivehd.php?id=130" }
           ]
     },
@@ -235,7 +244,7 @@
             { "label": "DL", "url": "https://thedaddy.to/embed/stream-34.php" },
             { "label": "T4TV", "url": "https://time4tv.top/embed/channels/stream34/link1.php" },
             { "label": "AC", "url": "https://antenacentral.store/maxtnt4.php" },
-            { "label": "TP4", "url": "https://streamtp4.com/global1.php?stream=tnt_4_gb" }
+            { "label": "SP4", "url": "https://streamtp4.com/global1.php?stream=tnt_4_gb" }
           ]
         },
         {
@@ -281,7 +290,7 @@
             { "label": "AC", "url": "https://antenacentral.store/dazn1.php" },
             { "label": "DLHD", "url": "https://dlhd.sx/embed/stream-445.php" },
             { "label": "DL1", "url": "https://d.daddylivehd.sx/embed/stream-445.php" },
-            { "label": "TP4", "url": "https://streamtp4.com/global1.php?stream=dazn1" }
+            { "label": "SP4", "url": "https://streamtp4.com/global1.php?stream=dazn1" }
           ]
     },
     {
@@ -293,7 +302,7 @@
             { "label": "AC", "url": "https://antenacentral.store/dazn2.php" },
             { "label": "DLHD", "url": "https://dlhd.sx/embed/stream-446.php" },
             { "label": "DL1", "url": "https://d.daddylivehd.sx/embed/stream-446.php" },
-            { "label": "TP4", "url": "https://streamtp4.com/global1.php?stream=dazn2" }
+            { "label": "SP4", "url": "https://streamtp4.com/global1.php?stream=dazn2" }
           ]
         },
         {
@@ -332,7 +341,7 @@
             { "label": "PM", "url": "https://playmatch.live/player/ES/5496" },
             { "label": "DL", "url": "https://thedaddy.to/embed/stream-539.php" },
             { "label": "AC", "url": "https://antenacentral.store/liga1.php" },
-            { "label": "TP4", "url": "https://streamtp4.com/global1.php?stream=laligahypermotion" }
+            { "label": "SP4", "url": "https://streamtp4.com/global1.php?stream=laligahypermotion" }
           ]
     },
     {
@@ -416,7 +425,8 @@
             { "label": "T4TV", "url": "https://time4tv.top/embed/channels/stream435/link1.php" },
             { "label": "AC", "url": "https://antenacentral.store/movistarcampeones.php" },
             { "label": "DLHD", "url": "https://dlhd.sx/embed/stream-435.php" },
-            { "label": "DL1", "url": "https://daddylivehd1.click/embed/stream-435.php" }
+            { "label": "DL1", "url": "https://daddylivehd1.click/embed/stream-435.php" },
+            { "label": "SP4", "url": "https://streamtp4.com/global1.php?stream=movistarligadecampeones" }
           ]
     },
     {
