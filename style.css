@@ -381,23 +381,24 @@ body.player-page .loader {
     top: 10px;
     right: 10px;
     z-index: 10; /* Ensure it's above the iframe/video */
-    background-color: rgba(42, 42, 42, 0.7);
+    /* MODIFIED: Removed background color */
+    background-color: transparent;
     border: none;
-    color: white;
+    color: white; /* Keep icon color white */
     padding: 8px;
     border-radius: 4px;
     cursor: pointer;
     line-height: 0; /* Align SVG nicely */
-    transition: background-color 0.2s ease, opacity 0.3s ease; /* Added opacity transition */
-    opacity: 0; /* *** MODIFIED: Initially hidden *** */
+    transition: opacity 0.3s ease; /* Only transition opacity */
+    opacity: 0; /* Initially hidden */
     display: none; /* Hide initially, shown by JS when player active */
-    pointer-events: none; /* *** MODIFIED: Initially not interactive *** */
+    pointer-events: none; /* Initially not interactive */
 }
 
 /* Show button when player is active AND (hovering player-area OR button has focus) */
 .player-area:hover .custom-fullscreen-btn,
 .player-area .custom-fullscreen-btn:focus-visible {
-    /* Only apply hover/focus visibility if the button is already display: block (meaning player is active) */
+    /* Only apply hover/focus visibility if the button is already display: block */
     opacity: 0.7; /* Make it visible */
     pointer-events: auto; /* Make it interactive */
 }
@@ -405,7 +406,8 @@ body.player-page .loader {
 /* Specific styles for when the button itself is hovered (while visible) */
 .player-area .custom-fullscreen-btn:hover {
      opacity: 1; /* Fully opaque on hover */
-     background-color: rgba(62, 62, 62, 0.9);
+     /* MODIFIED: Removed background color change on hover */
+     background-color: transparent;
 }
 
 /* Specific styles for when the button itself is focused (while visible) */
@@ -413,14 +415,16 @@ body.player-page .loader {
     opacity: 1; /* Fully opaque when focused */
     outline: 2px solid var(--accent-color);
     outline-offset: 1px;
+    /* MODIFIED: Removed background color change on focus */
+    background-color: transparent;
 }
 
 
 /* Show button (display: block) only when iframe or video is active */
-/* JS handles setting display: block; these rules ensure opacity/pointer-events */
+/* JS handles setting display: block; these rules ensure it's initially hidden via opacity */
 .player-area iframe.active ~ .custom-fullscreen-btn,
 .player-area video.active ~ .custom-fullscreen-btn {
-     display: block; /* *** IMPORTANT: JS sets this, CSS ensures it's initially hidden via opacity *** */
+     display: block;
      /* Opacity and pointer-events are handled by the hover/focus rules above */
 }
 
