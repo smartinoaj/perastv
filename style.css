@@ -149,13 +149,20 @@ input:focus-visible + .slider { box-shadow: 0 0 1px var(--accent-color); outline
 @media (min-width: 1024px) { .channel-grid#PT, .channel-grid#UK, .channel-grid#ES, .channel-grid#ALL, .channel-grid#Favorites { grid-template-columns: repeat(3, 1fr); } }
 @media (min-width: 1280px) { .channel-grid#PT, .channel-grid#UK, .channel-grid#ES, .channel-grid#ALL, .channel-grid#Favorites { grid-template-columns: repeat(4, 1fr); } }
 
-/* Standings grid layout (single column, centered) */
+/* Standings grid layout (single column mobile, two columns desktop) */
 .standings-grid {
-    grid-template-columns: 1fr; /* Ensures single column */
-    max-width: 800px; /* Limit width for better readability */
+    grid-template-columns: 1fr; /* Ensures single column on mobile */
+    max-width: 1400px; /* Adjust max-width if needed for two columns */
     margin-left: auto;
     margin-right: auto;
 }
+/* MODIFIED: Apply two columns for standings grid on medium screens and up */
+@media (min-width: 768px) {
+    .standings-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
 
 .channel-grid.active, .standings-grid.active {
     display: grid; /* Make active grid visible */
@@ -265,19 +272,12 @@ body[data-theme="light"] .box-disclaimer { color: #71717a; }
 }
 .standing-item iframe {
     width: 100%;
-    /* MODIFIED: Set height to 1043px as requested */
-    height: 1043px; /* Note: Fixed height might impact responsiveness */
+    /* MODIFIED: Set height to 1123px as requested */
+    height: 1123px; /* Note: Fixed height might impact responsiveness */
     border: none;
     border-radius: 8px;
     background-color: #fff; /* Set a background for the iframe area */
 }
-/* Responsive iframe height (Removed specific height override for smaller screens to keep 1043px) */
-/* @media (max-width: 600px) {
-    .standing-item iframe {
-        height: 400px;
-    }
-} */
-
 
 /* --- Footer (index.html only) --- */
 footer { text-align: center; color: var(--text-secondary); font-size: 0.8em; padding: 20px 0; width: 100%; margin-top: 40px; transition: color 0.3s ease; }
@@ -302,8 +302,58 @@ body[data-theme="light"] .status-message.info strong { color: var(--info-color);
 #scroll-to-top-btn svg { width: 1.2em; height: 1.2em; fill: currentColor; }
 
 /* --- Responsive Adjustments (index.html) --- */
-@media (max-width: 767px) { .channel-grid { grid-template-columns: 1fr; } .channel-box { padding: 15px; } .stream-button { padding: 6px 15px; font-size: 0.8em; } header img { max-width: 160px; } .tabs { gap: 10px; margin-bottom: 15px; } .tab-button { padding: 8px 15px; font-size: 0.85em; } #Matches .channel-box[id^="match-"]:not(.expanded), #ALL .channel-box[id^="match-"]:not(.expanded) { max-width: 100%; } #Matches .channel-header, #ALL .channel-box[id^="match-"] .channel-header { gap: 10px; } .match-logo { height: 32px; width: 32px; } .channel-info { font-size: 0.75em;} .channel-box[id^="match-"] .channel-header h3 { margin: 0 5px; font-size: 1em; } .favorite-button { top: 8px; right: 8px; } .favorite-button svg { width: 18px; height: 18px; } .channel-header h3 { padding-left: 30px; padding-right: 30px; } .settings-container { right: 15px; } #theme-toggle-button { left: 15px; } #scroll-to-top-btn { bottom: 20px; right: 20px; padding: 10px; } .standings-grid { padding-left: 5px; padding-right: 5px; } .standing-item { padding: 15px; } }
-@media (max-width: 480px) { .container { padding: 0 10px; } header img { max-width: 120px; } .tabs { gap: 8px; margin-bottom: 15px; } .tab-button { padding: 7px 12px; } .channel-box { padding: 12px; } .channel-header h3 { font-size: 1em;} .channel-box[id^="match-"] .channel-header h3 { margin: 0 5px;} .match-logo { height: 30px; width: 30px; } .stream-buttons strong { display: block; margin-bottom: 5px; margin-right: 0; text-align: center; } .stream-buttons div { text-align: center; } .player-area { min-height: 200px; } #search-input { padding: 10px 15px; font-size: 0.95em; } .channel-info { font-size: 0.7em;} .footer-disclaimer { font-size: 0.7em; } .box-disclaimer { font-size: 0.65em; } .channel-header h3 { padding-left: 25px; padding-right: 25px; } .settings-container { right: 10px; } #settings-button svg { width: 22px; height: 22px; } #settings-panel { width: 250px; } .settings-panel-item label[for] { font-size: 0.85em; } #theme-toggle-button { left: 10px; } #theme-toggle-button svg { width: 22px; height: 22px; } #scroll-to-top-btn { bottom: 15px; right: 15px; padding: 8px; } .standing-item { padding: 10px; } .standing-item h3 { font-size: 1.1em; margin-bottom: 10px; } }
+@media (max-width: 767px) {
+    .channel-grid { grid-template-columns: 1fr; }
+    .channel-box { padding: 15px; }
+    .stream-button { padding: 6px 15px; font-size: 0.8em; }
+    header img { max-width: 160px; }
+    .tabs { gap: 10px; margin-bottom: 15px; }
+    .tab-button { padding: 8px 15px; font-size: 0.85em; }
+    #Matches .channel-box[id^="match-"]:not(.expanded), #ALL .channel-box[id^="match-"]:not(.expanded) { max-width: 100%; }
+    #Matches .channel-header, #ALL .channel-box[id^="match-"] .channel-header { gap: 10px; }
+    .match-logo { height: 32px; width: 32px; }
+    .channel-info { font-size: 0.75em;}
+    .channel-box[id^="match-"] .channel-header h3 { margin: 0 5px; font-size: 1em; }
+    .favorite-button { top: 8px; right: 8px; }
+    .favorite-button svg { width: 18px; height: 18px; }
+    .channel-header h3 { padding-left: 30px; padding-right: 30px; }
+    .settings-container { right: 15px; }
+    #theme-toggle-button { left: 15px; }
+    #scroll-to-top-btn { bottom: 20px; right: 20px; padding: 10px; }
+    .standings-grid {
+        padding-left: 5px;
+        padding-right: 5px;
+        grid-template-columns: 1fr; /* Ensure standings are single column on small screens */
+    }
+    .standing-item { padding: 15px; }
+}
+@media (max-width: 480px) {
+    .container { padding: 0 10px; }
+    header img { max-width: 120px; }
+    .tabs { gap: 8px; margin-bottom: 15px; }
+    .tab-button { padding: 7px 12px; }
+    .channel-box { padding: 12px; }
+    .channel-header h3 { font-size: 1em;}
+    .channel-box[id^="match-"] .channel-header h3 { margin: 0 5px;}
+    .match-logo { height: 30px; width: 30px; }
+    .stream-buttons strong { display: block; margin-bottom: 5px; margin-right: 0; text-align: center; }
+    .stream-buttons div { text-align: center; }
+    .player-area { min-height: 200px; }
+    #search-input { padding: 10px 15px; font-size: 0.95em; }
+    .channel-info { font-size: 0.7em;}
+    .footer-disclaimer { font-size: 0.7em; }
+    .box-disclaimer { font-size: 0.65em; }
+    .channel-header h3 { padding-left: 25px; padding-right: 25px; }
+    .settings-container { right: 10px; }
+    #settings-button svg { width: 22px; height: 22px; }
+    #settings-panel { width: 250px; }
+    .settings-panel-item label[for] { font-size: 0.85em; }
+    #theme-toggle-button { left: 10px; }
+    #theme-toggle-button svg { width: 22px; height: 22px; }
+    #scroll-to-top-btn { bottom: 15px; right: 15px; padding: 8px; }
+    .standing-item { padding: 10px; }
+    .standing-item h3 { font-size: 1.1em; margin-bottom: 10px; }
+}
 
 /* ========================================= */
 /* --- Styles specific to player.html --- */
