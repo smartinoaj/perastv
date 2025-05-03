@@ -16,101 +16,42 @@
     <style>
         /* --- Password Protection Styles --- */
         #password-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: var(--bg-primary); /* Match body background */
-            z-index: 1000; /* Ensure it's on top */
-            display: flex; /* Hidden by default, shown via JS if needed */
-            justify-content: center;
-            align-items: center;
-            flex-direction: column;
-            padding: 20px;
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background-color: var(--bg-primary); z-index: 1000; display: flex;
+            justify-content: center; align-items: center; flex-direction: column; padding: 20px;
         }
         #password-form {
-            background-color: var(--bg-secondary);
-            padding: 30px 40px;
-            border-radius: 10px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
-            text-align: center;
+            background-color: var(--bg-secondary); padding: 30px 40px; border-radius: 10px;
+            box-shadow: 0 5px 15px var(--shadow-color); text-align: center;
         }
-        #password-form label {
-            display: block;
-            margin-bottom: 10px;
-            color: var(--text-primary);
-            font-weight: 500;
-        }
+        #password-form label { display: block; margin-bottom: 10px; color: var(--text-primary); font-weight: 500; }
         #password-input {
-            padding: 10px 15px;
-            font-size: 1em;
-            border-radius: 5px;
-            border: 1px solid var(--border-color);
-            background-color: var(--bg-tertiary);
-            color: var(--text-primary);
-            margin-bottom: 20px;
-            width: 100%;
-            max-width: 250px; /* Limit width */
+            padding: 10px 15px; font-size: 1em; border-radius: 5px; border: 1px solid var(--border-color);
+            background-color: var(--bg-tertiary); color: var(--text-primary); margin-bottom: 20px;
+            width: 100%; max-width: 250px;
         }
-         #password-input:focus {
-            outline: none;
-            border-color: var(--border-color-active);
-         }
+         #password-input:focus { outline: none; border-color: var(--border-color-active); }
         #password-submit {
-            padding: 10px 25px;
-            font-size: 1em;
-            border-radius: 5px;
-            border: none;
-            background-color: var(--accent-color);
-            color: white;
-            cursor: pointer;
-            transition: background-color 0.2s ease;
+            padding: 10px 25px; font-size: 1em; border-radius: 5px; border: none;
+            background-color: var(--accent-color); color: white; cursor: pointer; transition: background-color 0.2s ease;
         }
-        #password-submit:hover {
-            background-color: #c40812; /* Darker accent */
-        }
-        #password-error {
-            color: var(--error-color);
-            margin-top: 15px;
-            font-size: 0.9em;
-            min-height: 1.2em; /* Prevent layout shift */
-        }
+        #password-submit:hover { background-color: #c40812; } /* Consider variable */
+        #password-error { color: var(--error-color); margin-top: 15px; font-size: 0.9em; min-height: 1.2em; }
         /* Hide main content initially */
-        .main-container {
-            display: none; /* Hidden by default, shown via JS */
-        }
-        /* Initially hide the password overlay, JS will show if needed */
-        #password-overlay.hidden {
-             display: none;
-        }
-        /* Fallback message div - not actively used but kept for structure */
-        #devtools-detected-message {
-            display: none;
-        }
-
+        .main-container { display: none; }
+        /* Initially hide the password overlay */
+        #password-overlay.hidden { display: none; }
+        /* Fallback message div */
+        #devtools-detected-message { display: none; }
         /* Style for the clickable logo link */
-        #logo-link {
-            display: inline-block; /* Prevents extra space */
-            line-height: 0; /* Removes potential space below image */
-            text-decoration: none; /* Remove underline */
-            /* Center the logo link if settings icon pushes it */
-            margin: 0 auto; /* Auto margins for centering */
-            /* Adjust if settings icon is present */
-            padding-left: 40px; /* Make space for settings icon on the left */
-            padding-right: 40px; /* Balance padding */
-        }
-        #logo-link:focus-visible {
-             outline: 2px solid var(--accent-color);
-             outline-offset: 3px;
-             border-radius: 4px; /* Optional: add radius to outline */
-        }
+        #logo-link { display: inline-block; line-height: 0; text-decoration: none; }
+        #logo-link:focus-visible { outline: 2px solid var(--accent-color); outline-offset: 3px; border-radius: 4px; }
 
-        /* Reminder: Optimize images (logos) for faster loading */
-        /* Consider using tools like TinyPNG or Squoosh */
+        /* Ensure body transition applies */
+        body { transition: background-color 0.3s ease, color 0.3s ease; }
     </style>
     </head>
-<body> <div id="devtools-detected-message"></div>
+<body data-theme="dark"> <div id="devtools-detected-message"></div>
 
 <div id="password-overlay" class="hidden">
     <form id="password-form">
@@ -124,24 +65,22 @@
 <div class="main-container">
     <div class="container">
         <header>
+            <button id="theme-toggle-button" aria-label="Switch to Light Theme" title="Switch to Light Theme">
+                </button>
+
             <a href="index.html" id="logo-link" aria-label="Go to ALL tab / Home" role="button" tabindex="0">
                 <img src="ptvlogo.png" alt="PERAS TV Logo">
             </a>
 
             <div class="settings-container">
-                <button id="settings-button" aria-label="Open Settings Menu" aria-haspopup="true" aria-expanded="false">
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
-                        <path d="M19.479 10.092C19.272 8.808 18.699 7.668 17.81 6.78L19.83 4.76a.75.75 0 0 0-1.06-1.06l-2.02 2.02c-.888-.89-2.028-1.462-3.312-1.67V1.75a.75.75 0 0 0-1.5 0v2.301c-1.284.208-2.424.78-3.312 1.67L6.59 4.76a.75.75 0 1 0-1.06 1.06l2.02 2.02c-.89.888-1.462 2.028-1.67 3.312H3.58a.75.75 0 0 0 0 1.5h2.3c.208 1.284.78 2.424 1.67 3.312l-2.02 2.02a.75.75 0 0 0 1.06 1.06l2.02-2.02c.888.89 2.028 1.462 3.312 1.67v2.301a.75.75 0 0 0 1.5 0v-2.3c1.284-.208 2.424-.78 3.312-1.67l2.02 2.02a.75.75 0 0 0 1.06-1.06l-2.02-2.02c.89-.888 1.462-2.028 1.67-3.312h2.301a.75.75 0 0 0 0-1.5h-2.3Zm-7.48 2.908a3 3 0 1 0 0-6 3 3 0 0 0 0 6Z"/>
+                <button id="settings-button" aria-label="Open Settings Menu" aria-haspopup="true" aria-expanded="false" title="Settings">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" stroke="currentColor" fill="none">
+                        <line x1="4" y1="6" x2="20" y2="6"></line>
+                        <line x1="4" y1="12" x2="20" y2="12"></line>
+                        <line x1="4" y1="18" x2="20" y2="18"></line>
                     </svg>
                 </button>
                 <div id="settings-panel" role="menu">
-                    <div class="settings-panel-item" role="menuitemcheckbox" aria-checked="false">
-                        <label for="theme-toggle">Light Theme</label>
-                        <label class="toggle-switch">
-                            <input type="checkbox" id="theme-toggle">
-                            <span class="slider"></span>
-                        </label>
-                    </div>
                     <div class="settings-panel-item" role="menuitemcheckbox" aria-checked="false">
                         <label for="open-in-new-tab-toggle">Open source in new tab</label>
                         <label class="toggle-switch">
@@ -199,9 +138,7 @@
 <script>
     // --- Console Access Deterrents (Run Immediately) ---
     function setupConsoleDeterrents() {
-        // Disable right-click context menu
         document.addEventListener('contextmenu', (event) => event.preventDefault());
-        // Disable common developer shortcuts (F12, Ctrl+Shift+I/J/C, Ctrl+U)
         document.addEventListener('keydown', (event) => {
             if (event.key === 'F12' || (event.ctrlKey && event.shiftKey && ['I', 'J', 'C'].includes(event.key.toUpperCase())) || (event.ctrlKey && event.key.toUpperCase() === 'U')) {
                 event.preventDefault();
@@ -212,8 +149,8 @@
     setupConsoleDeterrents();
 
     // --- Authentication ---
-    const PERSONAL_USE_B64 = "cHR2"; // Base64 encoded access key (replace if needed)
-    const AUTH_KEY = 'perasTvAuthenticated'; // Key for session storage
+    const PERSONAL_USE_B64 = "cHR2";
+    const AUTH_KEY = 'perasTvAuthenticated';
 
     const passwordOverlay = document.getElementById('password-overlay');
     const passwordForm = document.getElementById('password-form');
@@ -221,49 +158,33 @@
     const passwordError = document.getElementById('password-error');
     const mainContainer = document.querySelector('.main-container');
 
-    // Check if already authenticated in this session
+    // Authentication Check
     if (sessionStorage.getItem(AUTH_KEY) === 'true') {
-        console.log("Already authenticated.");
-        passwordOverlay.classList.add('hidden'); // Hide overlay
-        mainContainer.style.display = 'block'; // Show main content
-        initializeApp(); // Start the main app logic
+        passwordOverlay.classList.add('hidden');
+        mainContainer.style.display = 'block';
+        initializeApp();
     } else {
-        // Check if the access key is configured
         if (typeof PERSONAL_USE_B64 === 'undefined' || PERSONAL_USE_B64 === "PASTE_YOUR_BASE64_PASSWORD_HERE" || PERSONAL_USE_B64 === "") {
              console.error("ERROR: PERSONAL_USE_B64 is not set correctly.");
              passwordOverlay.innerHTML = '<p style="color:var(--error-color); text-align:center;">Configuration Error: Access key not set.</p>';
-             passwordOverlay.classList.remove('hidden'); // Show error message
+             passwordOverlay.classList.remove('hidden');
         } else {
-            // Authentication required, show the form
-            console.log("Authentication required.");
             passwordOverlay.classList.remove('hidden');
-            passwordInput.focus(); // Focus the password input
-
-            // Handle password form submission
+            passwordInput.focus();
             passwordForm.addEventListener('submit', (event) => {
-                event.preventDefault(); // Prevent default form submission
+                event.preventDefault();
                 const enteredValue = passwordInput.value;
                 let correctKey = "";
-                try {
-                    // Decode the Base64 key
-                    correctKey = atob(PERSONAL_USE_B64);
-                } catch (e) {
-                    console.error("Error decoding Base64 key:", e);
-                    passwordError.textContent = 'Configuration Error'; return;
+                try { correctKey = atob(PERSONAL_USE_B64); } catch (e) {
+                    console.error("Error decoding Base64 key:", e); passwordError.textContent = 'Configuration Error'; return;
                 }
-
-                // Check if entered key matches the correct key
                 if (enteredValue === correctKey) {
-                    console.log("Access key correct.");
-                    sessionStorage.setItem(AUTH_KEY, 'true'); // Store authentication status
-                    passwordOverlay.classList.add('hidden'); // Hide overlay
-                    mainContainer.style.display = 'block'; // Show main content
-                    initializeApp(); // Start the main app logic
+                    sessionStorage.setItem(AUTH_KEY, 'true');
+                    passwordOverlay.classList.add('hidden');
+                    mainContainer.style.display = 'block';
+                    initializeApp();
                 } else {
-                    console.log("Incorrect access key.");
-                    passwordError.textContent = 'Incorrect Access Key'; // Show error
-                    passwordInput.value = ''; // Clear input
-                    passwordInput.focus(); // Re-focus
+                    passwordError.textContent = 'Incorrect Access Key'; passwordInput.value = ''; passwordInput.focus();
                 }
             });
         }
@@ -271,26 +192,26 @@
 
     /* --- PerasTV Main Application Logic --- */
     function initializeApp() {
-        // Prevent multiple initializations
         if (window.appInitialized) return;
         window.appInitialized = true;
         console.log("Initializing PerasTV App...");
 
         // --- Configuration Constants ---
         const CONFIG = {
-            channelsUrl: "channels.json", // URL for channels data
-            matchesUrl: "matches.json",   // URL for matches data
-            placeholderImage: 'data:image/svg+xml;charset=UTF-8,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="9" viewBox="0 0 16 9"><rect width="16" height="9" fill="%231a1a1a"/></svg>', // Placeholder for video poster
-            searchDebounceMs: 300,         // Delay for search input filtering
-            lastTabKey: 'perasTvLastTab',       // localStorage key for last active tab
-            favoritesKey: 'perasTvFavorites',   // localStorage key for favorites
-            iframeLoadTimeoutMs: 35000,     // Timeout for iframe loading
-            openInNewTabKey: 'perasTvOpenInNewTab', // localStorage key for 'Open source in new tab' toggle
-            openInPlayerPageKey: 'perasTvOpenPlayerPage', // localStorage key for 'Open player page' toggle
-            themeKey: 'perasTvTheme' // ADDED: localStorage key for theme preference
+            channelsUrl: "channels.json",
+            matchesUrl: "matches.json",
+            placeholderImage: 'data:image/svg+xml;charset=UTF-8,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="9" viewBox="0 0 16 9"><rect width="16" height="9" fill="%231a1a1a"/></svg>',
+            searchDebounceMs: 300,
+            lastTabKey: 'perasTvLastTab',
+            favoritesKey: 'perasTvFavorites',
+            iframeLoadTimeoutMs: 35000,
+            openInNewTabKey: 'perasTvOpenInNewTab',
+            openInPlayerPageKey: 'perasTvOpenPlayerPage',
+            themeKey: 'perasTvTheme'
         };
 
         // --- DOM Element References ---
+        const bodyElement = document.body;
         const searchInputElement = document.getElementById('search-input');
         const tabsContainerElement = document.querySelector('.tabs');
         const channelGridElements = document.querySelectorAll('.channel-grid');
@@ -298,42 +219,102 @@
         const initialLoadingMessageElement = document.getElementById('loadingMessage');
         const dataFetchErrorMessageElement = document.getElementById('fetchErrorMessage');
         const logoLinkElement = document.getElementById('logo-link');
-        // Settings Menu Elements
+        // Header Buttons & Panel
+        const themeToggleButtonElement = document.getElementById('theme-toggle-button'); // NEW
         const settingsButtonElement = document.getElementById('settings-button');
         const settingsPanelElement = document.getElementById('settings-panel');
-        const themeToggleElement = document.getElementById('theme-toggle'); // New theme toggle
-        const openInNewTabToggleElement = document.getElementById('open-in-new-tab-toggle'); // Now inside panel
-        const openInPlayerPageToggleElement = document.getElementById('open-in-player-page-toggle'); // Now inside panel
-        const bodyElement = document.body; // Reference to body for theme switching
+        // Toggles inside Settings Panel
+        const openInNewTabToggleElement = document.getElementById('open-in-new-tab-toggle');
+        const openInPlayerPageToggleElement = document.getElementById('open-in-player-page-toggle');
 
         // --- Application State ---
-        let currentHlsInstance = null;      // Reference to the active HLS.js instance
-        let allChannelsData = {};           // Stores fetched channel data
-        let allMatchesData = [];            // Stores fetched match data
-        let currentlyExpandedBoxElement = null; // Tracks the currently open channel/match box
-        let searchDebounceTimerId = null;   // Timer ID for search debouncing
-        let activeTabId = 'ALL';            // ID of the currently active tab
-        let favoriteItemIds = [];           // Array of IDs for favorited items
-        let openInNewTabEnabled = false;    // State of the 'Open source in new tab' toggle
-        let openInPlayerPageEnabled = false; // State of the 'Open player page' toggle
-        let isLightThemeEnabled = false;    // ADDED: State for light theme
+        let currentHlsInstance = null;
+        let allChannelsData = {};
+        let allMatchesData = [];
+        let currentlyExpandedBoxElement = null;
+        let searchDebounceTimerId = null;
+        let activeTabId = 'ALL';
+        let favoriteItemIds = [];
+        let openInNewTabEnabled = false;
+        let openInPlayerPageEnabled = false;
+        let currentTheme = 'dark'; // Default theme
+
+        // --- SVG Icons ---
+        const SVG_SUN = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M12 7c-2.76 0-5 2.24-5 5s2.24 5 5 5 5-2.24 5-5-2.24-5-5-5zM12 15c-1.65 0-3-1.35-3-3s1.35-3 3-3 3 1.35 3 3-1.35 3-3 3zm0-13a1 1 0 0 0-1 1v2a1 1 0 0 0 2 0V3a1 1 0 0 0-1-1zm0 18a1 1 0 0 0-1 1v2a1 1 0 0 0 2 0v-2a1 1 0 0 0-1-1zm-8.66-3.34a1 1 0 0 0-1.41 0l-1.41 1.41a1 1 0 1 0 1.41 1.41l1.41-1.41a1 1 0 0 0 0-1.41zm12.72 0a1 1 0 0 0 0 1.41l1.41 1.41a1 1 0 0 0 1.41-1.41l-1.41-1.41a1 1 0 0 0-1.41 0zM3 11H1a1 1 0 0 0 0 2h2a1 1 0 0 0 0-2zm18 0h-2a1 1 0 0 0 0 2h2a1 1 0 0 0 0-2zm-4.95-6.05a1 1 0 0 0 0-1.41L14.64 2.1a1 1 0 1 0-1.41 1.41l1.41 1.41a1 1 0 0 0 1.41 0zm-9.19 9.19a1 1 0 0 0 1.41 0l1.41-1.41a1 1 0 1 0-1.41-1.41l-1.41 1.41a1 1 0 0 0 0 1.41z"/></svg>`;
+        const SVG_MOON = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zm4.24 16.18c-3.46 0-6.46-2.24-7.57-5.42 2.89.66 5.84-.53 7.57-3.14 1.73-2.61 1.5-5.93-.53-8.23 4.34.63 7.57 4.58 7.57 9.1 0 4.58-3.23 8.53-7.57 9.1-.01.01-.01.01-.02.01z"/></svg>`;
+        const SVG_ENTER_FULLSCREEN = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" width="20px" height="20px"> <path d="M7 14H5v5h5v-2H7v-3zm-2-4h2V7h3V5H5v5zm12 7h-3v2h5v-5h-2v3zM14 5v2h3v3h2V5h-5z"/> </svg>`;
+        const SVG_EXIT_FULLSCREEN = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" width="20px" height="20px"> <path d="M5 16h3v3h2v-5H5v2zm3-8H5v2h5V5H8v3zm6 11h2v-3h3v-2h-5v5zm2-11V5h-2v5h5V8h-3z"/> </svg>`;
 
         // --- Disclaimer Text ---
         const BOX_DISCLAIMER_TEXT = `Disclaimer: This site embeds content from external sources. We do not host streams. Availability and quality not guaranteed. Use responsibly.`;
 
-        // --- SVG Icons for Fullscreen Button ---
-        const SVG_ENTER_FULLSCREEN = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" width="20px" height="20px"> <path d="M7 14H5v5h5v-2H7v-3zm-2-4h2V7h3V5H5v5zm12 7h-3v2h5v-5h-2v3zM14 5v2h3v3h2V5h-5z"/> </svg>`;
-        const SVG_EXIT_FULLSCREEN = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" width="20px" height="20px"> <path d="M5 16h3v3h2v-5H5v2zm3-8H5v2h5V5H8v3zm6 11h2v-3h3v-2h-5v5zm2-11V5h-2v5h5V8h-3z"/> </svg>`;
-
         // --- Initial Setup ---
-        loadFavoritesFromStorage(); // Load favorites from localStorage
-        loadSettingsFromStorage(); // MODIFIED: Load all settings (toggles + theme)
-        applyTheme();              // ADDED: Apply the loaded theme immediately
-        setupGlobalEventListeners(); // Set up event listeners for tabs, search, keyboard, fullscreen, logo, settings
-        updateTimestampDisplay();   // Display initial time
-        setInterval(updateTimestampDisplay, 60000); // Update time every minute
-        fetchAndRenderData();       // Fetch data and render the initial view
+        loadFavoritesFromStorage();
+        loadSettingsFromStorage(); // Load theme and other toggles
+        applyTheme(); // Apply loaded theme
+        updateThemeButtonIcon(); // Set initial theme button icon
+        setupGlobalEventListeners();
+        updateTimestampDisplay();
+        setInterval(updateTimestampDisplay, 60000);
+        fetchAndRenderData();
 
+        // --- Settings Loading & Applying ---
+        function loadSettingsFromStorage() {
+            // Load Theme
+            const storedTheme = localStorage.getItem(CONFIG.themeKey);
+            currentTheme = (storedTheme === 'light') ? 'light' : 'dark'; // Default to dark
+            console.log(`Loaded theme: ${currentTheme}`);
+
+            // Load Toggles
+            const storedNewTabState = localStorage.getItem(CONFIG.openInNewTabKey);
+            const storedPlayerPageState = localStorage.getItem(CONFIG.openInPlayerPageKey);
+            openInNewTabEnabled = (storedNewTabState === 'true');
+            openInPlayerPageEnabled = (storedPlayerPageState === 'true');
+            if (openInNewTabEnabled && openInPlayerPageEnabled) {
+                openInNewTabEnabled = false; // Player page takes precedence
+            }
+
+            // Update toggle checkbox states inside the panel
+            if (openInNewTabToggleElement) {
+                openInNewTabToggleElement.checked = openInNewTabEnabled;
+                updateAriaChecked(openInNewTabToggleElement, openInNewTabEnabled);
+            }
+            if (openInPlayerPageToggleElement) {
+                openInPlayerPageToggleElement.checked = openInPlayerPageEnabled;
+                updateAriaChecked(openInPlayerPageToggleElement, openInPlayerPageEnabled);
+            }
+            console.log(`Loaded toggles: NewTab=${openInNewTabEnabled}, PlayerPage=${openInPlayerPageEnabled}`);
+        }
+
+        function applyTheme() {
+            bodyElement.setAttribute('data-theme', currentTheme);
+            console.log(`Applied theme: ${currentTheme}`);
+        }
+
+        /** Updates the theme toggle button icon and labels */
+        function updateThemeButtonIcon() {
+            if (!themeToggleButtonElement) return;
+            if (currentTheme === 'light') {
+                themeToggleButtonElement.innerHTML = SVG_MOON;
+                themeToggleButtonElement.setAttribute('aria-label', 'Switch to Dark Theme');
+                themeToggleButtonElement.setAttribute('title', 'Switch to Dark Theme');
+            } else {
+                themeToggleButtonElement.innerHTML = SVG_SUN;
+                themeToggleButtonElement.setAttribute('aria-label', 'Switch to Light Theme');
+                themeToggleButtonElement.setAttribute('title', 'Switch to Light Theme');
+            }
+        }
+
+        function saveSettingsToStorage() {
+            try {
+                localStorage.setItem(CONFIG.themeKey, currentTheme);
+                localStorage.setItem(CONFIG.openInNewTabKey, openInNewTabEnabled);
+                localStorage.setItem(CONFIG.openInPlayerPageKey, openInPlayerPageEnabled);
+                console.log(`Saved settings: Theme=${currentTheme}, NewTab=${openInNewTabEnabled}, PlayerPage=${openInPlayerPageEnabled}`);
+            } catch (error) {
+                console.error("Error saving settings to localStorage:", error);
+            }
+        }
 
         // --- Favorite Management ---
         function loadFavoritesFromStorage() {
@@ -341,56 +322,36 @@
             if (storedFavoritesJson) {
                 try {
                     const parsedFavorites = JSON.parse(storedFavoritesJson);
-                    // Validate data format
                     if (Array.isArray(parsedFavorites) && parsedFavorites.every(item => typeof item === 'string')) {
                         favoriteItemIds = parsedFavorites;
-                    } else {
-                        console.warn("Invalid favorites data found. Resetting.");
-                        favoriteItemIds = [];
-                        localStorage.removeItem(CONFIG.favoritesKey); // Clear invalid data
-                    }
-                } catch (error) {
-                    console.error("Error parsing favorites:", error);
-                    favoriteItemIds = []; // Reset on error
-                }
-            } else {
-                favoriteItemIds = []; // Initialize if no data found
-            }
+                    } else { favoriteItemIds = []; localStorage.removeItem(CONFIG.favoritesKey); }
+                } catch (error) { console.error("Error parsing favorites:", error); favoriteItemIds = []; }
+            } else { favoriteItemIds = []; }
             console.log("Loaded favorites:", favoriteItemIds);
         }
 
         function saveFavoritesToStorage() {
-            try {
-                localStorage.setItem(CONFIG.favoritesKey, JSON.stringify(favoriteItemIds));
-                console.log("Saved favorites:", favoriteItemIds);
-            } catch (error) {
-                console.error("Error saving favorites:", error);
-            }
+            try { localStorage.setItem(CONFIG.favoritesKey, JSON.stringify(favoriteItemIds)); }
+            catch (error) { console.error("Error saving favorites:", error); }
         }
 
         function toggleFavoriteStatus(itemId, starButtonElement) {
-            if (!itemId || !starButtonElement) return; // Basic validation
-
+            if (!itemId || !starButtonElement) return;
             const itemIndex = favoriteItemIds.indexOf(itemId);
             const isCurrentlyFavorite = itemIndex > -1;
 
             if (isCurrentlyFavorite) {
-                // Remove from favorites
                 favoriteItemIds.splice(itemIndex, 1);
                 starButtonElement.classList.remove('is-favorite');
                 starButtonElement.setAttribute('aria-pressed', 'false');
                 starButtonElement.setAttribute('aria-label', 'Add to Favorites');
             } else {
-                // Add to favorites
                 favoriteItemIds.push(itemId);
                 starButtonElement.classList.add('is-favorite');
                 starButtonElement.setAttribute('aria-pressed', 'true');
                 starButtonElement.setAttribute('aria-label', 'Remove from Favorites');
             }
-
-            saveFavoritesToStorage(); // Persist changes
-
-            // Update the star icon on any other instances of this item (e.g., in 'ALL' tab vs 'Favorites' tab)
+            saveFavoritesToStorage();
             document.querySelectorAll(`.channel-box#${CSS.escape(itemId)} .favorite-button`).forEach(otherStar => {
                 if (otherStar !== starButtonElement) {
                     otherStar.classList.toggle('is-favorite', !isCurrentlyFavorite);
@@ -398,79 +359,9 @@
                     otherStar.setAttribute('aria-label', !isCurrentlyFavorite ? 'Remove from Favorites' : 'Add to Favorites');
                 }
             });
-
-            // If the Favorites tab is active, re-render it to reflect the change
             if (activeTabId === 'Favorites') {
                 renderFavoritesTabContent();
-                addChannelBoxEventListeners(document.getElementById('Favorites')); // Re-attach listeners
-            }
-        }
-
-        // --- Settings Management (Theme & Toggles) ---
-        /** Loads theme and toggle states from localStorage */
-        function loadSettingsFromStorage() {
-            // Load Theme
-            const storedTheme = localStorage.getItem(CONFIG.themeKey);
-            isLightThemeEnabled = (storedTheme === 'light'); // Default to dark if null/invalid
-
-            // Load Toggles
-            const storedNewTabState = localStorage.getItem(CONFIG.openInNewTabKey);
-            const storedPlayerPageState = localStorage.getItem(CONFIG.openInPlayerPageKey);
-            openInNewTabEnabled = (storedNewTabState === 'true');
-            openInPlayerPageEnabled = (storedPlayerPageState === 'true');
-
-            // Ensure mutual exclusivity for new tab toggles
-            if (openInNewTabEnabled && openInPlayerPageEnabled) {
-                console.warn("Both 'new tab' toggles were saved as active. Defaulting to 'Player Page'.");
-                openInNewTabEnabled = false;
-                // Don't save here, saveSettings will handle it later if needed
-            }
-
-            // Update Checkbox States
-            if (themeToggleElement) themeToggleElement.checked = isLightThemeEnabled;
-            if (openInNewTabToggleElement) openInNewTabToggleElement.checked = openInNewTabEnabled;
-            if (openInPlayerPageToggleElement) openInPlayerPageToggleElement.checked = openInPlayerPageEnabled;
-
-            // Update ARIA attributes for toggles in the panel
-            updateAriaChecked(themeToggleElement, isLightThemeEnabled);
-            updateAriaChecked(openInNewTabToggleElement, openInNewTabEnabled);
-            updateAriaChecked(openInPlayerPageToggleElement, openInPlayerPageEnabled);
-
-
-            console.log(`Loaded Theme: ${isLightThemeEnabled ? 'light' : 'dark'}`);
-            console.log(`Loaded 'Open source in new tab' state: ${openInNewTabEnabled}`);
-            console.log(`Loaded 'Open player page in new tab' state: ${openInPlayerPageEnabled}`);
-        }
-
-        /** Saves the current theme and toggle states to localStorage */
-        function saveSettingsToStorage() {
-            try {
-                // Save Theme
-                localStorage.setItem(CONFIG.themeKey, isLightThemeEnabled ? 'light' : 'dark');
-                // Save Toggles
-                localStorage.setItem(CONFIG.openInNewTabKey, openInNewTabEnabled);
-                localStorage.setItem(CONFIG.openInPlayerPageKey, openInPlayerPageEnabled);
-                console.log(`Saved Settings: Theme=${isLightThemeEnabled ? 'light' : 'dark'}, NewTab=${openInNewTabEnabled}, PlayerPage=${openInPlayerPageEnabled}`);
-            } catch (error) {
-                console.error("Error saving settings to localStorage:", error);
-            }
-        }
-
-        /** Applies the current theme state to the body element */
-        function applyTheme() {
-            if (isLightThemeEnabled) {
-                bodyElement.setAttribute('data-theme', 'light');
-            } else {
-                bodyElement.removeAttribute('data-theme');
-            }
-            console.log(`Applied theme: ${isLightThemeEnabled ? 'light' : 'dark'}`);
-        }
-
-        /** Helper to update aria-checked attribute on toggle containers */
-        function updateAriaChecked(toggleInputElement, isChecked) {
-            const container = toggleInputElement?.closest('[role="menuitemcheckbox"]');
-            if (container) {
-                container.setAttribute('aria-checked', isChecked ? 'true' : 'false');
+                addChannelBoxEventListeners(document.getElementById('Favorites'));
             }
         }
 
@@ -482,24 +373,30 @@
                 if (tabButton) activateTab(tabButton.dataset.tab);
             });
 
-            // Search input (debounced)
+            // Search input
             searchInputElement.addEventListener('input', (event) => {
-                clearTimeout(searchDebounceTimerId); // Clear previous timer
-                searchDebounceTimerId = setTimeout(() => {
-                    filterVisibleContent(event.target.value); // Filter after delay
-                }, CONFIG.searchDebounceMs);
+                clearTimeout(searchDebounceTimerId);
+                searchDebounceTimerId = setTimeout(() => filterVisibleContent(event.target.value), CONFIG.searchDebounceMs);
             });
+
+            // --- Theme Toggle Button Listener ---
+            if (themeToggleButtonElement) {
+                themeToggleButtonElement.addEventListener('click', () => {
+                    currentTheme = (currentTheme === 'light') ? 'dark' : 'light'; // Toggle theme
+                    applyTheme();
+                    updateThemeButtonIcon(); // Update icon/labels
+                    saveSettingsToStorage();
+                    console.log(`Theme toggled to: ${currentTheme}`);
+                });
+            }
 
             // --- Settings Menu Listeners ---
             if (settingsButtonElement && settingsPanelElement) {
-                // Toggle settings panel visibility
                 settingsButtonElement.addEventListener('click', (event) => {
-                    event.stopPropagation(); // Prevent body click listener from closing immediately
+                    event.stopPropagation();
                     const isVisible = settingsPanelElement.classList.toggle('visible');
                     settingsButtonElement.setAttribute('aria-expanded', isVisible ? 'true' : 'false');
                 });
-
-                // Close settings panel when clicking outside
                 document.addEventListener('click', (event) => {
                     if (!settingsPanelElement.contains(event.target) && !settingsButtonElement.contains(event.target)) {
                         if (settingsPanelElement.classList.contains('visible')) {
@@ -508,60 +405,44 @@
                         }
                     }
                 });
-
-                 // Close settings panel with Escape key
                  document.addEventListener('keydown', (event) => {
                      if (event.key === 'Escape' && settingsPanelElement.classList.contains('visible')) {
                          settingsPanelElement.classList.remove('visible');
                          settingsButtonElement.setAttribute('aria-expanded', 'false');
-                         settingsButtonElement.focus(); // Return focus to the button
+                         settingsButtonElement.focus();
                      }
                  });
             }
 
             // --- Toggle Switch Listeners (Inside Settings Panel) ---
-            // Theme Toggle
-            if (themeToggleElement) {
-                themeToggleElement.addEventListener('change', (event) => {
-                    isLightThemeEnabled = event.target.checked;
-                    applyTheme(); // Apply the new theme
-                    saveSettingsToStorage(); // Save the preference
-                    updateAriaChecked(themeToggleElement, isLightThemeEnabled);
-                });
-            }
             // Open Source in New Tab Toggle
             if (openInNewTabToggleElement) {
                 openInNewTabToggleElement.addEventListener('change', (event) => {
-                    const isChecked = event.target.checked;
-                    openInNewTabEnabled = isChecked;
-                    // Ensure mutual exclusivity
-                    if (isChecked && openInPlayerPageToggleElement) {
+                    openInNewTabEnabled = event.target.checked;
+                    if (openInNewTabEnabled && openInPlayerPageToggleElement) {
                         openInPlayerPageToggleElement.checked = false;
                         openInPlayerPageEnabled = false;
                         updateAriaChecked(openInPlayerPageToggleElement, false);
                     }
                     saveSettingsToStorage();
-                    updateAriaChecked(openInNewTabToggleElement, isChecked);
+                    updateAriaChecked(openInNewTabToggleElement, openInNewTabEnabled);
                     console.log(`'Open source in new tab' toggled: ${openInNewTabEnabled}`);
                 });
             }
             // Open Player Page in New Tab Toggle
             if (openInPlayerPageToggleElement) {
                 openInPlayerPageToggleElement.addEventListener('change', (event) => {
-                    const isChecked = event.target.checked;
-                    openInPlayerPageEnabled = isChecked;
-                    // Ensure mutual exclusivity
-                    if (isChecked && openInNewTabToggleElement) {
+                    openInPlayerPageEnabled = event.target.checked;
+                    if (openInPlayerPageEnabled && openInNewTabToggleElement) {
                         openInNewTabToggleElement.checked = false;
                         openInNewTabEnabled = false;
                          updateAriaChecked(openInNewTabToggleElement, false);
                     }
                     saveSettingsToStorage();
-                    updateAriaChecked(openInPlayerPageToggleElement, isChecked);
+                    updateAriaChecked(openInPlayerPageToggleElement, openInPlayerPageEnabled);
                     console.log(`'Open player page in new tab' toggled: ${openInPlayerPageEnabled}`);
                 });
             }
-
 
             // Keyboard navigation and interaction
             document.addEventListener('keydown', (event) => {
@@ -569,61 +450,42 @@
                  if (event.key === 'Escape' && currentlyExpandedBoxElement && !settingsPanelElement.classList.contains('visible')) {
                      collapseItemBox(currentlyExpandedBoxElement);
                  }
-
                  // Handle Escape key for fullscreen exit
                  if (event.key === 'Escape' && (document.fullscreenElement || document.webkitFullscreenElement || document.mozFullScreenElement || document.msFullscreenElement)) {
-                     updateFullscreenButtonState(); // Update button icon/state
+                     updateFullscreenButtonState();
                  }
-
-                 // Arrow key navigation within the active grid
+                 // Arrow key navigation
                  const focusableElements = getFocusableElementsInActiveGrid();
                  const currentIndex = focusableElements.indexOf(document.activeElement);
-
                  if (['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight'].includes(event.key)) {
-                     // Only navigate if focus is within a non-expanded channel box and settings are closed
                      if (document.activeElement && document.activeElement.closest('.channel-box') && !currentlyExpandedBoxElement && !settingsPanelElement.classList.contains('visible')) {
-                         event.preventDefault(); // Prevent page scrolling
+                         event.preventDefault();
                          let nextIndex = -1;
                          const activeGrid = document.getElementById(activeTabId);
                          const numCols = activeGrid ? getComputedStyle(activeGrid).gridTemplateColumns.split(' ').length : 1;
-
                          switch (event.key) {
                              case 'ArrowDown': nextIndex = currentIndex + numCols; break;
                              case 'ArrowUp': nextIndex = currentIndex - numCols; break;
                              case 'ArrowRight': nextIndex = (currentIndex + 1) % numCols === 0 && numCols > 1 ? -1 : currentIndex + 1; break;
                              case 'ArrowLeft': nextIndex = currentIndex % numCols === 0 && numCols > 1 ? -1 : currentIndex - 1; break;
                          }
-
-                         if (nextIndex >= 0 && nextIndex < focusableElements.length) {
-                             focusableElements[nextIndex].focus();
-                         }
-                     } else if (!document.activeElement || document.activeElement === document.body || document.activeElement === searchInputElement || document.activeElement.closest('.tabs')) {
-                         // If focus is lost or on search/tabs, focus the first item in the grid
+                         if (nextIndex >= 0 && nextIndex < focusableElements.length) { focusableElements[nextIndex].focus(); }
+                     } else if (!document.activeElement || document.activeElement === bodyElement || document.activeElement === searchInputElement || document.activeElement.closest('.tabs')) {
                          focusableElements[0]?.focus();
                      }
                  }
-
-                 // Enter/OK key press to activate focused element
+                 // Enter/OK key press
                  if (event.key === 'Enter' || event.key === 'Ok') {
-                     if (document.activeElement && document.activeElement.classList.contains('stream-button')) {
-                         event.preventDefault(); document.activeElement.click();
-                     } else if (document.activeElement && document.activeElement.classList.contains('tab-button')) {
-                         event.preventDefault(); document.activeElement.click();
-                     } else if (document.activeElement && document.activeElement.classList.contains('favorite-button')) {
-                         event.preventDefault(); document.activeElement.click();
-                     } else if (document.activeElement === logoLinkElement) {
-                         event.preventDefault();
-                         activateTab('ALL');
-                         window.scrollTo({ top: 0, behavior: 'smooth' });
-                     } else if (document.activeElement === settingsButtonElement) {
-                         event.preventDefault();
-                         settingsButtonElement.click(); // Open/close settings menu
-                     }
-                     // Activation of channel-box itself handled in addChannelBoxEventListeners
+                     if (document.activeElement?.classList.contains('stream-button')) { event.preventDefault(); document.activeElement.click(); }
+                     else if (document.activeElement?.classList.contains('tab-button')) { event.preventDefault(); document.activeElement.click(); }
+                     else if (document.activeElement?.classList.contains('favorite-button')) { event.preventDefault(); document.activeElement.click(); }
+                     else if (document.activeElement === logoLinkElement) { event.preventDefault(); activateTab('ALL'); window.scrollTo({ top: 0, behavior: 'smooth' }); }
+                     else if (document.activeElement === settingsButtonElement) { event.preventDefault(); settingsButtonElement.click(); }
+                     else if (document.activeElement === themeToggleButtonElement) { event.preventDefault(); themeToggleButtonElement.click(); } // Activate theme button
                  }
             });
 
-            // Listen for fullscreen changes globally to update button states
+            // Fullscreen change listeners
             document.addEventListener('fullscreenchange', updateFullscreenButtonState);
             document.addEventListener('webkitfullscreenchange', updateFullscreenButtonState);
             document.addEventListener('mozfullscreenchange', updateFullscreenButtonState);
@@ -633,676 +495,309 @@
             if (logoLinkElement) {
                 logoLinkElement.addEventListener('click', (event) => {
                     if (event.button === 1 || event.ctrlKey || event.metaKey) { return; }
-                    event.preventDefault();
-                    activateTab('ALL');
-                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                    event.preventDefault(); activateTab('ALL'); window.scrollTo({ top: 0, behavior: 'smooth' });
                 });
-                logoLinkElement.addEventListener('auxclick', (event) => {
-                     if (event.button === 1) { /* Allow default middle click */ }
-                });
+                logoLinkElement.addEventListener('auxclick', (event) => { if (event.button === 1) { /* Allow default */ } });
             }
         }
 
-        // Helper to get focusable channel boxes in the currently active grid
+        // Helper to update aria-checked attribute
+        function updateAriaChecked(toggleInputElement, isChecked) {
+            const container = toggleInputElement?.closest('[role="menuitemcheckbox"]');
+            if (container) {
+                container.setAttribute('aria-checked', isChecked ? 'true' : 'false');
+            }
+        }
+
+        // Helper to get focusable channel boxes
         function getFocusableElementsInActiveGrid() {
             const activeGrid = document.getElementById(activeTabId);
             if (!activeGrid) return [];
-            // Select only boxes that are not hidden and not expanded
             return Array.from(activeGrid.querySelectorAll(':scope > .channel-box:not(.hidden):not(.expanded)'));
         }
 
         // --- Data Fetching & Rendering ---
         async function fetchAndRenderData() {
-            showInitialLoadingMessage("Loading channels and matches...");
-            dataFetchErrorMessageElement.style.display = 'none'; // Hide previous errors
-
-            try {
-                // Add cache-busting query parameter
-                const cacheBuster = `?t=${Date.now()}`;
-                const channelsUrl = CONFIG.channelsUrl + cacheBuster;
-                const matchesUrl = CONFIG.matchesUrl + cacheBuster;
-
-                // Fetch both data sources concurrently
-                const [channelsResponse, matchesResponse] = await Promise.all([
-                    fetch(channelsUrl),
-                    fetch(matchesUrl)
-                ]);
-
-                // Check if responses are ok
-                if (!channelsResponse.ok) throw new Error(`Failed to load channels: ${channelsResponse.status} ${channelsResponse.statusText}`);
-                if (!matchesResponse.ok) throw new Error(`Failed to load matches: ${matchesResponse.status} ${matchesResponse.statusText}`);
-
-                // Parse JSON data
-                allChannelsData = await channelsResponse.json();
-                allMatchesData = await matchesResponse.json();
-
-                // Basic data validation
-                if (typeof allChannelsData !== 'object' || allChannelsData === null) throw new Error("Invalid channels data format.");
-                if (!Array.isArray(allMatchesData)) throw new Error("Invalid matches data format.");
-
-                console.log("Data fetched successfully:", { channels: allChannelsData, matches: allMatchesData });
-
-                // Render content into the grids
-                renderAllContentGrids();
-                hideInitialLoadingMessage(); // Hide loading message
-
-                // Activate the last used tab or default to 'ALL'
-                const lastSavedTabId = localStorage.getItem(CONFIG.lastTabKey);
-                const validTabIds = Array.from(tabsContainerElement.querySelectorAll('.tab-button')).map(btn => btn.dataset.tab);
-                activateTab(validTabIds.includes(lastSavedTabId) ? lastSavedTabId : 'ALL');
-
-            } catch (error) {
-                console.error("Data loading failed:", error);
-                hideInitialLoadingMessage();
-                showDataFetchErrorMessage(`Error loading data: ${error.message}. Please try refreshing.`); // Show error message
-            }
+             showInitialLoadingMessage("Loading channels and matches...");
+             dataFetchErrorMessageElement.style.display = 'none';
+             try {
+                 const cacheBuster = `?t=${Date.now()}`;
+                 const channelsUrl = CONFIG.channelsUrl + cacheBuster;
+                 const matchesUrl = CONFIG.matchesUrl + cacheBuster;
+                 const [channelsResponse, matchesResponse] = await Promise.all([ fetch(channelsUrl), fetch(matchesUrl) ]);
+                 if (!channelsResponse.ok) throw new Error(`Failed to load channels: ${channelsResponse.status} ${channelsResponse.statusText}`);
+                 if (!matchesResponse.ok) throw new Error(`Failed to load matches: ${matchesResponse.status} ${matchesResponse.statusText}`);
+                 allChannelsData = await channelsResponse.json();
+                 allMatchesData = await matchesResponse.json();
+                 if (typeof allChannelsData !== 'object' || allChannelsData === null) throw new Error("Invalid channels data format.");
+                 if (!Array.isArray(allMatchesData)) throw new Error("Invalid matches data format.");
+                 console.log("Data fetched successfully:", { channels: allChannelsData, matches: allMatchesData });
+                 renderAllContentGrids();
+                 hideInitialLoadingMessage();
+                 const lastSavedTabId = localStorage.getItem(CONFIG.lastTabKey);
+                 const validTabIds = Array.from(tabsContainerElement.querySelectorAll('.tab-button')).map(btn => btn.dataset.tab);
+                 activateTab(validTabIds.includes(lastSavedTabId) ? lastSavedTabId : 'ALL');
+             } catch (error) {
+                 console.error("Data loading failed:", error);
+                 hideInitialLoadingMessage();
+                 showDataFetchErrorMessage(`Error loading data: ${error.message}. Please try refreshing.`);
+             }
         }
 
-        // Renders content for all grids initially (but only active one is displayed)
+        // Renders content for all grids
         function renderAllContentGrids() {
              console.log("Rendering all content grids...");
              renderSpecificGridContent('PT', allChannelsData.PT || [], 'channel');
              renderSpecificGridContent('UK', allChannelsData.UK || [], 'channel');
              renderSpecificGridContent('ES', allChannelsData.ES || [], 'channel');
              renderSpecificGridContent('Matches', allMatchesData || [], 'match');
-             renderAllTabContent(); // Renders the combined 'ALL' tab
-             renderFavoritesTabContent(); // Renders the 'Favorites' tab
-             addChannelBoxEventListeners(); // Add listeners to all newly created boxes
+             renderAllTabContent();
+             renderFavoritesTabContent();
+             addChannelBoxEventListeners();
         }
 
-        // Renders content for a specific grid (PT, UK, ES, Matches)
+        // Renders content for a specific grid
         function renderSpecificGridContent(gridId, items, itemType) {
             const gridElement = document.getElementById(gridId);
-            if (!gridElement) return; // Grid not found
-
-            gridElement.innerHTML = ''; // Clear previous content
-
-            // Handle empty grids
+            if (!gridElement) return;
+            gridElement.innerHTML = '';
             if (!items || items.length === 0) {
                 let emptyMessage = `No ${itemType === 'match' ? 'matches' : 'channels'} listed.`;
                 if (gridId === 'Favorites') emptyMessage = 'Favorites list is empty. Click ☆ to add.';
-                gridElement.innerHTML = `<p class="status-message info">${emptyMessage}</p>`;
-                return;
+                gridElement.innerHTML = `<p class="status-message info">${emptyMessage}</p>`; return;
             }
-
-            // Create elements and append them
             const fragment = document.createDocumentFragment();
             items.forEach((itemData) => {
-                let itemElement = null;
-                let uniqueItemId = null;
-
-                // Generate a unique ID based on item type and its position in the original data
+                let itemElement = null; let uniqueItemId = null;
                 if (itemType === 'match') {
-                    const globalMatchIndex = allMatchesData.findIndex(m => m === itemData); // Find index in the global match list
-                    if (globalMatchIndex !== -1) {
-                        uniqueItemId = `match-${globalMatchIndex}`;
-                        itemElement = createMatchBoxElement(itemData, uniqueItemId);
-                    }
-                } else { // Channel
-                    let category = '';
-                    let categoryIndex = -1;
-                    // Find which category (PT, UK, ES) this channel belongs to and its index
+                    const globalMatchIndex = allMatchesData.findIndex(m => m === itemData);
+                    if (globalMatchIndex !== -1) { uniqueItemId = `match-${globalMatchIndex}`; itemElement = createMatchBoxElement(itemData, uniqueItemId); }
+                } else {
+                    let category = ''; let categoryIndex = -1;
                     for (const key in allChannelsData) {
                         const index = allChannelsData[key]?.indexOf(itemData);
-                        if (index !== -1 && index !== undefined) {
-                            category = key;
-                            categoryIndex = index;
-                            break;
-                        }
+                        if (index !== -1 && index !== undefined) { category = key; categoryIndex = index; break; }
                     }
-                    if (category && categoryIndex !== -1) {
-                        uniqueItemId = `${category}-channel-${categoryIndex}`;
-                        itemElement = createChannelBoxElement(itemData, uniqueItemId);
-                    }
+                    if (category && categoryIndex !== -1) { uniqueItemId = `${category}-channel-${categoryIndex}`; itemElement = createChannelBoxElement(itemData, uniqueItemId); }
                 }
-
-                if (itemElement) fragment.appendChild(itemElement);
-                else console.warn(`Failed to create element for item in grid ${gridId}`);
+                if (itemElement) fragment.appendChild(itemElement); else console.warn(`Failed to create element for item in grid ${gridId}`);
             });
             gridElement.appendChild(fragment);
         }
 
-        // Renders the content for the 'ALL' tab by combining matches and channels
+        // Renders the content for the 'ALL' tab
         function renderAllTabContent() {
             const allGridElement = document.getElementById('ALL');
             if (!allGridElement) return;
-            allGridElement.innerHTML = ''; // Clear previous content
-
+            allGridElement.innerHTML = '';
             const fragment = document.createDocumentFragment();
             let contentAdded = false;
-
-            // Add matches first
             if (allMatchesData && allMatchesData.length > 0) {
-                allMatchesData.forEach((match, index) => {
-                    const uniqueId = `match-${index}`; // Use global index for ID
-                    const box = createMatchBoxElement(match, uniqueId);
-                    if(box) {
-                        fragment.appendChild(box);
-                        contentAdded = true;
-                    }
-                });
+                allMatchesData.forEach((match, index) => { const uniqueId = `match-${index}`; const box = createMatchBoxElement(match, uniqueId); if(box) { fragment.appendChild(box); contentAdded = true; } });
             }
-
-            // Add channels from PT, UK, ES categories
             ['PT', 'UK', 'ES'].forEach(category => {
                 const channelsInCategory = allChannelsData[category] || [];
                 if (channelsInCategory.length > 0) {
-                    channelsInCategory.forEach((channel, index) => {
-                        const uniqueId = `${category}-channel-${index}`; // Use category and index for ID
-                        const box = createChannelBoxElement(channel, uniqueId);
-                        if(box) {
-                            fragment.appendChild(box);
-                            contentAdded = true;
-                        }
-                    });
+                    channelsInCategory.forEach((channel, index) => { const uniqueId = `${category}-channel-${index}`; const box = createChannelBoxElement(channel, uniqueId); if(box) { fragment.appendChild(box); contentAdded = true; } });
                 }
             });
-
             allGridElement.appendChild(fragment);
-
-            // Show message if no content was added
             if (!contentAdded) allGridElement.innerHTML = '<p class="status-message info">No channels or matches available.</p>';
         }
 
-        // Renders the content for the 'Favorites' tab based on favoriteItemIds
+        // Renders the content for the 'Favorites' tab
         function renderFavoritesTabContent() {
-            const favoritesGridElement = document.getElementById('Favorites');
-            if (!favoritesGridElement) return;
-            favoritesGridElement.innerHTML = ''; // Clear previous content
-
-            // Handle empty favorites list
-            if (favoriteItemIds.length === 0) {
-                favoritesGridElement.innerHTML = '<p class="status-message info">Favorites list is empty.<br>Click ☆ to add.</p>';
-                return;
-            }
-
-            const fragment = document.createDocumentFragment();
-            let validFavoritesFound = 0;
-
-            // Iterate through favorite IDs and try to find the corresponding data
-            favoriteItemIds.forEach(itemId => {
-                let itemElement = null;
-                if (itemId.startsWith('match-')) {
-                    // Find match data
-                    const matchIndex = parseInt(itemId.split('-')[1], 10);
-                    if (!isNaN(matchIndex) && matchIndex >= 0 && matchIndex < allMatchesData.length) {
-                        itemElement = createMatchBoxElement(allMatchesData[matchIndex], itemId);
-                    }
-                } else if (itemId.includes('-channel-')) {
-                    // Find channel data
-                    const parts = itemId.split('-');
-                    const category = parts[0];
-                    const channelIndex = parseInt(parts[parts.length - 1], 10);
-                    if (allChannelsData[category] && !isNaN(channelIndex) && channelIndex >= 0 && channelIndex < allChannelsData[category].length) {
-                        itemElement = createChannelBoxElement(allChannelsData[category][channelIndex], itemId);
-                    }
-                }
-
-                if (itemElement) {
-                    fragment.appendChild(itemElement);
-                    validFavoritesFound++;
-                } else {
-                    // Item data might be missing if JSON files changed
-                    console.warn(`Could not find data for favorite item ID: ${itemId}.`);
-                }
-            });
-
-            favoritesGridElement.appendChild(fragment);
-
-            // Show message if favorites exist but data couldn't be found
-            if (validFavoritesFound === 0 && favoriteItemIds.length > 0) {
-                favoritesGridElement.innerHTML = '<p class="status-message info">Previously favorited items could not be found.</p>';
-            }
+             const favoritesGridElement = document.getElementById('Favorites');
+             if (!favoritesGridElement) return;
+             favoritesGridElement.innerHTML = '';
+             if (favoriteItemIds.length === 0) { favoritesGridElement.innerHTML = '<p class="status-message info">Favorites list is empty.<br>Click ☆ to add.</p>'; return; }
+             const fragment = document.createDocumentFragment();
+             let validFavoritesFound = 0;
+             favoriteItemIds.forEach(itemId => {
+                 let itemElement = null;
+                 if (itemId.startsWith('match-')) {
+                     const matchIndex = parseInt(itemId.split('-')[1], 10);
+                     if (!isNaN(matchIndex) && matchIndex >= 0 && matchIndex < allMatchesData.length) { itemElement = createMatchBoxElement(allMatchesData[matchIndex], itemId); }
+                 } else if (itemId.includes('-channel-')) {
+                     const parts = itemId.split('-'); const category = parts[0]; const channelIndex = parseInt(parts[parts.length - 1], 10);
+                     if (allChannelsData[category] && !isNaN(channelIndex) && channelIndex >= 0 && channelIndex < allChannelsData[category].length) { itemElement = createChannelBoxElement(allChannelsData[category][channelIndex], itemId); }
+                 }
+                 if (itemElement) { fragment.appendChild(itemElement); validFavoritesFound++; }
+                 else { console.warn(`Could not find data for favorite item ID: ${itemId}.`); }
+             });
+             favoritesGridElement.appendChild(fragment);
+             if (validFavoritesFound === 0 && favoriteItemIds.length > 0) { favoritesGridElement.innerHTML = '<p class="status-message info">Previously favorited items could not be found.</p>'; }
         }
 
         // --- Element Creation ---
-        /**
-         * Creates the HTML structure for a channel box.
-         * @param {object} channelData - Data for the channel.
-         * @param {string} uniqueItemId - The unique ID for this box.
-         * @returns {HTMLDivElement | null} The created element or null on error.
-         */
         function createChannelBoxElement(channelData, uniqueItemId) {
             if (!channelData || !uniqueItemId || !channelData.name || !Array.isArray(channelData.srcs)) return null;
-
             const { name, srcs } = channelData;
             const boxElement = document.createElement('div');
-            boxElement.className = 'channel-box';
-            boxElement.id = uniqueItemId;
-            boxElement.tabIndex = 0; // Make it focusable
-            // Store data attributes for later use
-            boxElement.dataset.itemName = name;
-            boxElement.dataset.itemType = 'channel';
-            boxElement.dataset.sources = JSON.stringify(srcs);
-            boxElement.dataset.itemId = uniqueItemId;
-
+            boxElement.className = 'channel-box'; boxElement.id = uniqueItemId; boxElement.tabIndex = 0;
+            boxElement.dataset.itemName = name; boxElement.dataset.itemType = 'channel';
+            boxElement.dataset.sources = JSON.stringify(srcs); boxElement.dataset.itemId = uniqueItemId;
             const isFavorite = favoriteItemIds.includes(uniqueItemId);
-
-            // Inner HTML structure including player area and fullscreen button
             boxElement.innerHTML = `
                 <button class="favorite-button ${isFavorite ? 'is-favorite' : ''}" aria-label="${isFavorite ? 'Remove from' : 'Add to'} Favorites" aria-pressed="${isFavorite}" tabindex="-1">
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
                 </button>
-                <div class="channel-header" id="${uniqueItemId}-header" aria-expanded="false" aria-controls="${uniqueItemId}-content">
-                    <h3>${name}</h3>
-                </div>
-                <div class="channel-info"></div> <div class="iframe-container" id="${uniqueItemId}-content" role="region" aria-labelledby="${uniqueItemId}-header">
+                <div class="channel-header" id="${uniqueItemId}-header" aria-expanded="false" aria-controls="${uniqueItemId}-content"><h3>${name}</h3></div>
+                <div class="channel-info"></div>
+                <div class="iframe-container" id="${uniqueItemId}-content" role="region" aria-labelledby="${uniqueItemId}-header">
                     <div class="player-area">
-                        <div class="loader"></div>
-                        <div class="player-message" role="alert"></div>
+                        <div class="loader"></div> <div class="player-message" role="alert"></div>
                         <iframe allow="autoplay; fullscreen; encrypted-media; picture-in-picture" allowfullscreen title="Stream Player"></iframe>
                         <video controls autoplay muted playsinline title="Stream Player" poster="${CONFIG.placeholderImage}"></video>
-                        <button class="custom-fullscreen-btn" aria-label="Enter Fullscreen" title="Enter Fullscreen">
-                            ${SVG_ENTER_FULLSCREEN}
-                        </button>
+                        <button class="custom-fullscreen-btn" aria-label="Enter Fullscreen" title="Enter Fullscreen">${SVG_ENTER_FULLSCREEN}</button>
                     </div>
-                    <div class="stream-buttons"></div>
-                    <p class="box-disclaimer">${BOX_DISCLAIMER_TEXT}</p>
+                    <div class="stream-buttons"></div> <p class="box-disclaimer">${BOX_DISCLAIMER_TEXT}</p>
                 </div>`;
             return boxElement;
         }
 
-        /**
-         * Creates the HTML structure for a match box.
-         * @param {object} matchData - Data for the match.
-         * @param {string} uniqueItemId - The unique ID for this box.
-         * @returns {HTMLDivElement | null} The created element or null on error.
-         */
         function createMatchBoxElement(matchData, uniqueItemId) {
              if (!matchData || !uniqueItemId || !matchData.team1 || !matchData.team2) return null;
-
              const { team1, team2, logo1 = '', logo2 = '', time = '', league = '', pt = [], uk = [], es = [] } = matchData;
              const boxElement = document.createElement('div');
-             boxElement.className = 'channel-box';
-             boxElement.id = uniqueItemId;
-             boxElement.tabIndex = 0; // Make it focusable
-
+             boxElement.className = 'channel-box'; boxElement.id = uniqueItemId; boxElement.tabIndex = 0;
              const matchTitle = `${team1} vs ${team2}`;
-             // Store data attributes
-             boxElement.dataset.itemName = matchTitle;
-             boxElement.dataset.searchTerms = `${team1} ${team2} ${league}`.toLowerCase(); // For searching
-             boxElement.dataset.itemType = 'match';
-             const allSources = { pt: pt || [], uk: uk || [], es: es || [] }; // Combine sources
-             boxElement.dataset.sources = JSON.stringify(allSources);
-             boxElement.dataset.itemId = uniqueItemId;
-
+             boxElement.dataset.itemName = matchTitle; boxElement.dataset.searchTerms = `${team1} ${team2} ${league}`.toLowerCase();
+             boxElement.dataset.itemType = 'match'; const allSources = { pt: pt || [], uk: uk || [], es: es || [] };
+             boxElement.dataset.sources = JSON.stringify(allSources); boxElement.dataset.itemId = uniqueItemId;
              const isFavorite = favoriteItemIds.includes(uniqueItemId);
-
-             // Helper to create logo HTML with fallback
              const createLogoHtml = (logoUrl, altText) => logoUrl ? `<img src="${logoUrl}" alt="${altText} logo" class="match-logo" loading="lazy" onerror="this.style.display='none'; this.onerror=null;">` : '<span class="match-logo" aria-label="No logo available" style="display: inline-block; width: 40px;"></span>';
-
-             // Inner HTML structure including player area and fullscreen button
              boxElement.innerHTML = `
                 <button class="favorite-button ${isFavorite ? 'is-favorite' : ''}" aria-label="${isFavorite ? 'Remove from' : 'Add to'} Favorites" aria-pressed="${isFavorite}" tabindex="-1">
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
                 </button>
                 <div class="channel-header" id="${uniqueItemId}-header" aria-expanded="false" aria-controls="${uniqueItemId}-content">
-                    ${createLogoHtml(logo1, team1)}
-                    <h3>${matchTitle}</h3>
-                    ${createLogoHtml(logo2, team2)}
+                    ${createLogoHtml(logo1, team1)} <h3>${matchTitle}</h3> ${createLogoHtml(logo2, team2)}
                 </div>
-                <div class="channel-info">
-                    ${league ? `<span>${league}</span>` : ''}
-                    ${league && time ? '<span aria-hidden="true"> | </span>' : ''}
-                    ${time ? `<span>${time}</span>` : ''}
-                </div>
+                <div class="channel-info"> ${league ? `<span>${league}</span>` : ''} ${league && time ? '<span aria-hidden="true"> | </span>' : ''} ${time ? `<span>${time}</span>` : ''} </div>
                 <div class="iframe-container" id="${uniqueItemId}-content" role="region" aria-labelledby="${uniqueItemId}-header">
                     <div class="player-area">
-                        <div class="loader"></div>
-                        <div class="player-message" role="alert"></div>
+                        <div class="loader"></div> <div class="player-message" role="alert"></div>
                         <iframe allow="autoplay; fullscreen; encrypted-media; picture-in-picture" allowfullscreen title="Stream Player"></iframe>
                         <video controls autoplay muted playsinline title="Stream Player" poster="${CONFIG.placeholderImage}"></video>
-                         <button class="custom-fullscreen-btn" aria-label="Enter Fullscreen" title="Enter Fullscreen">
-                             ${SVG_ENTER_FULLSCREEN}
-                         </button>
+                        <button class="custom-fullscreen-btn" aria-label="Enter Fullscreen" title="Enter Fullscreen">${SVG_ENTER_FULLSCREEN}</button>
                     </div>
-                    <div class="stream-buttons"></div>
-                    <p class="box-disclaimer">${BOX_DISCLAIMER_TEXT}</p>
+                    <div class="stream-buttons"></div> <p class="box-disclaimer">${BOX_DISCLAIMER_TEXT}</p>
                 </div>`;
              return boxElement;
         }
 
-        /**
-         * Creates a button for a stream source, handling the different opening behaviors based on toggles.
-         * @param {string} label - Button text.
-         * @param {string} url - Stream URL.
-         * @param {HTMLDivElement} parentBoxElement - The parent channel/match box.
-         * @returns {HTMLButtonElement} The created button element.
-         */
         function createStreamSourceButton(label, url, parentBoxElement) {
            const buttonElement = document.createElement('button');
-           buttonElement.className = 'stream-button';
-           buttonElement.textContent = label || 'Source';
-           buttonElement.dataset.streamUrl = url;
-
+           buttonElement.className = 'stream-button'; buttonElement.textContent = label || 'Source'; buttonElement.dataset.streamUrl = url;
            buttonElement.onclick = (event) => {
-               event.stopPropagation(); // Prevent the click from expanding/collapsing the box
-               const itemId = parentBoxElement.dataset.itemId;
-
-               if (openInPlayerPageEnabled && itemId) {
-                   // Option 1: Open dedicated player page in new tab
-                   const playerPageUrl = `player.html?item=${encodeURIComponent(itemId)}`;
-                   console.log(`Opening player page in new tab: ${label} (${playerPageUrl})`);
-                   window.open(playerPageUrl, '_blank');
-                   // Briefly highlight the button
-                   buttonElement.classList.add('active');
-                   setTimeout(() => buttonElement.classList.remove('active'), 500);
-               } else if (openInNewTabEnabled) {
-                   // Option 2: Open the source URL directly in a new tab
-                   console.log(`Opening source in new tab: ${label} (${url})`);
-                   window.open(url, '_blank');
-                   // Briefly highlight the button
-                   buttonElement.classList.add('active');
-                   setTimeout(() => buttonElement.classList.remove('active'), 500);
-               } else {
-                   // Option 3 (Default): Load stream into the player within the expanded box
-                   console.log(`Loading stream in player: ${label} (${url})`);
-                   loadStreamIntoPlayer(buttonElement, url, parentBoxElement);
-               }
+               event.stopPropagation(); const itemId = parentBoxElement.dataset.itemId;
+               if (openInPlayerPageEnabled && itemId) { const playerPageUrl = `player.html?item=${encodeURIComponent(itemId)}`; window.open(playerPageUrl, '_blank'); buttonElement.classList.add('active'); setTimeout(() => buttonElement.classList.remove('active'), 500); }
+               else if (openInNewTabEnabled) { window.open(url, '_blank'); buttonElement.classList.add('active'); setTimeout(() => buttonElement.classList.remove('active'), 500); }
+               else { loadStreamIntoPlayer(buttonElement, url, parentBoxElement); }
            };
            return buttonElement;
        }
 
         // --- Event Listener Setup for Channel Boxes ---
-        /**
-         * Adds click, keyboard, and favorite listeners to channel/match boxes.
-         * @param {Document | HTMLElement} scopeElement - The element to search within for boxes (defaults to document).
-         */
         function addChannelBoxEventListeners(scopeElement = document) {
              if (!scopeElement) return;
-
-             // Find boxes that haven't had listeners added yet
              scopeElement.querySelectorAll('.channel-box:not([data-listener-added="true"])').forEach(boxElement => {
-                 const headerElement = boxElement.querySelector('.channel-header');
-                 const infoElement = boxElement.querySelector('.channel-info'); // For matches
-                 const favoriteButtonElement = boxElement.querySelector('.favorite-button');
-                 const boxId = boxElement.id;
-                 const itemId = boxElement.dataset.itemId;
-
-                 // Click handler for the box (header or info area)
+                 const headerElement = boxElement.querySelector('.channel-header'); const infoElement = boxElement.querySelector('.channel-info');
+                 const favoriteButtonElement = boxElement.querySelector('.favorite-button'); const boxId = boxElement.id; const itemId = boxElement.dataset.itemId;
                  const handleBoxClick = (event) => {
-                     // Ignore clicks on favorite or fullscreen buttons
                      if (event.target.closest('.favorite-button') || event.target.closest('.custom-fullscreen-btn')) return;
-
-                     if (openInPlayerPageEnabled && itemId) {
-                         // If player page toggle is on, open player page
-                         const playerPageUrl = `player.html?item=${encodeURIComponent(itemId)}`;
-                         console.log(`Box clicked: Opening player page in new tab (${playerPageUrl})`);
-                         window.open(playerPageUrl, '_blank');
-                     } else {
-                         // Otherwise, expand/collapse the box
-                         console.log("Box clicked: Expanding/Collapsing box.");
-                         toggleItemBoxExpansion(boxElement);
-                     }
+                     if (openInPlayerPageEnabled && itemId) { const playerPageUrl = `player.html?item=${encodeURIComponent(itemId)}`; window.open(playerPageUrl, '_blank'); }
+                     else { toggleItemBoxExpansion(boxElement); }
                  };
-
-                 // Attach click listener to header and visible info element
                  if (headerElement) headerElement.addEventListener('click', handleBoxClick);
-                 if (infoElement && getComputedStyle(infoElement).display !== 'none') {
-                     infoElement.addEventListener('click', handleBoxClick);
-                 }
-
-                 // Attach listener to favorite button
-                 if (favoriteButtonElement && boxId) {
-                     favoriteButtonElement.addEventListener('click', (event) => {
-                         event.stopPropagation(); // Prevent box expansion
-                         toggleFavoriteStatus(boxId, favoriteButtonElement);
-                     });
-                 } else if (!boxId) {
-                     console.warn("Could not attach favorite listener: Box ID missing.", boxElement);
-                 }
-
-                 // Keyboard activation (Enter/OK key)
+                 if (infoElement && getComputedStyle(infoElement).display !== 'none') { infoElement.addEventListener('click', handleBoxClick); }
+                 if (favoriteButtonElement && boxId) { favoriteButtonElement.addEventListener('click', (event) => { event.stopPropagation(); toggleFavoriteStatus(boxId, favoriteButtonElement); }); }
+                 else if (!boxId) { console.warn("Could not attach favorite listener: Box ID missing.", boxElement); }
                  boxElement.addEventListener('keydown', (event) => {
                      if ((event.key === 'Enter' || event.key === 'Ok') && !boxElement.classList.contains('expanded')) {
                          event.preventDefault();
-                         if (openInPlayerPageEnabled && itemId) {
-                             // Open player page if toggle is on
-                             const playerPageUrl = `player.html?item=${encodeURIComponent(itemId)}`;
-                             console.log(`Box activated (keyboard): Opening player page in new tab (${playerPageUrl})`);
-                             window.open(playerPageUrl, '_blank');
-                         } else {
-                             // Otherwise, expand the box
-                             console.log("Box activated (keyboard): Expanding box.");
-                             toggleItemBoxExpansion(boxElement);
-                         }
+                         if (openInPlayerPageEnabled && itemId) { const playerPageUrl = `player.html?item=${encodeURIComponent(itemId)}`; window.open(playerPageUrl, '_blank'); }
+                         else { toggleItemBoxExpansion(boxElement); }
                      }
                  });
-
-                 // Mark the box as having listeners added
                  boxElement.dataset.listenerAdded = 'true';
              });
         }
 
         // --- Tab Management ---
-        /**
-         * Activates a specific tab, hiding others and updating UI state.
-         * @param {string} tabIdToShow - The ID of the tab/grid to show.
-         */
         function activateTab(tabIdToShow) {
-            // Avoid unnecessary work if the tab is already active
             if (tabIdToShow === activeTabId && document.getElementById(tabIdToShow)?.classList.contains('active')) return;
-
-            console.log(`Activating tab: ${tabIdToShow}`);
-            activeTabId = tabIdToShow; // Update global state
-
-            // Update tab button appearance
-            tabsContainerElement.querySelectorAll('.tab-button').forEach(btn => {
-                const isActive = btn.dataset.tab === tabIdToShow;
-                btn.classList.toggle('active', isActive);
-                btn.setAttribute('aria-selected', isActive ? 'true' : 'false');
-            });
-
-            // Show the selected grid, hide others
-            channelGridElements.forEach(grid => {
-                const isGridActive = grid.id === tabIdToShow;
-                grid.classList.toggle('active', isGridActive);
-                grid.setAttribute('tabindex', isGridActive ? '0' : '-1'); // Manage focusability
-            });
-
-            // Collapse any currently expanded item when switching tabs
-            if (currentlyExpandedBoxElement) {
-                collapseItemBox(currentlyExpandedBoxElement);
-            }
-
-            // Save the active tab ID to localStorage
+            console.log(`Activating tab: ${tabIdToShow}`); activeTabId = tabIdToShow;
+            tabsContainerElement.querySelectorAll('.tab-button').forEach(btn => { const isActive = btn.dataset.tab === tabIdToShow; btn.classList.toggle('active', isActive); btn.setAttribute('aria-selected', isActive ? 'true' : 'false'); });
+            channelGridElements.forEach(grid => { const isGridActive = grid.id === tabIdToShow; grid.classList.toggle('active', isGridActive); grid.setAttribute('tabindex', isGridActive ? '0' : '-1'); });
+            if (currentlyExpandedBoxElement) { collapseItemBox(currentlyExpandedBoxElement); }
             localStorage.setItem(CONFIG.lastTabKey, tabIdToShow);
-
-            // Re-render favorites if that tab is activated (in case items were added/removed while it was inactive)
-            if (tabIdToShow === 'Favorites') {
-                renderFavoritesTabContent();
-                addChannelBoxEventListeners(document.getElementById('Favorites')); // Re-attach listeners
-            }
-
-            // Re-apply search filter to the newly activated tab's content
+            if (tabIdToShow === 'Favorites') { renderFavoritesTabContent(); addChannelBoxEventListeners(document.getElementById('Favorites')); }
             filterVisibleContent(searchInputElement.value);
-
-            // Set focus to the active grid container for accessibility (after a short delay)
             setTimeout(() => document.getElementById(tabIdToShow)?.focus({ preventScroll: true }), 50);
         }
 
         // --- Search Filtering ---
-        /**
-         * Filters the visible channel/match boxes based on the search term.
-         * @param {string} searchTerm - The term to filter by.
-         */
         function filterVisibleContent(searchTerm) {
-             const normalizedSearchTerm = searchTerm.toLowerCase().trim();
-             const isSearching = normalizedSearchTerm !== '';
-             let resultsFoundInActiveTab = false;
-             const activeGridElement = document.getElementById(activeTabId);
-             const allBoxes = document.querySelectorAll('.channel-box'); // Get all boxes across all grids
-
+             const normalizedSearchTerm = searchTerm.toLowerCase().trim(); const isSearching = normalizedSearchTerm !== ''; let resultsFoundInActiveTab = false;
+             const activeGridElement = document.getElementById(activeTabId); const allBoxes = document.querySelectorAll('.channel-box');
              allBoxes.forEach(boxElement => {
-                 const parentGridId = boxElement.closest('.channel-grid')?.id;
-                 if (!parentGridId) return; // Should not happen
-
-                 // Get search terms from data attributes
-                 const itemName = boxElement.dataset.itemName?.toLowerCase() || '';
-                 const additionalSearchTerms = boxElement.dataset.searchTerms?.toLowerCase() || ''; // For matches (teams, league)
-
-                 // Check if item matches search term
+                 const parentGridId = boxElement.closest('.channel-grid')?.id; if (!parentGridId) return;
+                 const itemName = boxElement.dataset.itemName?.toLowerCase() || ''; const additionalSearchTerms = boxElement.dataset.searchTerms?.toLowerCase() || '';
                  const matchesSearch = itemName.includes(normalizedSearchTerm) || additionalSearchTerms.includes(normalizedSearchTerm);
-
                  let shouldBeVisible = false;
-
-                 // Determine visibility based on active tab and search term
-                 if (!isSearching) {
-                     // No search term: visibility depends only on whether the box is in the active tab
-                     shouldBeVisible = (parentGridId === activeTabId);
-                 } else {
-                     // Searching: visibility depends on matching the term AND being in the correct tab context
-                     if (parentGridId === activeTabId) { // Box is in the currently viewed specific tab (PT, UK, ES, Matches)
-                         shouldBeVisible = matchesSearch;
-                     } else if (activeTabId === 'ALL') { // 'ALL' tab shows matches from any category
-                         shouldBeVisible = matchesSearch;
-                     } else if (activeTabId === 'Favorites') { // 'Favorites' tab shows matches only if favorited
-                         shouldBeVisible = matchesSearch && favoriteItemIds.includes(boxElement.id);
-                     }
-                     // Boxes in non-active, non-ALL, non-Favorites tabs are hidden when searching
+                 if (!isSearching) { shouldBeVisible = (parentGridId === activeTabId); }
+                 else {
+                     if (parentGridId === activeTabId) { shouldBeVisible = matchesSearch; }
+                     else if (activeTabId === 'ALL') { shouldBeVisible = matchesSearch; }
+                     else if (activeTabId === 'Favorites') { shouldBeVisible = matchesSearch && favoriteItemIds.includes(boxElement.id); }
                  }
-
-                 // Toggle visibility class, but only if the box is not expanded
-                 if (!boxElement.classList.contains('expanded')) {
-                     boxElement.classList.toggle('hidden', !shouldBeVisible);
-                     boxElement.tabIndex = shouldBeVisible ? 0 : -1; // Update focusability
-                 } else {
-                     // Expanded boxes should always remain visible regardless of filter
-                     boxElement.classList.remove('hidden');
-                     boxElement.tabIndex = -1; // Expanded boxes are not part of grid navigation
-                 }
-
-
-                 // Track if any results are found in the *active* tab
-                 if (shouldBeVisible && parentGridId === activeTabId && !boxElement.classList.contains('expanded')) {
-                     resultsFoundInActiveTab = true;
-                 }
+                 if (!boxElement.classList.contains('expanded')) { boxElement.classList.toggle('hidden', !shouldBeVisible); boxElement.tabIndex = shouldBeVisible ? 0 : -1; }
+                 else { boxElement.classList.remove('hidden'); boxElement.tabIndex = -1; }
+                 if (shouldBeVisible && parentGridId === activeTabId && !boxElement.classList.contains('expanded')) { resultsFoundInActiveTab = true; }
              });
-
-             // Display "No results" message in the active grid if needed
              if (activeGridElement) {
                  let noResultsMsgEl = activeGridElement.querySelector('.status-message.info.no-results');
-                 // Create the message element if it doesn't exist
-                 if (!noResultsMsgEl) {
-                     noResultsMsgEl = document.createElement('p');
-                     noResultsMsgEl.className = 'status-message info no-results';
-                     noResultsMsgEl.style.display = 'none'; // Initially hidden
-                     activeGridElement.prepend(noResultsMsgEl); // Add to the top of the grid
-                 }
-                 // Show or hide the message
-                 if (isSearching && !resultsFoundInActiveTab) {
-                     noResultsMsgEl.innerHTML = `No results found for "<strong>${searchTerm}</strong>" in this section.`;
-                     noResultsMsgEl.style.display = 'block';
-                 } else {
-                     noResultsMsgEl.style.display = 'none';
-                 }
+                 if (!noResultsMsgEl) { noResultsMsgEl = document.createElement('p'); noResultsMsgEl.className = 'status-message info no-results'; noResultsMsgEl.style.display = 'none'; activeGridElement.prepend(noResultsMsgEl); }
+                 if (isSearching && !resultsFoundInActiveTab) { noResultsMsgEl.innerHTML = `No results found for "<strong>${searchTerm}</strong>" in this section.`; noResultsMsgEl.style.display = 'block'; }
+                 else { noResultsMsgEl.style.display = 'none'; }
              }
         }
 
         // --- Channel Box Expansion ---
-        /**
-         * Toggles the expanded/collapsed state of a channel/match box.
-         * @param {HTMLDivElement} boxElement - The box element to toggle.
-         */
         function toggleItemBoxExpansion(boxElement) {
-             if (!boxElement) return;
-             const isCurrentlyExpanded = boxElement.classList.contains('expanded');
-             const headerElement = boxElement.querySelector('.channel-header');
-
-             // If another box is open, close it first
-             if (!isCurrentlyExpanded && currentlyExpandedBoxElement && currentlyExpandedBoxElement !== boxElement) {
-                 collapseItemBox(currentlyExpandedBoxElement);
-             }
-
-             // Toggle the state
-             if (!isCurrentlyExpanded) {
-                 expandItemBox(boxElement);
-                 if (headerElement) headerElement.setAttribute('aria-expanded', 'true');
-             } else {
-                 collapseItemBox(boxElement);
-                 if (headerElement) headerElement.setAttribute('aria-expanded', 'false');
-             }
+             if (!boxElement) return; const isCurrentlyExpanded = boxElement.classList.contains('expanded'); const headerElement = boxElement.querySelector('.channel-header');
+             if (!isCurrentlyExpanded && currentlyExpandedBoxElement && currentlyExpandedBoxElement !== boxElement) { collapseItemBox(currentlyExpandedBoxElement); }
+             if (!isCurrentlyExpanded) { expandItemBox(boxElement); if (headerElement) headerElement.setAttribute('aria-expanded', 'true'); }
+             else { collapseItemBox(boxElement); if (headerElement) headerElement.setAttribute('aria-expanded', 'false'); }
         }
 
-        /**
-         * Expands a box, populates streams, and handles focus/scroll.
-         * @param {HTMLDivElement} boxElement - The box element to expand.
-         */
         function expandItemBox(boxElement) {
-            if (!boxElement) return;
-            const playerAreaElement = boxElement.querySelector('.player-area');
-
-            // Hide/Show Player Area based on Toggle state
+            if (!boxElement) return; const playerAreaElement = boxElement.querySelector('.player-area');
             if (playerAreaElement) {
-                if (openInNewTabEnabled || openInPlayerPageEnabled) {
-                    // Hide player if either 'new tab' toggle is active
-                    console.log("   Hiding player area because a 'new tab' toggle is ON.");
-                    playerAreaElement.style.display = 'none';
-                } else {
-                    // Ensure player area is visible if no 'new tab' toggle is active
-                    console.log("   Ensuring player area is visible.");
-                    playerAreaElement.style.display = 'flex'; // Use flex to center loader/message initially
-                }
+                if (openInNewTabEnabled || openInPlayerPageEnabled) { playerAreaElement.style.display = 'none'; }
+                else { playerAreaElement.style.display = 'flex'; }
             }
-
-            boxElement.classList.add('expanded');
-            boxElement.classList.remove('hidden'); // Ensure it's not hidden by filters
-            boxElement.tabIndex = -1; // Remove from main grid tab flow when expanded
-            currentlyExpandedBoxElement = boxElement; // Update global tracker
-
-            populateStreamsAndLoadFirst(boxElement); // Load stream buttons and attempt to play first stream (if applicable)
-            setupCustomFullscreen(boxElement); // Setup the fullscreen button listener for this box
-
-            // Smooth Scroll into View after a short delay to allow rendering
+            boxElement.classList.add('expanded'); boxElement.classList.remove('hidden'); boxElement.tabIndex = -1;
+            currentlyExpandedBoxElement = boxElement;
+            populateStreamsAndLoadFirst(boxElement); setupCustomFullscreen(boxElement);
             setTimeout(() => {
                  boxElement.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-                 // Focus Management (Accessibility): Focus first stream button or fallback
                  const firstStreamButton = boxElement.querySelector('.stream-button');
-                 if (firstStreamButton) {
-                     setTimeout(() => firstStreamButton.focus({ preventScroll: true }), 150); // Delay focus slightly
-                 } else {
-                     boxElement.querySelector('.iframe-container')?.focus(); // Fallback focus
-                 }
-            }, 100); // Delay for scroll/focus
+                 if (firstStreamButton) { setTimeout(() => firstStreamButton.focus({ preventScroll: true }), 150); }
+                 else { boxElement.querySelector('.iframe-container')?.focus(); }
+            }, 100);
         }
 
-        /**
-         * Collapses a box, clears player state, and restores focusability.
-         * @param {HTMLDivElement} boxElement - The box element to collapse.
-         */
         function collapseItemBox(boxElement) {
-            if (!boxElement) return;
-            const wasCurrentlyExpanded = (currentlyExpandedBoxElement === boxElement);
-            const playerAreaElement = boxElement.querySelector('.player-area');
-
-            boxElement.classList.remove('expanded');
-
-            // Update global tracker if this was the currently expanded box
-            if (wasCurrentlyExpanded) {
-                currentlyExpandedBoxElement = null;
-            }
-
-            // Clean Up Player and Buttons
-            clearPlayerStateInBox(boxElement); // Ensure player is fully stopped and cleared
-            const streamButtonsContainer = boxElement.querySelector('.stream-buttons');
-            if (streamButtonsContainer) streamButtonsContainer.innerHTML = ''; // Clear stream buttons
-
-            // Reset Player Area Display (removes inline style added during expansion)
-            if (playerAreaElement) {
-                playerAreaElement.style.display = ''; // Reset display (will default to CSS 'flex' or 'none' depending on context)
-            }
-
-            // Update accessibility attribute
-            const headerElement = boxElement.querySelector('.channel-header');
-            if(headerElement) headerElement.setAttribute('aria-expanded', 'false');
-
-            // Restore Focusability and Re-apply Filter Visibility
-            // Determine if the box should be visible after collapsing based on current filter/tab
-            const normalizedSearchTerm = searchInputElement.value.toLowerCase().trim();
-            const isSearching = normalizedSearchTerm !== '';
-            const parentGridId = boxElement.closest('.channel-grid')?.id;
-            const itemName = boxElement.dataset.itemName?.toLowerCase() || '';
-            const additionalSearchTerms = boxElement.dataset.searchTerms?.toLowerCase() || '';
+            if (!boxElement) return; const wasCurrentlyExpanded = (currentlyExpandedBoxElement === boxElement); const playerAreaElement = boxElement.querySelector('.player-area');
+            boxElement.classList.remove('expanded'); if (wasCurrentlyExpanded) { currentlyExpandedBoxElement = null; }
+            clearPlayerStateInBox(boxElement); const streamButtonsContainer = boxElement.querySelector('.stream-buttons'); if (streamButtonsContainer) streamButtonsContainer.innerHTML = '';
+            if (playerAreaElement) { playerAreaElement.style.display = ''; }
+            const headerElement = boxElement.querySelector('.channel-header'); if(headerElement) headerElement.setAttribute('aria-expanded', 'false');
+            const normalizedSearchTerm = searchInputElement.value.toLowerCase().trim(); const isSearching = normalizedSearchTerm !== ''; const parentGridId = boxElement.closest('.channel-grid')?.id;
+            const itemName = boxElement.dataset.itemName?.toLowerCase() || ''; const additionalSearchTerms = boxElement.dataset.searchTerms?.toLowerCase() || '';
             const matchesSearch = itemName.includes(normalizedSearchTerm) || additionalSearchTerms.includes(normalizedSearchTerm);
             let shouldBeVisibleAfterCollapse = false;
             if (!isSearching) { shouldBeVisibleAfterCollapse = (parentGridId === activeTabId); }
@@ -1311,699 +806,151 @@
                 else if (activeTabId === 'ALL') { shouldBeVisibleAfterCollapse = matchesSearch; }
                 else if (activeTabId === 'Favorites') { shouldBeVisibleAfterCollapse = matchesSearch && favoriteItemIds.includes(boxElement.id); }
             }
-            // Hide if it shouldn't be visible, make focusable if it should
-            boxElement.classList.toggle('hidden', !shouldBeVisibleAfterCollapse);
-            boxElement.tabIndex = shouldBeVisibleAfterCollapse ? 0 : -1;
-
-            // Restore Focus to the collapsed box (if visible) or the grid container
-            if (wasCurrentlyExpanded && shouldBeVisibleAfterCollapse) {
-                setTimeout(() => boxElement.focus({ preventScroll: true }), 50);
-            } else if (wasCurrentlyExpanded) {
-                // If collapsed box is now hidden, focus the grid container
-                setTimeout(() => document.getElementById(activeTabId)?.focus({ preventScroll: true }), 50);
-            }
+            boxElement.classList.toggle('hidden', !shouldBeVisibleAfterCollapse); boxElement.tabIndex = shouldBeVisibleAfterCollapse ? 0 : -1;
+            if (wasCurrentlyExpanded && shouldBeVisibleAfterCollapse) { setTimeout(() => boxElement.focus({ preventScroll: true }), 50); }
+            else if (wasCurrentlyExpanded) { setTimeout(() => document.getElementById(activeTabId)?.focus({ preventScroll: true }), 50); }
         }
 
-        /**
-         * Populates the stream buttons and attempts to load the first stream if applicable.
-         * @param {HTMLDivElement} boxElement - The expanded box element.
-         */
         function populateStreamsAndLoadFirst(boxElement) {
-            const sourcesJson = boxElement.dataset.sources;
-            const streamButtonsContainer = boxElement.querySelector('.stream-buttons');
-            const playerAreaElement = boxElement.querySelector('.player-area');
-
-            // Ensure necessary elements and data exist
-            if (!sourcesJson || !streamButtonsContainer || !playerAreaElement) {
-                 displayNoStreamsAvailable(playerAreaElement, streamButtonsContainer);
-                 return;
-            }
-
-            streamButtonsContainer.innerHTML = ''; // Clear previous buttons
-            let firstStreamUrl = null;
-            let firstStreamButtonElement = null;
-            let streamCount = 0;
-            const fragment = document.createDocumentFragment(); // Efficiently add buttons
-
+            const sourcesJson = boxElement.dataset.sources; const streamButtonsContainer = boxElement.querySelector('.stream-buttons'); const playerAreaElement = boxElement.querySelector('.player-area');
+            if (!sourcesJson || !streamButtonsContainer || !playerAreaElement) { displayNoStreamsAvailable(playerAreaElement, streamButtonsContainer); return; }
+            streamButtonsContainer.innerHTML = ''; let firstStreamUrl = null; let firstStreamButtonElement = null; let streamCount = 0; const fragment = document.createDocumentFragment();
             try {
                 const sourcesData = JSON.parse(sourcesJson);
-
-                // Handle different source data structures (array for channels, object for matches)
-                if (Array.isArray(sourcesData)) { // Channel sources
-                    sourcesData.forEach((src) => {
-                        const url = typeof src === 'object' && src.url ? src.url : (typeof src === 'string' ? src : null);
-                        const label = typeof src === 'object' && src.label ? src.label : `Source ${streamCount + 1}`;
-                        if (url) {
-                            if (!firstStreamUrl) firstStreamUrl = url; // Capture first valid URL
-                            const button = createStreamSourceButton(label, url, boxElement);
-                            if (!firstStreamButtonElement) firstStreamButtonElement = button; // Capture first button element
-                            fragment.appendChild(button);
-                            streamCount++;
-                        }
-                    });
-                } else if (typeof sourcesData === 'object' && sourcesData !== null) { // Match sources (grouped by language)
-                    Object.entries(sourcesData).forEach(([langKey, sourcesInLang]) => {
-                        if (sourcesInLang && Array.isArray(sourcesInLang) && sourcesInLang.length > 0) {
-                            // Create a container for each language group
-                            const langGroupDiv = document.createElement('div');
-                            const langLabel = document.createElement('strong');
-                            langLabel.textContent = `${langKey.toUpperCase()}:`;
-                            langGroupDiv.appendChild(langLabel);
-                            // Add buttons for this language
-                            sourcesInLang.forEach((src) => {
-                                const url = typeof src === 'object' && src.url ? src.url : (typeof src === 'string' ? src : null);
-                                const label = typeof src === 'object' && src.label ? src.label : `Src ${streamCount + 1}`;
-                                if (url) {
-                                    if (!firstStreamUrl) firstStreamUrl = url;
-                                    const button = createStreamSourceButton(label, url, boxElement);
-                                    if (!firstStreamButtonElement) firstStreamButtonElement = button;
-                                    langGroupDiv.appendChild(button);
-                                    streamCount++;
-                                }
-                            });
-                            fragment.appendChild(langGroupDiv); // Add the language group to the fragment
-                        }
-                    });
+                if (Array.isArray(sourcesData)) {
+                    sourcesData.forEach((src) => { const url = typeof src === 'object' && src.url ? src.url : (typeof src === 'string' ? src : null); const label = typeof src === 'object' && src.label ? src.label : `Source ${streamCount + 1}`; if (url) { if (!firstStreamUrl) firstStreamUrl = url; const button = createStreamSourceButton(label, url, boxElement); if (!firstStreamButtonElement) firstStreamButtonElement = button; fragment.appendChild(button); streamCount++; } });
+                } else if (typeof sourcesData === 'object' && sourcesData !== null) {
+                    Object.entries(sourcesData).forEach(([langKey, sourcesInLang]) => { if (sourcesInLang && Array.isArray(sourcesInLang) && sourcesInLang.length > 0) { const langGroupDiv = document.createElement('div'); const langLabel = document.createElement('strong'); langLabel.textContent = `${langKey.toUpperCase()}:`; langGroupDiv.appendChild(langLabel); sourcesInLang.forEach((src) => { const url = typeof src === 'object' && src.url ? src.url : (typeof src === 'string' ? src : null); const label = typeof src === 'object' && src.label ? src.label : `Src ${streamCount + 1}`; if (url) { if (!firstStreamUrl) firstStreamUrl = url; const button = createStreamSourceButton(label, url, boxElement); if (!firstStreamButtonElement) firstStreamButtonElement = button; langGroupDiv.appendChild(button); streamCount++; } }); fragment.appendChild(langGroupDiv); } });
                 }
-
-                streamButtonsContainer.appendChild(fragment); // Add all buttons/groups to the DOM
-
-                // --- Decide whether to auto-load the first stream ---
-                if (streamCount === 0) {
-                    // No streams found
-                    displayNoStreamsAvailable(playerAreaElement, streamButtonsContainer);
-                    clearPlayerStateInBox(boxElement); // Ensure player is clear
-                } else if (openInPlayerPageEnabled) {
-                    // Player page toggle is ON: Don't auto-load, show message
-                    console.log("Skipping auto-load: 'Open player page' enabled.");
-                    if (playerAreaElement.style.display !== 'none') displayMessageInPlayerArea(playerAreaElement, `<strong>Select a source</strong><span>'Open player page' active. Click to open.</span>`, false);
-                    clearPlayerStateInBox(boxElement); // Ensure player is clear
-                } else if (openInNewTabEnabled) {
-                    // Source in new tab toggle is ON: Don't auto-load, show message
-                    console.log("Skipping auto-load: 'Open source' enabled.");
-                    if (playerAreaElement.style.display !== 'none') displayMessageInPlayerArea(playerAreaElement, `<strong>Select a source</strong><span>'Open source' active. Click to open.</span>`, false);
-                    clearPlayerStateInBox(boxElement); // Ensure player is clear
-                } else if (firstStreamUrl && firstStreamButtonElement) {
-                    // Toggles are OFF and streams exist: Auto-load the first stream if player isn't already active
-                    const videoEl = boxElement.querySelector('video');
-                    const iframeEl = boxElement.querySelector('iframe');
-                    if (!videoEl.classList.contains('active') && !iframeEl.classList.contains('active')) {
-                        console.log("Auto-loading first stream (toggles OFF).");
-                        loadStreamIntoPlayer(firstStreamButtonElement, firstStreamUrl, boxElement);
-                    } else {
-                        // Player is already active (e.g., user clicked another source) - don't auto-load, just update button state
-                        console.log("Skipping auto-load, player active.");
-                        const activeSrc = videoEl.src || iframeEl.src;
-                        if (activeSrc) {
-                            streamButtonsContainer.querySelectorAll('.stream-button').forEach(btn => {
-                                btn.classList.toggle('active', btn.dataset.streamUrl === activeSrc);
-                            });
-                        }
-                    }
-                } else {
-                    // Should not happen if streamCount > 0, but handle defensively
-                    console.error("Inconsistency: Streams counted, no first URL/Button.", boxElement.id);
-                    displayNoStreamsAvailable(playerAreaElement, streamButtonsContainer);
-                    clearPlayerStateInBox(boxElement);
-                }
-
-            } catch (error) {
-                console.error("Failed to parse sources/create buttons:", boxElement.id, error);
-                streamButtonsContainer.innerHTML = '<p class="status-message error">Error loading sources.</p>';
-                clearPlayerStateInBox(boxElement); // Ensure player is clear on error
-            }
+                streamButtonsContainer.appendChild(fragment);
+                if (streamCount === 0) { displayNoStreamsAvailable(playerAreaElement, streamButtonsContainer); clearPlayerStateInBox(boxElement); }
+                else if (openInPlayerPageEnabled) { if (playerAreaElement.style.display !== 'none') displayMessageInPlayerArea(playerAreaElement, `<strong>Select a source</strong><span>'Open player page' active. Click to open.</span>`, false); clearPlayerStateInBox(boxElement); }
+                else if (openInNewTabEnabled) { if (playerAreaElement.style.display !== 'none') displayMessageInPlayerArea(playerAreaElement, `<strong>Select a source</strong><span>'Open source' active. Click to open.</span>`, false); clearPlayerStateInBox(boxElement); }
+                else if (firstStreamUrl && firstStreamButtonElement) { const videoEl = boxElement.querySelector('video'); const iframeEl = boxElement.querySelector('iframe'); if (!videoEl.classList.contains('active') && !iframeEl.classList.contains('active')) { loadStreamIntoPlayer(firstStreamButtonElement, firstStreamUrl, boxElement); } else { const activeSrc = videoEl.src || iframeEl.src; if (activeSrc) { streamButtonsContainer.querySelectorAll('.stream-button').forEach(btn => { btn.classList.toggle('active', btn.dataset.streamUrl === activeSrc); }); } } }
+                else { console.error("Inconsistency: Streams counted, no first URL/Button.", boxElement.id); displayNoStreamsAvailable(playerAreaElement, streamButtonsContainer); clearPlayerStateInBox(boxElement); }
+            } catch (error) { console.error("Failed to parse sources/create buttons:", boxElement.id, error); streamButtonsContainer.innerHTML = '<p class="status-message error">Error loading sources.</p>'; clearPlayerStateInBox(boxElement); }
         }
 
-        /**
-         * Displays a message indicating no streams are available.
-         * @param {HTMLDivElement} playerAreaElement - The player area element.
-         * @param {HTMLDivElement} streamButtonsContainer - The stream buttons container.
-         */
         function displayNoStreamsAvailable(playerAreaElement, streamButtonsContainer) {
              const message = 'No stream sources listed for this item.';
-             if (streamButtonsContainer) {
-                 streamButtonsContainer.innerHTML = `<p style="color: var(--text-secondary); font-size: 0.9em; padding: 10px 0;">${message}</p>`;
-             }
-             // Show message in player area only if it's currently supposed to be visible
-             if (playerAreaElement && playerAreaElement.style.display !== 'none') {
-                 displayMessageInPlayerArea(playerAreaElement, `<strong>No Streams Available</strong><span>${message}</span>`, false);
-             }
+             if (streamButtonsContainer) { streamButtonsContainer.innerHTML = `<p style="color: var(--text-secondary); font-size: 0.9em; padding: 10px 0;">${message}</p>`; }
+             if (playerAreaElement && playerAreaElement.style.display !== 'none') { displayMessageInPlayerArea(playerAreaElement, `<strong>No Streams Available</strong><span>${message}</span>`, false); }
         }
 
-        // --- Stream Handling (Only used when BOTH toggles are false) ---
-        /**
-         * Loads a selected stream into the appropriate player (video or iframe).
-         * @param {HTMLButtonElement} clickedButtonElement - The button that was clicked.
-         * @param {string} streamUrl - The URL of the stream to load.
-         * @param {HTMLDivElement} parentBoxElement - The parent channel/match box.
-         */
+        // --- Stream Handling ---
         function loadStreamIntoPlayer(clickedButtonElement, streamUrl, parentBoxElement) {
-            // Safety check: Abort if a 'new tab' toggle is enabled
             if (!parentBoxElement || !streamUrl || typeof streamUrl !== 'string') return;
-            if (openInNewTabEnabled || openInPlayerPageEnabled) {
-                console.warn("loadStreamIntoPlayer called, but toggle enabled. Aborting.");
-                clearPlayerStateInBox(parentBoxElement); // Clear any previous state just in case
-                return;
-            }
-
-            console.log(`>>> loadStreamIntoPlayer START for box ${parentBoxElement.id}: ${streamUrl}`);
-            const playerAreaElement = parentBoxElement.querySelector('.player-area');
-            const loaderElement = playerAreaElement?.querySelector('.loader');
-            const messageContainerElement = playerAreaElement?.querySelector('.player-message');
-            const iframeElement = playerAreaElement?.querySelector('iframe');
-            const videoElement = playerAreaElement?.querySelector('video');
-
-            if (!playerAreaElement || !loaderElement || !messageContainerElement || !iframeElement || !videoElement) return; // Ensure all elements exist
-
-            // --- Prepare for loading ---
-            clearPlayerStateInBox(parentBoxElement); // Clear previous player state
-            messageContainerElement.classList.remove('visible'); // Hide any previous messages
-            loaderElement.classList.add('visible'); // Show loading spinner
-
-            // Update button states
-            const streamButtonsContainer = parentBoxElement.querySelector('.stream-buttons');
-            if (streamButtonsContainer) {
-                streamButtonsContainer.querySelectorAll('.stream-button').forEach(b => b.classList.remove('active')); // Deactivate all buttons
-            }
-            if (clickedButtonElement) {
-                clickedButtonElement.classList.add('active'); // Activate the clicked button
-            }
-
-            // Validate URL format (basic check)
-            if (!streamUrl.startsWith('http://') && !streamUrl.startsWith('https://')) {
-                loaderElement.classList.remove('visible'); // Hide loader
-                displayMessageInPlayerArea(playerAreaElement, `<strong>Invalid URL</strong><span>Link must start with http/https.</span>`, true, streamUrl, parentBoxElement);
-                return;
-            }
-
-            // --- Load stream (after a slight delay) ---
-            setTimeout(() => {
-                try {
-                    const urlObject = new URL(streamUrl); // Use URL API for parsing
-                    // Check if it's an HLS stream (.m3u8)
-                    if (urlObject.pathname.toLowerCase().endsWith('.m3u8')) {
-                        loadHlsStreamIntoVideo(streamUrl, videoElement, playerAreaElement);
-                    } else {
-                        // Assume it's a general URL to load in an iframe
-                        loadUrlIntoIframe(streamUrl, iframeElement, playerAreaElement);
-                    }
-                } catch (error) {
-                    // Handle URL parsing errors
-                    loaderElement.classList.remove('visible');
-                    displayMessageInPlayerArea(playerAreaElement, `<strong>URL Error</strong><span>Could not process link.</span>`, true, streamUrl, parentBoxElement);
-                }
-            }, 50); // Small delay before loading
+            if (openInNewTabEnabled || openInPlayerPageEnabled) { console.warn("loadStreamIntoPlayer called, but toggle enabled. Aborting."); clearPlayerStateInBox(parentBoxElement); return; }
+            const playerAreaElement = parentBoxElement.querySelector('.player-area'); const loaderElement = playerAreaElement?.querySelector('.loader'); const messageContainerElement = playerAreaElement?.querySelector('.player-message'); const iframeElement = playerAreaElement?.querySelector('iframe'); const videoElement = playerAreaElement?.querySelector('video');
+            if (!playerAreaElement || !loaderElement || !messageContainerElement || !iframeElement || !videoElement) return;
+            clearPlayerStateInBox(parentBoxElement); messageContainerElement.classList.remove('visible'); loaderElement.classList.add('visible');
+            const streamButtonsContainer = parentBoxElement.querySelector('.stream-buttons'); if (streamButtonsContainer) { streamButtonsContainer.querySelectorAll('.stream-button').forEach(b => b.classList.remove('active')); } if (clickedButtonElement) { clickedButtonElement.classList.add('active'); }
+            if (!streamUrl.startsWith('http://') && !streamUrl.startsWith('https://')) { loaderElement.classList.remove('visible'); displayMessageInPlayerArea(playerAreaElement, `<strong>Invalid URL</strong><span>Link must start with http/https.</span>`, true, streamUrl, parentBoxElement); return; }
+            setTimeout(() => { try { const urlObject = new URL(streamUrl); if (urlObject.pathname.toLowerCase().endsWith('.m3u8')) { loadHlsStreamIntoVideo(streamUrl, videoElement, playerAreaElement); } else { loadUrlIntoIframe(streamUrl, iframeElement, playerAreaElement); } } catch (error) { loaderElement.classList.remove('visible'); displayMessageInPlayerArea(playerAreaElement, `<strong>URL Error</strong><span>Could not process link.</span>`, true, streamUrl, parentBoxElement); } }, 50);
         }
 
-        /**
-         * Clears the player state (stops video/HLS, clears iframe, hides messages/loader).
-         * @param {HTMLDivElement} boxElement - The channel/match box element.
-         */
         function clearPlayerStateInBox(boxElement) {
-             if (!boxElement) return;
-             const playerAreaElement = boxElement.querySelector('.player-area');
-             if (!playerAreaElement) return;
-
-             const videoElement = playerAreaElement.querySelector('video');
-             const iframeElement = playerAreaElement.querySelector('iframe');
-             const loaderElement = playerAreaElement.querySelector('.loader');
-             const messageContainerElement = playerAreaElement.querySelector('.player-message');
-
-             // Destroy HLS instance if it's attached to this video element
-             if (currentHlsInstance && videoElement && currentHlsInstance.media === videoElement) {
-                 try { currentHlsInstance.destroy(); } catch (e) { console.warn("Error destroying HLS instance:", e); }
-                 currentHlsInstance = null;
-             }
-
-             // Clear iframe source and hide it
-             if (iframeElement) {
-                 if (iframeElement.getAttribute('src') && iframeElement.getAttribute('src') !== 'about:blank') {
-                     iframeElement.src = 'about:blank'; // Prevent resource loading
-                 }
-                 iframeElement.classList.remove('active');
-             }
-
-             // Clear video source, pause, and hide it
-             if (videoElement) {
-                 videoElement.pause();
-                 if (videoElement.hasAttribute('src')) videoElement.removeAttribute('src');
-                 // Force browser to release resources if possible
-                 if (videoElement.currentSrc) videoElement.load();
-                 videoElement.classList.remove('active');
-                 videoElement.poster = CONFIG.placeholderImage; // Reset poster
-             }
-
-             // Hide loader and message containers
-             if (loaderElement) loaderElement.classList.remove('visible');
-             if (messageContainerElement) messageContainerElement.classList.remove('visible');
-
-             // Deactivate any active stream buttons within this box
-             const streamButtonsContainer = boxElement.querySelector('.stream-buttons');
-             if (streamButtonsContainer) {
-                 streamButtonsContainer.querySelectorAll('.stream-button.active').forEach(b => b.classList.remove('active'));
-             }
-
-             // Ensure custom fullscreen button is hidden when player clears
-             const fsBtn = playerAreaElement.querySelector('.custom-fullscreen-btn');
-             if (fsBtn) fsBtn.style.display = 'none';
-             updateFullscreenButtonState(); // Reset icon if needed
+             if (!boxElement) return; const playerAreaElement = boxElement.querySelector('.player-area'); if (!playerAreaElement) return;
+             const videoElement = playerAreaElement.querySelector('video'); const iframeElement = playerAreaElement.querySelector('iframe'); const loaderElement = playerAreaElement.querySelector('.loader'); const messageContainerElement = playerAreaElement.querySelector('.player-message');
+             if (currentHlsInstance && videoElement && currentHlsInstance.media === videoElement) { try { currentHlsInstance.destroy(); } catch (e) { console.warn("Error destroying HLS instance:", e); } currentHlsInstance = null; }
+             if (iframeElement) { if (iframeElement.getAttribute('src') && iframeElement.getAttribute('src') !== 'about:blank') { iframeElement.src = 'about:blank'; } iframeElement.classList.remove('active'); }
+             if (videoElement) { videoElement.pause(); if (videoElement.hasAttribute('src')) videoElement.removeAttribute('src'); if (videoElement.currentSrc) videoElement.load(); videoElement.classList.remove('active'); videoElement.poster = CONFIG.placeholderImage; }
+             if (loaderElement) loaderElement.classList.remove('visible'); if (messageContainerElement) messageContainerElement.classList.remove('visible');
+             const streamButtonsContainer = boxElement.querySelector('.stream-buttons'); if (streamButtonsContainer) { streamButtonsContainer.querySelectorAll('.stream-button.active').forEach(b => b.classList.remove('active')); }
+             const fsBtn = playerAreaElement.querySelector('.custom-fullscreen-btn'); if (fsBtn) fsBtn.style.display = 'none'; updateFullscreenButtonState();
         }
 
-        /**
-         * Displays a message (error or info) within the player area.
-         * @param {HTMLDivElement} playerAreaElement - The player area element.
-         * @param {string} messageHtml - The HTML content for the message.
-         * @param {boolean} showTryNextButton - Whether to show the "Try Next Source" button.
-         * @param {string | null} failedUrl - The URL that failed (needed for finding the next source).
-         * @param {HTMLDivElement | null} parentBoxElement - The parent box (needed for finding the next source).
-         */
         function displayMessageInPlayerArea(playerAreaElement, messageHtml, showTryNextButton, failedUrl = null, parentBoxElement = null) {
-             const messageContainerElement = playerAreaElement?.querySelector('.player-message');
-             const loaderElement = playerAreaElement?.querySelector('.loader');
-             const videoElement = playerAreaElement?.querySelector('video');
-             const iframeElement = playerAreaElement?.querySelector('iframe');
-
-             if (!messageContainerElement || !loaderElement || !playerAreaElement) return; // Ensure elements exist
-
-             // Hide active player elements
-             if (videoElement) videoElement.classList.remove('active');
-             if (iframeElement) iframeElement.classList.remove('active');
-             loaderElement.classList.remove('visible'); // Hide loader
-
-             // Set message content
+             const messageContainerElement = playerAreaElement?.querySelector('.player-message'); const loaderElement = playerAreaElement?.querySelector('.loader'); const videoElement = playerAreaElement?.querySelector('video'); const iframeElement = playerAreaElement?.querySelector('iframe');
+             if (!messageContainerElement || !loaderElement || !playerAreaElement) return;
+             if (videoElement) videoElement.classList.remove('active'); if (iframeElement) iframeElement.classList.remove('active'); loaderElement.classList.remove('visible');
              messageContainerElement.innerHTML = messageHtml;
-
-             // Add "Try Next Source" button if applicable and toggles are off
              if (showTryNextButton && failedUrl && parentBoxElement && !openInNewTabEnabled && !openInPlayerPageEnabled) {
                  const nextButtonElement = findNextAvailableStreamButton(failedUrl, parentBoxElement);
-                 if (nextButtonElement) {
-                     // Create and append the button
-                     const tryNextBtn = document.createElement('button');
-                     tryNextBtn.className = 'try-next-button';
-                     tryNextBtn.textContent = 'Try Next Source';
-                     tryNextBtn.onclick = (event) => {
-                         event.stopPropagation(); // Prevent clicks bubbling up
-                         nextButtonElement.click(); // Simulate click on the next source button
-                     };
-                     messageContainerElement.appendChild(document.createElement('br')); // Add line break
-                     messageContainerElement.appendChild(tryNextBtn);
-                 } else {
-                     // No more sources available
-                     const noMoreSpan = document.createElement('span');
-                     noMoreSpan.style.cssText = 'font-size:0.8em;margin-top:10px;display:block;';
-                     noMoreSpan.textContent = '(No more sources available)';
-                     messageContainerElement.appendChild(noMoreSpan);
-                 }
-             } else if (showTryNextButton && (openInNewTabEnabled || openInPlayerPageEnabled)) {
-                 // Log if 'Try Next' is skipped due to toggles
-                 console.log("   'Try Next Source' button skipped (toggle enabled).");
-             }
-
-             messageContainerElement.classList.add('visible'); // Show the message container
-
-             // Hide custom fullscreen button when message shows
-             const fsBtn = playerAreaElement.querySelector('.custom-fullscreen-btn');
-             if (fsBtn) fsBtn.style.display = 'none';
-             updateFullscreenButtonState(); // Reset icon if needed
+                 if (nextButtonElement) { const tryNextBtn = document.createElement('button'); tryNextBtn.className = 'try-next-button'; tryNextBtn.textContent = 'Try Next Source'; tryNextBtn.onclick = (event) => { event.stopPropagation(); nextButtonElement.click(); }; messageContainerElement.appendChild(document.createElement('br')); messageContainerElement.appendChild(tryNextBtn); }
+                 else { const noMoreSpan = document.createElement('span'); noMoreSpan.style.cssText = 'font-size:0.8em;margin-top:10px;display:block;'; noMoreSpan.textContent = '(No more sources available)'; messageContainerElement.appendChild(noMoreSpan); }
+             } else if (showTryNextButton && (openInNewTabEnabled || openInPlayerPageEnabled)) { console.log("   'Try Next Source' button skipped (toggle enabled)."); }
+             messageContainerElement.classList.add('visible');
+             const fsBtn = playerAreaElement.querySelector('.custom-fullscreen-btn'); if (fsBtn) fsBtn.style.display = 'none'; updateFullscreenButtonState();
         }
 
-        /**
-         * Finds the next stream button in the list after a failed one.
-         * @param {string} failedUrl - The URL of the button that failed.
-         * @param {HTMLDivElement} parentBoxElement - The parent box containing the buttons.
-         * @returns {HTMLButtonElement | null} The next button element or null if none found.
-         */
         function findNextAvailableStreamButton(failedUrl, parentBoxElement) {
-             if (!failedUrl || !parentBoxElement) return null;
-             const allButtonsInBox = parentBoxElement.querySelectorAll('.stream-button');
-             let foundFailedButton = false;
-             for (let i = 0; i < allButtonsInBox.length; i++) {
-                 const currentButton = allButtonsInBox[i];
-                 if (currentButton.dataset.streamUrl === failedUrl) {
-                     foundFailedButton = true; // Mark when the failed button is found
-                 } else if (foundFailedButton) {
-                     // This is the first button after the failed one
-                     return currentButton;
-                 }
-             }
-             return null; // No button found after the failed one
+             if (!failedUrl || !parentBoxElement) return null; const allButtonsInBox = parentBoxElement.querySelectorAll('.stream-button'); let foundFailedButton = false;
+             for (let i = 0; i < allButtonsInBox.length; i++) { const currentButton = allButtonsInBox[i]; if (currentButton.dataset.streamUrl === failedUrl) { foundFailedButton = true; } else if (foundFailedButton) { return currentButton; } } return null;
         }
 
-        /**
-         * Loads an HLS (.m3u8) stream into the video element using HLS.js or native browser support.
-         * @param {string} hlsUrl - The URL of the HLS stream.
-         * @param {HTMLVideoElement} videoElement - The video element to load into.
-         * @param {HTMLDivElement} playerAreaElement - The container element.
-         */
         function loadHlsStreamIntoVideo(hlsUrl, videoElement, playerAreaElement) {
-            // Safety check: Abort if a 'new tab' toggle is enabled
-            if (openInNewTabEnabled || openInPlayerPageEnabled) {
-                console.warn("loadHlsStreamIntoVideo called, but toggle enabled. Aborting.");
-                return;
-            }
-            const parentBoxElement = videoElement.closest('.channel-box'); // Get parent for context in messages
-            videoElement.poster = CONFIG.placeholderImage; // Set poster while loading
-
+            if (openInNewTabEnabled || openInPlayerPageEnabled) { console.warn("loadHlsStreamIntoVideo called, but toggle enabled. Aborting."); return; }
+            const parentBoxElement = videoElement.closest('.channel-box'); videoElement.poster = CONFIG.placeholderImage;
             if (Hls.isSupported()) {
-                // --- Use HLS.js ---
-                console.log("Using HLS.js for:", hlsUrl);
-                // Destroy previous instance if attached to this element or any other
-                if (currentHlsInstance && currentHlsInstance.media === videoElement) {
-                    currentHlsInstance.destroy(); currentHlsInstance = null;
-                } else if (currentHlsInstance) {
-                    currentHlsInstance.destroy(); currentHlsInstance = null;
-                }
-
-                // Create new HLS instance with configuration
-                currentHlsInstance = new Hls({
-                    liveSyncDurationCount: 2, // Lower latency for live streams
-                    manifestLoadingTimeOut: 15000, // Timeout for manifest loading
-                    levelLoadingTimeOut: 15000,    // Timeout for level playlist loading
-                    fragLoadingTimeOut: 20000,     // Timeout for fragment loading
-                    manifestLoadErrorMaxRetry: 3,  // Retries for manifest load errors
-                    levelLoadErrorMaxRetry: 4,     // Retries for level load errors
-                    fragLoadErrorMaxRetry: 5       // Retries for fragment load errors
-                });
-
-                // Error handling
-                const hlsErrorListener = (event, data) => {
-                    // Ensure the error belongs to the current instance and element
-                    if (!currentHlsInstance || currentHlsInstance.media !== videoElement) return;
-
-                    console.error('HLS.js Error:', data.type, data.details, data.fatal);
-                    let userMessage = `Stream Error (${data.details || 'Unknown'}).`;
-                    if (data.type === Hls.ErrorTypes.NETWORK_ERROR) {
-                        userMessage = `Network Error (${data.details}).`;
-                    } else if (data.type === Hls.ErrorTypes.MEDIA_ERROR && data.details !== 'bufferStalledError') { // Ignore simple stalls
-                        userMessage = `Media Error (${data.details}).`;
-                    }
-
-                    // If the error is fatal, display message and clean up
-                    if (data.fatal) {
-                        displayMessageInPlayerArea(playerAreaElement, `<strong>${userMessage}</strong>`, true, hlsUrl, parentBoxElement);
-                        if (currentHlsInstance && currentHlsInstance.media === videoElement) {
-                            currentHlsInstance.destroy(); currentHlsInstance = null;
-                        }
-                        videoElement.classList.remove('active'); // Hide video element
-                        videoElement.poster = CONFIG.placeholderImage; // Reset poster
-                    }
-                };
-
-                // Handle successful manifest parsing
-                const hlsManifestParsedListener = () => {
-                    // Ensure this belongs to the current instance and element
-                    if (!currentHlsInstance || currentHlsInstance.media !== videoElement) return;
-
-                    playerAreaElement.querySelector('.loader').classList.remove('visible'); // Hide loader
-                    videoElement.classList.add('active'); // Show video element
-                    videoElement.muted = true; // Mute initially due to autoplay policies
-                    // Attempt to play
-                    videoElement.play().catch(error => {
-                        // Handle autoplay errors (e.g., browser policy)
-                        if (currentHlsInstance && currentHlsInstance.media === videoElement) {
-                            const message = error.name === 'NotAllowedError' ? 'Click play to start.' : error.message;
-                            // Show 'Try Next' only if it's not a simple 'Click play' issue
-                            const showNext = error.name !== 'NotAllowedError';
-                            displayMessageInPlayerArea(playerAreaElement, `<strong>Playback Error</strong><span>${message}</span>`, showNext, hlsUrl, parentBoxElement);
-                            if(showNext) videoElement.classList.remove('active'); // Hide video if it's a real error
-                            playerAreaElement.querySelector('.loader').classList.remove('visible'); // Ensure loader is hidden
-                        }
-                    });
-                };
-
-                // Attach listeners and load source
-                currentHlsInstance.on(Hls.Events.ERROR, hlsErrorListener);
-                currentHlsInstance.on(Hls.Events.MANIFEST_PARSED, hlsManifestParsedListener);
-                currentHlsInstance.attachMedia(videoElement);
-                currentHlsInstance.loadSource(hlsUrl);
-
+                if (currentHlsInstance && currentHlsInstance.media === videoElement) { currentHlsInstance.destroy(); currentHlsInstance = null; } else if (currentHlsInstance) { currentHlsInstance.destroy(); currentHlsInstance = null; }
+                currentHlsInstance = new Hls({ liveSyncDurationCount: 2, manifestLoadingTimeOut: 15000, levelLoadingTimeOut: 15000, fragLoadingTimeOut: 20000, manifestLoadErrorMaxRetry: 3, levelLoadErrorMaxRetry: 4, fragLoadErrorMaxRetry: 5 });
+                const hlsErrorListener = (event, data) => { if (!currentHlsInstance || currentHlsInstance.media !== videoElement) return; console.error('HLS.js Error:', data.type, data.details, data.fatal); let userMessage = `Stream Error (${data.details || 'Unknown'}).`; if (data.type === Hls.ErrorTypes.NETWORK_ERROR) { userMessage = `Network Error (${data.details}).`; } else if (data.type === Hls.ErrorTypes.MEDIA_ERROR && data.details !== 'bufferStalledError') { userMessage = `Media Error (${data.details}).`; } if (data.fatal) { displayMessageInPlayerArea(playerAreaElement, `<strong>${userMessage}</strong>`, true, hlsUrl, parentBoxElement); if (currentHlsInstance && currentHlsInstance.media === videoElement) { currentHlsInstance.destroy(); currentHlsInstance = null; } videoElement.classList.remove('active'); videoElement.poster = CONFIG.placeholderImage; } };
+                const hlsManifestParsedListener = () => { if (!currentHlsInstance || currentHlsInstance.media !== videoElement) return; playerAreaElement.querySelector('.loader').classList.remove('visible'); videoElement.classList.add('active'); videoElement.muted = true; videoElement.play().catch(error => { if (currentHlsInstance && currentHlsInstance.media === videoElement) { const message = error.name === 'NotAllowedError' ? 'Click play to start.' : error.message; const showNext = error.name !== 'NotAllowedError'; displayMessageInPlayerArea(playerAreaElement, `<strong>Playback Error</strong><span>${message}</span>`, showNext, hlsUrl, parentBoxElement); if(showNext) videoElement.classList.remove('active'); playerAreaElement.querySelector('.loader').classList.remove('visible'); } }); };
+                currentHlsInstance.on(Hls.Events.ERROR, hlsErrorListener); currentHlsInstance.on(Hls.Events.MANIFEST_PARSED, hlsManifestParsedListener); currentHlsInstance.attachMedia(videoElement); currentHlsInstance.loadSource(hlsUrl);
             } else if (videoElement.canPlayType('application/vnd.apple.mpegurl')) {
-                // --- Use Native Browser HLS Support (Safari, iOS) ---
-                console.log("Using native HLS support for:", hlsUrl);
-                // Clean up any existing HLS.js instance
                 if (currentHlsInstance) { currentHlsInstance.destroy(); currentHlsInstance = null; }
-
-                // Event handler for when metadata is loaded (stream starts)
-                const handleNativeLoadedMetadata = () => {
-                    // Ensure this event is for the currently loaded URL
-                    if (videoElement.getAttribute('src') !== hlsUrl) return;
-                    playerAreaElement.querySelector('.loader').classList.remove('visible');
-                    videoElement.classList.add('active');
-                    videoElement.muted = true;
-                    videoElement.play().catch(error => {
-                        // Handle autoplay errors
-                        if(videoElement.getAttribute('src') === hlsUrl){ // Check URL again
-                            const message = error.name==='NotAllowedError'?'Click play.':error.message;
-                            const showNext = error.name !== 'NotAllowedError';
-                            displayMessageInPlayerArea(playerAreaElement, `<strong>Playback Error</strong><span>${message}</span>`, showNext, hlsUrl, parentBoxElement);
-                            if(showNext) videoElement.classList.remove('active');
-                            playerAreaElement.querySelector('.loader').classList.remove('visible');
-                        }
-                    });
-                };
-
-                // Event handler for native playback errors
-                const handleNativeError = () => {
-                    // Ensure this event is for the currently loaded URL
-                    if (videoElement.getAttribute('src') !== hlsUrl) return;
-                    const err = videoElement.error;
-                    const msg = err ? (err.message || `code ${err.code}`) : 'Unknown';
-                    displayMessageInPlayerArea(playerAreaElement, `<strong>Stream Error</strong><span>Native HLS failed: ${msg}.</span>`, true, hlsUrl, parentBoxElement);
-                    videoElement.classList.remove('active');
-                    videoElement.poster = CONFIG.placeholderImage;
-                    playerAreaElement.querySelector('.loader').classList.remove('visible');
-                };
-
-                // Remove previous listeners before adding new ones
-                videoElement.removeEventListener('loadedmetadata', handleNativeLoadedMetadata);
-                videoElement.removeEventListener('error', handleNativeError);
-                // Add new listeners
-                videoElement.addEventListener('loadedmetadata', handleNativeLoadedMetadata);
-                videoElement.addEventListener('error', handleNativeError);
-
-                // Set the source and load
-                videoElement.src = hlsUrl;
-                videoElement.load(); // Important for native HLS
-
-            } else {
-                // --- HLS Not Supported ---
-                displayMessageInPlayerArea(playerAreaElement, `<strong>Unsupported Stream</strong><span>Browser cannot play HLS (.m3u8).</span>`, false);
-                videoElement.classList.remove('active');
-                videoElement.poster = CONFIG.placeholderImage;
-                playerAreaElement.querySelector('.loader').classList.remove('visible');
-            }
-
-            // Show custom fullscreen button after attempting to load
-            const fsBtn = playerAreaElement.querySelector('.custom-fullscreen-btn');
-            if (fsBtn) fsBtn.style.display = 'block'; // Use block to make it visible
-            updateFullscreenButtonState(); // Update icon based on current state
+                const handleNativeLoadedMetadata = () => { if (videoElement.getAttribute('src') !== hlsUrl) return; playerAreaElement.querySelector('.loader').classList.remove('visible'); videoElement.classList.add('active'); videoElement.muted = true; videoElement.play().catch(error => { if(videoElement.getAttribute('src') === hlsUrl){ const message = error.name==='NotAllowedError'?'Click play.':error.message; const showNext = error.name !== 'NotAllowedError'; displayMessageInPlayerArea(playerAreaElement, `<strong>Playback Error</strong><span>${message}</span>`, showNext, hlsUrl, parentBoxElement); if(showNext) videoElement.classList.remove('active'); playerAreaElement.querySelector('.loader').classList.remove('visible'); } }); };
+                const handleNativeError = () => { if (videoElement.getAttribute('src') !== hlsUrl) return; const err = videoElement.error; const msg = err ? (err.message || `code ${err.code}`) : 'Unknown'; displayMessageInPlayerArea(playerAreaElement, `<strong>Stream Error</strong><span>Native HLS failed: ${msg}.</span>`, true, hlsUrl, parentBoxElement); videoElement.classList.remove('active'); videoElement.poster = CONFIG.placeholderImage; playerAreaElement.querySelector('.loader').classList.remove('visible'); };
+                videoElement.removeEventListener('loadedmetadata', handleNativeLoadedMetadata); videoElement.removeEventListener('error', handleNativeError); videoElement.addEventListener('loadedmetadata', handleNativeLoadedMetadata); videoElement.addEventListener('error', handleNativeError);
+                videoElement.src = hlsUrl; videoElement.load();
+            } else { displayMessageInPlayerArea(playerAreaElement, `<strong>Unsupported Stream</strong><span>Browser cannot play HLS (.m3u8).</span>`, false); videoElement.classList.remove('active'); videoElement.poster = CONFIG.placeholderImage; playerAreaElement.querySelector('.loader').classList.remove('visible'); }
+            const fsBtn = playerAreaElement.querySelector('.custom-fullscreen-btn'); if (fsBtn) fsBtn.style.display = 'block'; updateFullscreenButtonState();
         }
 
-        /**
-         * Loads a general URL into the iframe element.
-         * @param {string} iframeUrl - The URL to load.
-         * @param {HTMLIFrameElement} iframeElement - The iframe element.
-         * @param {HTMLDivElement} playerAreaElement - The container element.
-         */
         function loadUrlIntoIframe(iframeUrl, iframeElement, playerAreaElement) {
-            // Safety check: Abort if a 'new tab' toggle is enabled
-            if (openInNewTabEnabled || openInPlayerPageEnabled) {
-                console.warn("loadUrlIntoIframe called, but toggle enabled. Aborting.");
-                return;
-            }
-            const parentBoxElement = iframeElement.closest('.channel-box'); // Get parent for context
-            let iframeLoadTimeoutId = null;
-            let isLoadSuccessful = false;
-
-            // Clean up any active HLS instance
+            if (openInNewTabEnabled || openInPlayerPageEnabled) { console.warn("loadUrlIntoIframe called, but toggle enabled. Aborting."); return; }
+            const parentBoxElement = iframeElement.closest('.channel-box'); let iframeLoadTimeoutId = null; let isLoadSuccessful = false;
             if (currentHlsInstance) { currentHlsInstance.destroy(); currentHlsInstance = null; }
-
-            // Function to clean up listeners and timeout
-            const cleanupIframeLoad = () => {
-                clearTimeout(iframeLoadTimeoutId);
-                iframeElement.onload = null;
-                iframeElement.onerror = null;
-            };
-
-            // Function to handle load failures (timeout or error)
-            const handleIframeLoadFailure = (reason) => {
-                cleanupIframeLoad();
-                // Only show error if the iframe src is still the one we tried to load
-                if (iframeElement.getAttribute('src') === iframeUrl) {
-                    displayMessageInPlayerArea(playerAreaElement, `<strong>Stream Error</strong><span>${reason}. Might be offline/blocked.</span>`, true, iframeUrl, parentBoxElement);
-                    iframeElement.classList.remove('active'); // Hide iframe
-                    iframeElement.src = 'about:blank'; // Clear src
-                    playerAreaElement.querySelector('.loader').classList.remove('visible'); // Hide loader
-                }
-            };
-
-            // Set a timeout to detect if the iframe fails to load (e.g., blocked by X-Frame-Options)
-            iframeLoadTimeoutId = setTimeout(() => {
-                if (!isLoadSuccessful && iframeElement.getAttribute('src') === iframeUrl) {
-                    handleIframeLoadFailure(`Load timeout (${CONFIG.iframeLoadTimeoutMs / 1000}s)`);
-                }
-            }, CONFIG.iframeLoadTimeoutMs);
-
-            // Handle successful load
-            iframeElement.onload = () => {
-                // Ensure this onload corresponds to the URL we set
-                if (iframeElement.getAttribute('src') === iframeUrl) {
-                    isLoadSuccessful = true;
-                    cleanupIframeLoad();
-                    playerAreaElement.querySelector('.loader').classList.remove('visible'); // Hide loader
-                    iframeElement.classList.add('active'); // Show iframe
-                } else if (iframeElement.getAttribute('src') !== 'about:blank') {
-                    // Ignore loads of 'about:blank' or other intermediate states
-                }
-            };
-
-            // Handle explicit iframe errors
-            iframeElement.onerror = () => {
-                if (iframeElement.getAttribute('src') === iframeUrl) {
-                    handleIframeLoadFailure("onError event fired");
-                }
-            };
-
-            // Set the iframe source to start loading
+            const cleanupIframeLoad = () => { clearTimeout(iframeLoadTimeoutId); iframeElement.onload = null; iframeElement.onerror = null; };
+            const handleIframeLoadFailure = (reason) => { cleanupIframeLoad(); if (iframeElement.getAttribute('src') === iframeUrl) { displayMessageInPlayerArea(playerAreaElement, `<strong>Stream Error</strong><span>${reason}. Might be offline/blocked.</span>`, true, iframeUrl, parentBoxElement); iframeElement.classList.remove('active'); iframeElement.src = 'about:blank'; playerAreaElement.querySelector('.loader').classList.remove('visible'); } };
+            iframeLoadTimeoutId = setTimeout(() => { if (!isLoadSuccessful && iframeElement.getAttribute('src') === iframeUrl) { handleIframeLoadFailure(`Load timeout (${CONFIG.iframeLoadTimeoutMs / 1000}s)`); } }, CONFIG.iframeLoadTimeoutMs);
+            iframeElement.onload = () => { if (iframeElement.getAttribute('src') === iframeUrl) { isLoadSuccessful = true; cleanupIframeLoad(); playerAreaElement.querySelector('.loader').classList.remove('visible'); iframeElement.classList.add('active'); } else if (iframeElement.getAttribute('src') !== 'about:blank') { /* Ignore */ } };
+            iframeElement.onerror = () => { if (iframeElement.getAttribute('src') === iframeUrl) { handleIframeLoadFailure("onError event fired"); } };
             iframeElement.src = iframeUrl;
-
-            // Show custom fullscreen button after attempting to load
-            const fsBtn = playerAreaElement.querySelector('.custom-fullscreen-btn');
-            if (fsBtn) fsBtn.style.display = 'block'; // Use block to make it visible
-            updateFullscreenButtonState(); // Update icon based on current state
+            const fsBtn = playerAreaElement.querySelector('.custom-fullscreen-btn'); if (fsBtn) fsBtn.style.display = 'block'; updateFullscreenButtonState();
         }
 
-        // --- Custom Fullscreen Logic (MODIFIED to target player-area) ---
-        /**
-         * Sets up the event listener for the custom fullscreen button within a box.
-         * Targets the player-area container for fullscreen request.
-         * @param {HTMLDivElement} boxElement The channel/match box element.
-         */
+        // --- Custom Fullscreen Logic ---
         function setupCustomFullscreen(boxElement) {
-            const btn = boxElement.querySelector('.custom-fullscreen-btn');
-            const playerArea = boxElement.querySelector('.player-area'); // Target the container
-
-            if (btn && playerArea) {
-                btn.onclick = (event) => {
-                    event.stopPropagation(); // Prevent box collapse/expand
-
-                    // Check if any player (iframe or video) inside the playerArea is actually active
-                    const iframe = playerArea.querySelector('iframe');
-                    const video = playerArea.querySelector('video');
-                    const isActive = iframe?.classList.contains('active') || video?.classList.contains('active');
-
-                    if (!isActive) {
-                         // Don't allow fullscreen if no player is active
-                         console.warn("Fullscreen button clicked, but no active player (iframe/video) found in box:", boxElement.id);
-                         return;
-                    }
-
-                    // Request fullscreen for the playerArea container
-                    console.log("Requesting fullscreen for playerArea in box:", boxElement.id);
-                    toggleBrowserFullscreen(playerArea); // Pass the container element
-                };
-            } else {
-                console.warn("Could not find fullscreen button or player area in box:", boxElement.id);
-            }
+            const btn = boxElement.querySelector('.custom-fullscreen-btn'); const playerArea = boxElement.querySelector('.player-area');
+            if (btn && playerArea) { btn.onclick = (event) => { event.stopPropagation(); const iframe = playerArea.querySelector('iframe'); const video = playerArea.querySelector('video'); const isActive = iframe?.classList.contains('active') || video?.classList.contains('active'); if (!isActive) { console.warn("Fullscreen button clicked, but no active player found in box:", boxElement.id); return; } toggleBrowserFullscreen(playerArea); }; }
+            else { console.warn("Could not find fullscreen button or player area in box:", boxElement.id); }
         }
 
-        /**
-         * Toggles fullscreen mode for a given element using the Fullscreen API.
-         * @param {HTMLElement} element The element to make fullscreen (now the .player-area).
-         */
         function toggleBrowserFullscreen(element) {
             if (!element) return;
-
-            // Check if browser is currently NOT in fullscreen mode
             if (!document.fullscreenElement && !document.webkitFullscreenElement && !document.mozFullScreenElement && !document.msFullscreenElement) {
-                // --- Enter Fullscreen ---
-                console.log("Requesting fullscreen for element:", element);
-                // Use standard or vendor-prefixed methods
-                if (element.requestFullscreen) {
-                    element.requestFullscreen().catch(err => console.error(`Error attempting to enable full-screen mode: ${err.message} (${err.name})`));
-                } else if (element.webkitRequestFullscreen) { /* Safari */
-                    element.webkitRequestFullscreen();
-                } else if (element.mozRequestFullScreen) { /* Firefox */
-                    element.mozRequestFullScreen();
-                } else if (element.msRequestFullscreen) { /* IE11 */
-                    element.msRequestFullscreen();
-                }
+                if (element.requestFullscreen) { element.requestFullscreen().catch(err => console.error(`FS Error: ${err.message} (${err.name})`)); }
+                else if (element.webkitRequestFullscreen) { element.webkitRequestFullscreen(); } else if (element.mozRequestFullScreen) { element.mozRequestFullScreen(); } else if (element.msRequestFullscreen) { element.msRequestFullscreen(); }
             } else {
-                // --- Exit Fullscreen ---
-                console.log("Exiting fullscreen.");
-                // Use standard or vendor-prefixed methods
-                if (document.exitFullscreen) {
-                    document.exitFullscreen();
-                } else if (document.webkitExitFullscreen) { /* Safari */
-                    document.webkitExitFullscreen();
-                } else if (document.mozCancelFullScreen) { /* Firefox */
-                    document.mozCancelFullScreen();
-                } else if (document.msExitFullscreen) { /* IE11 */
-                    document.msExitFullscreen();
-                }
+                if (document.exitFullscreen) { document.exitFullscreen(); } else if (document.webkitExitFullscreen) { document.webkitExitFullscreen(); } else if (document.mozCancelFullScreen) { document.mozCancelFullScreen(); } else if (document.msExitFullscreen) { document.msExitFullscreen(); }
             }
         }
 
-        /**
-         * Updates the appearance (icon, label) of all visible custom fullscreen buttons
-         * based on the current fullscreen state of the document and which element is fullscreen.
-         */
         function updateFullscreenButtonState() {
-            // Check if *any* element is fullscreen
             const isFullscreenActive = !!(document.fullscreenElement || document.webkitFullscreenElement || document.mozFullScreenElement || document.msFullscreenElement);
             const buttons = document.querySelectorAll('.custom-fullscreen-btn');
-
             buttons.forEach(btn => {
-                // Find the player-area associated with this button
                 const playerArea = btn.closest('.player-area');
-                // Check if this specific player-area is the element currently in fullscreen
-                const isThisPlayerAreaFullscreen = isFullscreenActive && (
-                    document.fullscreenElement === playerArea ||
-                    document.webkitFullscreenElement === playerArea ||
-                    document.mozFullScreenElement === playerArea ||
-                    document.msFullscreenElement === playerArea
-                );
-
-                // Set icon and label based on whether *this* player area is fullscreen
-                if (isThisPlayerAreaFullscreen) {
-                    btn.innerHTML = SVG_EXIT_FULLSCREEN;
-                    btn.setAttribute('aria-label', 'Exit Fullscreen');
-                    btn.setAttribute('title', 'Exit Fullscreen');
-                } else {
-                    btn.innerHTML = SVG_ENTER_FULLSCREEN;
-                    btn.setAttribute('aria-label', 'Enter Fullscreen');
-                    btn.setAttribute('title', 'Enter Fullscreen');
-                }
+                const isThisPlayerAreaFullscreen = isFullscreenActive && (document.fullscreenElement === playerArea || document.webkitFullscreenElement === playerArea || document.mozFullScreenElement === playerArea || document.msFullscreenElement === playerArea);
+                if (isThisPlayerAreaFullscreen) { btn.innerHTML = SVG_EXIT_FULLSCREEN; btn.setAttribute('aria-label', 'Exit Fullscreen'); btn.setAttribute('title', 'Exit Fullscreen'); }
+                else { btn.innerHTML = SVG_ENTER_FULLSCREEN; btn.setAttribute('aria-label', 'Enter Fullscreen'); btn.setAttribute('title', 'Enter Fullscreen'); }
             });
-             console.log("Fullscreen state changed. Is active:", isFullscreenActive);
         }
-        // --- End Custom Fullscreen Logic ---
-
 
         // --- Utility Functions ---
-        /** Updates the timestamp in the footer. */
         function updateTimestampDisplay() {
-             try {
-                 const now = new Date();
-                 const timeString = new Intl.DateTimeFormat(navigator.language || 'en-US', { hour: '2-digit', minute: '2-digit' }).format(now);
-                 lastUpdatedTimestampElement.textContent = `Updated: ${timeString}`;
-             } catch (error) {
-                 lastUpdatedTimestampElement.textContent = "Updated: Error"; // Fallback
-             }
+             try { const now = new Date(); const timeString = new Intl.DateTimeFormat(navigator.language || 'en-US', { hour: '2-digit', minute: '2-digit' }).format(now); lastUpdatedTimestampElement.textContent = `Updated: ${timeString}`; } catch (error) { lastUpdatedTimestampElement.textContent = "Updated: Error"; }
         }
-        /** Shows the initial loading message. */
         function showInitialLoadingMessage(text = "Loading...") {
-             initialLoadingMessageElement.textContent = text;
-             initialLoadingMessageElement.style.display = 'block';
+             initialLoadingMessageElement.textContent = text; initialLoadingMessageElement.style.display = 'block';
         }
-        /** Hides the initial loading message. */
         function hideInitialLoadingMessage() {
               initialLoadingMessageElement.style.display = 'none';
         }
-        /** Shows the data fetch error message. */
         function showDataFetchErrorMessage(text = "An error occurred.") {
-               dataFetchErrorMessageElement.innerHTML = `<strong>Error</strong><span>${text}</span>`;
-               dataFetchErrorMessageElement.style.display = 'block';
+               dataFetchErrorMessageElement.innerHTML = `<strong>Error</strong><span>${text}</span>`; dataFetchErrorMessageElement.style.display = 'block';
         }
 
     } // End of initializeApp() function
