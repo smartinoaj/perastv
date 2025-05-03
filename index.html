@@ -51,7 +51,7 @@
         body { transition: background-color 0.3s ease, color 0.3s ease; }
 
         /* Ensure grids have content visibility */
-        .channel-grid { contain: content; }
+        .channel-grid, .standings-grid { contain: content; }
     </style>
     </head>
 <body data-theme="dark"> <div id="devtools-detected-message"></div>
@@ -117,6 +117,7 @@
             <button class="tab-button" data-tab="UK" role="tab" aria-controls="UK" aria-selected="false">UK</button>
             <button class="tab-button" data-tab="ES" role="tab" aria-controls="ES" aria-selected="false">ES</button>
             <button class="tab-button" data-tab="Matches" role="tab" aria-controls="Matches" aria-selected="false">Matches</button>
+            <button class="tab-button" data-tab="Standings" role="tab" aria-controls="Standings" aria-selected="false">Standings</button>
         </div>
 
         <div id="loadingMessage" class="status-message loading" role="status" style="display: none;">Loading channels...</div>
@@ -128,6 +129,7 @@
         <div id="UK" class="channel-grid" role="tabpanel" aria-labelledby="tab-UK" tabindex="-1"></div>
         <div id="ES" class="channel-grid" role="tabpanel" aria-labelledby="tab-ES" tabindex="-1"></div>
         <div id="Matches" class="channel-grid" role="tabpanel" aria-labelledby="tab-Matches" tabindex="-1"></div>
+        <div id="Standings" class="standings-grid" role="tabpanel" aria-labelledby="tab-Standings" tabindex="-1"></div>
 
     </div>
 
@@ -210,6 +212,7 @@
         const CONFIG = {
             channelsUrl: "channels.json",
             matchesUrl: "matches.json",
+            standingsUrl: "standings.json", // ADDED: Standings data URL
             placeholderImage: 'data:image/svg+xml;charset=UTF-8,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="9" viewBox="0 0 16 9"><rect width="16" height="9" fill="%231a1a1a"/></svg>',
             searchDebounceMs: 300,
             lastTabKey: 'perasTvLastTab',
@@ -218,8 +221,8 @@
             openInNewTabKey: 'perasTvOpenInNewTab',
             openInPlayerPageKey: 'perasTvOpenPlayerPage',
             themeKey: 'perasTvTheme',
-            skeletonCount: 12, // Number of skeletons to show initially
-            scrollTopThreshold: 200 // Pixels to scroll before showing scroll-to-top button
+            skeletonCount: 12,
+            scrollTopThreshold: 200
         };
 
         // --- DOM Element References ---
@@ -227,31 +230,30 @@
         const searchInputElement = document.getElementById('search-input');
         const tabsContainerElement = document.querySelector('.tabs');
         const channelGridElements = document.querySelectorAll('.channel-grid');
+        const standingsGridElement = document.getElementById('Standings'); // ADDED: Standings grid ref
         const lastUpdatedTimestampElement = document.getElementById('lastUpdated');
         const initialLoadingMessageElement = document.getElementById('loadingMessage');
         const dataFetchErrorMessageElement = document.getElementById('fetchErrorMessage');
         const logoLinkElement = document.getElementById('logo-link');
-        // Header Buttons & Panel
-        const themeToggleButtonElement = document.getElementById('theme-toggle-button'); // NEW
+        const themeToggleButtonElement = document.getElementById('theme-toggle-button');
         const settingsButtonElement = document.getElementById('settings-button');
         const settingsPanelElement = document.getElementById('settings-panel');
-        // Toggles inside Settings Panel
         const openInNewTabToggleElement = document.getElementById('open-in-new-tab-toggle');
         const openInPlayerPageToggleElement = document.getElementById('open-in-player-page-toggle');
-        // Scroll to Top Button
-        const scrollToTopButtonElement = document.getElementById('scroll-to-top-btn'); // NEW
+        const scrollToTopButtonElement = document.getElementById('scroll-to-top-btn');
 
         // --- Application State ---
         let currentHlsInstance = null;
         let allChannelsData = {};
         let allMatchesData = [];
+        let allStandingsData = []; // ADDED: State for standings
         let currentlyExpandedBoxElement = null;
         let searchDebounceTimerId = null;
         let activeTabId = 'ALL';
         let favoriteItemIds = [];
         let openInNewTabEnabled = false;
         let openInPlayerPageEnabled = false;
-        let currentTheme = 'dark'; // Default theme
+        let currentTheme = 'dark';
 
         // --- SVG Icons ---
         const SVG_SUN = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" width="24px" height="24px"><path d="M12 7a5 5 0 1 0 5 5 5 5 0 0 0-5-5Zm0 8a3 3 0 1 1 3-3 3 3 0 0 1-3 3ZM12 2a1 1 0 0 0-1 1v1a1 1 0 0 0 2 0V3a1 1 0 0 0-1-1Zm0 18a1 1 0 0 0-1 1v1a1 1 0 0 0 2 0v-1a1 1 0 0 0-1-1ZM20.66 4.34a1 1 0 0 0-1.41 0l-.71.71a1 1 0 1 0 1.41 1.41l.71-.71a1 1 0 0 0 0-1.41ZM5.76 18.24a1 1 0 0 0-1.41 0l-.71.71a1 1 0 0 0 1.41 1.41l.71-.71a1 1 0 0 0 0-1.41ZM22 12a1 1 0 0 0-1-1h-1a1 1 0 0 0 0 2h1a1 1 0 0 0 1-1ZM5 11H4a1 1 0 0 0 0 2h1a1 1 0 0 0 0-2ZM18.24 18.24a1 1 0 0 0 0-1.41l-.71-.71a1 1 0 0 0-1.41 1.41l.71.71a1 1 0 0 0 1.41 0ZM4.34 5.76l.71.71a1 1 0 0 0 1.41-1.41l-.71-.71a1 1 0 0 0-1.41 1.41Z"/></svg>`;
@@ -264,133 +266,27 @@
 
         // --- Initial Setup ---
         loadFavoritesFromStorage();
-        loadSettingsFromStorage(); // Load theme and other toggles
-        applyTheme(); // Apply loaded theme
-        updateThemeButtonIcon(); // Set initial theme button icon
-        setupGlobalEventListeners(); // Includes scroll listener now
+        loadSettingsFromStorage();
+        applyTheme();
+        updateThemeButtonIcon();
+        setupGlobalEventListeners();
         updateTimestampDisplay();
         setInterval(updateTimestampDisplay, 60000);
-        fetchAndRenderData(); // Will show skeletons first
+        fetchAndRenderData(); // Includes standings fetch now
 
         // --- Settings Loading & Applying ---
-        function loadSettingsFromStorage() {
-            // Load Theme
-            const storedTheme = localStorage.getItem(CONFIG.themeKey);
-            currentTheme = (storedTheme === 'light') ? 'light' : 'dark'; // Default to dark
-            console.log(`Loaded theme: ${currentTheme}`);
-
-            // Load Toggles
-            const storedNewTabState = localStorage.getItem(CONFIG.openInNewTabKey);
-            const storedPlayerPageState = localStorage.getItem(CONFIG.openInPlayerPageKey);
-            openInNewTabEnabled = (storedNewTabState === 'true');
-            openInPlayerPageEnabled = (storedPlayerPageState === 'true');
-            if (openInNewTabEnabled && openInPlayerPageEnabled) {
-                openInNewTabEnabled = false; // Player page takes precedence
-            }
-
-            // Update toggle checkbox states inside the panel
-            if (openInNewTabToggleElement) {
-                openInNewTabToggleElement.checked = openInNewTabEnabled;
-                updateAriaChecked(openInNewTabToggleElement, openInNewTabEnabled);
-            }
-            if (openInPlayerPageToggleElement) {
-                openInPlayerPageToggleElement.checked = openInPlayerPageEnabled;
-                updateAriaChecked(openInPlayerPageToggleElement, openInPlayerPageEnabled);
-            }
-            console.log(`Loaded toggles: NewTab=${openInNewTabEnabled}, PlayerPage=${openInPlayerPageEnabled}`);
-        }
-
-        function applyTheme() {
-            bodyElement.setAttribute('data-theme', currentTheme);
-            console.log(`Applied theme: ${currentTheme}`);
-        }
-
-        /** Updates the theme toggle button icon and labels */
-        function updateThemeButtonIcon() {
-            if (!themeToggleButtonElement) return;
-            if (currentTheme === 'light') {
-                themeToggleButtonElement.innerHTML = SVG_MOON;
-                themeToggleButtonElement.setAttribute('aria-label', 'Switch to Dark Theme');
-                themeToggleButtonElement.setAttribute('title', 'Switch to Dark Theme');
-            } else {
-                themeToggleButtonElement.innerHTML = SVG_SUN;
-                themeToggleButtonElement.setAttribute('aria-label', 'Switch to Light Theme');
-                themeToggleButtonElement.setAttribute('title', 'Switch to Light Theme');
-            }
-        }
-
-        function saveSettingsToStorage() {
-            try {
-                localStorage.setItem(CONFIG.themeKey, currentTheme);
-                localStorage.setItem(CONFIG.openInNewTabKey, openInNewTabEnabled);
-                localStorage.setItem(CONFIG.openInPlayerPageKey, openInPlayerPageEnabled);
-                console.log(`Saved settings: Theme=${currentTheme}, NewTab=${openInNewTabEnabled}, PlayerPage=${openInPlayerPageEnabled}`);
-            } catch (error) {
-                console.error("Error saving settings to localStorage:", error);
-            }
-        }
+        function loadSettingsFromStorage() { /* ... keep existing ... */ const storedTheme = localStorage.getItem(CONFIG.themeKey); currentTheme = (storedTheme === 'light') ? 'light' : 'dark'; console.log(`Loaded theme: ${currentTheme}`); const storedNewTabState = localStorage.getItem(CONFIG.openInNewTabKey); const storedPlayerPageState = localStorage.getItem(CONFIG.openInPlayerPageKey); openInNewTabEnabled = (storedNewTabState === 'true'); openInPlayerPageEnabled = (storedPlayerPageState === 'true'); if (openInNewTabEnabled && openInPlayerPageEnabled) { openInNewTabEnabled = false; } if (openInNewTabToggleElement) { openInNewTabToggleElement.checked = openInNewTabEnabled; updateAriaChecked(openInNewTabToggleElement, openInNewTabEnabled); } if (openInPlayerPageToggleElement) { openInPlayerPageToggleElement.checked = openInPlayerPageEnabled; updateAriaChecked(openInPlayerPageToggleElement, openInPlayerPageEnabled); } console.log(`Loaded toggles: NewTab=${openInNewTabEnabled}, PlayerPage=${openInPlayerPageEnabled}`); }
+        function applyTheme() { /* ... keep existing ... */ bodyElement.setAttribute('data-theme', currentTheme); console.log(`Applied theme: ${currentTheme}`); }
+        function updateThemeButtonIcon() { /* ... keep existing ... */ if (!themeToggleButtonElement) return; if (currentTheme === 'light') { themeToggleButtonElement.innerHTML = SVG_MOON; themeToggleButtonElement.setAttribute('aria-label', 'Switch to Dark Theme'); themeToggleButtonElement.setAttribute('title', 'Switch to Dark Theme'); } else { themeToggleButtonElement.innerHTML = SVG_SUN; themeToggleButtonElement.setAttribute('aria-label', 'Switch to Light Theme'); themeToggleButtonElement.setAttribute('title', 'Switch to Light Theme'); } }
+        function saveSettingsToStorage() { /* ... keep existing ... */ try { localStorage.setItem(CONFIG.themeKey, currentTheme); localStorage.setItem(CONFIG.openInNewTabKey, openInNewTabEnabled); localStorage.setItem(CONFIG.openInPlayerPageKey, openInPlayerPageEnabled); console.log(`Saved settings: Theme=${currentTheme}, NewTab=${openInNewTabEnabled}, PlayerPage=${openInPlayerPageEnabled}`); } catch (error) { console.error("Error saving settings to localStorage:", error); } }
 
         // --- Favorite Management ---
-        function loadFavoritesFromStorage() {
-            const storedFavoritesJson = localStorage.getItem(CONFIG.favoritesKey);
-            if (storedFavoritesJson) {
-                try {
-                    const parsedFavorites = JSON.parse(storedFavoritesJson);
-                    if (Array.isArray(parsedFavorites) && parsedFavorites.every(item => typeof item === 'string')) { favoriteItemIds = parsedFavorites; }
-                    else { favoriteItemIds = []; localStorage.removeItem(CONFIG.favoritesKey); }
-                } catch (error) { console.error("Error parsing favorites:", error); favoriteItemIds = []; }
-            } else { favoriteItemIds = []; }
-            console.log("Loaded favorites:", favoriteItemIds);
-        }
-
-        function saveFavoritesToStorage() {
-            try { localStorage.setItem(CONFIG.favoritesKey, JSON.stringify(favoriteItemIds)); }
-            catch (error) { console.error("Error saving favorites:", error); }
-        }
-
-        function toggleFavoriteStatus(itemId, starButtonElement) {
-            if (!itemId || !starButtonElement) return;
-            const itemIndex = favoriteItemIds.indexOf(itemId);
-            const isCurrentlyFavorite = itemIndex > -1;
-            if (isCurrentlyFavorite) { favoriteItemIds.splice(itemIndex, 1); starButtonElement.classList.remove('is-favorite'); starButtonElement.setAttribute('aria-pressed', 'false'); starButtonElement.setAttribute('aria-label', 'Add to Favorites'); }
-            else { favoriteItemIds.push(itemId); starButtonElement.classList.add('is-favorite'); starButtonElement.setAttribute('aria-pressed', 'true'); starButtonElement.setAttribute('aria-label', 'Remove from Favorites'); }
-            saveFavoritesToStorage();
-            document.querySelectorAll(`.channel-box#${CSS.escape(itemId)} .favorite-button`).forEach(otherStar => { if (otherStar !== starButtonElement) { otherStar.classList.toggle('is-favorite', !isCurrentlyFavorite); otherStar.setAttribute('aria-pressed', !isCurrentlyFavorite ? 'true' : 'false'); otherStar.setAttribute('aria-label', !isCurrentlyFavorite ? 'Remove from Favorites' : 'Add to Favorites'); } });
-            if (activeTabId === 'Favorites') { renderFavoritesTabContent(); addChannelBoxEventListeners(document.getElementById('Favorites')); }
-        }
+        function loadFavoritesFromStorage() { /* ... keep existing ... */ const storedFavoritesJson = localStorage.getItem(CONFIG.favoritesKey); if (storedFavoritesJson) { try { const parsedFavorites = JSON.parse(storedFavoritesJson); if (Array.isArray(parsedFavorites) && parsedFavorites.every(item => typeof item === 'string')) { favoriteItemIds = parsedFavorites; } else { favoriteItemIds = []; localStorage.removeItem(CONFIG.favoritesKey); } } catch (error) { console.error("Error parsing favorites:", error); favoriteItemIds = []; } } else { favoriteItemIds = []; } console.log("Loaded favorites:", favoriteItemIds); }
+        function saveFavoritesToStorage() { /* ... keep existing ... */ try { localStorage.setItem(CONFIG.favoritesKey, JSON.stringify(favoriteItemIds)); } catch (error) { console.error("Error saving favorites:", error); } }
+        function toggleFavoriteStatus(itemId, starButtonElement) { /* ... keep existing ... */ if (!itemId || !starButtonElement) return; const itemIndex = favoriteItemIds.indexOf(itemId); const isCurrentlyFavorite = itemIndex > -1; if (isCurrentlyFavorite) { favoriteItemIds.splice(itemIndex, 1); starButtonElement.classList.remove('is-favorite'); starButtonElement.setAttribute('aria-pressed', 'false'); starButtonElement.setAttribute('aria-label', 'Add to Favorites'); } else { favoriteItemIds.push(itemId); starButtonElement.classList.add('is-favorite'); starButtonElement.setAttribute('aria-pressed', 'true'); starButtonElement.setAttribute('aria-label', 'Remove from Favorites'); } saveFavoritesToStorage(); document.querySelectorAll(`.channel-box#${CSS.escape(itemId)} .favorite-button`).forEach(otherStar => { if (otherStar !== starButtonElement) { otherStar.classList.toggle('is-favorite', !isCurrentlyFavorite); otherStar.setAttribute('aria-pressed', !isCurrentlyFavorite ? 'true' : 'false'); otherStar.setAttribute('aria-label', !isCurrentlyFavorite ? 'Remove from Favorites' : 'Add to Favorites'); } }); if (activeTabId === 'Favorites') { renderFavoritesTabContent(); addChannelBoxEventListeners(document.getElementById('Favorites')); } }
 
         // --- Event Listener Setup ---
-        function setupGlobalEventListeners() {
-            // Tab clicks
-            tabsContainerElement.addEventListener('click', (event) => { const tabButton = event.target.closest('.tab-button[data-tab]'); if (tabButton) activateTab(tabButton.dataset.tab); });
-            // Search input
-            searchInputElement.addEventListener('input', (event) => { clearTimeout(searchDebounceTimerId); searchDebounceTimerId = setTimeout(() => filterVisibleContent(event.target.value), CONFIG.searchDebounceMs); });
-            // Theme Toggle Button
-            if (themeToggleButtonElement) { themeToggleButtonElement.addEventListener('click', () => { currentTheme = (currentTheme === 'light') ? 'dark' : 'light'; applyTheme(); updateThemeButtonIcon(); saveSettingsToStorage(); console.log(`Theme toggled to: ${currentTheme}`); }); }
-            // Settings Menu
-            if (settingsButtonElement && settingsPanelElement) {
-                settingsButtonElement.addEventListener('click', (event) => { event.stopPropagation(); const isVisible = settingsPanelElement.classList.toggle('visible'); settingsButtonElement.setAttribute('aria-expanded', isVisible ? 'true' : 'false'); });
-                document.addEventListener('click', (event) => { if (!settingsPanelElement.contains(event.target) && !settingsButtonElement.contains(event.target)) { if (settingsPanelElement.classList.contains('visible')) { settingsPanelElement.classList.remove('visible'); settingsButtonElement.setAttribute('aria-expanded', 'false'); } } });
-                document.addEventListener('keydown', (event) => { if (event.key === 'Escape' && settingsPanelElement.classList.contains('visible')) { settingsPanelElement.classList.remove('visible'); settingsButtonElement.setAttribute('aria-expanded', 'false'); settingsButtonElement.focus(); } });
-            }
-            // Toggles Inside Settings Panel
-            if (openInNewTabToggleElement) { openInNewTabToggleElement.addEventListener('change', (event) => { openInNewTabEnabled = event.target.checked; if (openInNewTabEnabled && openInPlayerPageToggleElement) { openInPlayerPageToggleElement.checked = false; openInPlayerPageEnabled = false; updateAriaChecked(openInPlayerPageToggleElement, false); } saveSettingsToStorage(); updateAriaChecked(openInNewTabToggleElement, openInNewTabEnabled); console.log(`'Open source in new tab' toggled: ${openInNewTabEnabled}`); }); }
-            if (openInPlayerPageToggleElement) { openInPlayerPageToggleElement.addEventListener('change', (event) => { openInPlayerPageEnabled = event.target.checked; if (openInPlayerPageEnabled && openInNewTabToggleElement) { openInNewTabToggleElement.checked = false; openInNewTabEnabled = false; updateAriaChecked(openInNewTabToggleElement, false); } saveSettingsToStorage(); updateAriaChecked(openInPlayerPageToggleElement, openInPlayerPageEnabled); console.log(`'Open player page in new tab' toggled: ${openInPlayerPageEnabled}`); }); }
-            // Keyboard navigation
-            document.addEventListener('keydown', (event) => {
-                 if (event.key === 'Escape' && currentlyExpandedBoxElement && !settingsPanelElement.classList.contains('visible')) { collapseItemBox(currentlyExpandedBoxElement); }
-                 if (event.key === 'Escape' && (document.fullscreenElement || document.webkitFullscreenElement || document.mozFullScreenElement || document.msFullscreenElement)) { updateFullscreenButtonState(); }
-                 const focusableElements = getFocusableElementsInActiveGrid(); const currentIndex = focusableElements.indexOf(document.activeElement);
-                 if (['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight'].includes(event.key)) { if (document.activeElement && document.activeElement.closest('.channel-box') && !currentlyExpandedBoxElement && !settingsPanelElement.classList.contains('visible')) { event.preventDefault(); let nextIndex = -1; const activeGrid = document.getElementById(activeTabId); const numCols = activeGrid ? getComputedStyle(activeGrid).gridTemplateColumns.split(' ').length : 1; switch (event.key) { case 'ArrowDown': nextIndex = currentIndex + numCols; break; case 'ArrowUp': nextIndex = currentIndex - numCols; break; case 'ArrowRight': nextIndex = (currentIndex + 1) % numCols === 0 && numCols > 1 ? -1 : currentIndex + 1; break; case 'ArrowLeft': nextIndex = currentIndex % numCols === 0 && numCols > 1 ? -1 : currentIndex - 1; break; } if (nextIndex >= 0 && nextIndex < focusableElements.length) { focusableElements[nextIndex].focus(); } } else if (!document.activeElement || document.activeElement === bodyElement || document.activeElement === searchInputElement || document.activeElement.closest('.tabs')) { focusableElements[0]?.focus(); } }
-                 if (event.key === 'Enter' || event.key === 'Ok') { if (document.activeElement?.classList.contains('stream-button')) { event.preventDefault(); document.activeElement.click(); } else if (document.activeElement?.classList.contains('tab-button')) { event.preventDefault(); document.activeElement.click(); } else if (document.activeElement?.classList.contains('favorite-button')) { event.preventDefault(); document.activeElement.click(); } else if (document.activeElement === logoLinkElement) { event.preventDefault(); activateTab('ALL'); window.scrollTo({ top: 0, behavior: 'smooth' }); } else if (document.activeElement === settingsButtonElement) { event.preventDefault(); settingsButtonElement.click(); } else if (document.activeElement === themeToggleButtonElement) { event.preventDefault(); themeToggleButtonElement.click(); } }
-            });
-            // Fullscreen change listeners
-            document.addEventListener('fullscreenchange', updateFullscreenButtonState); document.addEventListener('webkitfullscreenchange', updateFullscreenButtonState); document.addEventListener('mozfullscreenchange', updateFullscreenButtonState); document.addEventListener('MSFullscreenChange', updateFullscreenButtonState);
-            // Logo Click Listener
-            if (logoLinkElement) { logoLinkElement.addEventListener('click', (event) => { if (event.button === 1 || event.ctrlKey || event.metaKey) { return; } event.preventDefault(); activateTab('ALL'); window.scrollTo({ top: 0, behavior: 'smooth' }); }); logoLinkElement.addEventListener('auxclick', (event) => { if (event.button === 1) { /* Allow default */ } }); }
-            // Scroll to Top Listener
-            if (scrollToTopButtonElement) { window.addEventListener('scroll', () => { if (window.scrollY > CONFIG.scrollTopThreshold) { scrollToTopButtonElement.classList.add('visible'); } else { scrollToTopButtonElement.classList.remove('visible'); } }); scrollToTopButtonElement.addEventListener('click', () => { window.scrollTo({ top: 0, behavior: 'smooth' }); }); }
-        }
+        function setupGlobalEventListeners() { /* ... keep existing + scroll listener ... */ tabsContainerElement.addEventListener('click', (event) => { const tabButton = event.target.closest('.tab-button[data-tab]'); if (tabButton) activateTab(tabButton.dataset.tab); }); searchInputElement.addEventListener('input', (event) => { clearTimeout(searchDebounceTimerId); searchDebounceTimerId = setTimeout(() => filterVisibleContent(event.target.value), CONFIG.searchDebounceMs); }); if (themeToggleButtonElement) { themeToggleButtonElement.addEventListener('click', () => { currentTheme = (currentTheme === 'light') ? 'dark' : 'light'; applyTheme(); updateThemeButtonIcon(); saveSettingsToStorage(); console.log(`Theme toggled to: ${currentTheme}`); }); } if (settingsButtonElement && settingsPanelElement) { settingsButtonElement.addEventListener('click', (event) => { event.stopPropagation(); const isVisible = settingsPanelElement.classList.toggle('visible'); settingsButtonElement.setAttribute('aria-expanded', isVisible ? 'true' : 'false'); }); document.addEventListener('click', (event) => { if (!settingsPanelElement.contains(event.target) && !settingsButtonElement.contains(event.target)) { if (settingsPanelElement.classList.contains('visible')) { settingsPanelElement.classList.remove('visible'); settingsButtonElement.setAttribute('aria-expanded', 'false'); } } }); document.addEventListener('keydown', (event) => { if (event.key === 'Escape' && settingsPanelElement.classList.contains('visible')) { settingsPanelElement.classList.remove('visible'); settingsButtonElement.setAttribute('aria-expanded', 'false'); settingsButtonElement.focus(); } }); } if (openInNewTabToggleElement) { openInNewTabToggleElement.addEventListener('change', (event) => { openInNewTabEnabled = event.target.checked; if (openInNewTabEnabled && openInPlayerPageToggleElement) { openInPlayerPageToggleElement.checked = false; openInPlayerPageEnabled = false; updateAriaChecked(openInPlayerPageToggleElement, false); } saveSettingsToStorage(); updateAriaChecked(openInNewTabToggleElement, openInNewTabEnabled); console.log(`'Open source in new tab' toggled: ${openInNewTabEnabled}`); }); } if (openInPlayerPageToggleElement) { openInPlayerPageToggleElement.addEventListener('change', (event) => { openInPlayerPageEnabled = event.target.checked; if (openInPlayerPageEnabled && openInNewTabToggleElement) { openInNewTabToggleElement.checked = false; openInNewTabEnabled = false; updateAriaChecked(openInNewTabToggleElement, false); } saveSettingsToStorage(); updateAriaChecked(openInPlayerPageToggleElement, openInPlayerPageEnabled); console.log(`'Open player page in new tab' toggled: ${openInPlayerPageEnabled}`); }); } document.addEventListener('keydown', (event) => { if (event.key === 'Escape' && currentlyExpandedBoxElement && !settingsPanelElement.classList.contains('visible')) { collapseItemBox(currentlyExpandedBoxElement); } if (event.key === 'Escape' && (document.fullscreenElement || document.webkitFullscreenElement || document.mozFullScreenElement || document.msFullscreenElement)) { updateFullscreenButtonState(); } const focusableElements = getFocusableElementsInActiveGrid(); const currentIndex = focusableElements.indexOf(document.activeElement); if (['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight'].includes(event.key)) { if (document.activeElement && document.activeElement.closest('.channel-box') && !currentlyExpandedBoxElement && !settingsPanelElement.classList.contains('visible')) { event.preventDefault(); let nextIndex = -1; const activeGrid = document.getElementById(activeTabId); const numCols = activeGrid ? getComputedStyle(activeGrid).gridTemplateColumns.split(' ').length : 1; switch (event.key) { case 'ArrowDown': nextIndex = currentIndex + numCols; break; case 'ArrowUp': nextIndex = currentIndex - numCols; break; case 'ArrowRight': nextIndex = (currentIndex + 1) % numCols === 0 && numCols > 1 ? -1 : currentIndex + 1; break; case 'ArrowLeft': nextIndex = currentIndex % numCols === 0 && numCols > 1 ? -1 : currentIndex - 1; break; } if (nextIndex >= 0 && nextIndex < focusableElements.length) { focusableElements[nextIndex].focus(); } } else if (!document.activeElement || document.activeElement === bodyElement || document.activeElement === searchInputElement || document.activeElement.closest('.tabs')) { focusableElements[0]?.focus(); } } if (event.key === 'Enter' || event.key === 'Ok') { if (document.activeElement?.classList.contains('stream-button')) { event.preventDefault(); document.activeElement.click(); } else if (document.activeElement?.classList.contains('tab-button')) { event.preventDefault(); document.activeElement.click(); } else if (document.activeElement?.classList.contains('favorite-button')) { event.preventDefault(); document.activeElement.click(); } else if (document.activeElement === logoLinkElement) { event.preventDefault(); activateTab('ALL'); window.scrollTo({ top: 0, behavior: 'smooth' }); } else if (document.activeElement === settingsButtonElement) { event.preventDefault(); settingsButtonElement.click(); } else if (document.activeElement === themeToggleButtonElement) { event.preventDefault(); themeToggleButtonElement.click(); } } }); document.addEventListener('fullscreenchange', updateFullscreenButtonState); document.addEventListener('webkitfullscreenchange', updateFullscreenButtonState); document.addEventListener('mozfullscreenchange', updateFullscreenButtonState); document.addEventListener('MSFullscreenChange', updateFullscreenButtonState); if (logoLinkElement) { logoLinkElement.addEventListener('click', (event) => { if (event.button === 1 || event.ctrlKey || event.metaKey) { return; } event.preventDefault(); activateTab('ALL'); window.scrollTo({ top: 0, behavior: 'smooth' }); }); logoLinkElement.addEventListener('auxclick', (event) => { if (event.button === 1) { /* Allow default */ } }); } if (scrollToTopButtonElement) { window.addEventListener('scroll', () => { if (window.scrollY > CONFIG.scrollTopThreshold) { scrollToTopButtonElement.classList.add('visible'); } else { scrollToTopButtonElement.classList.remove('visible'); } }); scrollToTopButtonElement.addEventListener('click', () => { window.scrollTo({ top: 0, behavior: 'smooth' }); }); } }
 
         // Helper to update aria-checked attribute
         function updateAriaChecked(toggleInputElement, isChecked) { const container = toggleInputElement?.closest('[role="menuitemcheckbox"]'); if (container) { container.setAttribute('aria-checked', isChecked ? 'true' : 'false'); } }
@@ -399,43 +295,117 @@
 
         // --- Data Fetching & Rendering ---
         async function fetchAndRenderData() {
-             showSkeletons(); // Show skeleton loaders instead
+             showSkeletons();
              dataFetchErrorMessageElement.style.display = 'none';
              try {
-                 const cacheBuster = `?t=${Date.now()}`; const channelsUrl = CONFIG.channelsUrl + cacheBuster; const matchesUrl = CONFIG.matchesUrl + cacheBuster;
-                 const [channelsResponse, matchesResponse] = await Promise.all([ fetch(channelsUrl), fetch(matchesUrl) ]);
+                 const cacheBuster = `?t=${Date.now()}`;
+                 const channelsUrl = CONFIG.channelsUrl + cacheBuster;
+                 const matchesUrl = CONFIG.matchesUrl + cacheBuster;
+                 const standingsUrl = CONFIG.standingsUrl + cacheBuster; // ADDED
+
+                 // Fetch all data sources concurrently
+                 const [channelsResponse, matchesResponse, standingsResponse] = await Promise.all([
+                     fetch(channelsUrl),
+                     fetch(matchesUrl),
+                     fetch(standingsUrl) // ADDED
+                 ]);
+
+                 // Check responses
                  if (!channelsResponse.ok) throw new Error(`Failed to load channels: ${channelsResponse.status} ${channelsResponse.statusText}`);
                  if (!matchesResponse.ok) throw new Error(`Failed to load matches: ${matchesResponse.status} ${matchesResponse.statusText}`);
-                 allChannelsData = await channelsResponse.json(); allMatchesData = await matchesResponse.json();
+                 if (!standingsResponse.ok) throw new Error(`Failed to load standings: ${standingsResponse.status} ${standingsResponse.statusText}`); // ADDED
+
+                 // Parse JSON
+                 allChannelsData = await channelsResponse.json();
+                 allMatchesData = await matchesResponse.json();
+                 allStandingsData = await standingsResponse.json(); // ADDED
+
+                 // Validate data
                  if (typeof allChannelsData !== 'object' || allChannelsData === null) throw new Error("Invalid channels data format.");
                  if (!Array.isArray(allMatchesData)) throw new Error("Invalid matches data format.");
-                 console.log("Data fetched successfully:", { channels: allChannelsData, matches: allMatchesData });
-                 renderAllContentGrids(); // Will replace skeletons
-                 const lastSavedTabId = localStorage.getItem(CONFIG.lastTabKey); const validTabIds = Array.from(tabsContainerElement.querySelectorAll('.tab-button')).map(btn => btn.dataset.tab);
+                 if (!Array.isArray(allStandingsData)) throw new Error("Invalid standings data format."); // ADDED
+
+                 console.log("Data fetched successfully:", { channels: allChannelsData, matches: allMatchesData, standings: allStandingsData }); // Updated log
+
+                 // Render content (including standings)
+                 renderAllContentGrids(); // This now implicitly includes standings rendering
+
+                 // Activate the correct tab
+                 const lastSavedTabId = localStorage.getItem(CONFIG.lastTabKey);
+                 const validTabIds = Array.from(tabsContainerElement.querySelectorAll('.tab-button')).map(btn => btn.dataset.tab);
                  activateTab(validTabIds.includes(lastSavedTabId) ? lastSavedTabId : 'ALL');
+
              } catch (error) {
                  console.error("Data loading failed:", error);
-                 clearSkeletons(); // Clear skeletons on error too
+                 clearSkeletons();
                  showDataFetchErrorMessage(`Error loading data: ${error.message}. Please try refreshing.`);
              }
         }
 
         // --- Skeleton Loading ---
         function renderSkeletons(gridElement, count) { /* ... keep existing ... */ if (!gridElement) return; gridElement.innerHTML = ''; const fragment = document.createDocumentFragment(); const isMatchGrid = gridElement.id === 'Matches'; for (let i = 0; i < count; i++) { const skeleton = document.createElement('div'); skeleton.className = 'skeleton-box'; if (isMatchGrid) { skeleton.dataset.type = 'match'; } else if (gridElement.id === 'ALL' && i < (allMatchesData?.length || 0)) { skeleton.dataset.type = 'match'; } else { skeleton.dataset.type = 'channel'; } fragment.appendChild(skeleton); } gridElement.appendChild(fragment); gridElement.style.display = 'grid'; }
-        function showSkeletons() { /* ... keep existing ... */ channelGridElements.forEach(grid => { if (grid.id === activeTabId || grid.id === 'ALL') { renderSkeletons(grid, CONFIG.skeletonCount); grid.classList.add('active'); } else { grid.innerHTML = ''; grid.classList.remove('active'); } }); }
-        function clearSkeletons() { /* ... keep existing ... */ document.querySelectorAll('.skeleton-box').forEach(el => el.remove()); }
+        function showSkeletons() { /* ... keep existing ... */ channelGridElements.forEach(grid => { if (grid.id === activeTabId || grid.id === 'ALL') { renderSkeletons(grid, CONFIG.skeletonCount); grid.classList.add('active'); } else { grid.innerHTML = ''; grid.classList.remove('active'); } }); if (standingsGridElement && (activeTabId === 'Standings' || activeTabId === 'ALL')) { /* Optionally show standings skeletons or message */ standingsGridElement.innerHTML = '<p class="status-message info">Loading standings...</p>'; standingsGridElement.classList.add('active'); } }
+        function clearSkeletons() { /* ... keep existing ... */ document.querySelectorAll('.skeleton-box').forEach(el => el.remove()); /* Clear standings loading message */ if (standingsGridElement && standingsGridElement.querySelector('.status-message')) { standingsGridElement.innerHTML = ''; } }
 
 
-        // Renders content for all grids (Clears skeletons first)
-        function renderAllContentGrids() { /* ... keep existing ... */ console.log("Rendering all content grids..."); clearSkeletons(); renderSpecificGridContent('PT', allChannelsData.PT || [], 'channel'); renderSpecificGridContent('UK', allChannelsData.UK || [], 'channel'); renderSpecificGridContent('ES', allChannelsData.ES || [], 'channel'); renderSpecificGridContent('Matches', allMatchesData || [], 'match'); renderAllTabContent(); renderFavoritesTabContent(); addChannelBoxEventListeners(); }
-        // Renders content for a specific grid (Clears skeletons first)
+        // Renders content for all grids (including standings)
+        function renderAllContentGrids() {
+             console.log("Rendering all content grids...");
+             clearSkeletons();
+             renderSpecificGridContent('PT', allChannelsData.PT || [], 'channel');
+             renderSpecificGridContent('UK', allChannelsData.UK || [], 'channel');
+             renderSpecificGridContent('ES', allChannelsData.ES || [], 'channel');
+             renderSpecificGridContent('Matches', allMatchesData || [], 'match');
+             renderAllTabContent();
+             renderFavoritesTabContent();
+             renderStandingsContent(); // ADDED: Render standings
+             addChannelBoxEventListeners();
+        }
+
+        // Renders content for a specific grid
         function renderSpecificGridContent(gridId, items, itemType) { /* ... keep existing ... */ const gridElement = document.getElementById(gridId); if (!gridElement) return; gridElement.innerHTML = ''; if (!items || items.length === 0) { let emptyMessage = `No ${itemType === 'match' ? 'matches' : 'channels'} listed.`; if (gridId === 'Favorites') emptyMessage = 'Favorites list is empty. Click ☆ to add.'; gridElement.innerHTML = `<p class="status-message info">${emptyMessage}</p>`; return; } const fragment = document.createDocumentFragment(); items.forEach((itemData) => { let itemElement = null; let uniqueItemId = null; if (itemType === 'match') { const globalMatchIndex = allMatchesData.findIndex(m => m === itemData); if (globalMatchIndex !== -1) { uniqueItemId = `match-${globalMatchIndex}`; itemElement = createMatchBoxElement(itemData, uniqueItemId); } } else { let category = ''; let categoryIndex = -1; for (const key in allChannelsData) { const index = allChannelsData[key]?.indexOf(itemData); if (index !== -1 && index !== undefined) { category = key; categoryIndex = index; break; } } if (category && categoryIndex !== -1) { uniqueItemId = `${category}-channel-${categoryIndex}`; itemElement = createChannelBoxElement(itemData, uniqueItemId); } } if (itemElement) fragment.appendChild(itemElement); else console.warn(`Failed to create element for item in grid ${gridId}`); }); gridElement.appendChild(fragment); }
-        // Renders the content for the 'ALL' tab (Clears skeletons first)
+        // Renders the content for the 'ALL' tab
         function renderAllTabContent() { /* ... keep existing ... */ const allGridElement = document.getElementById('ALL'); if (!allGridElement) return; allGridElement.innerHTML = ''; const fragment = document.createDocumentFragment(); let contentAdded = false; if (allMatchesData && allMatchesData.length > 0) { allMatchesData.forEach((match, index) => { const uniqueId = `match-${index}`; const box = createMatchBoxElement(match, uniqueId); if(box) { fragment.appendChild(box); contentAdded = true; } }); } ['PT', 'UK', 'ES'].forEach(category => { const channelsInCategory = allChannelsData[category] || []; if (channelsInCategory.length > 0) { channelsInCategory.forEach((channel, index) => { const uniqueId = `${category}-channel-${index}`; const box = createChannelBoxElement(channel, uniqueId); if(box) { fragment.appendChild(box); contentAdded = true; } }); } }); allGridElement.appendChild(fragment); if (!contentAdded) allGridElement.innerHTML = '<p class="status-message info">No channels or matches available.</p>'; }
-        // Renders the content for the 'Favorites' tab (Clears skeletons first)
+        // Renders the content for the 'Favorites' tab
         function renderFavoritesTabContent() { /* ... keep existing ... */ const favoritesGridElement = document.getElementById('Favorites'); if (!favoritesGridElement) return; favoritesGridElement.innerHTML = ''; if (favoriteItemIds.length === 0) { favoritesGridElement.innerHTML = '<p class="status-message info">Favorites list is empty.<br>Click ☆ to add.</p>'; return; } const fragment = document.createDocumentFragment(); let validFavoritesFound = 0; favoriteItemIds.forEach(itemId => { let itemElement = null; if (itemId.startsWith('match-')) { const matchIndex = parseInt(itemId.split('-')[1], 10); if (!isNaN(matchIndex) && matchIndex >= 0 && matchIndex < allMatchesData.length) { itemElement = createMatchBoxElement(allMatchesData[matchIndex], itemId); } } else if (itemId.includes('-channel-')) { const parts = itemId.split('-'); const category = parts[0]; const channelIndex = parseInt(parts[parts.length - 1], 10); if (allChannelsData[category] && !isNaN(channelIndex) && channelIndex >= 0 && channelIndex < allChannelsData[category].length) { itemElement = createChannelBoxElement(allChannelsData[category][channelIndex], itemId); } } if (itemElement) { fragment.appendChild(itemElement); validFavoritesFound++; } else { console.warn(`Could not find data for favorite item ID: ${itemId}.`); } }); favoritesGridElement.appendChild(fragment); if (validFavoritesFound === 0 && favoriteItemIds.length > 0) { favoritesGridElement.innerHTML = '<p class="status-message info">Previously favorited items could not be found.</p>'; } }
 
-        // --- Element Creation ---
+        // --- ADDED: Render Standings Content ---
+        function renderStandingsContent() {
+            if (!standingsGridElement) return;
+            standingsGridElement.innerHTML = ''; // Clear previous content
+
+            if (!allStandingsData || allStandingsData.length === 0) {
+                standingsGridElement.innerHTML = '<p class="status-message info">No standings available.</p>';
+                return;
+            }
+
+            const fragment = document.createDocumentFragment();
+            allStandingsData.forEach((standing, index) => {
+                if (standing.leagueName && standing.embedUrl) {
+                    const itemDiv = document.createElement('div');
+                    itemDiv.className = 'standing-item';
+
+                    const title = document.createElement('h3');
+                    title.textContent = standing.leagueName;
+                    itemDiv.appendChild(title);
+
+                    const iframe = document.createElement('iframe');
+                    iframe.src = standing.embedUrl;
+                    iframe.title = `${standing.leagueName} Standings`;
+                    iframe.loading = 'lazy'; // Lazy load iframes
+                    // Consider adding sandbox attributes if needed for security
+                    // iframe.sandbox = "allow-scripts allow-same-origin allow-popups";
+                    itemDiv.appendChild(iframe);
+
+                    fragment.appendChild(itemDiv);
+                } else {
+                    console.warn(`Invalid standing data at index ${index}:`, standing);
+                }
+            });
+            standingsGridElement.appendChild(fragment);
+        }
+
+        // --- Element Creation (Existing Functions) ---
         function createChannelBoxElement(channelData, uniqueItemId) { /* ... keep existing ... */ if (!channelData || !uniqueItemId || !channelData.name || !Array.isArray(channelData.srcs)) return null; const { name, srcs } = channelData; const boxElement = document.createElement('div'); boxElement.className = 'channel-box'; boxElement.id = uniqueItemId; boxElement.tabIndex = 0; boxElement.dataset.itemName = name; boxElement.dataset.itemType = 'channel'; boxElement.dataset.sources = JSON.stringify(srcs); boxElement.dataset.itemId = uniqueItemId; const isFavorite = favoriteItemIds.includes(uniqueItemId); boxElement.innerHTML = `<button class="favorite-button ${isFavorite ? 'is-favorite' : ''}" aria-label="${isFavorite ? 'Remove from' : 'Add to'} Favorites" aria-pressed="${isFavorite}" tabindex="-1"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg></button><div class="channel-header" id="${uniqueItemId}-header" aria-expanded="false" aria-controls="${uniqueItemId}-content"><h3>${name}</h3></div><div class="channel-info"></div><div class="iframe-container" id="${uniqueItemId}-content" role="region" aria-labelledby="${uniqueItemId}-header"><div class="player-area"><div class="loader"></div> <div class="player-message" role="alert"></div><iframe allow="autoplay; fullscreen; encrypted-media; picture-in-picture" allowfullscreen title="Stream Player"></iframe><video controls autoplay muted playsinline title="Stream Player" poster="${CONFIG.placeholderImage}"></video><button class="custom-fullscreen-btn" aria-label="Enter Fullscreen" title="Enter Fullscreen">${SVG_ENTER_FULLSCREEN}</button></div><div class="stream-buttons"></div> <p class="box-disclaimer">${BOX_DISCLAIMER_TEXT}</p></div>`; return boxElement; }
         function createMatchBoxElement(matchData, uniqueItemId) { /* ... keep existing ... */ if (!matchData || !uniqueItemId || !matchData.team1 || !matchData.team2) return null; const { team1, team2, logo1 = '', logo2 = '', time = '', league = '', pt = [], uk = [], es = [] } = matchData; const boxElement = document.createElement('div'); boxElement.className = 'channel-box'; boxElement.id = uniqueItemId; boxElement.tabIndex = 0; const matchTitle = `${team1} vs ${team2}`; boxElement.dataset.itemName = matchTitle; boxElement.dataset.searchTerms = `${team1} ${team2} ${league}`.toLowerCase(); boxElement.dataset.itemType = 'match'; const allSources = { pt: pt || [], uk: uk || [], es: es || [] }; boxElement.dataset.sources = JSON.stringify(allSources); boxElement.dataset.itemId = uniqueItemId; const isFavorite = favoriteItemIds.includes(uniqueItemId); const createLogoHtml = (logoUrl, altText) => logoUrl ? `<img src="${logoUrl}" alt="${altText} logo" class="match-logo" loading="lazy" onerror="this.style.display='none'; this.onerror=null;">` : '<span class="match-logo" aria-label="No logo available" style="display: inline-block; width: 40px;"></span>'; boxElement.innerHTML = `<button class="favorite-button ${isFavorite ? 'is-favorite' : ''}" aria-label="${isFavorite ? 'Remove from' : 'Add to'} Favorites" aria-pressed="${isFavorite}" tabindex="-1"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg></button><div class="channel-header" id="${uniqueItemId}-header" aria-expanded="false" aria-controls="${uniqueItemId}-content">${createLogoHtml(logo1, team1)} <h3>${matchTitle}</h3> ${createLogoHtml(logo2, team2)}</div><div class="channel-info"> ${league ? `<span>${league}</span>` : ''} ${league && time ? '<span aria-hidden="true"> | </span>' : ''} ${time ? `<span>${time}</span>` : ''} </div><div class="iframe-container" id="${uniqueItemId}-content" role="region" aria-labelledby="${uniqueItemId}-header"><div class="player-area"><div class="loader"></div> <div class="player-message" role="alert"></div><iframe allow="autoplay; fullscreen; encrypted-media; picture-in-picture" allowfullscreen title="Stream Player"></iframe><video controls autoplay muted playsinline title="Stream Player" poster="${CONFIG.placeholderImage}"></video><button class="custom-fullscreen-btn" aria-label="Enter Fullscreen" title="Enter Fullscreen">${SVG_ENTER_FULLSCREEN}</button></div><div class="stream-buttons"></div> <p class="box-disclaimer">${BOX_DISCLAIMER_TEXT}</p></div>`; return boxElement; }
         function createStreamSourceButton(label, url, parentBoxElement) { /* ... keep existing ... */ const buttonElement = document.createElement('button'); buttonElement.className = 'stream-button'; buttonElement.textContent = label || 'Source'; buttonElement.dataset.streamUrl = url; buttonElement.onclick = (event) => { event.stopPropagation(); const itemId = parentBoxElement.dataset.itemId; if (openInPlayerPageEnabled && itemId) { const playerPageUrl = `player.html?item=${encodeURIComponent(itemId)}`; window.open(playerPageUrl, '_blank'); buttonElement.classList.add('active'); setTimeout(() => buttonElement.classList.remove('active'), 500); } else if (openInNewTabEnabled) { window.open(url, '_blank'); buttonElement.classList.add('active'); setTimeout(() => buttonElement.classList.remove('active'), 500); } else { loadStreamIntoPlayer(buttonElement, url, parentBoxElement); } }; return buttonElement; }
@@ -444,10 +414,78 @@
         function addChannelBoxEventListeners(scopeElement = document) { /* ... keep existing ... */ if (!scopeElement) return; scopeElement.querySelectorAll('.channel-box:not([data-listener-added="true"])').forEach(boxElement => { const headerElement = boxElement.querySelector('.channel-header'); const infoElement = boxElement.querySelector('.channel-info'); const favoriteButtonElement = boxElement.querySelector('.favorite-button'); const boxId = boxElement.id; const itemId = boxElement.dataset.itemId; const handleBoxClick = (event) => { if (event.target.closest('.favorite-button') || event.target.closest('.custom-fullscreen-btn')) return; if (openInPlayerPageEnabled && itemId) { const playerPageUrl = `player.html?item=${encodeURIComponent(itemId)}`; window.open(playerPageUrl, '_blank'); } else { toggleItemBoxExpansion(boxElement); } }; if (headerElement) headerElement.addEventListener('click', handleBoxClick); if (infoElement && getComputedStyle(infoElement).display !== 'none') { infoElement.addEventListener('click', handleBoxClick); } if (favoriteButtonElement && boxId) { favoriteButtonElement.addEventListener('click', (event) => { event.stopPropagation(); toggleFavoriteStatus(boxId, favoriteButtonElement); }); } else if (!boxId) { console.warn("Could not attach favorite listener: Box ID missing.", boxElement); } boxElement.addEventListener('keydown', (event) => { if ((event.key === 'Enter' || event.key === 'Ok') && !boxElement.classList.contains('expanded')) { event.preventDefault(); if (openInPlayerPageEnabled && itemId) { const playerPageUrl = `player.html?item=${encodeURIComponent(itemId)}`; window.open(playerPageUrl, '_blank'); } else { toggleItemBoxExpansion(boxElement); } } }); boxElement.dataset.listenerAdded = 'true'; }); }
 
         // --- Tab Management ---
-        function activateTab(tabIdToShow) { /* ... keep existing ... */ if (tabIdToShow === activeTabId && document.getElementById(tabIdToShow)?.classList.contains('active')) return; console.log(`Activating tab: ${tabIdToShow}`); activeTabId = tabIdToShow; tabsContainerElement.querySelectorAll('.tab-button').forEach(btn => { const isActive = btn.dataset.tab === tabIdToShow; btn.classList.toggle('active', isActive); btn.setAttribute('aria-selected', isActive ? 'true' : 'false'); }); channelGridElements.forEach(grid => { const isGridActive = grid.id === tabIdToShow; grid.classList.toggle('active', isGridActive); grid.setAttribute('tabindex', isGridActive ? '0' : '-1'); }); if (currentlyExpandedBoxElement) { collapseItemBox(currentlyExpandedBoxElement); } localStorage.setItem(CONFIG.lastTabKey, tabIdToShow); if (tabIdToShow === 'Favorites') { renderFavoritesTabContent(); addChannelBoxEventListeners(document.getElementById('Favorites')); } filterVisibleContent(searchInputElement.value); setTimeout(() => document.getElementById(tabIdToShow)?.focus({ preventScroll: true }), 50); }
+        function activateTab(tabIdToShow) {
+            if (tabIdToShow === activeTabId && document.getElementById(tabIdToShow)?.classList.contains('active')) return;
+            console.log(`Activating tab: ${tabIdToShow}`); activeTabId = tabIdToShow;
+            tabsContainerElement.querySelectorAll('.tab-button').forEach(btn => { const isActive = btn.dataset.tab === tabIdToShow; btn.classList.toggle('active', isActive); btn.setAttribute('aria-selected', isActive ? 'true' : 'false'); });
+            // Handle channel grids
+            channelGridElements.forEach(grid => { const isGridActive = grid.id === tabIdToShow; grid.classList.toggle('active', isGridActive); grid.setAttribute('tabindex', isGridActive ? '0' : '-1'); });
+            // Handle standings grid
+            if (standingsGridElement) { const isStandingsActive = standingsGridElement.id === tabIdToShow; standingsGridElement.classList.toggle('active', isStandingsActive); standingsGridElement.setAttribute('tabindex', isStandingsActive ? '0' : '-1'); }
+            // Collapse any open box
+            if (currentlyExpandedBoxElement) { collapseItemBox(currentlyExpandedBoxElement); }
+            localStorage.setItem(CONFIG.lastTabKey, tabIdToShow);
+            // Re-render specific content if needed (e.g., Favorites)
+            if (tabIdToShow === 'Favorites') { renderFavoritesTabContent(); addChannelBoxEventListeners(document.getElementById('Favorites')); }
+            else if (tabIdToShow === 'Standings') { renderStandingsContent(); } // Render standings when tab is activated
+            // Apply search filter
+            filterVisibleContent(searchInputElement.value);
+            // Set focus
+            setTimeout(() => document.getElementById(tabIdToShow)?.focus({ preventScroll: true }), 50);
+        }
 
-        // --- Search Filtering (Improved) ---
-        function filterVisibleContent(searchTerm) { /* ... keep existing ... */ const normalizedSearchTerm = searchTerm.toLowerCase().trim(); const searchWords = normalizedSearchTerm.split(/\s+/).filter(word => word.length > 0); const isSearching = searchWords.length > 0; let resultsFoundInActiveTab = false; const activeGridElement = document.getElementById(activeTabId); const allBoxes = document.querySelectorAll('.channel-box'); allBoxes.forEach(boxElement => { const parentGridId = boxElement.closest('.channel-grid')?.id; if (!parentGridId) return; const itemName = boxElement.dataset.itemName?.toLowerCase() || ''; const additionalSearchTerms = boxElement.dataset.searchTerms?.toLowerCase() || ''; const textToSearch = `${itemName} ${additionalSearchTerms}`; const matchesSearch = isSearching ? searchWords.every(word => textToSearch.includes(word)) : true; let shouldBeVisible = false; if (!isSearching) { shouldBeVisible = (parentGridId === activeTabId); } else { if (parentGridId === activeTabId) { shouldBeVisible = matchesSearch; } else if (activeTabId === 'ALL') { shouldBeVisible = matchesSearch; } else if (activeTabId === 'Favorites') { shouldBeVisible = matchesSearch && favoriteItemIds.includes(boxElement.id); } } if (!boxElement.classList.contains('expanded')) { boxElement.classList.toggle('hidden', !shouldBeVisible); boxElement.tabIndex = shouldBeVisible ? 0 : -1; } else { boxElement.classList.remove('hidden'); boxElement.tabIndex = -1; } if (shouldBeVisible && parentGridId === activeTabId && !boxElement.classList.contains('expanded')) { resultsFoundInActiveTab = true; } }); if (activeGridElement) { let noResultsMsgEl = activeGridElement.querySelector('.status-message.info.no-results'); if (!noResultsMsgEl) { noResultsMsgEl = document.createElement('p'); noResultsMsgEl.className = 'status-message info no-results'; noResultsMsgEl.style.display = 'none'; activeGridElement.prepend(noResultsMsgEl); } if (isSearching && !resultsFoundInActiveTab) { noResultsMsgEl.innerHTML = `No results found for "<strong>${searchTerm}</strong>" in this section.`; noResultsMsgEl.style.display = 'block'; } else { noResultsMsgEl.style.display = 'none'; } } }
+        // --- Search Filtering ---
+        function filterVisibleContent(searchTerm) {
+             const normalizedSearchTerm = searchTerm.toLowerCase().trim();
+             const searchWords = normalizedSearchTerm.split(/\s+/).filter(word => word.length > 0);
+             const isSearching = searchWords.length > 0;
+             let resultsFoundInActiveTab = false;
+             const activeGridElement = document.getElementById(activeTabId);
+             const allGrids = [...channelGridElements, standingsGridElement].filter(Boolean); // Include standings grid
+
+             // Filter channel/match boxes
+             allGrids.forEach(grid => {
+                 if (grid.id !== 'Standings') { // Only process channel/match grids here
+                     grid.querySelectorAll('.channel-box').forEach(boxElement => {
+                         const parentGridId = grid.id;
+                         const itemName = boxElement.dataset.itemName?.toLowerCase() || '';
+                         const additionalSearchTerms = boxElement.dataset.searchTerms?.toLowerCase() || '';
+                         const textToSearch = `${itemName} ${additionalSearchTerms}`;
+                         const matchesSearch = isSearching ? searchWords.every(word => textToSearch.includes(word)) : true;
+                         let shouldBeVisible = false;
+                         if (!isSearching) { shouldBeVisible = (parentGridId === activeTabId); }
+                         else {
+                             if (parentGridId === activeTabId) { shouldBeVisible = matchesSearch; }
+                             else if (activeTabId === 'ALL') { shouldBeVisible = matchesSearch; }
+                             else if (activeTabId === 'Favorites') { shouldBeVisible = matchesSearch && favoriteItemIds.includes(boxElement.id); }
+                         }
+                         if (!boxElement.classList.contains('expanded')) { boxElement.classList.toggle('hidden', !shouldBeVisible); boxElement.tabIndex = shouldBeVisible ? 0 : -1; }
+                         else { boxElement.classList.remove('hidden'); boxElement.tabIndex = -1; }
+                         if (shouldBeVisible && parentGridId === activeTabId && !boxElement.classList.contains('expanded')) { resultsFoundInActiveTab = true; }
+                     });
+                 }
+             });
+
+             // Handle Standings grid visibility based on search (hide if searching unless tab is Standings)
+             if (standingsGridElement) {
+                 const isStandingsTabActive = activeTabId === 'Standings';
+                 const shouldStandingsBeVisible = isStandingsTabActive && !isSearching; // Show only if Standings tab active AND not searching
+                 standingsGridElement.classList.toggle('hidden', !shouldStandingsBeVisible);
+                 if (shouldStandingsBeVisible) resultsFoundInActiveTab = true; // Count as results if shown
+             }
+
+             // Display "No results" message
+             if (activeGridElement) {
+                 let noResultsMsgEl = activeGridElement.querySelector('.status-message.info.no-results');
+                 if (!noResultsMsgEl && activeGridElement.id !== 'Standings') { // Don't add to standings grid
+                     noResultsMsgEl = document.createElement('p'); noResultsMsgEl.className = 'status-message info no-results'; noResultsMsgEl.style.display = 'none'; activeGridElement.prepend(noResultsMsgEl);
+                 }
+                 if (noResultsMsgEl) {
+                     if (isSearching && !resultsFoundInActiveTab && activeGridElement.id !== 'Standings') { noResultsMsgEl.innerHTML = `No results found for "<strong>${searchTerm}</strong>" in this section.`; noResultsMsgEl.style.display = 'block'; }
+                     else { noResultsMsgEl.style.display = 'none'; }
+                 }
+             }
+        }
 
         // --- Channel Box Expansion ---
         function toggleItemBoxExpansion(boxElement) { /* ... keep existing ... */ if (!boxElement) return; const isCurrentlyExpanded = boxElement.classList.contains('expanded'); const headerElement = boxElement.querySelector('.channel-header'); if (!isCurrentlyExpanded && currentlyExpandedBoxElement && currentlyExpandedBoxElement !== boxElement) { collapseItemBox(currentlyExpandedBoxElement); } if (!isCurrentlyExpanded) { expandItemBox(boxElement); if (headerElement) headerElement.setAttribute('aria-expanded', 'true'); } else { collapseItemBox(boxElement); if (headerElement) headerElement.setAttribute('aria-expanded', 'false'); } }
@@ -480,4 +518,3 @@
 
 </body>
 </html>
-
