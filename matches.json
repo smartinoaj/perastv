@@ -1,19 +1,80 @@
 [
   {
-    "team1": "Estoril",
-    "logo1": "img/teams/estoril.png",
-    "team2": "SL Benfica",
-    "logo2": "img/teams/slb.png",
-    "time": "Saturday, 20:30",
+    "team1": "Sporting",
+    "logo1": "img/teams/sporting.png",
+    "team2": "Gil Vicente",
+    "logo2": "img/teams/gilvicente.png",
+    "time": "Sunday, 20:30",
     "league": "Liga Portugal", 
     "pt": [
       { "label": "PM", "url": "https://playmatch.live/player/PT/406" },
       { "label": "DL", "url": "https://thedaddy.to/embed/stream-49.php" },
       { "label": "T4TV", "url": "https://time4tv.top/embed/channels/stream49/link1.php" },
       { "label": "AC", "url": "https://antenacentral.store/sport1pt.php" },
+      { "label": "SP4", "url": "https://streamtp4.com/global1.php?stream=sportv_1pt" },
       { "label": "Pop", "url": "https://popcdn.day/go.php?stream=SPT1" },
       { "label": "SO", "url": "https://sportsonline.si/channels/pt/sporttv1.php" },
       { "label": "WLS", "url": "https://welivesport.shop/esta/sporttv1pt.php" }
+    ]
+  },
+  {
+    "team1": "Brentford",
+    "logo1": "img/teams/brentford.png",
+    "team2": "Man United",
+    "logo2": "img/teams/manutd.png",
+    "time": "Sunday, 14:00",
+    "league": "Premier League", 
+    "pt": [
+      { "label": "PM", "url": "https://playmatch.live/player/PT/6078" },
+      { "label": "DL", "url": "https://thedaddy.to/embed/stream-455.php" },
+      { "label": "T4TV", "url": "https://time4tv.top/embed/channels/stream455/link1.php" },
+      { "label": "AC", "url": "https://antenacentral.store/dazn1pt.php" },
+      { "label": "SP4", "url": "https://streamtp4.com/global1.php?stream=eleven1_pt" },
+      { "label": "SO", "url": "https://sportzonline.ps/channels/pt/eleven1.php" }
+    ]
+  },
+  {
+    "team1": "West Ham",
+    "logo1": "img/teams/westham.png",
+    "team2": "Tottenham",
+    "logo2": "img/teams/spurs.png",
+    "time": "Sunday, 14:00",
+    "league": "Premier League", 
+    "pt": [
+      { "label": "PM", "url": "https://playmatch.live/player/PT/6081" },
+      { "label": "DL", "url": "https://thedaddy.to/embed/stream-458.php" },
+      { "label": "T4TV", "url": "https://time4tv.top/embed/channels/stream458/link1.php" },
+      { "label": "AC", "url": "https://antenacentral.store/dazn4pt.php" },
+      { "label": "SP4", "url": "https://streamtp4.com/global1.php?stream=eleven4_pt" },
+      { "label": "WLS", "url": "https://welivesport.shop/esta/eleven4pt.php" }
+    ]
+  },
+  {
+    "team1": "Brighton",
+    "logo1": "img/teams/brighton.png",
+    "team2": "Newcastle",
+    "logo2": "img/teams/newcastle.png",
+    "time": "Sunday, 14:00",
+    "league": "Premier League", 
+    "pt": [
+      { "label": "PM", "url": "https://playmatch.live/player/PT/6088" },
+      { "label": "AC", "url": "https://antenacentral.store/dazn6pt.php" }
+    ]
+  },
+  {
+    "team1": "Chelsea",
+    "logo1": "img/teams/chelsea.png",
+    "team2": "Liverpool",
+    "logo2": "img/teams/liverpool.png",
+    "time": "Sunday, 16:30",
+    "league": "Premier League", 
+    "pt": [
+      { "label": "PM", "url": "https://playmatch.live/player/PT/6078" },
+      { "label": "DL", "url": "https://thedaddy.to/embed/stream-455.php" },
+      { "label": "T4TV", "url": "https://time4tv.top/embed/channels/stream455/link1.php" },
+      { "label": "AC", "url": "https://antenacentral.store/dazn1pt.php" },
+      { "label": "SP4", "url": "https://streamtp4.com/global1.php?stream=eleven1_pt" },
+      { "label": "SO", "url": "https://sportzonline.ps/channels/pt/eleven1.php" }
 
     ]
   }
