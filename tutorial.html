@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tutorial</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <main class="container">
+        <a href="index.html" class="back-link">&larr; Back to Megathread</a>
+        
+        <div class="tutorial-container">
+            <h1 id="tutorial-title">Loading...</h1>
+            <div id="tutorial-content">
+                <p>Please wait while the tutorial content is loaded.</p>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        // This script reads the 'topic' from the URL and displays the correct tutorial.
+        window.onload = function() {
+            const params = new URLSearchParams(window.location.search);
+            const topic = params.get('topic'); // Gets the topic like "duckduckgo" from the URL
+
+            const titleElement = document.getElementById('tutorial-title');
+            const contentElement = document.getElementById('tutorial-content');
+
+            // --- HOW TO ADD A NEW TUTORIAL ---
+            // 1. Copy one of the "case" blocks below.
+            // 2. Change the case name to match the link in index.html (e.g., case 'new-app':)
+            // 3. Change the title and content inside the block.
+            switch (topic) {
+                case 'duckduckgo':
+                    titleElement.textContent = 'How to Set DuckDuckGo as Your Default Search Engine';
+                    contentElement.innerHTML = `
+                        <p>Setting DuckDuckGo as your default search engine is a great step for privacy. Here are the steps for major browsers:</p>
+                        <h3>Google Chrome</h3>
+                        <ol>
+                            <li>Go to Settings > Search Engine.</li>
+                            <li>Find "Search engine used in the address bar" and select "DuckDuckGo" from the dropdown.</li>
+                        </ol>
+                        <h3>Mozilla Firefox</h3>
+                        <ol>
+                            <li>Go to Settings > Search.</li>
+                            <li>Under "Default Search Engine," choose "DuckDuckGo" from the list.</li>
+                        </ol>
+                        <p>That's it! Your searches will now be private.</p>
+                    `;
+                    break;
+                
+                // Add your next tutorial case here
+                // case 'some-other-app':
+                //     titleElement.textContent = 'Title for Some Other App';
+                //     contentElement.innerHTML = '<p>Your tutorial steps go here.</p>';
+                //     break;
+
+                default:
+                    titleElement.textContent = 'Tutorial Not Found';
+                    contentElement.innerHTML = '<p>Sorry, a tutorial for this topic could not be found. Please go back and try a different link.</p>';
+            }
+        };
+    </script>
+
+</body>
+</html>

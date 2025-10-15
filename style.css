@@ -141,8 +141,15 @@ section h2 {
 
 .card p {
     color: var(--text-secondary);
-    flex-grow: 1; /* Pushes the button to the bottom */
+    flex-grow: 1; /* Pushes the buttons to the bottom */
     margin-bottom: 20px;
+}
+
+/* --- Button Styles --- */
+.card-buttons {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
 }
 
 .btn-link {
@@ -154,13 +161,26 @@ section h2 {
     text-decoration: none;
     border-radius: 5px;
     font-weight: 500;
-    transition: background-color 0.2s ease;
-    align-self: flex-start; /* Aligns button to the left */
+    transition: background-color 0.2s ease, color 0.2s ease;
+    border: 1px solid var(--accent-color);
 }
 
 .btn-link:hover {
     background-color: #0056b3;
+    border-color: #0056b3;
 }
+
+/* Style for the secondary (tutorial) button */
+.btn-secondary {
+    background-color: transparent;
+    color: var(--accent-color);
+}
+
+.btn-secondary:hover {
+    background-color: var(--accent-color);
+    color: #ffffff;
+}
+
 
 /* --- Footer --- */
 footer {
@@ -173,6 +193,52 @@ footer {
     font-size: 0.9rem;
 }
 
+/* --- Tutorial Page Specific Styles --- */
+.back-link {
+    display: inline-block;
+    color: var(--text-secondary);
+    text-decoration: none;
+    margin-bottom: 40px;
+    font-size: 0.95rem;
+}
+
+.back-link:hover {
+    color: var(--accent-color);
+    text-decoration: underline;
+}
+
+.tutorial-container {
+    background-color: var(--bg-secondary);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    padding: 30px 40px;
+}
+
+.tutorial-container h1 {
+    font-size: 2rem;
+    margin-bottom: 25px;
+}
+
+.tutorial-container h3 {
+    font-size: 1.4rem;
+    margin-top: 30px;
+    margin-bottom: 15px;
+    color: var(--accent-color);
+}
+
+.tutorial-container p, .tutorial-container ol {
+    line-height: 1.8;
+    color: var(--text-secondary);
+}
+
+.tutorial-container ol {
+    padding-left: 20px;
+}
+
+.tutorial-container ol li {
+    margin-bottom: 10px;
+}
+
 /* --- Responsive Adjustments --- */
 @media (max-width: 768px) {
     header h1 {
@@ -181,4 +247,11 @@ footer {
     section h2 {
         font-size: 1.5rem;
     }
+    .tutorial-container {
+        padding: 20px;
+    }
+    .tutorial-container h1 {
+        font-size: 1.6rem;
+    }
 }
+
