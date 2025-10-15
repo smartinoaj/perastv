@@ -105,6 +105,16 @@ section h2 {
     align-items: center;
 }
 
+/* NEW: Subsection Title Style */
+.subsection-title {
+    font-size: 1.4rem;
+    font-weight: 500;
+    color: var(--text-secondary);
+    margin-top: 40px;
+    margin-bottom: 20px;
+}
+
+
 /* --- Grid for Links/Apps --- */
 .grid-container {
     display: grid;
@@ -140,7 +150,7 @@ section h2 {
     margin-bottom: 20px;
 }
 
-/* --- NEW: Recommended Item Styles --- */
+/* --- Recommended Item Styles --- */
 .card.recommended {
     border-width: 2px;
     border-color: var(--recommended-color);
