@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>The Ultimate Megathread</title>
     <link rel="stylesheet" href="style.css">
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 </head>
 <body>
     <header>
@@ -15,73 +15,55 @@
 
     <main class="container">
 
-        <!-- Quick Navigation Menu -->
-        <nav class="quick-nav">
-            <h3>Categories</h3>
-            <ul>
-                <li><a href="#privacy">Privacy</a></li>
-                <li><a href="#emulation">Emulation</a></li>
-                <li><a href="#gaming">Gaming</a></li>
-                <li><a href="#movies-tv">Movies / TV</a></li>
-            </ul>
-        </nav>
+        <!-- Tab Navigation -->
+        <div class="tabs-nav">
+            <button class="tab-button active" data-tab="privacy">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm0 10.99h7c-.53 4.12-3.28 7.79-7 8.94V12H5V6.3l7-3.11v8.8z"/></svg>
+                Privacy
+            </button>
+            <button class="tab-button" data-tab="emulation">
+                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M19.23,8.53l-7-5.45a1,1,0,0,0-1.1,0l-7,5.45A1,1,0,0,0,3.5,9.45l7,5.46,7-5.46a1,1,0,0,0-.62-1.87ZM12,13.2,5.13,8,12,3.31,18.87,8Z"/><path d="M4.17,11.18l-1.3,1a1,1,0,0,0-.24,1.38l3,4.43a1,1,0,0,0,1.38.24l1.3-1-3-4.43A1,1,0,0,0,4.17,11.18Z"/><path d="M19.83,11.18a1,1,0,0,0-1.14.62l-3,4.43,1.3,1a1,1,0,0,0,1.38-.24l3-4.43A1,1,0,0,0,19.83,11.18Z"/></svg>
+                Emulation
+            </button>
+            <button class="tab-button" data-tab="gaming">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M21.58,16.09l-1.09-7.66C20.21,6.46,18.52,5,16.53,5H7.47C5.48,5,3.79,6.46,3.51,8.43L2.42,16.09C2.16,17.84,3.42,19,5.13,19H8.5a1,1,0,0,0,1-1V16a1,1,0,0,1,1-1h3a1,1,0,0,1,1,1v2a1,1,0,0,0,1,1h3.37C20.58,19,21.84,17.84,21.58,16.09ZM10,12a1,1,0,1,1,1-1A1,1,0,0,1,10,12Zm4,0a1,1,0,1,1,1-1A1,1,0,0,1,14,12Z"/></svg>
+                Gaming
+            </button>
+            <button class="tab-button" data-tab="movies-tv">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M20,4H4A2,2,0,0,0,2,6V18a2,2,0,0,0,2,2H20a2,2,0,0,0,2-2V6A2,2,0,0,0,20,4ZM4,10H8V8h2v2h4V8h2v2h4v3H16v2H14V13H10v2H8V13H4Z"/></svg>
+                Movies / TV
+            </button>
+        </div>
 
-        <!-- Section for Privacy -->
-        <section id="privacy">
-            <h2>Privacy</h2>
-            <div class="grid-container">
-                <div class="card recommended">
-                    <div class="recommended-star">
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
-                            <path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/>
-                        </svg>
-                    </div>
-                    <h3>DuckDuckGo</h3>
-                    <p>A private search engine that doesn't track your search history, providing unbiased results.</p>
-                    <div class="card-buttons">
-                        <a href="https://duckduckgo.com" class="btn-link" target="_blank">Visit Site</a>
-                        <button class="btn-link btn-secondary tutorial-button" data-topic="duckduckgo">Tutorial</button>
+        <!-- Tab Content Panels -->
+        <div class="tabs-content">
+
+            <!-- Privacy Panel -->
+            <div id="privacy" class="tab-content active">
+                <div class="grid-container">
+                    <div class="card recommended">
+                        <div class="recommended-star"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg></div>
+                        <h3>DuckDuckGo</h3>
+                        <p>A private search engine that doesn't track your search history, providing unbiased results.</p>
+                        <div class="card-buttons">
+                            <a href="https://duckduckgo.com" class="btn-link" target="_blank">Visit Site</a>
+                            <button class="btn-link btn-secondary tutorial-button" data-topic="duckduckgo">Tutorial</button>
+                        </div>
                     </div>
                 </div>
             </div>
-        </section>
 
-        <!-- Section for Emulation -->
-        <section id="emulation">
-            <h2>Emulation</h2>
-
-            <!-- Subsection for ROM Sites -->
-            <h3 class="subsection-title">ROM Sites</h3>
-            <div class="grid-container">
-                <div class="card recommended">
-                    <div class="recommended-star">
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
-                    </div>
+            <!-- Emulation Panel -->
+            <div id="emulation" class="tab-content">
+                <div class="grid-container">
+                     <div class="card recommended">
+                    <div class="recommended-star"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg></div>
                     <h3>Vimm's Lair</h3>
                     <p>A highly-respected preservation site for classic video games. Known for safe and accurate ROMs.</p>
-                    <div class="card-buttons">
-                        <a href="https://vimm.net/" class="btn-link" target="_blank">Visit Site</a>
-                    </div>
+                    <div class="card-buttons"><a href="https://vimm.net/" class="btn-link" target="_blank">Visit Site</a></div>
                 </div>
-                <div class="card">
-                    <h3>Myrient</h3>
-                    <p>A massive archive for game preservation, offering fast downloads for a huge library of titles.</p>
-                    <div class="card-buttons">
-                        <a href="https://myrient.erista.me/" class="btn-link" target="_blank">Visit Site</a>
-                    </div>
-                </div>
-                <div class="card">
-                    <h3>r-roms</h3>
-                    <p>A popular Reddit community with extensive links and resources for finding game ROMs.</p>
-                    <div class="card-buttons">
-                        <a href="https://r-roms.github.io/" class="btn-link" target="_blank">Visit Site</a>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Subsection for Emulators -->
-            <h3 class="subsection-title">Emulators</h3>
-            <div class="grid-container">
+                <div class="card"><h3>Myrient</h3><p>A massive archive for game preservation, offering fast downloads for a huge library of titles.</p><div class="card-buttons"><a href="https://myrient.erista.me/" class="btn-link" target="_blank">Visit Site</a></div></div>
+                <div class="card"><h3>r-roms</h3><p>A popular Reddit community with extensive links and resources for finding game ROMs.</p><div class="card-buttons"><a href="https://r-roms.github.io/" class="btn-link" target="_blank">Visit Site</a></div></div>
                  <div class="card"><h3>Dolphin</h3><p>The definitive emulator for GameCube and Wii games, with high compatibility and enhancement features.</p><div class="card-buttons"><a href="https://dolphin-emu.org/" class="btn-link" target="_blank">Visit Site</a></div></div>
                 <div class="card"><h3>PCSX2</h3><p>The leading open-source emulator for PlayStation 2. Allows you to play PS2 games on your PC.</p><div class="card-buttons"><a href="https://pcsx2.net/" class="btn-link" target="_blank">Visit Site</a></div></div>
                 <div class="card"><h3>RPCS3</h3><p>An impressive open-source PlayStation 3 emulator that is constantly improving its compatibility.</p><div class="card-buttons"><a href="https://rpcs3.net/" class="btn-link" target="_blank">Visit Site</a></div></div>
@@ -97,39 +79,27 @@
                 <div class="card"><h3>PPSSPP</h3><p>The leading open-source PlayStation Portable (PSP) emulator, available on many platforms.</p><div class="card-buttons"><a href="https://www.ppsspp.org/" class="btn-link" target="_blank">Visit Site</a></div></div>
                 <div class="card"><h3>Vita3K</h3><p>The world's first experimental open-source PlayStation Vita emulator.</p><div class="card-buttons"><a href="https://vita3k.org/" class="btn-link" target="_blank">Visit Site</a></div></div>
                 <div class="card"><h3>DuckStation</h3><p>An accuracy-focused PlayStation 1 (PSX) emulator with many enhancement features.</p><div class="card-buttons"><a href="https://www.duckstation.org/" class="btn-link" target="_blank">Visit Site</a></div></div>
-            </div>
-
-            <!-- Subsection for Emulator Frontends -->
-            <h3 class="subsection-title">Emulator Frontends</h3>
-            <div class="grid-container">
                 <div class="card"><h3>RetroArch</h3><p>A popular, cross-platform frontend for emulators and game engines. It manages all your emulators in one place.</p><div class="card-buttons"><a href="https://www.retroarch.com/" class="btn-link" target="_blank">Visit Site</a></div></div>
                 <div class="card"><h3>Playnite</h3><p>An open-source video game library manager with one simple goal: To provide a unified interface for all of your games.</p><div class="card-buttons"><a href="https://playnite.link/" class="btn-link" target="_blank">Visit Site</a></div></div>
                 <div class="card"><h3>LaunchBox</h3><p>Originally built as an attractive frontend for DOSBox, it has since expanded to support modern PC games and emulation.</p><div class="card-buttons"><a href="https://www.launchbox-app.com/" class="btn-link" target="_blank">Visit Site</a></div></div>
+                 <div class="card"><h3>EmuGen Wiki</h3><p>A comprehensive wiki for the emulation scene, providing guides, recommendations, and information.</p><div class="card-buttons"><a href="https://emulation.gametechwiki.com/index.php/Main_Page" class="btn-link" target="_blank">Visit Site</a></div></div>
+                </div>
             </div>
 
-            <!-- Subsection for Miscellaneous -->
-            <h3 class="subsection-title">Miscellaneous</h3>
-            <div class="grid-container">
-                <div class="card"><h3>EmuGen Wiki</h3><p>A comprehensive wiki for the emulation scene, providing guides, recommendations, and information.</p><div class="card-buttons"><a href="https://emulation.gametechwiki.com/index.php/Main_Page" class="btn-link" target="_blank">Visit Site</a></div></div>
+            <!-- Gaming Panel -->
+            <div id="gaming" class="tab-content">
+                <div class="grid-container">
+                    <!-- Add your Gaming links here -->
+                </div>
             </div>
-        </section>
 
-        <!-- Section for Gaming -->
-        <section id="gaming">
-            <h2>Gaming</h2>
-            <div class="grid-container">
-                <!-- Add your Gaming links here -->
+            <!-- Movies / TV Panel -->
+            <div id="movies-tv" class="tab-content">
+                <div class="grid-container">
+                     <!-- Add your Movies / TV links here -->
+                </div>
             </div>
-        </section>
-
-        <!-- Section for Movies / TV -->
-        <section id="movies-tv">
-            <h2>Movies / TV</h2>
-            <div class="grid-container">
-                <!-- Add your Movies / TV links here -->
-            </div>
-        </section>
-
+        </div>
     </main>
 
     <footer>
@@ -141,21 +111,43 @@
         <div class="modal-content">
             <button id="modal-close" class="modal-close">&times;</button>
             <h2 id="tutorial-title">Tutorial Title</h2>
-            <div id="tutorial-content" class="tutorial-body">
-                <!-- Tutorial content will be injected here by JavaScript -->
-            </div>
+            <div id="tutorial-content" class="tutorial-body"></div>
         </div>
     </div>
 
     <script>
-    // --- SCRIPT FOR MODAL TUTORIALS ---
+    // --- SCRIPT FOR TABS AND MODAL ---
     document.addEventListener('DOMContentLoaded', () => {
+        // --- TAB LOGIC ---
+        const tabsNav = document.querySelector('.tabs-nav');
+        const tabButtons = document.querySelectorAll('.tab-button');
+        const tabContents = document.querySelectorAll('.tab-content');
+
+        tabsNav.addEventListener('click', (e) => {
+            const clickedButton = e.target.closest('.tab-button');
+            if (!clickedButton) return;
+
+            const tabId = clickedButton.dataset.tab;
+            
+            tabButtons.forEach(button => button.classList.remove('active'));
+            clickedButton.classList.add('active');
+
+            tabContents.forEach(content => {
+                if (content.id === tabId) {
+                    content.classList.add('active');
+                } else {
+                    content.classList.remove('active');
+                }
+            });
+        });
+
+
+        // --- MODAL LOGIC ---
         const modalOverlay = document.getElementById('tutorial-modal');
         const modalTitle = document.getElementById('tutorial-title');
         const modalContent = document.getElementById('tutorial-content');
         const closeModalButton = document.getElementById('modal-close');
-        const tutorialButtons = document.querySelectorAll('.tutorial-button');
-
+        
         const openModal = (topic) => {
             const content = getTutorialContent(topic);
             
@@ -163,18 +155,22 @@
                 modalTitle.textContent = content.title;
                 modalContent.innerHTML = content.body;
                 modalOverlay.classList.add('visible');
+                document.body.style.overflow = 'hidden'; // Prevent background scrolling
             } else {
                 modalTitle.textContent = 'Tutorial Not Found';
                 modalContent.innerHTML = '<p>Sorry, we could not find a tutorial for this topic.</p>';
                 modalOverlay.classList.add('visible');
+                document.body.style.overflow = 'hidden';
             }
         };
 
         const closeModal = () => {
             modalOverlay.classList.remove('visible');
+            document.body.style.overflow = ''; // Restore background scrolling
         };
 
         const getTutorialContent = (topic) => {
+            // Your tutorial content remains here...
             switch (topic) {
                 case 'duckduckgo':
                     return {
@@ -199,24 +195,20 @@
             }
         };
 
-        tutorialButtons.forEach(button => {
-            button.addEventListener('click', () => {
-                const topic = button.getAttribute('data-topic');
+        // Attach event listeners to all tutorial buttons on the page
+        document.body.addEventListener('click', (event) => {
+            if (event.target.matches('.tutorial-button')) {
+                const topic = event.target.getAttribute('data-topic');
                 openModal(topic);
-            });
+            }
         });
 
         closeModalButton.addEventListener('click', closeModal);
         modalOverlay.addEventListener('click', (event) => {
-            if (event.target === modalOverlay) {
-                closeModal();
-            }
+            if (event.target === modalOverlay) closeModal();
         });
-
         document.addEventListener('keydown', (event) => {
-            if (event.key === 'Escape' && modalOverlay.classList.contains('visible')) {
-                closeModal();
-            }
+            if (event.key === 'Escape' && modalOverlay.classList.contains('visible')) closeModal();
         });
     });
     </script>

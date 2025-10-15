@@ -1,23 +1,24 @@
-/* --- Basic Reset & Body Styling --- */
+/* --- MODERN DESIGN REFRESH --- */
+
+/* --- Color Palette & Root Variables --- */
 :root {
-    --bg-primary: #121212;
-    --bg-secondary: #1e1e1e;
-    --accent-color: #007bff;
-    --text-primary: #e0e0e0;
-    --text-secondary: #a0a0a0;
-    --border-color: #333333;
-    --recommended-color: #e6b800; /* Gold for recommended items */
-    --font-sans: 'Roboto', sans-serif;
+    --bg-primary: #111827;      /* Dark Blue-Gray Background */
+    --bg-secondary: #1F2937;    /* Lighter Blue-Gray for Cards/Headers */
+    --bg-tertiary: #374151;     /* Hover color */
+    --accent-color: #8B5CF6;     /* Vibrant Purple Accent */
+    --accent-hover: #7C3AED;     /* Darker Purple on hover */
+    --text-primary: #F9FAFB;     /* Off-white for primary text */
+    --text-secondary: #9CA3AF;  /* Lighter gray for secondary text */
+    --border-color: #374151;    /* Subtle border color */
+    --recommended-color: #FBBF24; /* Amber/Gold for recommended */
+    --font-sans: 'Inter', sans-serif;
 }
 
+/* --- Basic Reset & Body Styling --- */
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-}
-
-html {
-    scroll-behavior: smooth;
 }
 
 body {
@@ -36,187 +37,194 @@ body {
 /* --- Header --- */
 header {
     text-align: center;
-    padding: 60px 20px;
-    background-color: var(--bg-secondary);
+    padding: 5rem 1rem;
     border-bottom: 1px solid var(--border-color);
 }
 
 header h1 {
-    font-size: 2.5rem;
+    font-size: 2.75rem;
     font-weight: 700;
-    margin-bottom: 10px;
+    margin-bottom: 1rem;
+    color: var(--text-primary);
 }
 
 header p {
-    font-size: 1.1rem;
+    font-size: 1.125rem;
     color: var(--text-secondary);
+    max-width: 600px;
+    margin: 0 auto;
 }
 
-/* --- Quick Navigation Menu --- */
-.quick-nav {
-    background-color: var(--bg-secondary);
-    border: 1px solid var(--border-color);
-    border-radius: 8px;
-    padding: 25px;
-    margin-bottom: 50px;
-}
-
-.quick-nav h3 {
-    font-size: 1.2rem;
-    font-weight: 500;
-    margin-bottom: 20px;
-    padding-bottom: 15px;
-    border-bottom: 1px solid var(--border-color);
-}
-
-.quick-nav ul {
-    list-style: none;
-    padding: 0;
+/* --- NEW: Tab Navigation --- */
+.tabs-nav {
     display: flex;
-    flex-wrap: wrap;
-    gap: 15px 25px;
-}
-
-.quick-nav ul li a {
-    color: var(--text-secondary);
-    text-decoration: none;
-    font-size: 0.95rem;
-    transition: color 0.2s ease;
-}
-
-.quick-nav ul li a:hover {
-    color: var(--accent-color);
-    text-decoration: underline;
-}
-
-/* --- Main Content & Sections --- */
-section {
-    padding-top: 20px;
-    margin-bottom: 40px;
-}
-
-section h2 {
-    font-size: 1.8rem;
-    font-weight: 500;
-    margin-bottom: 30px;
+    justify-content: center;
+    gap: 1rem;
+    margin-top: -1px; /* Overlap the header border slightly */
+    padding: 1.5rem 0;
     border-bottom: 1px solid var(--border-color);
-    padding-bottom: 15px;
+    background-color: var(--bg-primary);
+}
+
+.tab-button {
+    background: transparent;
+    border: none;
+    color: var(--text-secondary);
+    padding: 0.75rem 1.5rem;
+    font-size: 1rem;
+    font-weight: 600;
+    border-radius: 999px; /* Pill shape */
+    cursor: pointer;
+    transition: background-color 0.2s ease, color 0.2s ease;
     display: flex;
     align-items: center;
+    gap: 0.5rem;
+}
+.tab-button svg {
+    width: 1.25em;
+    height: 1.25em;
 }
 
-/* NEW: Subsection Title Style */
-.subsection-title {
-    font-size: 1.4rem;
-    font-weight: 500;
-    color: var(--text-secondary);
-    margin-top: 40px;
-    margin-bottom: 20px;
+.tab-button:hover {
+    background-color: var(--bg-tertiary);
+    color: var(--text-primary);
 }
 
+.tab-button.active {
+    background-color: var(--accent-color);
+    color: #ffffff;
+}
 
-/* --- Grid for Links/Apps --- */
+/* --- NEW: Tab Content Panels --- */
+.tabs-content {
+    padding-top: 3rem;
+}
+.tab-content {
+    display: none;
+    animation: fadeIn 0.5s ease;
+}
+.tab-content.active {
+    display: block;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* --- Grid & Card Styles --- */
 .grid-container {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-    gap: 25px;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 1.5rem;
 }
 
 .card {
     background-color: var(--bg-secondary);
     border: 1px solid var(--border-color);
-    border-radius: 8px;
-    padding: 25px;
+    border-radius: 12px; /* Softer corners */
+    padding: 1.5rem;
     display: flex;
     flex-direction: column;
     transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
-    position: relative; /* Needed for star positioning */
+    position: relative;
+    overflow: hidden; /* Hide overflow from star */
 }
 
 .card:hover {
-    transform: translateY(-5px);
+    transform: translateY(-4px);
     border-color: var(--accent-color);
+    box-shadow: 0 10px 25px -5px rgba(0,0,0,0.2);
 }
 
 .card h3 {
-    font-size: 1.2rem;
-    font-weight: 500;
-    margin-bottom: 10px;
+    font-size: 1.25rem;
+    font-weight: 600;
+    margin-bottom: 0.75rem;
+    color: var(--text-primary);
 }
 
 .card p {
     color: var(--text-secondary);
-    flex-grow: 1; /* Pushes the buttons to the bottom */
-    margin-bottom: 20px;
+    flex-grow: 1;
+    margin-bottom: 1.5rem;
 }
 
 /* --- Recommended Item Styles --- */
 .card.recommended {
-    border-width: 2px;
     border-color: var(--recommended-color);
+    box-shadow: 0 0 20px rgba(251, 191, 36, 0.1);
 }
 
 .card.recommended:hover {
     border-color: var(--recommended-color);
-    box-shadow: 0 0 15px rgba(230, 184, 0, 0.2);
 }
 
 .recommended-star {
     position: absolute;
-    top: 15px;
-    right: 15px;
+    top: 1rem;
+    right: 1rem;
     width: 24px;
     height: 24px;
     color: var(--recommended-color);
 }
 
 .card.recommended h3 {
-    padding-right: 30px; /* Prevent title from overlapping the star */
+    padding-right: 2rem;
 }
 
 /* --- Button Styles --- */
 .card-buttons {
     display: flex;
     flex-wrap: wrap;
-    gap: 10px;
+    gap: 0.75rem;
+    margin-top: auto; /* Align to bottom */
 }
 
 .btn-link {
     display: inline-block;
-    background-color: var(--accent-color);
-    color: #ffffff;
-    padding: 10px 20px;
+    padding: 0.625rem 1.25rem;
     text-align: center;
     text-decoration: none;
-    border-radius: 5px;
-    font-weight: 500;
-    transition: background-color 0.2s ease, color 0.2s ease;
-    border: 1px solid var(--accent-color);
+    border-radius: 8px; /* Softer corners */
+    font-weight: 600;
+    transition: background-color 0.2s ease, transform 0.1s ease;
+    border: 1px solid transparent;
     cursor: pointer;
     font-family: inherit;
+    font-size: 0.9rem;
 }
-
-.btn-link:hover {
-    background-color: #0056b3;
-    border-color: #0056b3;
+.btn-link:active {
+    transform: scale(0.98);
 }
-
-.btn-secondary {
-    background-color: transparent;
-    color: var(--accent-color);
-}
-
-.btn-secondary:hover {
+.btn-link.btn-primary {
     background-color: var(--accent-color);
     color: #ffffff;
+    border-color: var(--accent-color);
+}
+
+.btn-link.btn-primary:hover {
+    background-color: var(--accent-hover);
+    border-color: var(--accent-hover);
+}
+
+.btn-link.btn-secondary {
+    background-color: transparent;
+    color: var(--text-secondary);
+    border-color: var(--border-color);
+}
+
+.btn-link.btn-secondary:hover {
+    background-color: var(--bg-tertiary);
+    color: var(--text-primary);
+    border-color: var(--bg-tertiary);
 }
 
 /* --- Footer --- */
 footer {
     text-align: center;
-    padding: 30px 20px;
-    margin-top: 40px;
-    background-color: var(--bg-secondary);
+    padding: 3rem 1rem;
+    margin-top: 3rem;
     border-top: 1px solid var(--border-color);
     color: var(--text-secondary);
     font-size: 0.9rem;
@@ -229,12 +237,13 @@ footer {
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(0, 0, 0, 0.7);
+    background-color: rgba(17, 24, 39, 0.8);
+    backdrop-filter: blur(5px);
     display: flex;
     justify-content: center;
     align-items: center;
     z-index: 1000;
-    padding: 20px;
+    padding: 1rem;
     visibility: hidden;
     opacity: 0;
     transition: opacity 0.3s ease, visibility 0.3s ease;
@@ -248,71 +257,77 @@ footer {
 .modal-content {
     background-color: var(--bg-secondary);
     border: 1px solid var(--border-color);
-    border-radius: 8px;
-    padding: 30px 40px;
+    border-radius: 12px;
+    padding: 2rem 2.5rem;
     width: 100%;
     max-width: 800px;
     max-height: 90vh;
     overflow-y: auto;
     position: relative;
-    transform: translateY(-20px);
+    transform: scale(0.95);
     transition: transform 0.3s ease;
 }
 
 .modal-overlay.visible .modal-content {
-    transform: translateY(0);
+    transform: scale(1);
 }
 
 .modal-close {
     position: absolute;
-    top: 15px;
-    right: 20px;
+    top: 1rem;
+    right: 1.5rem;
     background: none;
     border: none;
     color: var(--text-secondary);
     font-size: 2rem;
     line-height: 1;
     cursor: pointer;
-    transition: color 0.2s ease;
+    transition: color 0.2s ease, transform 0.2s ease;
 }
 
 .modal-close:hover {
     color: var(--text-primary);
+    transform: rotate(90deg);
+}
+
+.tutorial-body h2 {
+    font-size: 1.75rem;
+    margin-bottom: 1.5rem;
+    color: var(--text-primary);
 }
 
 .tutorial-body h3 {
-    font-size: 1.4rem;
-    margin-top: 30px;
-    margin-bottom: 15px;
+    font-size: 1.25rem;
+    margin-top: 2rem;
+    margin-bottom: 1rem;
     color: var(--accent-color);
 }
 
 .tutorial-body p, .tutorial-body ol {
     line-height: 1.8;
     color: var(--text-secondary);
+    font-size: 1rem;
 }
 
 .tutorial-body ol {
-    padding-left: 20px;
+    padding-left: 25px;
 }
 
 .tutorial-body ol li {
-    margin-bottom: 10px;
+    margin-bottom: 0.75rem;
 }
 
 /* --- Responsive Adjustments --- */
 @media (max-width: 768px) {
-    header h1 {
-        font-size: 2rem;
+    .tabs-nav {
+        gap: 0.5rem;
+        padding: 1rem;
+        flex-wrap: wrap;
     }
-    section h2 {
-        font-size: 1.5rem;
+    .tab-button {
+        padding: 0.5rem 1rem;
+        font-size: 0.9rem;
     }
-    .modal-content {
-        padding: 20px;
-    }
-    .modal-content h2 {
-        font-size: 1.6rem;
-    }
+    header h1 { font-size: 2rem; }
 }
 
