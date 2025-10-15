@@ -6,6 +6,7 @@
     --text-primary: #e0e0e0;
     --text-secondary: #a0a0a0;
     --border-color: #333333;
+    --recommended-color: #e6b800; /* Gold for recommended items */
     --font-sans: 'Roboto', sans-serif;
 }
 
@@ -118,7 +119,8 @@ section h2 {
     padding: 25px;
     display: flex;
     flex-direction: column;
-    transition: transform 0.2s ease, border-color 0.2s ease;
+    transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+    position: relative; /* Needed for star positioning */
 }
 
 .card:hover {
@@ -136,6 +138,30 @@ section h2 {
     color: var(--text-secondary);
     flex-grow: 1; /* Pushes the buttons to the bottom */
     margin-bottom: 20px;
+}
+
+/* --- NEW: Recommended Item Styles --- */
+.card.recommended {
+    border-width: 2px;
+    border-color: var(--recommended-color);
+}
+
+.card.recommended:hover {
+    border-color: var(--recommended-color);
+    box-shadow: 0 0 15px rgba(230, 184, 0, 0.2);
+}
+
+.recommended-star {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    width: 24px;
+    height: 24px;
+    color: var(--recommended-color);
+}
+
+.card.recommended h3 {
+    padding-right: 30px; /* Prevent title from overlapping the star */
 }
 
 /* --- Button Styles --- */
@@ -156,8 +182,8 @@ section h2 {
     font-weight: 500;
     transition: background-color 0.2s ease, color 0.2s ease;
     border: 1px solid var(--accent-color);
-    cursor: pointer; /* Added for button elements */
-    font-family: inherit; /* Added for button elements */
+    cursor: pointer;
+    font-family: inherit;
 }
 
 .btn-link:hover {
@@ -186,7 +212,7 @@ footer {
     font-size: 0.9rem;
 }
 
-/* --- NEW: MODAL (POPUP) STYLES --- */
+/* --- MODAL (POPUP) STYLES --- */
 .modal-overlay {
     position: fixed;
     top: 0;

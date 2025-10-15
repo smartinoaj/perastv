@@ -30,17 +30,30 @@
         <section id="privacy">
             <h2>Privacy</h2>
             <div class="grid-container">
-                <!-- Example Item with a Tutorial Button -->
-                <div class="card">
+
+                <!-- 
+                *** HOW TO MAKE A RECOMMENDED ITEM ***
+                1. Add the class "recommended" to the card div, like this: <div class="card recommended">
+                2. Copy and paste the "recommended-star" div inside the card.
+                -->
+
+                <!-- Example of a "Recommended" Item -->
+                <div class="card recommended">
+                    <!-- Star Icon for Recommended Items -->
+                    <div class="recommended-star">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/>
+                        </svg>
+                    </div>
                     <h3>DuckDuckGo</h3>
                     <p>A private search engine that doesn't track your search history, providing unbiased results.</p>
                     <div class="card-buttons">
                         <a href="https://duckduckgo.com" class="btn-link" target="_blank">Visit Site</a>
-                        <!-- This is now a button that opens the modal -->
                         <button class="btn-link btn-secondary tutorial-button" data-topic="duckduckgo">Tutorial</button>
                     </div>
                 </div>
                 <!-- Add more cards for Privacy here -->
+
             </div>
         </section>
 
@@ -94,9 +107,7 @@
         const closeModalButton = document.getElementById('modal-close');
         const tutorialButtons = document.querySelectorAll('.tutorial-button');
 
-        // Function to open the modal and display content
         const openModal = (topic) => {
-            // Find the right content for the topic
             const content = getTutorialContent(topic);
             
             if (content) {
@@ -104,22 +115,16 @@
                 modalContent.innerHTML = content.body;
                 modalOverlay.classList.add('visible');
             } else {
-                // Fallback if topic is not found
                 modalTitle.textContent = 'Tutorial Not Found';
                 modalContent.innerHTML = '<p>Sorry, we could not find a tutorial for this topic.</p>';
                 modalOverlay.classList.add('visible');
             }
         };
 
-        // Function to close the modal
         const closeModal = () => {
             modalOverlay.classList.remove('visible');
         };
 
-        // --- HOW TO ADD A NEW TUTORIAL ---
-        // 1. Add a new 'case' to this function.
-        // 2. The case name must match the `data-topic` in your button.
-        // 3. Add a 'title' and the 'body' HTML for your guide.
         const getTutorialContent = (topic) => {
             switch (topic) {
                 case 'duckduckgo':
@@ -140,20 +145,11 @@
                             <p>That's it! Your searches will now be private.</p>
                         `
                     };
-                
-                // ADD YOUR NEXT TUTORIAL HERE
-                // case 'some-other-app':
-                //     return {
-                //         title: 'Title for Some Other App',
-                //         body: '<p>Your tutorial steps go here.</p>'
-                //     };
-
                 default:
-                    return null; // Topic not found
+                    return null;
             }
         };
 
-        // Event Listeners
         tutorialButtons.forEach(button => {
             button.addEventListener('click', () => {
                 const topic = button.getAttribute('data-topic');
@@ -163,13 +159,11 @@
 
         closeModalButton.addEventListener('click', closeModal);
         modalOverlay.addEventListener('click', (event) => {
-            // Only close if the dark background is clicked, not the content box
             if (event.target === modalOverlay) {
                 closeModal();
             }
         });
 
-        // Close modal with the 'Escape' key
         document.addEventListener('keydown', (event) => {
             if (event.key === 'Escape' && modalOverlay.classList.contains('visible')) {
                 closeModal();
