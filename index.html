@@ -15,7 +15,7 @@
 
     <main class="container">
 
-        <!-- Tab Navigation -->
+        <!-- Main Tab Navigation -->
         <div class="tabs-nav">
             <button class="tab-button active" data-tab="privacy">
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm0 10.99h7c-.53 4.12-3.28 7.79-7 8.94V12H5V6.3l7-3.11v8.8z"/></svg>
@@ -46,7 +46,7 @@
                         <h3>DuckDuckGo</h3>
                         <p>A private search engine that doesn't track your search history, providing unbiased results.</p>
                         <div class="card-buttons">
-                            <a href="https://duckduckgo.com" class="btn-link" target="_blank">Visit Site</a>
+                            <a href="https://duckduckgo.com" class="btn-link btn-primary-rec" target="_blank">Visit Site</a>
                             <button class="btn-link btn-secondary tutorial-button" data-topic="duckduckgo">Tutorial</button>
                         </div>
                     </div>
@@ -55,48 +55,72 @@
 
             <!-- Emulation Panel -->
             <div id="emulation" class="tab-content">
-                <div class="grid-container">
-                     <div class="card recommended">
-                    <div class="recommended-star"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg></div>
-                    <h3>Vimm's Lair</h3>
-                    <p>A highly-respected preservation site for classic video games. Known for safe and accurate ROMs.</p>
-                    <div class="card-buttons"><a href="https://vimm.net/" class="btn-link" target="_blank">Visit Site</a></div>
+                <!-- Sub-Tab Navigation for Emulation -->
+                <div class="sub-tabs-nav">
+                    <button class="sub-tab-button active" data-subtab="roms">ROM Sites</button>
+                    <button class="sub-tab-button" data-subtab="emulators">Emulators</button>
+                    <button class="sub-tab-button" data-subtab="compatibility">Compatibility</button>
                 </div>
-                <div class="card"><h3>Myrient</h3><p>A massive archive for game preservation, offering fast downloads for a huge library of titles.</p><div class="card-buttons"><a href="https://myrient.erista.me/" class="btn-link" target="_blank">Visit Site</a></div></div>
-                <div class="card"><h3>r-roms</h3><p>A popular Reddit community with extensive links and resources for finding game ROMs.</p><div class="card-buttons"><a href="https://r-roms.github.io/" class="btn-link" target="_blank">Visit Site</a></div></div>
-                 <div class="card"><h3>Dolphin</h3><p>The definitive emulator for GameCube and Wii games, with high compatibility and enhancement features.</p><div class="card-buttons"><a href="https://dolphin-emu.org/" class="btn-link" target="_blank">Visit Site</a></div></div>
-                <div class="card"><h3>PCSX2</h3><p>The leading open-source emulator for PlayStation 2. Allows you to play PS2 games on your PC.</p><div class="card-buttons"><a href="https://pcsx2.net/" class="btn-link" target="_blank">Visit Site</a></div></div>
-                <div class="card"><h3>RPCS3</h3><p>An impressive open-source PlayStation 3 emulator that is constantly improving its compatibility.</p><div class="card-buttons"><a href="https://rpcs3.net/" class="btn-link" target="_blank">Visit Site</a></div></div>
-                <div class="card"><h3>Xenia</h3><p>An experimental open-source emulator for the Xbox 360, actively in development.</p><div class="card-buttons"><a href="https://xenia.jp/" class="btn-link" target="_blank">Visit Site</a></div></div>
-                <div class="card"><h3>Ryujinx</h3><p>A popular and highly compatible open-source Nintendo Switch emulator written in C#.</p><div class="card-buttons"><a href="https://ryujinx.org/" class="btn-link" target="_blank">Visit Site</a></div></div>
-                <div class="card"><h3>Yuzu</h3><p>Another excellent open-source Nintendo Switch emulator, known for its performance and features.</p><div class="card-buttons"><a href="https://yuzu-emu.org/" class="btn-link" target="_blank">Visit Site</a></div></div>
-                <div class="card"><h3>Cemu</h3><p>A highly effective closed-source emulator for the Nintendo Wii U, known for its performance.</p><div class="card-buttons"><a href="https://cemu.info/" class="btn-link" target="_blank">Visit Site</a></div></div>
-                <div class="card"><h3>Mesen</h3><p>A high-accuracy open-source emulator for the NES, Famicom, and Famicom Disk System.</p><div class="card-buttons"><a href="https://www.mesen.ca/" class="btn-link" target="_blank">Visit Site</a></div></div>
-                <div class="card"><h3>Snes9x</h3><p>A portable, freeware Super Nintendo Entertainment System (SNES) emulator.</p><div class="card-buttons"><a href="https://www.snes9x.com/" class="btn-link" target="_blank">Visit Site</a></div></div>
-                <div class="card"><h3>mGBA</h3><p>A fast, accurate, and feature-rich open-source emulator for Game Boy Advance.</p><div class="card-buttons"><a href="https://mgba.io/" class="btn-link" target="_blank">Visit Site</a></div></div>
-                <div class="card"><h3>melonDS</h3><p>An open-source Nintendo DS emulator focused on accuracy and performance, with Wi-Fi support.</p><div class="card-buttons"><a href="http://melonds.kuribo64.net/" class="btn-link" target="_blank">Visit Site</a></div></div>
-                <div class="card"><h3>Citra</h3><p>The world's most popular open-source emulator for the Nintendo 3DS.</p><div class="card-buttons"><a href="https://citra-emu.org/" class="btn-link" target="_blank">Visit Site</a></div></div>
-                <div class="card"><h3>PPSSPP</h3><p>The leading open-source PlayStation Portable (PSP) emulator, available on many platforms.</p><div class="card-buttons"><a href="https://www.ppsspp.org/" class="btn-link" target="_blank">Visit Site</a></div></div>
-                <div class="card"><h3>Vita3K</h3><p>The world's first experimental open-source PlayStation Vita emulator.</p><div class="card-buttons"><a href="https://vita3k.org/" class="btn-link" target="_blank">Visit Site</a></div></div>
-                <div class="card"><h3>DuckStation</h3><p>An accuracy-focused PlayStation 1 (PSX) emulator with many enhancement features.</p><div class="card-buttons"><a href="https://www.duckstation.org/" class="btn-link" target="_blank">Visit Site</a></div></div>
-                <div class="card"><h3>RetroArch</h3><p>A popular, cross-platform frontend for emulators and game engines. It manages all your emulators in one place.</p><div class="card-buttons"><a href="https://www.retroarch.com/" class="btn-link" target="_blank">Visit Site</a></div></div>
-                <div class="card"><h3>Playnite</h3><p>An open-source video game library manager with one simple goal: To provide a unified interface for all of your games.</p><div class="card-buttons"><a href="https://playnite.link/" class="btn-link" target="_blank">Visit Site</a></div></div>
-                <div class="card"><h3>LaunchBox</h3><p>Originally built as an attractive frontend for DOSBox, it has since expanded to support modern PC games and emulation.</p><div class="card-buttons"><a href="https://www.launchbox-app.com/" class="btn-link" target="_blank">Visit Site</a></div></div>
-                 <div class="card"><h3>EmuGen Wiki</h3><p>A comprehensive wiki for the emulation scene, providing guides, recommendations, and information.</p><div class="card-buttons"><a href="https://emulation.gametechwiki.com/index.php/Main_Page" class="btn-link" target="_blank">Visit Site</a></div></div>
+
+                <div class="sub-tabs-content">
+                    <!-- ROM Sites Sub-Panel -->
+                    <div id="roms" class="sub-tab-content active">
+                        <div class="grid-container">
+                            <div class="card recommended">
+                                <div class="recommended-star"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg></div>
+                                <h3>Vimm's Lair</h3>
+                                <p>A highly-respected preservation site for classic video games. Known for safe and accurate ROMs.</p>
+                                <div class="card-buttons"><a href="https://vimm.net/" class="btn-link btn-primary-rec" target="_blank">Visit Site</a></div>
+                            </div>
+                            <div class="card"><h3>Myrient</h3><p>A massive archive for game preservation, offering fast downloads for a huge library of titles.</p><div class="card-buttons"><a href="https://myrient.erista.me/" class="btn-link btn-primary" target="_blank">Visit Site</a></div></div>
+                            <div class="card"><h3>r-roms</h3><p>A popular Reddit community with extensive links and resources for finding game ROMs.</p><div class="card-buttons"><a href="https://r-roms.github.io/" class="btn-link btn-primary" target="_blank">Visit Site</a></div></div>
+                        </div>
+                    </div>
+                    <!-- Emulators Sub-Panel -->
+                    <div id="emulators" class="sub-tab-content">
+                        <div class="grid-container">
+                            <div class="card"><h3>Dolphin</h3><p>The definitive emulator for GameCube and Wii games, with high compatibility and enhancement features.</p><div class="card-buttons"><a href="https://dolphin-emu.org/" class="btn-link btn-primary" target="_blank">Visit Site</a></div></div>
+                            <div class="card"><h3>PCSX2</h3><p>The leading open-source emulator for PlayStation 2. Allows you to play PS2 games on your PC.</p><div class="card-buttons"><a href="https://pcsx2.net/" class="btn-link btn-primary" target="_blank">Visit Site</a></div></div>
+                            <div class="card"><h3>RPCS3</h3><p>An impressive open-source PlayStation 3 emulator that is constantly improving its compatibility.</p><div class="card-buttons"><a href="https://rpcs3.net/" class="btn-link btn-primary" target="_blank">Visit Site</a></div></div>
+                            <div class="card"><h3>Xenia</h3><p>An experimental open-source emulator for the Xbox 360, actively in development.</p><div class="card-buttons"><a href="https://xenia.jp/" class="btn-link btn-primary" target="_blank">Visit Site</a></div></div>
+                            <div class="card"><h3>Ryujinx</h3><p>A popular and highly compatible open-source Nintendo Switch emulator written in C#.</p><div class="card-buttons"><a href="https://ryujinx.org/" class="btn-link btn-primary" target="_blank">Visit Site</a></div></div>
+                            <div class="card"><h3>Yuzu</h3><p>Another excellent open-source Nintendo Switch emulator, known for its performance and features.</p><div class="card-buttons"><a href="https://yuzu-emu.org/" class="btn-link btn-primary" target="_blank">Visit Site</a></div></div>
+                            <div class="card"><h3>Cemu</h3><p>A highly effective closed-source emulator for the Nintendo Wii U, known for its performance.</p><div class="card-buttons"><a href="https://cemu.info/" class="btn-link btn-primary" target="_blank">Visit Site</a></div></div>
+                            <div class="card"><h3>Mesen</h3><p>A high-accuracy open-source emulator for the NES, Famicom, and Famicom Disk System.</p><div class="card-buttons"><a href="https://www.mesen.ca/" class="btn-link btn-primary" target="_blank">Visit Site</a></div></div>
+                            <div class="card"><h3>Snes9x</h3><p>A portable, freeware Super Nintendo Entertainment System (SNES) emulator.</p><div class="card-buttons"><a href="https://www.snes9x.com/" class="btn-link btn-primary" target="_blank">Visit Site</a></div></div>
+                            <div class="card"><h3>mGBA</h3><p>A fast, accurate, and feature-rich open-source emulator for Game Boy Advance.</p><div class="card-buttons"><a href="https://mgba.io/" class="btn-link btn-primary" target="_blank">Visit Site</a></div></div>
+                            <div class="card"><h3>melonDS</h3><p>An open-source Nintendo DS emulator focused on accuracy and performance, with Wi-Fi support.</p><div class="card-buttons"><a href="http://melonds.kuribo64.net/" class="btn-link btn-primary" target="_blank">Visit Site</a></div></div>
+                            <div class="card"><h3>Citra</h3><p>The world's most popular open-source emulator for the Nintendo 3DS.</p><div class="card-buttons"><a href="https://citra-emu.org/" class="btn-link btn-primary" target="_blank">Visit Site</a></div></div>
+                            <div class="card"><h3>PPSSPP</h3><p>The leading open-source PlayStation Portable (PSP) emulator, available on many platforms.</p><div class="card-buttons"><a href="https://www.ppsspp.org/" class="btn-link btn-primary" target="_blank">Visit Site</a></div></div>
+                            <div class="card"><h3>Vita3K</h3><p>The world's first experimental open-source PlayStation Vita emulator.</p><div class="card-buttons"><a href="https://vita3k.org/" class="btn-link btn-primary" target="_blank">Visit Site</a></div></div>
+                            <div class="card"><h3>DuckStation</h3><p>An accuracy-focused PlayStation 1 (PSX) emulator with many enhancement features.</p><div class="card-buttons"><a href="https://www.duckstation.org/" class="btn-link btn-primary" target="_blank">Visit Site</a></div></div>
+                            <div class="card"><h3>RetroArch</h3><p>A popular, cross-platform frontend for emulators and game engines.</p><div class="card-buttons"><a href="https://www.retroarch.com/" class="btn-link btn-primary" target="_blank">Visit Site</a></div></div>
+                            <div class="card"><h3>Playnite</h3><p>An open-source video game library manager with one simple goal: To provide a unified interface for all of your games.</p><div class="card-buttons"><a href="https://playnite.link/" class="btn-link btn-primary" target="_blank">Visit Site</a></div></div>
+                            <div class="card"><h3>LaunchBox</h3><p>Originally built as an attractive frontend for DOSBox, it has since expanded to support modern PC games and emulation.</p><div class="card-buttons"><a href="https://www.launchbox-app.com/" class="btn-link btn-primary" target="_blank">Visit Site</a></div></div>
+                            <div class="card"><h3>EmuGen Wiki</h3><p>A comprehensive wiki for the emulation scene, providing guides, recommendations, and information.</p><div class="card-buttons"><a href="https://emulation.gametechwiki.com/index.php/Main_Page" class="btn-link btn-primary" target="_blank">Visit Site</a></div></div>
+                        </div>
+                    </div>
+                     <!-- Compatibility Sub-Panel -->
+                    <div id="compatibility" class="sub-tab-content">
+                        <div class="grid-container">
+                            <!-- Add your Compatibility links here in the future -->
+                             <p class="placeholder-text">Compatibility guides and resources will be added here soon!</p>
+                        </div>
+                    </div>
                 </div>
             </div>
 
             <!-- Gaming Panel -->
             <div id="gaming" class="tab-content">
                 <div class="grid-container">
-                    <!-- Add your Gaming links here -->
+                     <p class="placeholder-text">Gaming links and resources will be added here soon!</p>
                 </div>
             </div>
 
             <!-- Movies / TV Panel -->
             <div id="movies-tv" class="tab-content">
                 <div class="grid-container">
-                     <!-- Add your Movies / TV links here -->
+                     <p class="placeholder-text">Movie & TV links and resources will be added here soon!</p>
                 </div>
             </div>
         </div>
@@ -118,29 +142,39 @@
     <script>
     // --- SCRIPT FOR TABS AND MODAL ---
     document.addEventListener('DOMContentLoaded', () => {
-        // --- TAB LOGIC ---
-        const tabsNav = document.querySelector('.tabs-nav');
-        const tabButtons = document.querySelectorAll('.tab-button');
-        const tabContents = document.querySelectorAll('.tab-content');
-
-        tabsNav.addEventListener('click', (e) => {
+        // --- MAIN TAB LOGIC ---
+        const mainTabsNav = document.querySelector('.tabs-nav');
+        mainTabsNav.addEventListener('click', (e) => {
             const clickedButton = e.target.closest('.tab-button');
             if (!clickedButton) return;
 
-            const tabId = clickedButton.dataset.tab;
-            
-            tabButtons.forEach(button => button.classList.remove('active'));
+            // Update button active states
+            mainTabsNav.querySelectorAll('.tab-button').forEach(button => button.classList.remove('active'));
             clickedButton.classList.add('active');
 
-            tabContents.forEach(content => {
-                if (content.id === tabId) {
-                    content.classList.add('active');
-                } else {
-                    content.classList.remove('active');
-                }
+            // Update content panel active states
+            const tabId = clickedButton.dataset.tab;
+            document.querySelectorAll('.tab-content').forEach(content => {
+                content.classList.toggle('active', content.id === tabId);
             });
         });
 
+        // --- EMULATION SUB-TAB LOGIC ---
+        const subTabsNav = document.querySelector('#emulation .sub-tabs-nav');
+        subTabsNav.addEventListener('click', (e) => {
+            const clickedButton = e.target.closest('.sub-tab-button');
+            if (!clickedButton) return;
+
+             // Update button active states
+            subTabsNav.querySelectorAll('.sub-tab-button').forEach(button => button.classList.remove('active'));
+            clickedButton.classList.add('active');
+
+            // Update content panel active states
+            const subTabId = clickedButton.dataset.subtab;
+            document.querySelectorAll('#emulation .sub-tab-content').forEach(content => {
+                content.classList.toggle('active', content.id === subTabId);
+            });
+        });
 
         // --- MODAL LOGIC ---
         const modalOverlay = document.getElementById('tutorial-modal');
@@ -150,66 +184,53 @@
         
         const openModal = (topic) => {
             const content = getTutorialContent(topic);
-            
             if (content) {
                 modalTitle.textContent = content.title;
                 modalContent.innerHTML = content.body;
-                modalOverlay.classList.add('visible');
-                document.body.style.overflow = 'hidden'; // Prevent background scrolling
             } else {
                 modalTitle.textContent = 'Tutorial Not Found';
                 modalContent.innerHTML = '<p>Sorry, we could not find a tutorial for this topic.</p>';
-                modalOverlay.classList.add('visible');
-                document.body.style.overflow = 'hidden';
             }
+            modalOverlay.classList.add('visible');
+            document.body.style.overflow = 'hidden';
         };
 
         const closeModal = () => {
             modalOverlay.classList.remove('visible');
-            document.body.style.overflow = ''; // Restore background scrolling
+            document.body.style.overflow = '';
         };
 
         const getTutorialContent = (topic) => {
-            // Your tutorial content remains here...
             switch (topic) {
                 case 'duckduckgo':
                     return {
                         title: 'How to Set DuckDuckGo as Your Default Search Engine',
                         body: `
-                            <p>Setting DuckDuckGo as your default search engine is a great step for privacy. Here are the steps for major browsers:</p>
                             <h3>Google Chrome</h3>
                             <ol>
                                 <li>Go to Settings > Search Engine.</li>
-                                <li>Find "Search engine used in the address bar" and select "DuckDuckGo" from the dropdown.</li>
+                                <li>Find "Search engine used in the address bar" and select "DuckDuckGo".</li>
                             </ol>
                             <h3>Mozilla Firefox</h3>
                             <ol>
                                 <li>Go to Settings > Search.</li>
-                                <li>Under "Default Search Engine," choose "DuckDuckGo" from the list.</li>
+                                <li>Under "Default Search Engine," choose "DuckDuckGo".</li>
                             </ol>
-                            <p>That's it! Your searches will now be private.</p>
                         `
                     };
-                default:
-                    return null;
+                default: return null;
             }
         };
-
-        // Attach event listeners to all tutorial buttons on the page
+        
         document.body.addEventListener('click', (event) => {
             if (event.target.matches('.tutorial-button')) {
-                const topic = event.target.getAttribute('data-topic');
-                openModal(topic);
+                openModal(event.target.getAttribute('data-topic'));
             }
         });
 
         closeModalButton.addEventListener('click', closeModal);
-        modalOverlay.addEventListener('click', (event) => {
-            if (event.target === modalOverlay) closeModal();
-        });
-        document.addEventListener('keydown', (event) => {
-            if (event.key === 'Escape' && modalOverlay.classList.contains('visible')) closeModal();
-        });
+        modalOverlay.addEventListener('click', (e) => { if (e.target === modalOverlay) closeModal(); });
+        document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeModal(); });
     });
     </script>
 
