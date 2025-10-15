@@ -441,13 +441,14 @@
 <programme start="20251015130000 +0000" stop="20251015140000 +0000" channel="ABolaTV.pt"><title lang="pt">Esta Semana No Wrestling</title></programme>
 <programme start="20251015140000 +0000" stop="20251015150000 +0000" channel="ABolaTV.pt"><title lang="pt">Vamos Falar De F1</title></programme>
 <programme start="20251015150000 +0000" stop="20251015153000 +0000" channel="ABolaTV.pt"><title lang="pt">A Grelha</title></programme>
-<programme start="20251015153000 +0000" stop="20251015160000 +0000" channel="ABolaTV.pt"><title lang="pt">Mãe África</title></programme>
+<programme start="20251015153000 +0000" stop="20251015160000 +0000" channel="ABolaTV.pt"><title lang="pt">Entrevista: João Carvalho</title></programme>
 <programme start="20251015160000 +0000" stop="20251015180000 +0000" channel="ABolaTV.pt"><title lang="pt">Mais Vale À Tarde Que Nunca</title></programme>
 <programme start="20251015180000 +0000" stop="20251015190000 +0000" channel="ABolaTV.pt"><title lang="pt">A Bola Das 7</title></programme>
 <programme start="20251015190000 +0000" stop="20251015210000 +0000" channel="ABolaTV.pt"><title lang="pt">Mais Vale À Tarde Que Nunca</title></programme>
 <programme start="20251015210000 +0000" stop="20251015213000 +0000" channel="ABolaTV.pt"><title lang="pt">Moto +</title></programme>
-<programme start="20251015213000 +0000" stop="20251015214500 +0000" channel="ABolaTV.pt"><title lang="pt">Clássicos Com História</title></programme>
-<programme start="20251015214500 +0000" stop="20251015220000 +0000" channel="ABolaTV.pt"><title lang="pt">Desporto Motorizado</title></programme>
+<programme start="20251015213000 +0000" stop="20251015214000 +0000" channel="ABolaTV.pt"><title lang="pt">Clássicos Com História</title></programme>
+<programme start="20251015214000 +0000" stop="20251015214500 +0000" channel="ABolaTV.pt"><title lang="pt">Especial: Reportagem Lisbon Foxes</title></programme>
+<programme start="20251015214500 +0000" stop="20251015220000 +0000" channel="ABolaTV.pt"><title lang="pt">Magazine FMP</title></programme>
 <programme start="20251015220000 +0000" stop="20251015223000 +0000" channel="ABolaTV.pt"><title lang="pt">Magazine TT</title></programme>
 <programme start="20251015223000 +0000" stop="20251015230000 +0000" channel="ABolaTV.pt"><title lang="pt">Motores</title></programme>
 <programme start="20251015230000 +0000" stop="20251015233000 +0000" channel="ABolaTV.pt"><title lang="pt">O Lado B Do Desporto</title></programme>
@@ -474,11 +475,9 @@
 <programme start="20251016083000 +0000" stop="20251016090000 +0000" channel="ABolaTV.pt"><title lang="pt">Mãe África</title></programme>
 <programme start="20251016090000 +0000" stop="20251016110000 +0000" channel="ABolaTV.pt"><title lang="pt">Mais Vale À Tarde Que Nunca</title></programme>
 <programme start="20251016110000 +0000" stop="20251016120000 +0000" channel="ABolaTV.pt"><title lang="pt">A Bola Do Meio Dia</title></programme>
-<programme start="20251016120000 +0000" stop="20251016123000 +0000" channel="ABolaTV.pt"><title lang="pt">A Grelha</title></programme>
-<programme start="20251016123000 +0000" stop="20251016130000 +0000" channel="ABolaTV.pt"><title lang="pt">Desporto À Solta</title></programme>
-<programme start="20251016130000 +0000" stop="20251016133000 +0000" channel="ABolaTV.pt"><title lang="pt">Compacto Desportivo</title></programme>
-<programme start="20251016133000 +0000" stop="20251016140000 +0000" channel="ABolaTV.pt"><title lang="pt">Isto É Cinema</title></programme>
-<programme start="20251016140000 +0000" stop="20251016143000 +0000" channel="ABolaTV.pt"><title lang="pt">Magazine TT</title></programme>
+<programme start="20251016120000 +0000" stop="20251016123000 +0000" channel="ABolaTV.pt"><title lang="pt">Desporto À Solta</title></programme>
+<programme start="20251016123000 +0000" stop="20251016130000 +0000" channel="ABolaTV.pt"><title lang="pt">Isto É Cinema</title></programme>
+<programme start="20251016130000 +0000" stop="20251016143000 +0000" channel="ABolaTV.pt"><title lang="pt">90+3</title></programme>
 <programme start="20251016143000 +0000" stop="20251016143500 +0000" channel="ABolaTV.pt"><title lang="pt">Off</title></programme>
 <programme start="20251016143500 +0000" stop="20251016150000 +0000" channel="ABolaTV.pt"><title lang="pt">Moto +</title></programme>
 <programme start="20251016150000 +0000" stop="20251016151000 +0000" channel="ABolaTV.pt"><title lang="pt">Gear Vibes</title></programme>
@@ -489,7 +488,8 @@
 <programme start="20251016180000 +0000" stop="20251016190000 +0000" channel="ABolaTV.pt"><title lang="pt">A Bola Das 7</title></programme>
 <programme start="20251016190000 +0000" stop="20251016193000 +0000" channel="ABolaTV.pt"><title lang="pt">Mãe África</title></programme>
 <programme start="20251016193000 +0000" stop="20251016200000 +0000" channel="ABolaTV.pt"><title lang="pt">A Grelha</title></programme>
-<programme start="20251016200000 +0000" stop="20251016220000 +0000" channel="ABolaTV.pt"><title lang="pt">Mais Vale À Tarde Que Nunca</title></programme>
+<programme start="20251016200000 +0000" stop="20251016214000 +0000" channel="ABolaTV.pt"><title lang="pt">Transmissão Desportiva</title></programme>
+<programme start="20251016214000 +0000" stop="20251016220000 +0000" channel="ABolaTV.pt"><title lang="pt">Entrevista: Natan Suárez</title></programme>
 <programme start="20251016220000 +0000" stop="20251016223000 +0000" channel="ABolaTV.pt"><title lang="pt">O Lado B Do Desporto</title></programme>
 <programme start="20251016223000 +0000" stop="20251016230000 +0000" channel="ABolaTV.pt"><title lang="pt">Isto É Cinema</title></programme>
 <programme start="20251016230000 +0000" stop="20251016233000 +0000" channel="ABolaTV.pt"><title lang="pt">Ride</title></programme>
@@ -9520,7 +9520,7 @@
 <programme start="20251016123000 +0000" stop="20251016130000 +0000" channel="PortoCanal.pt"><title lang="pt">La Fora</title></programme>
 <programme start="20251016130000 +0000" stop="20251016140000 +0000" channel="PortoCanal.pt"><title lang="pt">Ordem Do Dia</title></programme>
 <programme start="20251016140000 +0000" stop="20251016160000 +0000" channel="PortoCanal.pt"><title lang="pt">Consultório</title></programme>
-<programme start="20251016160000 +0000" stop="20251016163000 +0000" channel="PortoCanal.pt"><title lang="pt">Especial FC Porto</title></programme>
+<programme start="20251016160000 +0000" stop="20251016163000 +0000" channel="PortoCanal.pt"><title lang="pt">Pódio</title></programme>
 <programme start="20251016163000 +0000" stop="20251016173000 +0000" channel="PortoCanal.pt"><title lang="pt">Por Perto</title></programme>
 <programme start="20251016173000 +0000" stop="20251016183000 +0000" channel="PortoCanal.pt"><title lang="pt">Jornal Diário</title></programme>
 <programme start="20251016183000 +0000" stop="20251016190000 +0000" channel="PortoCanal.pt"><title lang="pt">Flash Porto</title></programme>
@@ -9531,7 +9531,7 @@
 <programme start="20251016210000 +0000" stop="20251016213000 +0000" channel="PortoCanal.pt"><title lang="pt">Opinião Ribau Esteves</title></programme>
 <programme start="20251016213000 +0000" stop="20251016220000 +0000" channel="PortoCanal.pt"><title lang="pt">ADN</title></programme>
 <programme start="20251016220000 +0000" stop="20251016223000 +0000" channel="PortoCanal.pt"><title lang="pt">Veterinários Todo O Terreno</title></programme>
-<programme start="20251016223000 +0000" stop="20251016230000 +0000" channel="PortoCanal.pt"><title lang="pt">Pole Position</title></programme>
+<programme start="20251016223000 +0000" stop="20251016230000 +0000" channel="PortoCanal.pt"><title lang="pt">Planeta Verde</title></programme>
 <programme start="20251016230000 +0000" stop="20251017030000 +0000" channel="PortoCanal.pt"><title lang="pt">Noite Desportiva</title></programme>
 <programme start="20251014230000 +0000" stop="20251015000000 +0000" channel="PROTVInternational.ro"><title lang="pt">PRO TV News</title></programme>
 <programme start="20251015000000 +0000" stop="20251015004500 +0000" channel="PROTVInternational.ro"><title lang="pt">Las Fierbinti</title></programme>
@@ -9989,17 +9989,17 @@
 <programme start="20251016035800 +0000" stop="20251016050000 +0000" channel="RTP1.pt"><title lang="pt">Televendas</title></programme>
 <programme start="20251016050000 +0000" stop="20251016090000 +0000" channel="RTP1.pt"><title lang="pt">Bom Dia Portugal</title></programme>
 <programme start="20251016090000 +0000" stop="20251016115800 +0000" channel="RTP1.pt"><title lang="pt">Praça da Alegria</title></programme>
-<programme start="20251016115800 +0000" stop="20251016131500 +0000" channel="RTP1.pt"><title lang="pt">Jornal da Tarde</title></programme>
-<programme start="20251016131500 +0000" stop="20251016133000 +0000" channel="RTP1.pt"><title lang="pt">Hora Da Sorte - Lotaria Popular - Ep. 42</title></programme>
-<programme start="20251016133000 +0000" stop="20251016143000 +0000" channel="RTP1.pt"><title lang="pt">Balacobaco - Ep. 89</title></programme>
-<programme start="20251016143000 +0000" stop="20251016163000 +0000" channel="RTP1.pt"><title lang="pt">A Nossa Tarde</title></programme>
+<programme start="20251016115800 +0000" stop="20251016132000 +0000" channel="RTP1.pt"><title lang="pt">Jornal da Tarde</title></programme>
+<programme start="20251016132000 +0000" stop="20251016132900 +0000" channel="RTP1.pt"><title lang="pt">Hora Da Sorte - Lotaria Popular - Ep. 42</title></programme>
+<programme start="20251016132900 +0000" stop="20251016142700 +0000" channel="RTP1.pt"><title lang="pt">Balacobaco - Ep. 89</title></programme>
+<programme start="20251016142700 +0000" stop="20251016163000 +0000" channel="RTP1.pt"><title lang="pt">A Nossa Tarde</title></programme>
 <programme start="20251016163000 +0000" stop="20251016180000 +0000" channel="RTP1.pt"><title lang="pt">Portugal Em Rede</title></programme>
-<programme start="20251016180000 +0000" stop="20251016190000 +0000" channel="RTP1.pt"><title lang="pt">Telejornal</title></programme>
-<programme start="20251016190000 +0000" stop="20251016210000 +0000" channel="RTP1.pt"><title lang="pt">Futebol Fem.: Benfica x Arsenal - Liga Dos Campeões (Direto)</title></programme>
+<programme start="20251016180000 +0000" stop="20251016185500 +0000" channel="RTP1.pt"><title lang="pt">Telejornal</title></programme>
+<programme start="20251016185500 +0000" stop="20251016210000 +0000" channel="RTP1.pt"><title lang="pt">Futebol Fem.: Benfica x Arsenal - Liga Dos Campeões (Direto)</title></programme>
 <programme start="20251016210000 +0000" stop="20251016220000 +0000" channel="RTP1.pt"><title lang="pt">Joker T10 - Ep. 3</title></programme>
-<programme start="20251016220000 +0000" stop="20251016230000 +0000" channel="RTP1.pt"><title lang="pt">Alguém Tem De O Fazer T2 - Ep. 2</title></programme>
-<programme start="20251016230000 +0000" stop="20251016234500 +0000" channel="RTP1.pt"><title lang="pt">A Troca</title></programme>
-<programme start="20251016234500 +0000" stop="20251017004500 +0000" channel="RTP1.pt"><title lang="pt">Grande Entrevista</title></programme>
+<programme start="20251016220000 +0000" stop="20251016230100 +0000" channel="RTP1.pt"><title lang="pt">Alguém Tem De O Fazer T2 - Ep. 2</title></programme>
+<programme start="20251016230100 +0000" stop="20251016235400 +0000" channel="RTP1.pt"><title lang="pt">A Troca</title></programme>
+<programme start="20251016235400 +0000" stop="20251017004400 +0000" channel="RTP1.pt"><title lang="pt">Grande Entrevista: Hugo Soares</title></programme>
 <programme start="20251014233300 +0000" stop="20251015000400 +0000" channel="RTP2.pt"><title lang="pt">Eurodeputados T11 - Ep. 32</title></programme>
 <programme start="20251015000400 +0000" stop="20251015010400 +0000" channel="RTP2.pt"><title lang="pt">Sociedade Civil T21 - Ep. 139</title></programme>
 <programme start="20251015010400 +0000" stop="20251015020500 +0000" channel="RTP2.pt"><title lang="pt">Sempre a Tempo - Ep. 253</title></programme>
@@ -10070,70 +10070,75 @@
 <programme start="20251016030500 +0000" stop="20251016040800 +0000" channel="RTP2.pt"><title lang="pt">Sempre a Tempo - Ep. 258</title></programme>
 <programme start="20251016040800 +0000" stop="20251016050000 +0000" channel="RTP2.pt"><title lang="pt">Operação: Marcha sobre Roma</title></programme>
 <programme start="20251016050000 +0000" stop="20251016053200 +0000" channel="RTP2.pt"><title lang="pt">A Fé Dos Homens</title></programme>
-<programme start="20251016053200 +0000" stop="20251016063000 +0000" channel="RTP2.pt"><title lang="pt">Repórter África</title></programme>
-<programme start="20251016063000 +0000" stop="20251016063500 +0000" channel="RTP2.pt"><title lang="pt">Ana Ladina - Ep. 7</title></programme>
-<programme start="20251016063500 +0000" stop="20251016064000 +0000" channel="RTP2.pt"><title lang="pt">Ana Ladina - Ep. 8</title></programme>
-<programme start="20251016064000 +0000" stop="20251016065000 +0000" channel="RTP2.pt"><title lang="pt">O Senhor Texugo E A Senhora Raposa T2 - Ep. 2</title></programme>
-<programme start="20251016065000 +0000" stop="20251016065500 +0000" channel="RTP2.pt"><title lang="pt">Petit T3 - Ep. 11</title></programme>
-<programme start="20251016065500 +0000" stop="20251016070500 +0000" channel="RTP2.pt"><title lang="pt">Kid Lucky - Ep. 2</title></programme>
-<programme start="20251016070500 +0000" stop="20251016071500 +0000" channel="RTP2.pt"><title lang="pt">ScienceXplosion - Ep. 19</title></programme>
-<programme start="20251016071500 +0000" stop="20251016072500 +0000" channel="RTP2.pt"><title lang="pt">Academia de Super-heróis T2 - Ep. 6</title></programme>
-<programme start="20251016072500 +0000" stop="20251016073000 +0000" channel="RTP2.pt"><title lang="pt">Agenda Zigzaguear - Ep. 22</title></programme>
-<programme start="20251016073000 +0000" stop="20251016074000 +0000" channel="RTP2.pt"><title lang="pt">Sempre Atrasados T1 - Ep. 11</title></programme>
-<programme start="20251016074000 +0000" stop="20251016075000 +0000" channel="RTP2.pt"><title lang="pt">Escola de Heróis - Ep. 54</title></programme>
-<programme start="20251016075000 +0000" stop="20251016075500 +0000" channel="RTP2.pt"><title lang="pt">Os Contos do Lobito T1 - Ep. 23</title></programme>
-<programme start="20251016075500 +0000" stop="20251016080500 +0000" channel="RTP2.pt"><title lang="pt">Rev &amp; Roll - Ep. 50</title></programme>
-<programme start="20251016080500 +0000" stop="20251016081500 +0000" channel="RTP2.pt"><title lang="pt">A Escola dos Rugidos T1 - Ep. 23</title></programme>
-<programme start="20251016081500 +0000" stop="20251016082000 +0000" channel="RTP2.pt"><title lang="pt">Numberblocks T1 - Ep. 24</title></programme>
-<programme start="20251016082000 +0000" stop="20251016082500 +0000" channel="RTP2.pt"><title lang="pt">Kiwi T1 - Ep. 23</title></programme>
-<programme start="20251016082500 +0000" stop="20251016083000 +0000" channel="RTP2.pt"><title lang="pt">A Grande Descoberta - Ep. 23</title></programme>
-<programme start="20251016083000 +0000" stop="20251016084000 +0000" channel="RTP2.pt"><title lang="pt">Ziggy and the Zootram T1 - Ep. 23</title></programme>
-<programme start="20251016084000 +0000" stop="20251016084500 +0000" channel="RTP2.pt"><title lang="pt">Dimitri T2 - Ep. 16</title></programme>
-<programme start="20251016084500 +0000" stop="20251016085000 +0000" channel="RTP2.pt"><title lang="pt">Mia Go T2 - Ep. 5</title></programme>
-<programme start="20251016085000 +0000" stop="20251016085500 +0000" channel="RTP2.pt"><title lang="pt">Mia Go T2 - Ep. 6</title></programme>
-<programme start="20251016085500 +0000" stop="20251016090500 +0000" channel="RTP2.pt"><title lang="pt">Zig, Zag, Zzz e Amigos - Ep. 24</title></programme>
-<programme start="20251016090500 +0000" stop="20251016092000 +0000" channel="RTP2.pt"><title lang="pt">Twirlywoos T1 - Ep. 46</title></programme>
-<programme start="20251016092000 +0000" stop="20251016092500 +0000" channel="RTP2.pt"><title lang="pt">Twirlywoos T1 - Ep. 47</title></programme>
-<programme start="20251016092500 +0000" stop="20251016093000 +0000" channel="RTP2.pt"><title lang="pt">Agenda Zigzaguear - Ep. 22</title></programme>
-<programme start="20251016093000 +0000" stop="20251016100000 +0000" channel="RTP2.pt"><title lang="pt">A Minha Indonésia - Making Of</title></programme>
-<programme start="20251016100000 +0000" stop="20251016110000 +0000" channel="RTP2.pt"><title lang="pt">Sempre a Tempo - Ep. 175</title></programme>
-<programme start="20251016110000 +0000" stop="20251016120000 +0000" channel="RTP2.pt"><title lang="pt">Justiça para Todos - Ep. 2</title></programme>
-<programme start="20251016120000 +0000" stop="20251016123000 +0000" channel="RTP2.pt"><title lang="pt">Biosfera T23 - Ep. 30</title></programme>
-<programme start="20251016123000 +0000" stop="20251016130000 +0000" channel="RTP2.pt"><title lang="pt">Do Algarve à Lapónia - Ep. 17</title></programme>
-<programme start="20251016130000 +0000" stop="20251016140000 +0000" channel="RTP2.pt"><title lang="pt">Sociedade Civil T21 - Ep. 141</title></programme>
-<programme start="20251016140000 +0000" stop="20251016143000 +0000" channel="RTP2.pt"><title lang="pt">A Fé Dos Homens</title></programme>
-<programme start="20251016143000 +0000" stop="20251016150000 +0000" channel="RTP2.pt"><title lang="pt">O Silêncio de Goya - Ep. 1</title></programme>
-<programme start="20251016150000 +0000" stop="20251016160000 +0000" channel="RTP2.pt"><title lang="pt">No Topo da Amazónia, Em Busca de Novas Espécies</title></programme>
-<programme start="20251016160000 +0000" stop="20251016160100 +0000" channel="RTP2.pt"><title lang="pt">Zig Zag</title></programme>
-<programme start="20251016160100 +0000" stop="20251016160500 +0000" channel="RTP2.pt"><title lang="pt">Agenda Zigzaguear - Ep. 22</title></programme>
-<programme start="20251016160500 +0000" stop="20251016161000 +0000" channel="RTP2.pt"><title lang="pt">Ziggy and the Zootram T1 - Ep. 23</title></programme>
-<programme start="20251016161000 +0000" stop="20251016162500 +0000" channel="RTP2.pt"><title lang="pt">Robocar Poli T5 - Ep. 7</title></programme>
-<programme start="20251016162500 +0000" stop="20251016163500 +0000" channel="RTP2.pt"><title lang="pt">Bing T3 - Ep. 1</title></programme>
-<programme start="20251016163500 +0000" stop="20251016164000 +0000" channel="RTP2.pt"><title lang="pt">Ana Ladina - Ep. 13</title></programme>
-<programme start="20251016164000 +0000" stop="20251016165000 +0000" channel="RTP2.pt"><title lang="pt">Gus, O Cavaleiro Minorca T2 - Ep. 46</title></programme>
-<programme start="20251016165000 +0000" stop="20251016170000 +0000" channel="RTP2.pt"><title lang="pt">Petit T3 - Ep. 10</title></programme>
-<programme start="20251016170000 +0000" stop="20251016171000 +0000" channel="RTP2.pt"><title lang="pt">Grizzy e os Lemingues T2 - Ep. 73</title></programme>
-<programme start="20251016171000 +0000" stop="20251016171500 +0000" channel="RTP2.pt"><title lang="pt">Numberblocks T1 - Ep. 23</title></programme>
-<programme start="20251016171500 +0000" stop="20251016172500 +0000" channel="RTP2.pt"><title lang="pt">Sempre Atrasados T1 - Ep. 20</title></programme>
-<programme start="20251016172500 +0000" stop="20251016174000 +0000" channel="RTP2.pt"><title lang="pt">Sempre Atrasados T1 - Ep. 21</title></programme>
-<programme start="20251016174000 +0000" stop="20251016175500 +0000" channel="RTP2.pt"><title lang="pt">Academia de Super-heróis T1 - Ep. 11</title></programme>
-<programme start="20251016175500 +0000" stop="20251016180500 +0000" channel="RTP2.pt"><title lang="pt">ScienceXplosion - Ep. 20</title></programme>
-<programme start="20251016180500 +0000" stop="20251016181500 +0000" channel="RTP2.pt"><title lang="pt">No Mundo dos Animais T2 - Ep. 5</title></programme>
-<programme start="20251016181500 +0000" stop="20251016182500 +0000" channel="RTP2.pt"><title lang="pt">Escola de Heróis - Ep. 53</title></programme>
-<programme start="20251016182500 +0000" stop="20251016183000 +0000" channel="RTP2.pt"><title lang="pt">Agenda Zigzaguear - Ep. 22</title></programme>
-<programme start="20251016183000 +0000" stop="20251016184000 +0000" channel="RTP2.pt"><title lang="pt">Scream Street T1 - Ep. 47</title></programme>
-<programme start="20251016184000 +0000" stop="20251016185500 +0000" channel="RTP2.pt"><title lang="pt">Scream Street T1 - Ep. 48</title></programme>
-<programme start="20251016185500 +0000" stop="20251016191500 +0000" channel="RTP2.pt"><title lang="pt">Space Nova - Ep. 24</title></programme>
-<programme start="20251016191500 +0000" stop="20251016192500 +0000" channel="RTP2.pt"><title lang="pt">Dorg Van Dango - Ep. 47</title></programme>
-<programme start="20251016192500 +0000" stop="20251016193000 +0000" channel="RTP2.pt"><title lang="pt">Crias - Ep. 21</title></programme>
-<programme start="20251016193000 +0000" stop="20251016193500 +0000" channel="RTP2.pt"><title lang="pt">Agenda Zigzaguear - Ep. 22</title></programme>
-<programme start="20251016193500 +0000" stop="20251016203000 +0000" channel="RTP2.pt"><title lang="pt">O Lado Oculto - Ep. 4</title></programme>
-<programme start="20251016203000 +0000" stop="20251016210000 +0000" channel="RTP2.pt"><title lang="pt">Jornal 2</title></programme>
-<programme start="20251016210000 +0000" stop="20251016215000 +0000" channel="RTP2.pt"><title lang="pt">Inesquecível T5 - Ep. 1</title></programme>
-<programme start="20251016215000 +0000" stop="20251016220000 +0000" channel="RTP2.pt"><title lang="pt">Folha de Sala T8 - Ep. 259</title></programme>
-<programme start="20251016220000 +0000" stop="20251016225500 +0000" channel="RTP2.pt"><title lang="pt">A Guerra dos Tronos - A Verdadeira História da Europa T3 - Ep. 2</title></programme>
-<programme start="20251016225500 +0000" stop="20251016235000 +0000" channel="RTP2.pt"><title lang="pt">As Crónicas De Hitler - Ep. 4</title></programme>
-<programme start="20251016235000 +0000" stop="20251017004500 +0000" channel="RTP2.pt"><title lang="pt">Cinemax T14 - Ep. 30</title></programme>
+<programme start="20251016053200 +0000" stop="20251016060000 +0000" channel="RTP2.pt"><title lang="pt">Repórter África</title></programme>
+<programme start="20251016060000 +0000" stop="20251016060100 +0000" channel="RTP2.pt"><title lang="pt">Zig Zag</title></programme>
+<programme start="20251016060100 +0000" stop="20251016060600 +0000" channel="RTP2.pt"><title lang="pt">Tommy, O Pequeno Dragão T1 - Ep. 23</title></programme>
+<programme start="20251016060600 +0000" stop="20251016062000 +0000" channel="RTP2.pt"><title lang="pt">Robocar Poli T5 - Ep. 8</title></programme>
+<programme start="20251016062000 +0000" stop="20251016062700 +0000" channel="RTP2.pt"><title lang="pt">Bing T3 - Ep. 4</title></programme>
+<programme start="20251016062700 +0000" stop="20251016063300 +0000" channel="RTP2.pt"><title lang="pt">Agenda Zigzaguear - Ep. 22</title></programme>
+<programme start="20251016063300 +0000" stop="20251016063800 +0000" channel="RTP2.pt"><title lang="pt">Ana Ladina - Ep. 7</title></programme>
+<programme start="20251016063800 +0000" stop="20251016064300 +0000" channel="RTP2.pt"><title lang="pt">Ana Ladina - Ep. 8</title></programme>
+<programme start="20251016064300 +0000" stop="20251016065500 +0000" channel="RTP2.pt"><title lang="pt">O Senhor Texugo E A Senhora Raposa T2 - Ep. 2</title></programme>
+<programme start="20251016065500 +0000" stop="20251016070200 +0000" channel="RTP2.pt"><title lang="pt">Petit T3 - Ep. 11</title></programme>
+<programme start="20251016070200 +0000" stop="20251016071400 +0000" channel="RTP2.pt"><title lang="pt">Kid Lucky T1 - Ep. 2</title></programme>
+<programme start="20251016071400 +0000" stop="20251016071800 +0000" channel="RTP2.pt"><title lang="pt">ScienceXplosion - Ep. 19</title></programme>
+<programme start="20251016071800 +0000" stop="20251016073400 +0000" channel="RTP2.pt"><title lang="pt">Academia de Super-heróis T2 - Ep. 6</title></programme>
+<programme start="20251016073400 +0000" stop="20251016073900 +0000" channel="RTP2.pt"><title lang="pt">Agenda Zigzaguear - Ep. 22</title></programme>
+<programme start="20251016073900 +0000" stop="20251016075100 +0000" channel="RTP2.pt"><title lang="pt">Escola de Heróis - Ep. 54</title></programme>
+<programme start="20251016075100 +0000" stop="20251016075900 +0000" channel="RTP2.pt"><title lang="pt">Os Contos do Lobito T1 - Ep. 23</title></programme>
+<programme start="20251016075900 +0000" stop="20251016081000 +0000" channel="RTP2.pt"><title lang="pt">Rev &amp; Roll - Ep. 50</title></programme>
+<programme start="20251016081000 +0000" stop="20251016081700 +0000" channel="RTP2.pt"><title lang="pt">A Escola dos Rugidos T1 - Ep. 23</title></programme>
+<programme start="20251016081700 +0000" stop="20251016082200 +0000" channel="RTP2.pt"><title lang="pt">Numberblocks T1 - Ep. 24</title></programme>
+<programme start="20251016082200 +0000" stop="20251016082700 +0000" channel="RTP2.pt"><title lang="pt">Kiwi T1 - Ep. 23</title></programme>
+<programme start="20251016082700 +0000" stop="20251016083300 +0000" channel="RTP2.pt"><title lang="pt">A Grande Descoberta - Ep. 23</title></programme>
+<programme start="20251016083300 +0000" stop="20251016084400 +0000" channel="RTP2.pt"><title lang="pt">Ziggy and the Zootram T1 - Ep. 23</title></programme>
+<programme start="20251016084400 +0000" stop="20251016084900 +0000" channel="RTP2.pt"><title lang="pt">Dimitri T2 - Ep. 16</title></programme>
+<programme start="20251016084900 +0000" stop="20251016085500 +0000" channel="RTP2.pt"><title lang="pt">Mia Go T2 - Ep. 5</title></programme>
+<programme start="20251016085500 +0000" stop="20251016090000 +0000" channel="RTP2.pt"><title lang="pt">Mia Go T2 - Ep. 6</title></programme>
+<programme start="20251016090000 +0000" stop="20251016090800 +0000" channel="RTP2.pt"><title lang="pt">Zig, Zag, Zzz e Amigos - Ep. 24</title></programme>
+<programme start="20251016090800 +0000" stop="20251016091900 +0000" channel="RTP2.pt"><title lang="pt">Twirlywoos T1 - Ep. 46</title></programme>
+<programme start="20251016091900 +0000" stop="20251016093100 +0000" channel="RTP2.pt"><title lang="pt">Twirlywoos T1 - Ep. 47</title></programme>
+<programme start="20251016093100 +0000" stop="20251016093800 +0000" channel="RTP2.pt"><title lang="pt">Agenda Zigzaguear - Ep. 22</title></programme>
+<programme start="20251016093800 +0000" stop="20251016101400 +0000" channel="RTP2.pt"><title lang="pt">A Minha Indonésia - Making Of</title></programme>
+<programme start="20251016101400 +0000" stop="20251016111600 +0000" channel="RTP2.pt"><title lang="pt">Sempre a Tempo - Ep. 175</title></programme>
+<programme start="20251016111600 +0000" stop="20251016120800 +0000" channel="RTP2.pt"><title lang="pt">Justiça para Todos - Ep. 2</title></programme>
+<programme start="20251016120800 +0000" stop="20251016123700 +0000" channel="RTP2.pt"><title lang="pt">Biosfera T23 - Ep. 30</title></programme>
+<programme start="20251016123700 +0000" stop="20251016130000 +0000" channel="RTP2.pt"><title lang="pt">Do Algarve à Lapónia - Ep. 17</title></programme>
+<programme start="20251016130000 +0000" stop="20251016140300 +0000" channel="RTP2.pt"><title lang="pt">Sociedade Civil T21 - Ep. 141</title></programme>
+<programme start="20251016140300 +0000" stop="20251016143700 +0000" channel="RTP2.pt"><title lang="pt">A Fé Dos Homens</title></programme>
+<programme start="20251016143700 +0000" stop="20251016151100 +0000" channel="RTP2.pt"><title lang="pt">O Silêncio de Goya - Ep. 1</title></programme>
+<programme start="20251016151100 +0000" stop="20251016160500 +0000" channel="RTP2.pt"><title lang="pt">No Topo da Amazónia, Em Busca de Novas Espécies</title></programme>
+<programme start="20251016160500 +0000" stop="20251016160600 +0000" channel="RTP2.pt"><title lang="pt">Zig Zag</title></programme>
+<programme start="20251016160600 +0000" stop="20251016161000 +0000" channel="RTP2.pt"><title lang="pt">Agenda Zigzaguear - Ep. 22</title></programme>
+<programme start="20251016161000 +0000" stop="20251016162100 +0000" channel="RTP2.pt"><title lang="pt">Ziggy and the Zootram T1 - Ep. 23</title></programme>
+<programme start="20251016162100 +0000" stop="20251016163500 +0000" channel="RTP2.pt"><title lang="pt">Robocar Poli T5 - Ep. 7</title></programme>
+<programme start="20251016163500 +0000" stop="20251016164200 +0000" channel="RTP2.pt"><title lang="pt">Bing T3 - Ep. 1</title></programme>
+<programme start="20251016164200 +0000" stop="20251016164900 +0000" channel="RTP2.pt"><title lang="pt">Ana Ladina - Ep. 13</title></programme>
+<programme start="20251016164900 +0000" stop="20251016170000 +0000" channel="RTP2.pt"><title lang="pt">Gus, O Cavaleiro Minorca T2 - Ep. 46</title></programme>
+<programme start="20251016170000 +0000" stop="20251016170700 +0000" channel="RTP2.pt"><title lang="pt">Petit T3 - Ep. 10</title></programme>
+<programme start="20251016170700 +0000" stop="20251016171400 +0000" channel="RTP2.pt"><title lang="pt">Grizzy e os Lemingues T2 - Ep. 73</title></programme>
+<programme start="20251016171400 +0000" stop="20251016171900 +0000" channel="RTP2.pt"><title lang="pt">Numberblocks T1 - Ep. 23</title></programme>
+<programme start="20251016171900 +0000" stop="20251016173100 +0000" channel="RTP2.pt"><title lang="pt">Sempre Atrasados T1 - Ep. 20</title></programme>
+<programme start="20251016173100 +0000" stop="20251016174200 +0000" channel="RTP2.pt"><title lang="pt">Sempre Atrasados T1 - Ep. 21</title></programme>
+<programme start="20251016174200 +0000" stop="20251016175800 +0000" channel="RTP2.pt"><title lang="pt">Academia de Super-heróis T2 - Ep. 11</title></programme>
+<programme start="20251016175800 +0000" stop="20251016180200 +0000" channel="RTP2.pt"><title lang="pt">ScienceXplosion - Ep. 20</title></programme>
+<programme start="20251016180200 +0000" stop="20251016181100 +0000" channel="RTP2.pt"><title lang="pt">No Mundo dos Animais T2 - Ep. 5</title></programme>
+<programme start="20251016181100 +0000" stop="20251016182400 +0000" channel="RTP2.pt"><title lang="pt">Escola de Heróis - Ep. 53</title></programme>
+<programme start="20251016182400 +0000" stop="20251016182900 +0000" channel="RTP2.pt"><title lang="pt">Agenda Zigzaguear - Ep. 22</title></programme>
+<programme start="20251016182900 +0000" stop="20251016184000 +0000" channel="RTP2.pt"><title lang="pt">Scream Street T1 - Ep. 47</title></programme>
+<programme start="20251016184000 +0000" stop="20251016185100 +0000" channel="RTP2.pt"><title lang="pt">Scream Street T1 - Ep. 48</title></programme>
+<programme start="20251016185100 +0000" stop="20251016191400 +0000" channel="RTP2.pt"><title lang="pt">Space Nova - Ep. 24</title></programme>
+<programme start="20251016191400 +0000" stop="20251016192600 +0000" channel="RTP2.pt"><title lang="pt">Dorg Van Dango - Ep. 47</title></programme>
+<programme start="20251016192600 +0000" stop="20251016192800 +0000" channel="RTP2.pt"><title lang="pt">Crias - Ep. 21</title></programme>
+<programme start="20251016192800 +0000" stop="20251016193600 +0000" channel="RTP2.pt"><title lang="pt">Agenda Zigzaguear - Ep. 22</title></programme>
+<programme start="20251016193600 +0000" stop="20251016194100 +0000" channel="RTP2.pt"><title lang="pt">Folha de Sala T8 - Ep. 259</title></programme>
+<programme start="20251016194100 +0000" stop="20251016203000 +0000" channel="RTP2.pt"><title lang="pt">O Lado Oculto - Ep. 4</title></programme>
+<programme start="20251016203000 +0000" stop="20251016210100 +0000" channel="RTP2.pt"><title lang="pt">Jornal 2</title></programme>
+<programme start="20251016210100 +0000" stop="20251016214700 +0000" channel="RTP2.pt"><title lang="pt">Inesquecível T5 - Ep. 1</title></programme>
+<programme start="20251016214700 +0000" stop="20251016215700 +0000" channel="RTP2.pt"><title lang="pt">Folha de Sala T8 - Ep. 259</title></programme>
+<programme start="20251016215700 +0000" stop="20251016225100 +0000" channel="RTP2.pt"><title lang="pt">A Guerra dos Tronos - A Verdadeira História da Europa T3 - Ep. 2</title></programme>
+<programme start="20251016225100 +0000" stop="20251016234500 +0000" channel="RTP2.pt"><title lang="pt">As Crónicas De Hitler - Ep. 4</title></programme>
+<programme start="20251016234500 +0000" stop="20251017003700 +0000" channel="RTP2.pt"><title lang="pt">Cinemax T14 - Ep. 30</title></programme>
 <programme start="20251014230000 +0000" stop="20251015000000 +0000" channel="RTP3.pt"><title lang="pt">24 Horas</title></programme>
 <programme start="20251015000000 +0000" stop="20251015010000 +0000" channel="RTP3.pt"><title lang="pt">Jogo Político - Ep. 2</title></programme>
 <programme start="20251015010000 +0000" stop="20251015011000 +0000" channel="RTP3.pt"><title lang="pt">Ensaio T3 - Ep. 141</title></programme>
@@ -10156,36 +10161,60 @@
 <programme start="20251015123000 +0000" stop="20251015124500 +0000" channel="RTP3.pt"><title lang="pt">Ensaio T3 - Ep. 141</title></programme>
 <programme start="20251015124500 +0000" stop="20251015130000 +0000" channel="RTP3.pt"><title lang="pt">Europa À Porta T3 - Ep. 1</title></programme>
 <programme start="20251015130000 +0000" stop="20251015134000 +0000" channel="RTP3.pt"><title lang="pt">3 Às 14</title></programme>
-<programme start="20251015134000 +0000" stop="20251015140000 +0000" channel="RTP3.pt"><title lang="pt">Eixo Norte Sul</title></programme>
-<programme start="20251015140000 +0000" stop="20251015144500 +0000" channel="RTP3.pt"><title lang="pt">3 Às 15</title></programme>
-<programme start="20251015144500 +0000" stop="20251015150000 +0000" channel="RTP3.pt"><title lang="pt">Zoom África</title></programme>
-<programme start="20251015150000 +0000" stop="20251015160000 +0000" channel="RTP3.pt"><title lang="pt">3 Às 16</title></programme>
-<programme start="20251015160000 +0000" stop="20251015170000 +0000" channel="RTP3.pt"><title lang="pt">3 Às 17</title></programme>
-<programme start="20251015170000 +0000" stop="20251015190000 +0000" channel="RTP3.pt"><title lang="pt">18/20</title></programme>
-<programme start="20251015190000 +0000" stop="20251015193000 +0000" channel="RTP3.pt"><title lang="pt">3 Às 20</title></programme>
-<programme start="20251015193000 +0000" stop="20251015194500 +0000" channel="RTP3.pt"><title lang="pt">A Essência T11 - Ep. 26</title></programme>
-<programme start="20251015194500 +0000" stop="20251015200000 +0000" channel="RTP3.pt"><title lang="pt">Europa À Porta T3 - Ep. 1</title></programme>
-<programme start="20251015200000 +0000" stop="20251015213000 +0000" channel="RTP3.pt"><title lang="pt">360º</title></programme>
-<programme start="20251015213000 +0000" stop="20251015221500 +0000" channel="RTP3.pt"><title lang="pt">Especial Informação</title></programme>
-<programme start="20251015221500 +0000" stop="20251015230000 +0000" channel="RTP3.pt"><title lang="pt">3 Às 23</title></programme>
+<programme start="20251015133000 +0000" stop="20251015134500 +0000" channel="RTP3.pt"><title lang="pt">Notícias País</title></programme>
+<programme start="20251015134500 +0000" stop="20251015140000 +0000" channel="RTP3.pt"><title lang="pt">Ensaio T3 - Ep. 144</title></programme>
+<programme start="20251015140000 +0000" stop="20251015150000 +0000" channel="RTP3.pt"><title lang="pt">Notícias 15</title></programme>
+<programme start="20251015150000 +0000" stop="20251015160000 +0000" channel="RTP3.pt"><title lang="pt">Notícias 16</title></programme>
+<programme start="20251015160000 +0000" stop="20251015170000 +0000" channel="RTP3.pt"><title lang="pt">Notícias 17</title></programme>
+<programme start="20251015170000 +0000" stop="20251015180000 +0000" channel="RTP3.pt"><title lang="pt">Notícias Seis Da Tarde</title></programme>
+<programme start="20251015180000 +0000" stop="20251015183000 +0000" channel="RTP3.pt"><title lang="pt">Notícias Sete Da Tarde</title></programme>
+<programme start="20251015183000 +0000" stop="20251015185800 +0000" channel="RTP3.pt"><title lang="pt">Jogo Político - Ep. 3</title></programme>
+<programme start="20251015185800 +0000" stop="20251015200000 +0000" channel="RTP3.pt"><title lang="pt">Telejornal</title></programme>
+<programme start="20251015200000 +0000" stop="20251015210000 +0000" channel="RTP3.pt"><title lang="pt">Notícias 21</title></programme>
+<programme start="20251015210000 +0000" stop="20251015213000 +0000" channel="RTP3.pt"><title lang="pt">Notícias Noite 1ª Edição</title></programme>
+<programme start="20251015213000 +0000" stop="20251015221500 +0000" channel="RTP3.pt"><title lang="pt">Grande Entrevista T18 - Ep. 31</title></programme>
+<programme start="20251015221500 +0000" stop="20251015230000 +0000" channel="RTP3.pt"><title lang="pt">Notícias Noite 2ª Edição</title></programme>
 <programme start="20251015230000 +0000" stop="20251016000000 +0000" channel="RTP3.pt"><title lang="pt">24 Horas</title></programme>
 <programme start="20251015230000 +0000" stop="20251016000000 +0000" channel="RTP3.pt"><title lang="pt">24 Horas</title></programme>
-<programme start="20251016000000 +0000" stop="20251016002500 +0000" channel="RTP3.pt"><title lang="pt">The Daily Show T30 - Ep. 112</title></programme>
-<programme start="20251016000000 +0000" stop="20251016002500 +0000" channel="RTP3.pt"><title lang="pt">The Daily Show T30 - Ep. 112</title></programme>
-<programme start="20251016002500 +0000" stop="20251016004000 +0000" channel="RTP3.pt"><title lang="pt">Ensaio T3 - Ep. 141</title></programme>
-<programme start="20251016004000 +0000" stop="20251016012500 +0000" channel="RTP3.pt"><title lang="pt">Especial Informação</title></programme>
-<programme start="20251016012500 +0000" stop="20251016020000 +0000" channel="RTP3.pt"><title lang="pt">Linha Da Frente T17 - Ep. 22</title></programme>
-<programme start="20251016020000 +0000" stop="20251016022500 +0000" channel="RTP3.pt"><title lang="pt">Todas As Palavras T10 - Ep. 31</title></programme>
-<programme start="20251016022500 +0000" stop="20251016024000 +0000" channel="RTP3.pt"><title lang="pt">Hora De Agir T3 - Ep. 21</title></programme>
-<programme start="20251016024000 +0000" stop="20251016031000 +0000" channel="RTP3.pt"><title lang="pt">Europa À Porta T3 - Ep. 1</title></programme>
-<programme start="20251016031000 +0000" stop="20251016033000 +0000" channel="RTP3.pt"><title lang="pt">Eixo Norte Sul</title></programme>
+<programme start="20251016000000 +0000" stop="20251016003000 +0000" channel="RTP3.pt"><title lang="pt">Jogo Político - Ep. 3</title></programme>
+<programme start="20251016000000 +0000" stop="20251016003000 +0000" channel="RTP3.pt"><title lang="pt">Jogo Político - Ep. 3</title></programme>
+<programme start="20251016003000 +0000" stop="20251016004500 +0000" channel="RTP3.pt"><title lang="pt">Divagar É Preciso - Ep. 3</title></programme>
+<programme start="20251016004500 +0000" stop="20251016010000 +0000" channel="RTP3.pt"><title lang="pt">Contra Ponto - Ep. 3</title></programme>
+<programme start="20251016010000 +0000" stop="20251016011000 +0000" channel="RTP3.pt"><title lang="pt">Ensaio T3 - Ep. 144</title></programme>
+<programme start="20251016011000 +0000" stop="20251016015000 +0000" channel="RTP3.pt"><title lang="pt">Grande Entrevista T18 - Ep. 31</title></programme>
+<programme start="20251016015000 +0000" stop="20251016021500 +0000" channel="RTP3.pt"><title lang="pt">Janela Indiscreta T17 - Ep. 41</title></programme>
+<programme start="20251016021500 +0000" stop="20251016030000 +0000" channel="RTP3.pt"><title lang="pt">Visita Guiada T15 - Ep. 11</title></programme>
+<programme start="20251016030000 +0000" stop="20251016031000 +0000" channel="RTP3.pt"><title lang="pt">Europa À Porta T3 - Ep. 1</title></programme>
+<programme start="20251016031000 +0000" stop="20251016033000 +0000" channel="RTP3.pt"><title lang="pt">Notícias País</title></programme>
 <programme start="20251016033000 +0000" stop="20251016040000 +0000" channel="RTP3.pt"><title lang="pt">Telejornal Madeira</title></programme>
 <programme start="20251016040000 +0000" stop="20251016043000 +0000" channel="RTP3.pt"><title lang="pt">Telejornal Açores</title></programme>
 <programme start="20251016043000 +0000" stop="20251016050000 +0000" channel="RTP3.pt"><title lang="pt">Repórter África - 2ª Edição</title></programme>
-<programme start="20251016050000 +0000" stop="20251016110000 +0000" channel="RTP3.pt"><title lang="pt">Bom Dia Portugal</title></programme>
-<programme start="20251016110000 +0000" stop="20251016170000 +0000" channel="RTP3.pt"><title lang="pt">RTP NOTÍCIAS</title></programme>
-<programme start="20251016170000 +0000" stop="20251016230000 +0000" channel="RTP3.pt"><title lang="pt">RTP NOTÍCIAS</title></programme>
-<programme start="20251016230000 +0000" stop="20251017050000 +0000" channel="RTP3.pt"><title lang="pt">RTP NOTÍCIAS</title></programme>
+<programme start="20251016050000 +0000" stop="20251016053000 +0000" channel="RTP3.pt"><title lang="pt">Bom Dia Portugal</title></programme>
+<programme start="20251016053000 +0000" stop="20251016073000 +0000" channel="RTP3.pt"><title lang="pt">Bom Dia Portugal</title></programme>
+<programme start="20251016073000 +0000" stop="20251016073500 +0000" channel="RTP3.pt"><title lang="pt">Mundo Automóvel</title></programme>
+<programme start="20251016073500 +0000" stop="20251016082500 +0000" channel="RTP3.pt"><title lang="pt">Bom Dia Portugal</title></programme>
+<programme start="20251016082500 +0000" stop="20251016083000 +0000" channel="RTP3.pt"><title lang="pt">Esta Língua Que Nos Une - Ep. 3</title></programme>
+<programme start="20251016083000 +0000" stop="20251016090000 +0000" channel="RTP3.pt"><title lang="pt">Bom Dia Portugal</title></programme>
+<programme start="20251016090000 +0000" stop="20251016100000 +0000" channel="RTP3.pt"><title lang="pt">Notícias 10</title></programme>
+<programme start="20251016100000 +0000" stop="20251016110000 +0000" channel="RTP3.pt"><title lang="pt">Notícias 11</title></programme>
+<programme start="20251016110000 +0000" stop="20251016114500 +0000" channel="RTP3.pt"><title lang="pt">Notícias 12</title></programme>
+<programme start="20251016114500 +0000" stop="20251016124500 +0000" channel="RTP3.pt"><title lang="pt">Notícias 13</title></programme>
+<programme start="20251016124500 +0000" stop="20251016130000 +0000" channel="RTP3.pt"><title lang="pt">Notícias De África</title></programme>
+<programme start="20251016130000 +0000" stop="20251016133000 +0000" channel="RTP3.pt"><title lang="pt">Notícias 14</title></programme>
+<programme start="20251016133000 +0000" stop="20251016134500 +0000" channel="RTP3.pt"><title lang="pt">Notícias País</title></programme>
+<programme start="20251016134500 +0000" stop="20251016140000 +0000" channel="RTP3.pt"><title lang="pt">Ensaio T3 - Ep. 145</title></programme>
+<programme start="20251016140000 +0000" stop="20251016150000 +0000" channel="RTP3.pt"><title lang="pt">Notícias 15</title></programme>
+<programme start="20251016150000 +0000" stop="20251016160000 +0000" channel="RTP3.pt"><title lang="pt">Notícias 16</title></programme>
+<programme start="20251016160000 +0000" stop="20251016170000 +0000" channel="RTP3.pt"><title lang="pt">Notícias 17</title></programme>
+<programme start="20251016170000 +0000" stop="20251016180000 +0000" channel="RTP3.pt"><title lang="pt">Notícias Seis Da Tarde</title></programme>
+<programme start="20251016180000 +0000" stop="20251016193000 +0000" channel="RTP3.pt"><title lang="pt">Telejornal</title></programme>
+<programme start="20251016193000 +0000" stop="20251016200000 +0000" channel="RTP3.pt"><title lang="pt">Jogo Político - Ep. 4</title></programme>
+<programme start="20251016200000 +0000" stop="20251016210000 +0000" channel="RTP3.pt"><title lang="pt">Notícias 21</title></programme>
+<programme start="20251016210000 +0000" stop="20251016213000 +0000" channel="RTP3.pt"><title lang="pt">Notícias Noite 1ª Edição</title></programme>
+<programme start="20251016213000 +0000" stop="20251016223000 +0000" channel="RTP3.pt"><title lang="pt">Estado Da Arte - Ep. 1</title></programme>
+<programme start="20251016223000 +0000" stop="20251016230000 +0000" channel="RTP3.pt"><title lang="pt">Notícias Noite 2ª Edição</title></programme>
+<programme start="20251016230000 +0000" stop="20251017000000 +0000" channel="RTP3.pt"><title lang="pt">24 Horas</title></programme>
+<programme start="20251017000000 +0000" stop="20251017003000 +0000" channel="RTP3.pt"><title lang="pt">Jogo Político - Ep. 4</title></programme>
 <programme start="20251014233000 +0000" stop="20251015000500 +0000" channel="RTPAcores.pt"><title lang="pt">Telejornal Açores</title></programme>
 <programme start="20251015000500 +0000" stop="20251015005000 +0000" channel="RTPAcores.pt"><title lang="pt">O Sábio - Ep. 202</title></programme>
 <programme start="20251015005000 +0000" stop="20251015015200 +0000" channel="RTPAcores.pt"><title lang="pt">Sempre A Tempo - Ep. 78</title></programme>
@@ -10292,28 +10321,31 @@
 <programme start="20251016035000 +0000" stop="20251016040500 +0000" channel="RTPAfrica.pt"><title lang="pt">Fotobox T10 - Ep. 6</title></programme>
 <programme start="20251016040500 +0000" stop="20251016043200 +0000" channel="RTPAfrica.pt"><title lang="pt">Portugal Fenomenal T2 - Ep. 7</title></programme>
 <programme start="20251016043200 +0000" stop="20251016050000 +0000" channel="RTPAfrica.pt"><title lang="pt">O Planeta Vivo - Ep. 4</title></programme>
-<programme start="20251016050000 +0000" stop="20251016070100 +0000" channel="RTPAfrica.pt"><title lang="pt">Bom Dia Portugal</title></programme>
-<programme start="20251016070100 +0000" stop="20251016083000 +0000" channel="RTPAfrica.pt"><title lang="pt">Bem-vindos (Manhã) T14 - Ep. 159</title></programme>
-<programme start="20251016083000 +0000" stop="20251016090000 +0000" channel="RTPAfrica.pt"><title lang="pt">Em Pratos Limpos - Ep. 1</title></programme>
-<programme start="20251016090000 +0000" stop="20251016093000 +0000" channel="RTPAfrica.pt"><title lang="pt">Afrikando Angola - Ep. 1</title></programme>
-<programme start="20251016093000 +0000" stop="20251016101500 +0000" channel="RTPAfrica.pt"><title lang="pt">Afrikando Angola - Ep. 16</title></programme>
-<programme start="20251016101500 +0000" stop="20251016110600 +0000" channel="RTPAfrica.pt"><title lang="pt">Programa a Designar - RTP África</title></programme>
-<programme start="20251016110600 +0000" stop="20251016115900 +0000" channel="RTPAfrica.pt"><title lang="pt">Joker T9 - Ep. 16</title></programme>
-<programme start="20251016115900 +0000" stop="20251016131500 +0000" channel="RTPAfrica.pt"><title lang="pt">Jornal da Tarde</title></programme>
-<programme start="20251016131500 +0000" stop="20251016132000 +0000" channel="RTPAfrica.pt"><title lang="pt">África Global</title></programme>
-<programme start="20251016132000 +0000" stop="20251016134500 +0000" channel="RTPAfrica.pt"><title lang="pt">Repórter África - 1ª Edição</title></programme>
-<programme start="20251016134500 +0000" stop="20251016143000 +0000" channel="RTPAfrica.pt"><title lang="pt">O Sábio - Ep. 187</title></programme>
-<programme start="20251016143000 +0000" stop="20251016150000 +0000" channel="RTPAfrica.pt"><title lang="pt">Encruzilhadas da Vida - Ep. 4</title></programme>
-<programme start="20251016150000 +0000" stop="20251016151500 +0000" channel="RTPAfrica.pt"><title lang="pt">Notícias de África - Ep. 4</title></programme>
-<programme start="20251016151500 +0000" stop="20251016160000 +0000" channel="RTPAfrica.pt"><title lang="pt">Os Filhos da Madrugada T4 - Ep. 6</title></programme>
-<programme start="20251016160000 +0000" stop="20251016170000 +0000" channel="RTPAfrica.pt"><title lang="pt">Bem-vindos (Tarde) T14 - Ep. 159</title></programme>
-<programme start="20251016170000 +0000" stop="20251016180000 +0000" channel="RTPAfrica.pt"><title lang="pt">Sempre a Tempo - Ep. 105</title></programme>
+<programme start="20251016050000 +0000" stop="20251016070000 +0000" channel="RTPAfrica.pt"><title lang="pt">Bom Dia Portugal</title></programme>
+<programme start="20251016070000 +0000" stop="20251016083100 +0000" channel="RTPAfrica.pt"><title lang="pt">Bem-vindos (Manhã) T14 - Ep. 159</title></programme>
+<programme start="20251016083100 +0000" stop="20251016085700 +0000" channel="RTPAfrica.pt"><title lang="pt">Em Pratos Limpos - Ep. 1</title></programme>
+<programme start="20251016085700 +0000" stop="20251016093300 +0000" channel="RTPAfrica.pt"><title lang="pt">Afrikando Angola - Ep. 1</title></programme>
+<programme start="20251016093300 +0000" stop="20251016101800 +0000" channel="RTPAfrica.pt"><title lang="pt">Afrikando Angola - Ep. 16</title></programme>
+<programme start="20251016101800 +0000" stop="20251016110800 +0000" channel="RTPAfrica.pt"><title lang="pt">Visita Guiada T14 - Ep. 1</title></programme>
+<programme start="20251016110800 +0000" stop="20251016115800 +0000" channel="RTPAfrica.pt"><title lang="pt">Joker T9 - Ep. 16</title></programme>
+<programme start="20251016115800 +0000" stop="20251016132200 +0000" channel="RTPAfrica.pt"><title lang="pt">Jornal da Tarde</title></programme>
+<programme start="20251016132200 +0000" stop="20251016135200 +0000" channel="RTPAfrica.pt"><title lang="pt">África Global</title></programme>
+<programme start="20251016135200 +0000" stop="20251016143300 +0000" channel="RTPAfrica.pt"><title lang="pt">O Sábio - Ep. 187</title></programme>
+<programme start="20251016143300 +0000" stop="20251016150000 +0000" channel="RTPAfrica.pt"><title lang="pt">Encruzilhadas da Vida - Ep. 4</title></programme>
+<programme start="20251016150000 +0000" stop="20251016151600 +0000" channel="RTPAfrica.pt"><title lang="pt">Notícias África</title></programme>
+<programme start="20251016151600 +0000" stop="20251016154400 +0000" channel="RTPAfrica.pt"><title lang="pt">Os Filhos da Madrugada T4 - Ep. 6</title></programme>
+<programme start="20251016154400 +0000" stop="20251016164700 +0000" channel="RTPAfrica.pt"><title lang="pt">Bem-vindos (Tarde) T14 - Ep. 159</title></programme>
+<programme start="20251016164700 +0000" stop="20251016165500 +0000" channel="RTPAfrica.pt"><title lang="pt">Em Busca do Museu Desconhecido T1 - Ep. 8</title></programme>
+<programme start="20251016165500 +0000" stop="20251016165800 +0000" channel="RTPAfrica.pt"><title lang="pt">Segredos Médicos de Lisboa - Ep. 4</title></programme>
+<programme start="20251016165800 +0000" stop="20251016180000 +0000" channel="RTPAfrica.pt"><title lang="pt">Sempre a Tempo - Ep. 105</title></programme>
 <programme start="20251016180000 +0000" stop="20251016183000 +0000" channel="RTPAfrica.pt"><title lang="pt">África Global</title></programme>
-<programme start="20251016183000 +0000" stop="20251016185900 +0000" channel="RTPAfrica.pt"><title lang="pt">Repórter África - 2ª Edição</title></programme>
-<programme start="20251016185900 +0000" stop="20251016200100 +0000" channel="RTPAfrica.pt"><title lang="pt">Telejornal</title></programme>
-<programme start="20251016200100 +0000" stop="20251016213000 +0000" channel="RTPAfrica.pt"><title lang="pt">Miradouro da Lua T2 - Ep. 29</title></programme>
-<programme start="20251016213000 +0000" stop="20251016223000 +0000" channel="RTPAfrica.pt"><title lang="pt">O Crime do Padre Amaro - Ep. 2</title></programme>
-<programme start="20251016223000 +0000" stop="20251016230000 +0000" channel="RTPAfrica.pt"><title lang="pt">Curral de Moinas - Os Banqueiros do Povo - Ep. 4</title></programme>
+<programme start="20251016183000 +0000" stop="20251016190000 +0000" channel="RTPAfrica.pt"><title lang="pt">Repórter África - 2ª Edição</title></programme>
+<programme start="20251016190000 +0000" stop="20251016195000 +0000" channel="RTPAfrica.pt"><title lang="pt">Telejornal</title></programme>
+<programme start="20251016195000 +0000" stop="20251016195700 +0000" channel="RTPAfrica.pt"><title lang="pt">Em Busca do Museu Desconhecido T1 - Ep. 8</title></programme>
+<programme start="20251016195700 +0000" stop="20251016200000 +0000" channel="RTPAfrica.pt"><title lang="pt">Segredos Médicos de Lisboa - Ep. 4</title></programme>
+<programme start="20251016200000 +0000" stop="20251016214100 +0000" channel="RTPAfrica.pt"><title lang="pt">Miradouro da Lua T2 - Ep. 29</title></programme>
+<programme start="20251016214100 +0000" stop="20251016222900 +0000" channel="RTPAfrica.pt"><title lang="pt">O Crime do Padre Amaro - Ep. 2</title></programme>
+<programme start="20251016222900 +0000" stop="20251016230000 +0000" channel="RTPAfrica.pt"><title lang="pt">Curral de Moinas - Os Banqueiros do Povo - Ep. 4</title></programme>
 <programme start="20251016230000 +0000" stop="20251017000100 +0000" channel="RTPAfrica.pt"><title lang="pt">24 Horas</title></programme>
 <programme start="20251014230000 +0000" stop="20251015053000 +0000" channel="RTPMadeira.pt"><title lang="pt">RTP 3 (Madeira)</title></programme>
 <programme start="20251015053000 +0000" stop="20251015160000 +0000" channel="RTPMadeira.pt"><title lang="pt">RTP 3 (Madeira)</title></programme>
@@ -10326,9 +10358,9 @@
 <programme start="20251015205000 +0000" stop="20251015211500 +0000" channel="RTPMadeira.pt"><title lang="pt">C´ma Diz O Outro - Ep. 27</title></programme>
 <programme start="20251015211500 +0000" stop="20251015223000 +0000" channel="RTPMadeira.pt"><title lang="pt">Interesse Público - Ep. 13</title></programme>
 <programme start="20251015223000 +0000" stop="20251015230000 +0000" channel="RTPMadeira.pt"><title lang="pt">Telejornal Madeira</title></programme>
-<programme start="20251015230000 +0000" stop="20251016053000 +0000" channel="RTPMadeira.pt"><title lang="pt">RTP 3 (Madeira)</title></programme>
-<programme start="20251015230000 +0000" stop="20251016053000 +0000" channel="RTPMadeira.pt"><title lang="pt">RTP 3 (Madeira)</title></programme>
-<programme start="20251016053000 +0000" stop="20251016160000 +0000" channel="RTPMadeira.pt"><title lang="pt">RTP 3 (Madeira)</title></programme>
+<programme start="20251015230000 +0000" stop="20251016053000 +0000" channel="RTPMadeira.pt"><title lang="pt">RTP Notícias (RTP Madeira)</title></programme>
+<programme start="20251015230000 +0000" stop="20251016053000 +0000" channel="RTPMadeira.pt"><title lang="pt">RTP Notícias (RTP Madeira)</title></programme>
+<programme start="20251016053000 +0000" stop="20251016160000 +0000" channel="RTPMadeira.pt"><title lang="pt">RTP Notícias (RTP Madeira)</title></programme>
 <programme start="20251016160000 +0000" stop="20251016163000 +0000" channel="RTPMadeira.pt"><title lang="pt">Notícias do Atlântico</title></programme>
 <programme start="20251016163000 +0000" stop="20251016174000 +0000" channel="RTPMadeira.pt"><title lang="pt">Interesse Público - Ep. 13</title></programme>
 <programme start="20251016174000 +0000" stop="20251016180000 +0000" channel="RTPMadeira.pt"><title lang="pt">C´ma Diz O Outro - Ep. 27</title></programme>
@@ -10336,9 +10368,9 @@
 <programme start="20251016182000 +0000" stop="20251016200000 +0000" channel="RTPMadeira.pt"><title lang="pt">Madeira Viva - Ep. 136</title></programme>
 <programme start="20251016200000 +0000" stop="20251016205000 +0000" channel="RTPMadeira.pt"><title lang="pt">Telejornal Madeira</title></programme>
 <programme start="20251016205000 +0000" stop="20251016212000 +0000" channel="RTPMadeira.pt"><title lang="pt">Casa Das Artes - Ep. 27</title></programme>
-<programme start="20251016212000 +0000" stop="20251016222000 +0000" channel="RTPMadeira.pt"><title lang="pt">Dossier De Imprensa - Ep. 27</title></programme>
-<programme start="20251016222000 +0000" stop="20251016230000 +0000" channel="RTPMadeira.pt"><title lang="pt">Telejornal Madeira</title></programme>
-<programme start="20251016230000 +0000" stop="20251017053000 +0000" channel="RTPMadeira.pt"><title lang="pt">RTP 3 (Madeira)</title></programme>
+<programme start="20251016212000 +0000" stop="20251016222500 +0000" channel="RTPMadeira.pt"><title lang="pt">Dossier De Imprensa - Ep. 27</title></programme>
+<programme start="20251016222500 +0000" stop="20251016230000 +0000" channel="RTPMadeira.pt"><title lang="pt">Telejornal Madeira</title></programme>
+<programme start="20251016230000 +0000" stop="20251017053000 +0000" channel="RTPMadeira.pt"><title lang="pt">RTP Notícias (RTP Madeira)</title></programme>
 <programme start="20251014231500 +0000" stop="20251015000500 +0000" channel="RTPMemoria.pt"><title lang="pt">Pedro E Inês - Ep. 7</title></programme>
 <programme start="20251015000500 +0000" stop="20251015004900 +0000" channel="RTPMemoria.pt"><title lang="pt">Soldados da Fortuna T2 - Ep. 6</title></programme>
 <programme start="20251015004900 +0000" stop="20251015013900 +0000" channel="RTPMemoria.pt"><title lang="pt">Perry Mason T8 - Ep. 5</title></programme>
@@ -10380,7 +10412,7 @@
 <programme start="20251016005400 +0000" stop="20251016014400 +0000" channel="RTPMemoria.pt"><title lang="pt">Perry Mason T8 - Ep. 6</title></programme>
 <programme start="20251016014400 +0000" stop="20251016023100 +0000" channel="RTPMemoria.pt"><title lang="pt">A Família Ventura T1 - Ep. 2</title></programme>
 <programme start="20251016023100 +0000" stop="20251016031500 +0000" channel="RTPMemoria.pt"><title lang="pt">O Sábio - Ep. 290</title></programme>
-<programme start="20251016031500 +0000" stop="20251016035700 +0000" channel="RTPMemoria.pt"><title lang="pt">Portugueses Pelo Mundo T1 - Ep. 2</title></programme>
+<programme start="20251016031500 +0000" stop="20251016035700 +0000" channel="RTPMemoria.pt"><title lang="pt">Portugueses Pelo Mundo T2 - Ep. 2</title></programme>
 <programme start="20251016035700 +0000" stop="20251016044500 +0000" channel="RTPMemoria.pt"><title lang="pt">Bem-Vindos A Beirais T3 - Ep. 37</title></programme>
 <programme start="20251016044500 +0000" stop="20251016053400 +0000" channel="RTPMemoria.pt"><title lang="pt">Pedro E Inês - Ep. 8</title></programme>
 <programme start="20251016053400 +0000" stop="20251016060000 +0000" channel="RTPMemoria.pt"><title lang="pt">Falaescreveacertaganha T1 - Ep. 10</title></programme>
@@ -10397,19 +10429,19 @@
 <programme start="20251016121300 +0000" stop="20251016130100 +0000" channel="RTPMemoria.pt"><title lang="pt">Visita Guiada T8 - Ep. 26</title></programme>
 <programme start="20251016130100 +0000" stop="20251016132000 +0000" channel="RTPMemoria.pt"><title lang="pt">Rio De Onor - A Memória Do Conselho</title></programme>
 <programme start="20251016132000 +0000" stop="20251016145300 +0000" channel="RTPMemoria.pt"><title lang="pt">Uma Casa Na Pradaria: A Última Despedida</title></programme>
-<programme start="20251016145300 +0000" stop="20251016152200 +0000" channel="RTPMemoria.pt"><title lang="pt">Aqui Portugal - Ep. 9</title></programme>
-<programme start="20251016152200 +0000" stop="20251016160400 +0000" channel="RTPMemoria.pt"><title lang="pt">Sagrada Família - Ep. 9</title></programme>
-<programme start="20251016160400 +0000" stop="20251016163300 +0000" channel="RTPMemoria.pt"><title lang="pt">Os Andrades - Ep. 5</title></programme>
-<programme start="20251016163300 +0000" stop="20251016172100 +0000" channel="RTPMemoria.pt"><title lang="pt">Os Nossos Dias T2 - Ep. 287</title></programme>
-<programme start="20251016172100 +0000" stop="20251016181200 +0000" channel="RTPMemoria.pt"><title lang="pt">A Família Ventura T1 - Ep. 3</title></programme>
-<programme start="20251016181200 +0000" stop="20251016181800 +0000" channel="RTPMemoria.pt"><title lang="pt">Rumo À Liberdade</title></programme>
-<programme start="20251016181800 +0000" stop="20251016183200 +0000" channel="RTPMemoria.pt"><title lang="pt">Onde Os Bois Lavram O Mar</title></programme>
-<programme start="20251016183200 +0000" stop="20251016191700 +0000" channel="RTPMemoria.pt"><title lang="pt">Bem-Vindos A Beirais T3 - Ep. 14</title></programme>
-<programme start="20251016191700 +0000" stop="20251016204900 +0000" channel="RTPMemoria.pt"><title lang="pt">Uma Casa Na Pradaria: A Última Despedida</title></programme>
-<programme start="20251016204900 +0000" stop="20251016213900 +0000" channel="RTPMemoria.pt"><title lang="pt">Perry Mason T8 - Ep. 7</title></programme>
-<programme start="20251016213900 +0000" stop="20251016222300 +0000" channel="RTPMemoria.pt"><title lang="pt">Soldados da Fortuna T2 - Ep. 8</title></programme>
-<programme start="20251016222300 +0000" stop="20251016231500 +0000" channel="RTPMemoria.pt"><title lang="pt">A Família Ventura T1 - Ep. 3</title></programme>
-<programme start="20251016231500 +0000" stop="20251017000400 +0000" channel="RTPMemoria.pt"><title lang="pt">Pedro E Inês - Ep. 9</title></programme>
+<programme start="20251016145300 +0000" stop="20251016152300 +0000" channel="RTPMemoria.pt"><title lang="pt">Aqui Portugal - Ep. 9</title></programme>
+<programme start="20251016152300 +0000" stop="20251016160500 +0000" channel="RTPMemoria.pt"><title lang="pt">Sagrada Família - Ep. 9</title></programme>
+<programme start="20251016160500 +0000" stop="20251016163400 +0000" channel="RTPMemoria.pt"><title lang="pt">Os Andrades - Ep. 5</title></programme>
+<programme start="20251016163400 +0000" stop="20251016172200 +0000" channel="RTPMemoria.pt"><title lang="pt">Os Nossos Dias T2 - Ep. 287</title></programme>
+<programme start="20251016172200 +0000" stop="20251016181300 +0000" channel="RTPMemoria.pt"><title lang="pt">A Família Ventura T1 - Ep. 3</title></programme>
+<programme start="20251016181300 +0000" stop="20251016181900 +0000" channel="RTPMemoria.pt"><title lang="pt">Rumo À Liberdade</title></programme>
+<programme start="20251016181900 +0000" stop="20251016183300 +0000" channel="RTPMemoria.pt"><title lang="pt">Onde Os Bois Lavram O Mar</title></programme>
+<programme start="20251016183300 +0000" stop="20251016191800 +0000" channel="RTPMemoria.pt"><title lang="pt">Bem-Vindos A Beirais T3 - Ep. 14</title></programme>
+<programme start="20251016191800 +0000" stop="20251016205000 +0000" channel="RTPMemoria.pt"><title lang="pt">Uma Casa Na Pradaria: A Última Despedida</title></programme>
+<programme start="20251016205000 +0000" stop="20251016214100 +0000" channel="RTPMemoria.pt"><title lang="pt">Perry Mason T8 - Ep. 7</title></programme>
+<programme start="20251016214100 +0000" stop="20251016222600 +0000" channel="RTPMemoria.pt"><title lang="pt">Soldados da Fortuna T2 - Ep. 8</title></programme>
+<programme start="20251016222600 +0000" stop="20251016231800 +0000" channel="RTPMemoria.pt"><title lang="pt">A Família Ventura T1 - Ep. 3</title></programme>
+<programme start="20251016231800 +0000" stop="20251017000700 +0000" channel="RTPMemoria.pt"><title lang="pt">Pedro E Inês - Ep. 9</title></programme>
 <programme start="20251014232700 +0000" stop="20251015005000 +0000" channel="Sextreme.br"><title lang="pt">College Lesbian 3Somes</title></programme>
 <programme start="20251015005000 +0000" stop="20251015021200 +0000" channel="Sextreme.br"><title lang="pt">Amador: Orgina Na Piscina</title></programme>
 <programme start="20251015021200 +0000" stop="20251015033300 +0000" channel="Sextreme.br"><title lang="pt">Festinha Lesbo</title></programme>
@@ -10472,22 +10504,21 @@
 <programme start="20251015232500 +0000" stop="20251016002500 +0000" channel="SIC.pt"><title lang="pt">Nazaré T2 - Ep. 90</title></programme>
 <programme start="20251016002500 +0000" stop="20251016022500 +0000" channel="SIC.pt"><title lang="pt">Passadeira Vermelha T12 - Ep. 193</title></programme>
 <programme start="20251016022500 +0000" stop="20251016024500 +0000" channel="SIC.pt"><title lang="pt">Terra Brava - Ep. 496</title></programme>
-<programme start="20251016024500 +0000" stop="20251016034500 +0000" channel="SIC.pt"><title lang="pt">Televendas</title></programme>
-<programme start="20251016034500 +0000" stop="20251016050000 +0000" channel="SIC.pt"><title lang="pt">Passadeira Vermelha T12 - Ep. 192</title></programme>
-<programme start="20251016050000 +0000" stop="20251016083000 +0000" channel="SIC.pt"><title lang="pt">Edição Da Manhã</title></programme>
-<programme start="20251016083000 +0000" stop="20251016120000 +0000" channel="SIC.pt"><title lang="pt">Casa Feliz T6 - Ep. 206</title></programme>
-<programme start="20251016120000 +0000" stop="20251016133000 +0000" channel="SIC.pt"><title lang="pt">Primeiro Jornal</title></programme>
-<programme start="20251016133000 +0000" stop="20251016144500 +0000" channel="SIC.pt"><title lang="pt">Júlia T8 - Ep. 164</title></programme>
-<programme start="20251016144500 +0000" stop="20251016154500 +0000" channel="SIC.pt"><title lang="pt">Amor Eterno - Ep. 109</title></programme>
-<programme start="20251016154500 +0000" stop="20251016164500 +0000" channel="SIC.pt"><title lang="pt">Força De Mulher - Ep. 29</title></programme>
-<programme start="20251016164500 +0000" stop="20251016180000 +0000" channel="SIC.pt"><title lang="pt">A Dona Do Pedaço - Ep. 74</title></programme>
-<programme start="20251016180000 +0000" stop="20251016190000 +0000" channel="SIC.pt"><title lang="pt">O Outro Lado do Paraíso - Ep. 208</title></programme>
-<programme start="20251016190000 +0000" stop="20251016204500 +0000" channel="SIC.pt"><title lang="pt">Jornal Da Noite</title></programme>
-<programme start="20251016204500 +0000" stop="20251016213000 +0000" channel="SIC.pt"><title lang="pt">A Promessa - Ep. 348</title></programme>
-<programme start="20251016213000 +0000" stop="20251016221500 +0000" channel="SIC.pt"><title lang="pt">Vitória - Ep. 19</title></programme>
+<programme start="20251016024500 +0000" stop="20251016033000 +0000" channel="SIC.pt"><title lang="pt">Televendas</title></programme>
+<programme start="20251016033000 +0000" stop="20251016050000 +0000" channel="SIC.pt"><title lang="pt">Passadeira Vermelha T12 - Ep. 192</title></programme>
+<programme start="20251016050000 +0000" stop="20251016084500 +0000" channel="SIC.pt"><title lang="pt">Edição Da Manhã</title></programme>
+<programme start="20251016084500 +0000" stop="20251016115800 +0000" channel="SIC.pt"><title lang="pt">Casa Feliz T6 - Ep. 206</title></programme>
+<programme start="20251016115800 +0000" stop="20251016132500 +0000" channel="SIC.pt"><title lang="pt">Primeiro Jornal</title></programme>
+<programme start="20251016132500 +0000" stop="20251016143500 +0000" channel="SIC.pt"><title lang="pt">Júlia T8 - Ep. 164</title></programme>
+<programme start="20251016143500 +0000" stop="20251016161500 +0000" channel="SIC.pt"><title lang="pt">Amor Eterno - Ep. 109</title></programme>
+<programme start="20251016161500 +0000" stop="20251016172000 +0000" channel="SIC.pt"><title lang="pt">Força De Mulher - Ep. 29</title></programme>
+<programme start="20251016172000 +0000" stop="20251016183000 +0000" channel="SIC.pt"><title lang="pt">A Dona Do Pedaço - Ep. 74</title></programme>
+<programme start="20251016183000 +0000" stop="20251016185500 +0000" channel="SIC.pt"><title lang="pt">O Outro Lado do Paraíso - Ep. 208</title></programme>
+<programme start="20251016185500 +0000" stop="20251016210500 +0000" channel="SIC.pt"><title lang="pt">Jornal Da Noite</title></programme>
+<programme start="20251016210500 +0000" stop="20251016212500 +0000" channel="SIC.pt"><title lang="pt">A Promessa - Ep. 348</title></programme>
+<programme start="20251016212500 +0000" stop="20251016221500 +0000" channel="SIC.pt"><title lang="pt">Vitória - Ep. 19</title></programme>
 <programme start="20251016221500 +0000" stop="20251016230000 +0000" channel="SIC.pt"><title lang="pt">A Herança - Ep. 189</title></programme>
-<programme start="20251016230000 +0000" stop="20251016233000 +0000" channel="SIC.pt"><title lang="pt">Casados À Primeira Vista - Segundas Núpcias (Diários) T1 - Ep. 108</title></programme>
-<programme start="20251016233000 +0000" stop="20251017001500 +0000" channel="SIC.pt"><title lang="pt">Nazaré T2 - Ep. 91</title></programme>
+<programme start="20251016230000 +0000" stop="20251017000500 +0000" channel="SIC.pt"><title lang="pt">Nazaré T2 - Ep. 91</title></programme>
 <programme start="20251014235000 +0000" stop="20251015003100 +0000" channel="SICCaras.pt"><title lang="pt">Barcos Com Amor T12 - Ep. 15</title></programme>
 <programme start="20251015003100 +0000" stop="20251015011500 +0000" channel="SICCaras.pt"><title lang="pt">Donas de Casa De Beverly Hills T14 - Ep. 10</title></programme>
 <programme start="20251015011500 +0000" stop="20251015020000 +0000" channel="SICCaras.pt"><title lang="pt">Donas de Casa De Beverly Hills T14 - Ep. 11</title></programme>
@@ -10524,29 +10555,29 @@
 <programme start="20251016020300 +0000" stop="20251016024600 +0000" channel="SICCaras.pt"><title lang="pt">Miúdos Ricos Em Económica T2 - Ep. 5</title></programme>
 <programme start="20251016024600 +0000" stop="20251016033000 +0000" channel="SICCaras.pt"><title lang="pt">Miúdos Ricos Em Económica T2 - Ep. 6</title></programme>
 <programme start="20251016033000 +0000" stop="20251016050200 +0000" channel="SICCaras.pt"><title lang="pt">Passadeira Vermelha T12 - Ep. 192</title></programme>
-<programme start="20251016050200 +0000" stop="20251016055000 +0000" channel="SICCaras.pt"><title lang="pt">Ponto Sem Nó Mini T3 - Ep. 35</title></programme>
-<programme start="20251016055000 +0000" stop="20251016061500 +0000" channel="SICCaras.pt"><title lang="pt">Passadeira Vermelha T12 - Ep. 191</title></programme>
-<programme start="20251016061500 +0000" stop="20251016074500 +0000" channel="SICCaras.pt"><title lang="pt">Passadeira Vermelha T12 - Ep. 192</title></programme>
-<programme start="20251016074500 +0000" stop="20251016083000 +0000" channel="SICCaras.pt"><title lang="pt">Donas de Casa De Beverly Hills T14 - Ep. 12</title></programme>
-<programme start="20251016083000 +0000" stop="20251016091500 +0000" channel="SICCaras.pt"><title lang="pt">Donas de Casa De Beverly Hills T14 - Ep. 13</title></programme>
-<programme start="20251016091500 +0000" stop="20251016100000 +0000" channel="SICCaras.pt"><title lang="pt">Eva Longoria: O Gosto Pelo México T1 - Ep. 6</title></programme>
-<programme start="20251016100000 +0000" stop="20251016113000 +0000" channel="SICCaras.pt"><title lang="pt">Passadeira Vermelha T12 - Ep. 193</title></programme>
-<programme start="20251016113000 +0000" stop="20251016121500 +0000" channel="SICCaras.pt"><title lang="pt">Apesar Do Amor T1 - Ep. 40</title></programme>
-<programme start="20251016121500 +0000" stop="20251016130000 +0000" channel="SICCaras.pt"><title lang="pt">Apesar Do Amor T1 - Ep. 41</title></programme>
-<programme start="20251016130000 +0000" stop="20251016134500 +0000" channel="SICCaras.pt"><title lang="pt">Barcos Com Amor T12 - Ep. 16</title></programme>
-<programme start="20251016134500 +0000" stop="20251016143000 +0000" channel="SICCaras.pt"><title lang="pt">Barcos Com Amor T3 - Ep. 1</title></programme>
-<programme start="20251016143000 +0000" stop="20251016150000 +0000" channel="SICCaras.pt"><title lang="pt">Amor Aluga-se T1 - Ep. 127</title></programme>
-<programme start="20251016150000 +0000" stop="20251016154500 +0000" channel="SICCaras.pt"><title lang="pt">Amor Aluga-se T1 - Ep. 128</title></programme>
-<programme start="20251016154500 +0000" stop="20251016164500 +0000" channel="SICCaras.pt"><title lang="pt">Apesar Do Amor T1 - Ep. 48</title></programme>
-<programme start="20251016164500 +0000" stop="20251016173000 +0000" channel="SICCaras.pt"><title lang="pt">Apesar Do Amor T1 - Ep. 49</title></programme>
-<programme start="20251016173000 +0000" stop="20251016190000 +0000" channel="SICCaras.pt"><title lang="pt">Passadeira Vermelha T12 - Ep. 194</title></programme>
-<programme start="20251016190000 +0000" stop="20251016193000 +0000" channel="SICCaras.pt"><title lang="pt">Donas de Casa De Beverly Hills T14 - Ep. 13</title></programme>
-<programme start="20251016193000 +0000" stop="20251016201500 +0000" channel="SICCaras.pt"><title lang="pt">Donas de Casa De Beverly Hills T14 - Ep. 14</title></programme>
-<programme start="20251016201500 +0000" stop="20251016210000 +0000" channel="SICCaras.pt"><title lang="pt">Barcos Com Amor T3 - Ep. 2</title></programme>
-<programme start="20251016210000 +0000" stop="20251016214500 +0000" channel="SICCaras.pt"><title lang="pt">Barcos Com Amor T3 - Ep. 3</title></programme>
-<programme start="20251016214500 +0000" stop="20251016230000 +0000" channel="SICCaras.pt"><title lang="pt">Passadeira Vermelha T12 - Ep. 194</title></programme>
-<programme start="20251016230000 +0000" stop="20251016234500 +0000" channel="SICCaras.pt"><title lang="pt">Barcos Com Amor T12 - Ep. 16</title></programme>
-<programme start="20251016234500 +0000" stop="20251017003000 +0000" channel="SICCaras.pt"><title lang="pt">Barcos Com Amor T3 - Ep. 1</title></programme>
+<programme start="20251016050200 +0000" stop="20251016050500 +0000" channel="SICCaras.pt"><title lang="pt">Ponto Sem Nó Mini T3 - Ep. 35</title></programme>
+<programme start="20251016050500 +0000" stop="20251016063600 +0000" channel="SICCaras.pt"><title lang="pt">Passadeira Vermelha T12 - Ep. 191</title></programme>
+<programme start="20251016063600 +0000" stop="20251016080800 +0000" channel="SICCaras.pt"><title lang="pt">Passadeira Vermelha T12 - Ep. 192</title></programme>
+<programme start="20251016080800 +0000" stop="20251016085200 +0000" channel="SICCaras.pt"><title lang="pt">Donas de Casa De Beverly Hills T14 - Ep. 12</title></programme>
+<programme start="20251016085200 +0000" stop="20251016093700 +0000" channel="SICCaras.pt"><title lang="pt">Donas de Casa De Beverly Hills T14 - Ep. 13</title></programme>
+<programme start="20251016093700 +0000" stop="20251016101900 +0000" channel="SICCaras.pt"><title lang="pt">Eva Longoria: O Gosto Pelo México T1 - Ep. 6</title></programme>
+<programme start="20251016101900 +0000" stop="20251016115100 +0000" channel="SICCaras.pt"><title lang="pt">Passadeira Vermelha T12 - Ep. 193</title></programme>
+<programme start="20251016115100 +0000" stop="20251016123400 +0000" channel="SICCaras.pt"><title lang="pt">Apesar Do Amor T1 - Ep. 40</title></programme>
+<programme start="20251016123400 +0000" stop="20251016131700 +0000" channel="SICCaras.pt"><title lang="pt">Apesar Do Amor T1 - Ep. 41</title></programme>
+<programme start="20251016131700 +0000" stop="20251016135900 +0000" channel="SICCaras.pt"><title lang="pt">Barcos Com Amor T12 - Ep. 16</title></programme>
+<programme start="20251016135900 +0000" stop="20251016145400 +0000" channel="SICCaras.pt"><title lang="pt">Barcos Com Amor T3 - Ep. 1</title></programme>
+<programme start="20251016145400 +0000" stop="20251016151900 +0000" channel="SICCaras.pt"><title lang="pt">Amor Aluga-se T1 - Ep. 127</title></programme>
+<programme start="20251016151900 +0000" stop="20251016160400 +0000" channel="SICCaras.pt"><title lang="pt">Amor Aluga-se T1 - Ep. 128</title></programme>
+<programme start="20251016160400 +0000" stop="20251016164700 +0000" channel="SICCaras.pt"><title lang="pt">Apesar Do Amor T1 - Ep. 48</title></programme>
+<programme start="20251016164700 +0000" stop="20251016173000 +0000" channel="SICCaras.pt"><title lang="pt">Apesar Do Amor T1 - Ep. 49</title></programme>
+<programme start="20251016173000 +0000" stop="20251016190100 +0000" channel="SICCaras.pt"><title lang="pt">Passadeira Vermelha T12 - Ep. 194</title></programme>
+<programme start="20251016190100 +0000" stop="20251016192200 +0000" channel="SICCaras.pt"><title lang="pt">Donas de Casa De Beverly Hills T14 - Ep. 13</title></programme>
+<programme start="20251016192200 +0000" stop="20251016200500 +0000" channel="SICCaras.pt"><title lang="pt">Donas de Casa De Beverly Hills T14 - Ep. 14</title></programme>
+<programme start="20251016200500 +0000" stop="20251016204700 +0000" channel="SICCaras.pt"><title lang="pt">Barcos Com Amor T3 - Ep. 2</title></programme>
+<programme start="20251016204700 +0000" stop="20251016213400 +0000" channel="SICCaras.pt"><title lang="pt">Barcos Com Amor T3 - Ep. 3</title></programme>
+<programme start="20251016213400 +0000" stop="20251016230600 +0000" channel="SICCaras.pt"><title lang="pt">Passadeira Vermelha T12 - Ep. 194</title></programme>
+<programme start="20251016230600 +0000" stop="20251016235000 +0000" channel="SICCaras.pt"><title lang="pt">Barcos Com Amor T12 - Ep. 16</title></programme>
+<programme start="20251016235000 +0000" stop="20251017004500 +0000" channel="SICCaras.pt"><title lang="pt">Barcos Com Amor T3 - Ep. 1</title></programme>
 <programme start="20251014234900 +0000" stop="20251015001200 +0000" channel="SICK.pt"><title lang="pt">GGO Football T1 - Ep. 21</title></programme>
 <programme start="20251015001200 +0000" stop="20251015003600 +0000" channel="SICK.pt"><title lang="pt">GGO Football T1 - Ep. 22</title></programme>
 <programme start="20251015003600 +0000" stop="20251015005800 +0000" channel="SICK.pt"><title lang="pt">Lego Ninjago T8 - Ep. 3</title></programme>
@@ -10641,63 +10672,61 @@
 <programme start="20251016041700 +0000" stop="20251016042800 +0000" channel="SICK.pt"><title lang="pt">Lego Friends: Meninas Em Missão T2 - Ep. 1</title></programme>
 <programme start="20251016042800 +0000" stop="20251016050000 +0000" channel="SICK.pt"><title lang="pt">Lego Friends: Meninas Em Missão T2 - Ep. 2</title></programme>
 <programme start="20251016050000 +0000" stop="20251016051000 +0000" channel="SICK.pt"><title lang="pt">Power Players T1 - Ep. 17</title></programme>
-<programme start="20251016051000 +0000" stop="20251016052000 +0000" channel="SICK.pt"><title lang="pt">Power Players T1 - Ep. 18</title></programme>
-<programme start="20251016052000 +0000" stop="20251016053000 +0000" channel="SICK.pt"><title lang="pt">Power Players T1 - Ep. 19</title></programme>
-<programme start="20251016053000 +0000" stop="20251016054000 +0000" channel="SICK.pt"><title lang="pt">Power Players T1 - Ep. 20</title></programme>
-<programme start="20251016054000 +0000" stop="20251016055000 +0000" channel="SICK.pt"><title lang="pt">Power Players T1 - Ep. 21</title></programme>
-<programme start="20251016055000 +0000" stop="20251016060000 +0000" channel="SICK.pt"><title lang="pt">Power Players T1 - Ep. 22</title></programme>
-<programme start="20251016060000 +0000" stop="20251016061500 +0000" channel="SICK.pt"><title lang="pt">Power Players T2 - Ep. 16</title></programme>
-<programme start="20251016061500 +0000" stop="20251016063000 +0000" channel="SICK.pt"><title lang="pt">Power Players T2 - Ep. 17</title></programme>
-<programme start="20251016063000 +0000" stop="20251016070000 +0000" channel="SICK.pt"><title lang="pt">Supa Strikas T7 - Ep. 7</title></programme>
-<programme start="20251016070000 +0000" stop="20251016073000 +0000" channel="SICK.pt"><title lang="pt">Supa Strikas T1 - Ep. 42</title></programme>
-<programme start="20251016073000 +0000" stop="20251016081500 +0000" channel="SICK.pt"><title lang="pt">Supa Strikas T6 - Ep. 13</title></programme>
-<programme start="20251016081500 +0000" stop="20251016082500 +0000" channel="SICK.pt"><title lang="pt">Power Players T2 - Ep. 13</title></programme>
-<programme start="20251016082500 +0000" stop="20251016083500 +0000" channel="SICK.pt"><title lang="pt">Power Players T2 - Ep. 14</title></programme>
-<programme start="20251016083500 +0000" stop="20251016084500 +0000" channel="SICK.pt"><title lang="pt">Power Players T2 - Ep. 15</title></programme>
-<programme start="20251016084500 +0000" stop="20251016090000 +0000" channel="SICK.pt"><title lang="pt">Power Players T2 - Ep. 1</title></programme>
-<programme start="20251016090000 +0000" stop="20251016091500 +0000" channel="SICK.pt"><title lang="pt">Power Players T2 - Ep. 2</title></programme>
-<programme start="20251016091500 +0000" stop="20251016093000 +0000" channel="SICK.pt"><title lang="pt">Power Players T2 - Ep. 3</title></programme>
-<programme start="20251016093000 +0000" stop="20251016093900 +0000" channel="SICK.pt"><title lang="pt">Lego Friends: Meninas Em Missão T3 - Ep. 11</title></programme>
-<programme start="20251016093900 +0000" stop="20251016094700 +0000" channel="SICK.pt"><title lang="pt">Lego Friends: Meninas Em Missão T3 - Ep. 12</title></programme>
-<programme start="20251016094700 +0000" stop="20251016095600 +0000" channel="SICK.pt"><title lang="pt">Lego Friends: Meninas Em Missão T3 - Ep. 13</title></programme>
-<programme start="20251016095600 +0000" stop="20251016100400 +0000" channel="SICK.pt"><title lang="pt">Lego Friends: Meninas Em Missão T3 - Ep. 14</title></programme>
-<programme start="20251016100400 +0000" stop="20251016101300 +0000" channel="SICK.pt"><title lang="pt">Lego Friends: Meninas Em Missão T3 - Ep. 15</title></programme>
-<programme start="20251016101300 +0000" stop="20251016102100 +0000" channel="SICK.pt"><title lang="pt">Lego Friends: Meninas Em Missão T3 - Ep. 16</title></programme>
-<programme start="20251016102100 +0000" stop="20251016103000 +0000" channel="SICK.pt"><title lang="pt">Lego Friends: Meninas Em Missão T3 - Ep. 17</title></programme>
-<programme start="20251016103000 +0000" stop="20251016105200 +0000" channel="SICK.pt"><title lang="pt">Lego Ninjago T16 - Ep. 17</title></programme>
-<programme start="20251016105200 +0000" stop="20251016111500 +0000" channel="SICK.pt"><title lang="pt">Lego Ninjago T16 - Ep. 18</title></programme>
-<programme start="20251016111500 +0000" stop="20251016114500 +0000" channel="SICK.pt"><title lang="pt">Supa Strikas - Rookie Season T1 - Ep. 4</title></programme>
-<programme start="20251016114500 +0000" stop="20251016123000 +0000" channel="SICK.pt"><title lang="pt">Supa Strikas T1 - Ep. 35</title></programme>
-<programme start="20251016123000 +0000" stop="20251016125200 +0000" channel="SICK.pt"><title lang="pt">Onze T4 - Ep. 28</title></programme>
-<programme start="20251016125200 +0000" stop="20251016131500 +0000" channel="SICK.pt"><title lang="pt">Onze T4 - Ep. 29</title></programme>
-<programme start="20251016131500 +0000" stop="20251016140000 +0000" channel="SICK.pt"><title lang="pt">Margarita T1 - Ep. 19</title></programme>
-<programme start="20251016140000 +0000" stop="20251016141500 +0000" channel="SICK.pt"><title lang="pt">Lego Friends: Meninas Em Missão T1 - Ep. 1</title></programme>
-<programme start="20251016141500 +0000" stop="20251016143000 +0000" channel="SICK.pt"><title lang="pt">Lego Friends: Meninas Em Missão T1 - Ep. 2</title></programme>
-<programme start="20251016143000 +0000" stop="20251016144500 +0000" channel="SICK.pt"><title lang="pt">Lego Friends: Meninas Em Missão T1 - Ep. 3</title></programme>
-<programme start="20251016144500 +0000" stop="20251016150000 +0000" channel="SICK.pt"><title lang="pt">Lego Friends: Meninas Em Missão T1 - Ep. 4</title></programme>
-<programme start="20251016150000 +0000" stop="20251016151100 +0000" channel="SICK.pt"><title lang="pt">Power Players T1 - Ep. 1</title></programme>
-<programme start="20251016151100 +0000" stop="20251016152200 +0000" channel="SICK.pt"><title lang="pt">Power Players T1 - Ep. 2</title></programme>
-<programme start="20251016152200 +0000" stop="20251016153400 +0000" channel="SICK.pt"><title lang="pt">Power Players T1 - Ep. 3</title></programme>
-<programme start="20251016153400 +0000" stop="20251016154500 +0000" channel="SICK.pt"><title lang="pt">Power Players T1 - Ep. 4</title></programme>
-<programme start="20251016154500 +0000" stop="20251016155500 +0000" channel="SICK.pt"><title lang="pt">Power Players T2 - Ep. 16</title></programme>
-<programme start="20251016155500 +0000" stop="20251016160500 +0000" channel="SICK.pt"><title lang="pt">Power Players T2 - Ep. 17</title></programme>
-<programme start="20251016160500 +0000" stop="20251016161500 +0000" channel="SICK.pt"><title lang="pt">Power Players T2 - Ep. 19</title></programme>
-<programme start="20251016161500 +0000" stop="20251016170000 +0000" channel="SICK.pt"><title lang="pt">Supa Strikas T7 - Ep. 2</title></programme>
-<programme start="20251016170000 +0000" stop="20251016173000 +0000" channel="SICK.pt"><title lang="pt">Supa Strikas T1 - Ep. 7</title></programme>
-<programme start="20251016173000 +0000" stop="20251016175200 +0000" channel="SICK.pt"><title lang="pt">Onze T4 - Ep. 30</title></programme>
-<programme start="20251016175200 +0000" stop="20251016181500 +0000" channel="SICK.pt"><title lang="pt">Onze T4 - Ep. 31</title></programme>
-<programme start="20251016181500 +0000" stop="20251016183000 +0000" channel="SICK.pt"><title lang="pt">Onze T4 - Ep. 32</title></programme>
-<programme start="20251016183000 +0000" stop="20251016184500 +0000" channel="SICK.pt"><title lang="pt">Onze T4 - Ep. 33</title></programme>
-<programme start="20251016184500 +0000" stop="20251016193000 +0000" channel="SICK.pt"><title lang="pt">Margarita T1 - Ep. 19</title></programme>
-<programme start="20251016193000 +0000" stop="20251016201500 +0000" channel="SICK.pt"><title lang="pt">Margarita T1 - Ep. 20</title></programme>
-<programme start="20251016201500 +0000" stop="20251016203800 +0000" channel="SICK.pt"><title lang="pt">Onze T4 - Ep. 34</title></programme>
-<programme start="20251016203800 +0000" stop="20251016210000 +0000" channel="SICK.pt"><title lang="pt">Onze T4 - Ep. 35</title></programme>
-<programme start="20251016210000 +0000" stop="20251016214500 +0000" channel="SICK.pt"><title lang="pt">Rebelde Way T1 - Ep. 227</title></programme>
-<programme start="20251016214500 +0000" stop="20251016223000 +0000" channel="SICK.pt"><title lang="pt">Lua Vermelha T1 - Ep. 110</title></programme>
-<programme start="20251016223000 +0000" stop="20251016230000 +0000" channel="SICK.pt"><title lang="pt">Malhação: Vidas Brasileiras T26 - Ep. 228</title></programme>
-<programme start="20251016230000 +0000" stop="20251016232200 +0000" channel="SICK.pt"><title lang="pt">Yu-Gi-Oh! Vrains T3 - Ep. 25</title></programme>
-<programme start="20251016232200 +0000" stop="20251016234500 +0000" channel="SICK.pt"><title lang="pt">Yu-Gi-Oh! Vrains T3 - Ep. 26</title></programme>
-<programme start="20251016234500 +0000" stop="20251017000800 +0000" channel="SICK.pt"><title lang="pt">GGO Football T1 - Ep. 25</title></programme>
+<programme start="20251016051000 +0000" stop="20251016052100 +0000" channel="SICK.pt"><title lang="pt">Power Players T1 - Ep. 18</title></programme>
+<programme start="20251016052100 +0000" stop="20251016053200 +0000" channel="SICK.pt"><title lang="pt">Power Players T1 - Ep. 19</title></programme>
+<programme start="20251016053200 +0000" stop="20251016054300 +0000" channel="SICK.pt"><title lang="pt">Power Players T1 - Ep. 20</title></programme>
+<programme start="20251016054300 +0000" stop="20251016055400 +0000" channel="SICK.pt"><title lang="pt">Power Players T1 - Ep. 21</title></programme>
+<programme start="20251016055400 +0000" stop="20251016060400 +0000" channel="SICK.pt"><title lang="pt">Power Players T1 - Ep. 22</title></programme>
+<programme start="20251016060400 +0000" stop="20251016061500 +0000" channel="SICK.pt"><title lang="pt">Power Players T2 - Ep. 16</title></programme>
+<programme start="20251016061500 +0000" stop="20251016062600 +0000" channel="SICK.pt"><title lang="pt">Power Players T2 - Ep. 17</title></programme>
+<programme start="20251016062600 +0000" stop="20251016064700 +0000" channel="SICK.pt"><title lang="pt">Supa Strikas T7 - Ep. 7</title></programme>
+<programme start="20251016064700 +0000" stop="20251016070700 +0000" channel="SICK.pt"><title lang="pt">Supa Strikas T1 - Ep. 42</title></programme>
+<programme start="20251016070700 +0000" stop="20251016081300 +0000" channel="SICK.pt"><title lang="pt">Supa Strikas T6 - Ep. 13</title></programme>
+<programme start="20251016081300 +0000" stop="20251016082400 +0000" channel="SICK.pt"><title lang="pt">Power Players T2 - Ep. 13</title></programme>
+<programme start="20251016082400 +0000" stop="20251016083500 +0000" channel="SICK.pt"><title lang="pt">Power Players T2 - Ep. 14</title></programme>
+<programme start="20251016083500 +0000" stop="20251016084600 +0000" channel="SICK.pt"><title lang="pt">Power Players T2 - Ep. 15</title></programme>
+<programme start="20251016084600 +0000" stop="20251016085700 +0000" channel="SICK.pt"><title lang="pt">Power Players T2 - Ep. 1</title></programme>
+<programme start="20251016085700 +0000" stop="20251016090700 +0000" channel="SICK.pt"><title lang="pt">Power Players T2 - Ep. 2</title></programme>
+<programme start="20251016090700 +0000" stop="20251016093400 +0000" channel="SICK.pt"><title lang="pt">Power Players T2 - Ep. 3</title></programme>
+<programme start="20251016093400 +0000" stop="20251016094400 +0000" channel="SICK.pt"><title lang="pt">Lego Friends: Meninas Em Missão T3 - Ep. 11</title></programme>
+<programme start="20251016094400 +0000" stop="20251016095500 +0000" channel="SICK.pt"><title lang="pt">Lego Friends: Meninas Em Missão T3 - Ep. 12</title></programme>
+<programme start="20251016095500 +0000" stop="20251016100500 +0000" channel="SICK.pt"><title lang="pt">Lego Friends: Meninas Em Missão T3 - Ep. 13</title></programme>
+<programme start="20251016100500 +0000" stop="20251016101600 +0000" channel="SICK.pt"><title lang="pt">Lego Friends: Meninas Em Missão T3 - Ep. 14</title></programme>
+<programme start="20251016101600 +0000" stop="20251016102600 +0000" channel="SICK.pt"><title lang="pt">Lego Friends: Meninas Em Missão T3 - Ep. 15</title></programme>
+<programme start="20251016102600 +0000" stop="20251016103900 +0000" channel="SICK.pt"><title lang="pt">Lego Friends: Meninas Em Missão T3 - Ep. 16</title></programme>
+<programme start="20251016103900 +0000" stop="20251016110000 +0000" channel="SICK.pt"><title lang="pt">Lego Ninjago T16 - Ep. 17</title></programme>
+<programme start="20251016110000 +0000" stop="20251016112300 +0000" channel="SICK.pt"><title lang="pt">Lego Ninjago T16 - Ep. 18</title></programme>
+<programme start="20251016112300 +0000" stop="20251016114400 +0000" channel="SICK.pt"><title lang="pt">Supa Strikas - Rookie Season T1 - Ep. 4</title></programme>
+<programme start="20251016114400 +0000" stop="20251016122900 +0000" channel="SICK.pt"><title lang="pt">Supa Strikas T1 - Ep. 35</title></programme>
+<programme start="20251016122900 +0000" stop="20251016125200 +0000" channel="SICK.pt"><title lang="pt">Onze T4 - Ep. 28</title></programme>
+<programme start="20251016125200 +0000" stop="20251016131600 +0000" channel="SICK.pt"><title lang="pt">Onze T4 - Ep. 29</title></programme>
+<programme start="20251016131600 +0000" stop="20251016135900 +0000" channel="SICK.pt"><title lang="pt">Margarita T1 - Ep. 19</title></programme>
+<programme start="20251016135900 +0000" stop="20251016141000 +0000" channel="SICK.pt"><title lang="pt">Lego Friends: Meninas Em Missão T1 - Ep. 1</title></programme>
+<programme start="20251016141000 +0000" stop="20251016142000 +0000" channel="SICK.pt"><title lang="pt">Lego Friends: Meninas Em Missão T1 - Ep. 2</title></programme>
+<programme start="20251016142000 +0000" stop="20251016143100 +0000" channel="SICK.pt"><title lang="pt">Lego Friends: Meninas Em Missão T1 - Ep. 3</title></programme>
+<programme start="20251016143100 +0000" stop="20251016150300 +0000" channel="SICK.pt"><title lang="pt">Lego Friends: Meninas Em Missão T1 - Ep. 4</title></programme>
+<programme start="20251016150300 +0000" stop="20251016151400 +0000" channel="SICK.pt"><title lang="pt">Power Players T1 - Ep. 1</title></programme>
+<programme start="20251016151400 +0000" stop="20251016152500 +0000" channel="SICK.pt"><title lang="pt">Power Players T1 - Ep. 2</title></programme>
+<programme start="20251016152500 +0000" stop="20251016153500 +0000" channel="SICK.pt"><title lang="pt">Power Players T1 - Ep. 3</title></programme>
+<programme start="20251016153500 +0000" stop="20251016154600 +0000" channel="SICK.pt"><title lang="pt">Power Players T1 - Ep. 4</title></programme>
+<programme start="20251016154600 +0000" stop="20251016155700 +0000" channel="SICK.pt"><title lang="pt">Power Players T2 - Ep. 16</title></programme>
+<programme start="20251016155700 +0000" stop="20251016161000 +0000" channel="SICK.pt"><title lang="pt">Power Players T2 - Ep. 17</title></programme>
+<programme start="20251016161000 +0000" stop="20251016163000 +0000" channel="SICK.pt"><title lang="pt">Supa Strikas T7 - Ep. 2</title></programme>
+<programme start="20251016163000 +0000" stop="20251016171800 +0000" channel="SICK.pt"><title lang="pt">Supa Strikas T1 - Ep. 7</title></programme>
+<programme start="20251016171800 +0000" stop="20251016174100 +0000" channel="SICK.pt"><title lang="pt">Onze T4 - Ep. 30</title></programme>
+<programme start="20251016174100 +0000" stop="20251016180500 +0000" channel="SICK.pt"><title lang="pt">Onze T4 - Ep. 31</title></programme>
+<programme start="20251016180500 +0000" stop="20251016182800 +0000" channel="SICK.pt"><title lang="pt">Onze T4 - Ep. 32</title></programme>
+<programme start="20251016182800 +0000" stop="20251016185300 +0000" channel="SICK.pt"><title lang="pt">Onze T4 - Ep. 33</title></programme>
+<programme start="20251016185300 +0000" stop="20251016193500 +0000" channel="SICK.pt"><title lang="pt">Margarita T1 - Ep. 19</title></programme>
+<programme start="20251016193500 +0000" stop="20251016201300 +0000" channel="SICK.pt"><title lang="pt">Margarita T1 - Ep. 20</title></programme>
+<programme start="20251016201300 +0000" stop="20251016203500 +0000" channel="SICK.pt"><title lang="pt">Onze T4 - Ep. 34</title></programme>
+<programme start="20251016203500 +0000" stop="20251016205700 +0000" channel="SICK.pt"><title lang="pt">Onze T4 - Ep. 35</title></programme>
+<programme start="20251016205700 +0000" stop="20251016215200 +0000" channel="SICK.pt"><title lang="pt">Rebelde Way T1 - Ep. 227</title></programme>
+<programme start="20251016215200 +0000" stop="20251016224200 +0000" channel="SICK.pt"><title lang="pt">Lua Vermelha T1 - Ep. 110</title></programme>
+<programme start="20251016224200 +0000" stop="20251016231000 +0000" channel="SICK.pt"><title lang="pt">Malhação: Vidas Brasileiras T26 - Ep. 228</title></programme>
+<programme start="20251016231000 +0000" stop="20251016233200 +0000" channel="SICK.pt"><title lang="pt">Yu-Gi-Oh! Vrains T3 - Ep. 25</title></programme>
+<programme start="20251016233200 +0000" stop="20251016235500 +0000" channel="SICK.pt"><title lang="pt">Yu-Gi-Oh! Vrains T3 - Ep. 26</title></programme>
+<programme start="20251016235500 +0000" stop="20251017001800 +0000" channel="SICK.pt"><title lang="pt">GGO Football T1 - Ep. 25</title></programme>
 <programme start="20251014235100 +0000" stop="20251015004100 +0000" channel="SICMulher.pt"><title lang="pt">Married At First Sight Austrália T12 - Ep. 21</title></programme>
 <programme start="20251015004100 +0000" stop="20251015012600 +0000" channel="SICMulher.pt"><title lang="pt">Married At First Sight Austrália T12 - Ep. 22</title></programme>
 <programme start="20251015012600 +0000" stop="20251015022200 +0000" channel="SICMulher.pt"><title lang="pt">Los Fugitivos T1 - Ep. 1</title></programme>
@@ -10742,36 +10771,36 @@
 <programme start="20251016025700 +0000" stop="20251016032200 +0000" channel="SICMulher.pt"><title lang="pt">Temos De Falar T1 - Ep. 22</title></programme>
 <programme start="20251016032200 +0000" stop="20251016040300 +0000" channel="SICMulher.pt"><title lang="pt">What&apos;s Up? TV T3 - Ep. 1</title></programme>
 <programme start="20251016040300 +0000" stop="20251016043700 +0000" channel="SICMulher.pt"><title lang="pt">Temos De Falar T2 - Ep. 9</title></programme>
-<programme start="20251016043700 +0000" stop="20251016050000 +0000" channel="SICMulher.pt"><title lang="pt">Expresso Imobiliário T1 - Ep. 29</title></programme>
-<programme start="20251016050000 +0000" stop="20251016053000 +0000" channel="SICMulher.pt"><title lang="pt">Médico Da Casa Com Dr. Almeida Nunes T3 - Ep. 4</title></programme>
-<programme start="20251016053000 +0000" stop="20251016060000 +0000" channel="SICMulher.pt"><title lang="pt">Irresistível T3 - Ep. 10</title></programme>
-<programme start="20251016060000 +0000" stop="20251016064500 +0000" channel="SICMulher.pt"><title lang="pt">Temos De Falar T2 - Ep. 3</title></programme>
-<programme start="20251016064500 +0000" stop="20251016071500 +0000" channel="SICMulher.pt"><title lang="pt">What&apos;s Up? TV T3 - Ep. 16</title></programme>
-<programme start="20251016071500 +0000" stop="20251016074500 +0000" channel="SICMulher.pt"><title lang="pt">Irresistível T3 - Ep. 2</title></programme>
-<programme start="20251016074500 +0000" stop="20251016083000 +0000" channel="SICMulher.pt"><title lang="pt">Temptation Island U.S.A. T5 - Ep. 10</title></programme>
-<programme start="20251016083000 +0000" stop="20251016091500 +0000" channel="SICMulher.pt"><title lang="pt">Married At First Sight Austrália T12 - Ep. 25</title></programme>
-<programme start="20251016091500 +0000" stop="20251016100000 +0000" channel="SICMulher.pt"><title lang="pt">Married At First Sight Austrália T12 - Ep. 26</title></programme>
-<programme start="20251016100000 +0000" stop="20251016104500 +0000" channel="SICMulher.pt"><title lang="pt">My Dream Home T8 - Ep. 9</title></programme>
-<programme start="20251016104500 +0000" stop="20251016113000 +0000" channel="SICMulher.pt"><title lang="pt">My Dream Home T8 - Ep. 14</title></programme>
-<programme start="20251016113000 +0000" stop="20251016121500 +0000" channel="SICMulher.pt"><title lang="pt">What&apos;s Up? TV T3 - Ep. 20</title></programme>
-<programme start="20251016121500 +0000" stop="20251016124500 +0000" channel="SICMulher.pt"><title lang="pt">Wounded Birds T1 - Ep. 83</title></programme>
-<programme start="20251016124500 +0000" stop="20251016131500 +0000" channel="SICMulher.pt"><title lang="pt">Wounded Birds T1 - Ep. 84</title></programme>
-<programme start="20251016131500 +0000" stop="20251016140000 +0000" channel="SICMulher.pt"><title lang="pt">Wounded Birds T1 - Ep. 85</title></programme>
-<programme start="20251016140000 +0000" stop="20251016144500 +0000" channel="SICMulher.pt"><title lang="pt">Fixer To Fabulous T4 - Ep. 13</title></programme>
-<programme start="20251016144500 +0000" stop="20251016153000 +0000" channel="SICMulher.pt"><title lang="pt">Fixer To Fabulous T4 - Ep. 8</title></programme>
-<programme start="20251016153000 +0000" stop="20251016161500 +0000" channel="SICMulher.pt"><title lang="pt">Married At First Sight Austrália T12 - Ep. 30</title></programme>
-<programme start="20251016161500 +0000" stop="20251016170000 +0000" channel="SICMulher.pt"><title lang="pt">Married At First Sight Austrália T12 - Ep. 31</title></programme>
-<programme start="20251016170000 +0000" stop="20251016173000 +0000" channel="SICMulher.pt"><title lang="pt">Love &amp; Hate T1 - Ep. 54</title></programme>
-<programme start="20251016173000 +0000" stop="20251016181500 +0000" channel="SICMulher.pt"><title lang="pt">Love &amp; Hate T1 - Ep. 55</title></programme>
-<programme start="20251016181500 +0000" stop="20251016184500 +0000" channel="SICMulher.pt"><title lang="pt">I Am Mother T2 - Ep. 3</title></programme>
-<programme start="20251016184500 +0000" stop="20251016193000 +0000" channel="SICMulher.pt"><title lang="pt">I Am Mother T2 - Ep. 4</title></programme>
-<programme start="20251016193000 +0000" stop="20251016200000 +0000" channel="SICMulher.pt"><title lang="pt">Lifeline T1 - Ep. 202</title></programme>
-<programme start="20251016200000 +0000" stop="20251016204500 +0000" channel="SICMulher.pt"><title lang="pt">Lifeline T1 - Ep. 203</title></programme>
-<programme start="20251016204500 +0000" stop="20251016211500 +0000" channel="SICMulher.pt"><title lang="pt">Fatmagul T1 - Ep. 1</title></programme>
-<programme start="20251016211500 +0000" stop="20251016220000 +0000" channel="SICMulher.pt"><title lang="pt">Our Story T1 - Ep. 78</title></programme>
-<programme start="20251016220000 +0000" stop="20251016224500 +0000" channel="SICMulher.pt"><title lang="pt">Hold My Hand T1 - Ep. 169</title></programme>
-<programme start="20251016224500 +0000" stop="20251016233000 +0000" channel="SICMulher.pt"><title lang="pt">Hold My Hand T1 - Ep. 170</title></programme>
-<programme start="20251016233000 +0000" stop="20251017001500 +0000" channel="SICMulher.pt"><title lang="pt">Married At First Sight Austrália T12 - Ep. 24</title></programme>
+<programme start="20251016043700 +0000" stop="20251016044800 +0000" channel="SICMulher.pt"><title lang="pt">Expresso Imobiliário T1 - Ep. 29</title></programme>
+<programme start="20251016044800 +0000" stop="20251016051500 +0000" channel="SICMulher.pt"><title lang="pt">Médico Da Casa Com Dr. Almeida Nunes T3 - Ep. 4</title></programme>
+<programme start="20251016051500 +0000" stop="20251016054800 +0000" channel="SICMulher.pt"><title lang="pt">Irresistível T3 - Ep. 10</title></programme>
+<programme start="20251016054800 +0000" stop="20251016062400 +0000" channel="SICMulher.pt"><title lang="pt">Temos De Falar T2 - Ep. 3</title></programme>
+<programme start="20251016062400 +0000" stop="20251016070800 +0000" channel="SICMulher.pt"><title lang="pt">What&apos;s Up? TV T3 - Ep. 16</title></programme>
+<programme start="20251016070800 +0000" stop="20251016074100 +0000" channel="SICMulher.pt"><title lang="pt">Irresistível T3 - Ep. 2</title></programme>
+<programme start="20251016074100 +0000" stop="20251016082400 +0000" channel="SICMulher.pt"><title lang="pt">Temptation Island U.S.A. T5 - Ep. 10</title></programme>
+<programme start="20251016082400 +0000" stop="20251016090700 +0000" channel="SICMulher.pt"><title lang="pt">Married At First Sight Austrália T12 - Ep. 25</title></programme>
+<programme start="20251016090700 +0000" stop="20251016095400 +0000" channel="SICMulher.pt"><title lang="pt">Married At First Sight Austrália T12 - Ep. 26</title></programme>
+<programme start="20251016095400 +0000" stop="20251016103800 +0000" channel="SICMulher.pt"><title lang="pt">My Dream Home T8 - Ep. 9</title></programme>
+<programme start="20251016103800 +0000" stop="20251016112400 +0000" channel="SICMulher.pt"><title lang="pt">My Dream Home T8 - Ep. 14</title></programme>
+<programme start="20251016112400 +0000" stop="20251016120600 +0000" channel="SICMulher.pt"><title lang="pt">What&apos;s Up? TV T3 - Ep. 20</title></programme>
+<programme start="20251016120600 +0000" stop="20251016122800 +0000" channel="SICMulher.pt"><title lang="pt">Wounded Birds T1 - Ep. 83</title></programme>
+<programme start="20251016122800 +0000" stop="20251016131100 +0000" channel="SICMulher.pt"><title lang="pt">Wounded Birds T1 - Ep. 84</title></programme>
+<programme start="20251016131100 +0000" stop="20251016135600 +0000" channel="SICMulher.pt"><title lang="pt">Wounded Birds T1 - Ep. 85</title></programme>
+<programme start="20251016135600 +0000" stop="20251016144300 +0000" channel="SICMulher.pt"><title lang="pt">Fixer To Fabulous T4 - Ep. 13</title></programme>
+<programme start="20251016144300 +0000" stop="20251016153200 +0000" channel="SICMulher.pt"><title lang="pt">Fixer To Fabulous T4 - Ep. 8</title></programme>
+<programme start="20251016153200 +0000" stop="20251016161100 +0000" channel="SICMulher.pt"><title lang="pt">Married At First Sight Austrália T12 - Ep. 30</title></programme>
+<programme start="20251016161100 +0000" stop="20251016165900 +0000" channel="SICMulher.pt"><title lang="pt">Married At First Sight Austrália T12 - Ep. 31</title></programme>
+<programme start="20251016165900 +0000" stop="20251016172000 +0000" channel="SICMulher.pt"><title lang="pt">Love &amp; Hate T1 - Ep. 54</title></programme>
+<programme start="20251016172000 +0000" stop="20251016180900 +0000" channel="SICMulher.pt"><title lang="pt">Love &amp; Hate T1 - Ep. 55</title></programme>
+<programme start="20251016180900 +0000" stop="20251016184500 +0000" channel="SICMulher.pt"><title lang="pt">I Am Mother T2 - Ep. 3</title></programme>
+<programme start="20251016184500 +0000" stop="20251016192900 +0000" channel="SICMulher.pt"><title lang="pt">I Am Mother T2 - Ep. 4</title></programme>
+<programme start="20251016192900 +0000" stop="20251016195400 +0000" channel="SICMulher.pt"><title lang="pt">Lifeline T1 - Ep. 202</title></programme>
+<programme start="20251016195400 +0000" stop="20251016204500 +0000" channel="SICMulher.pt"><title lang="pt">Lifeline T1 - Ep. 203</title></programme>
+<programme start="20251016204500 +0000" stop="20251016210600 +0000" channel="SICMulher.pt"><title lang="pt">Fatmagul T1 - Ep. 1</title></programme>
+<programme start="20251016210600 +0000" stop="20251016215400 +0000" channel="SICMulher.pt"><title lang="pt">Our Story T1 - Ep. 78</title></programme>
+<programme start="20251016215400 +0000" stop="20251016224000 +0000" channel="SICMulher.pt"><title lang="pt">Hold My Hand T1 - Ep. 169</title></programme>
+<programme start="20251016224000 +0000" stop="20251016232500 +0000" channel="SICMulher.pt"><title lang="pt">Hold My Hand T1 - Ep. 170</title></programme>
+<programme start="20251016232500 +0000" stop="20251017001100 +0000" channel="SICMulher.pt"><title lang="pt">Married At First Sight Austrália T12 - Ep. 24</title></programme>
 <programme start="20251014230000 +0000" stop="20251015004500 +0000" channel="SICNoticias.pt"><title lang="pt">Jornal Da Meia-Noite</title></programme>
 <programme start="20251015004500 +0000" stop="20251015011300 +0000" channel="SICNoticias.pt"><title lang="pt">Primeira Página - Ep. 203</title></programme>
 <programme start="20251015011300 +0000" stop="20251015025400 +0000" channel="SICNoticias.pt"><title lang="pt">Jornal Da Meia-Noite</title></programme>
@@ -10805,22 +10834,22 @@
 <programme start="20251016032900 +0000" stop="20251016034900 +0000" channel="SICNoticias.pt"><title lang="pt">Volante T34 - Ep. 6</title></programme>
 <programme start="20251016034900 +0000" stop="20251016043400 +0000" channel="SICNoticias.pt"><title lang="pt">Jornal Da Meia-Noite</title></programme>
 <programme start="20251016043400 +0000" stop="20251016050000 +0000" channel="SICNoticias.pt"><title lang="pt">Primeira Página - Ep. 204</title></programme>
-<programme start="20251016050000 +0000" stop="20251016090000 +0000" channel="SICNoticias.pt"><title lang="pt">Edição Da Manhã</title></programme>
-<programme start="20251016090000 +0000" stop="20251016100000 +0000" channel="SICNoticias.pt"><title lang="pt">SIC Notícias Manhã</title></programme>
+<programme start="20251016050000 +0000" stop="20251016085500 +0000" channel="SICNoticias.pt"><title lang="pt">Edição Da Manhã</title></programme>
+<programme start="20251016085500 +0000" stop="20251016100000 +0000" channel="SICNoticias.pt"><title lang="pt">SIC Notícias Manhã</title></programme>
 <programme start="20251016100000 +0000" stop="20251016110000 +0000" channel="SICNoticias.pt"><title lang="pt">SIC Notícias Manhã - 11 Horas</title></programme>
-<programme start="20251016110000 +0000" stop="20251016120000 +0000" channel="SICNoticias.pt"><title lang="pt">SIC Notícias Manhã - 12 Horas</title></programme>
-<programme start="20251016120000 +0000" stop="20251016133000 +0000" channel="SICNoticias.pt"><title lang="pt">Jornal SIC Notícias</title></programme>
-<programme start="20251016133000 +0000" stop="20251016134500 +0000" channel="SICNoticias.pt"><title lang="pt">Economia Expresso</title></programme>
-<programme start="20251016134500 +0000" stop="20251016140000 +0000" channel="SICNoticias.pt"><title lang="pt">Jornal SIC Notícias</title></programme>
-<programme start="20251016140000 +0000" stop="20251016150000 +0000" channel="SICNoticias.pt"><title lang="pt">Jogo Aberto</title></programme>
-<programme start="20251016150000 +0000" stop="20251016170000 +0000" channel="SICNoticias.pt"><title lang="pt">SIC Notícias Direto</title></programme>
-<programme start="20251016170000 +0000" stop="20251016173000 +0000" channel="SICNoticias.pt"><title lang="pt">Jornal Do Dia</title></programme>
-<programme start="20251016173000 +0000" stop="20251016174500 +0000" channel="SICNoticias.pt"><title lang="pt">Economia Expresso</title></programme>
-<programme start="20251016174500 +0000" stop="20251016180000 +0000" channel="SICNoticias.pt"><title lang="pt">Jornal Do Dia</title></programme>
+<programme start="20251016110000 +0000" stop="20251016115500 +0000" channel="SICNoticias.pt"><title lang="pt">SIC Notícias Manhã - 12 Horas</title></programme>
+<programme start="20251016115500 +0000" stop="20251016131500 +0000" channel="SICNoticias.pt"><title lang="pt">Jornal SIC Notícias</title></programme>
+<programme start="20251016131500 +0000" stop="20251016132200 +0000" channel="SICNoticias.pt"><title lang="pt">Economia Expresso</title></programme>
+<programme start="20251016132200 +0000" stop="20251016135000 +0000" channel="SICNoticias.pt"><title lang="pt">Jornal SIC Notícias</title></programme>
+<programme start="20251016135000 +0000" stop="20251016145500 +0000" channel="SICNoticias.pt"><title lang="pt">Jogo Aberto</title></programme>
+<programme start="20251016145500 +0000" stop="20251016165500 +0000" channel="SICNoticias.pt"><title lang="pt">SIC Notícias Direto</title></programme>
+<programme start="20251016165500 +0000" stop="20251016172300 +0000" channel="SICNoticias.pt"><title lang="pt">Jornal Do Dia</title></programme>
+<programme start="20251016172300 +0000" stop="20251016173000 +0000" channel="SICNoticias.pt"><title lang="pt">Economia Expresso</title></programme>
+<programme start="20251016173000 +0000" stop="20251016180000 +0000" channel="SICNoticias.pt"><title lang="pt">Jornal Do Dia</title></programme>
 <programme start="20251016180000 +0000" stop="20251016190000 +0000" channel="SICNoticias.pt"><title lang="pt">Jornal Do Dia - 19 Horas</title></programme>
-<programme start="20251016190000 +0000" stop="20251016210000 +0000" channel="SICNoticias.pt"><title lang="pt">Grande Edição</title></programme>
-<programme start="20251016210000 +0000" stop="20251016220000 +0000" channel="SICNoticias.pt"><title lang="pt">Edição Da Noite</title></programme>
-<programme start="20251016220000 +0000" stop="20251016230000 +0000" channel="SICNoticias.pt"><title lang="pt">Eixo Do Mal T17 - Ep. 38</title></programme>
+<programme start="20251016190000 +0000" stop="20251016205700 +0000" channel="SICNoticias.pt"><title lang="pt">Grande Edição</title></programme>
+<programme start="20251016205700 +0000" stop="20251016220200 +0000" channel="SICNoticias.pt"><title lang="pt">Edição Da Noite</title></programme>
+<programme start="20251016220200 +0000" stop="20251016230000 +0000" channel="SICNoticias.pt"><title lang="pt">Eixo Do Mal T17 - Ep. 38</title></programme>
 <programme start="20251016230000 +0000" stop="20251017004500 +0000" channel="SICNoticias.pt"><title lang="pt">Jornal Da Meia-Noite</title></programme>
 <programme start="20251014232000 +0000" stop="20251015000900 +0000" channel="SICNovelas.pt"><title lang="pt">Podia Acabar O Mundo - Ep. 163</title></programme>
 <programme start="20251015000900 +0000" stop="20251015005200 +0000" channel="SICNovelas.pt"><title lang="pt">Laços De Sangue - Ep. 65</title></programme>
@@ -10865,34 +10894,34 @@
 <programme start="20251016025400 +0000" stop="20251016033800 +0000" channel="SICNovelas.pt"><title lang="pt">Resistirei - Ep. 45</title></programme>
 <programme start="20251016033800 +0000" stop="20251016042700 +0000" channel="SICNovelas.pt"><title lang="pt">Podia Acabar O Mundo - Ep. 164</title></programme>
 <programme start="20251016042700 +0000" stop="20251016050000 +0000" channel="SICNovelas.pt"><title lang="pt">Laços De Sangue - Ep. 66</title></programme>
-<programme start="20251016050000 +0000" stop="20251016051000 +0000" channel="SICNovelas.pt"><title lang="pt">E-Especial T7 - Ep. 33</title></programme>
-<programme start="20251016051000 +0000" stop="20251016054500 +0000" channel="SICNovelas.pt"><title lang="pt">Uma Aventura T3 - Ep. 8</title></programme>
-<programme start="20251016054500 +0000" stop="20251016063000 +0000" channel="SICNovelas.pt"><title lang="pt">Floribella - Ep. 195</title></programme>
-<programme start="20251016063000 +0000" stop="20251016071500 +0000" channel="SICNovelas.pt"><title lang="pt">Floribella - Ep. 196</title></programme>
-<programme start="20251016071500 +0000" stop="20251016080000 +0000" channel="SICNovelas.pt"><title lang="pt">Paixão - Ep. 209</title></programme>
-<programme start="20251016080000 +0000" stop="20251016084500 +0000" channel="SICNovelas.pt"><title lang="pt">Golpe De Sorte T4 - Ep. 28</title></programme>
-<programme start="20251016084500 +0000" stop="20251016093000 +0000" channel="SICNovelas.pt"><title lang="pt">Podia Acabar O Mundo - Ep. 164</title></programme>
-<programme start="20251016093000 +0000" stop="20251016101500 +0000" channel="SICNovelas.pt"><title lang="pt">Resistirei - Ep. 45</title></programme>
-<programme start="20251016101500 +0000" stop="20251016110000 +0000" channel="SICNovelas.pt"><title lang="pt">Amor Maior - Ep. 365</title></programme>
-<programme start="20251016110000 +0000" stop="20251016114500 +0000" channel="SICNovelas.pt"><title lang="pt">Floribella - Ep. 196</title></programme>
-<programme start="20251016114500 +0000" stop="20251016123000 +0000" channel="SICNovelas.pt"><title lang="pt">Paixão - Ep. 209</title></programme>
-<programme start="20251016123000 +0000" stop="20251016131500 +0000" channel="SICNovelas.pt"><title lang="pt">Vingança - Ep. 15</title></programme>
-<programme start="20251016131500 +0000" stop="20251016140000 +0000" channel="SICNovelas.pt"><title lang="pt">Laços De Sangue - Ep. 66</title></programme>
-<programme start="20251016140000 +0000" stop="20251016144500 +0000" channel="SICNovelas.pt"><title lang="pt">Golpe De Sorte T4 - Ep. 28</title></programme>
-<programme start="20251016144500 +0000" stop="20251016153000 +0000" channel="SICNovelas.pt"><title lang="pt">Resistirei - Ep. 45</title></programme>
-<programme start="20251016153000 +0000" stop="20251016161500 +0000" channel="SICNovelas.pt"><title lang="pt">Podia Acabar O Mundo - Ep. 164</title></programme>
-<programme start="20251016161500 +0000" stop="20251016170000 +0000" channel="SICNovelas.pt"><title lang="pt">Vingança - Ep. 15</title></programme>
-<programme start="20251016170000 +0000" stop="20251016174500 +0000" channel="SICNovelas.pt"><title lang="pt">Lua Vermelha - Ep. 77</title></programme>
-<programme start="20251016174500 +0000" stop="20251016183000 +0000" channel="SICNovelas.pt"><title lang="pt">Floribella - Ep. 196</title></programme>
-<programme start="20251016183000 +0000" stop="20251016191500 +0000" channel="SICNovelas.pt"><title lang="pt">Floribella - Ep. 197</title></programme>
-<programme start="20251016191500 +0000" stop="20251016200000 +0000" channel="SICNovelas.pt"><title lang="pt">Laços De Sangue - Ep. 67</title></programme>
-<programme start="20251016200000 +0000" stop="20251016204500 +0000" channel="SICNovelas.pt"><title lang="pt">Vingança - Ep. 16</title></programme>
-<programme start="20251016204500 +0000" stop="20251016211500 +0000" channel="SICNovelas.pt"><title lang="pt">Amor Maior - Ep. 366</title></programme>
-<programme start="20251016211500 +0000" stop="20251016214500 +0000" channel="SICNovelas.pt"><title lang="pt">Golpe De Sorte T4 - Ep. 29</title></programme>
-<programme start="20251016214500 +0000" stop="20251016223000 +0000" channel="SICNovelas.pt"><title lang="pt">Paixão - Ep. 210</title></programme>
-<programme start="20251016223000 +0000" stop="20251016230000 +0000" channel="SICNovelas.pt"><title lang="pt">Resistirei - Ep. 46</title></programme>
-<programme start="20251016230000 +0000" stop="20251016234500 +0000" channel="SICNovelas.pt"><title lang="pt">Podia Acabar O Mundo - Ep. 165</title></programme>
-<programme start="20251016234500 +0000" stop="20251017003000 +0000" channel="SICNovelas.pt"><title lang="pt">Laços De Sangue - Ep. 67</title></programme>
+<programme start="20251016050000 +0000" stop="20251016051400 +0000" channel="SICNovelas.pt"><title lang="pt">E-Especial T7 - Ep. 33</title></programme>
+<programme start="20251016051400 +0000" stop="20251016055000 +0000" channel="SICNovelas.pt"><title lang="pt">Uma Aventura T3 - Ep. 8</title></programme>
+<programme start="20251016055000 +0000" stop="20251016063100 +0000" channel="SICNovelas.pt"><title lang="pt">Floribella - Ep. 195</title></programme>
+<programme start="20251016063100 +0000" stop="20251016071300 +0000" channel="SICNovelas.pt"><title lang="pt">Floribella - Ep. 196</title></programme>
+<programme start="20251016071300 +0000" stop="20251016075500 +0000" channel="SICNovelas.pt"><title lang="pt">Paixão - Ep. 209</title></programme>
+<programme start="20251016075500 +0000" stop="20251016084000 +0000" channel="SICNovelas.pt"><title lang="pt">Golpe De Sorte T4 - Ep. 28</title></programme>
+<programme start="20251016084000 +0000" stop="20251016092800 +0000" channel="SICNovelas.pt"><title lang="pt">Podia Acabar O Mundo - Ep. 164</title></programme>
+<programme start="20251016092800 +0000" stop="20251016101400 +0000" channel="SICNovelas.pt"><title lang="pt">Resistirei - Ep. 45</title></programme>
+<programme start="20251016101400 +0000" stop="20251016110500 +0000" channel="SICNovelas.pt"><title lang="pt">Amor Maior - Ep. 365</title></programme>
+<programme start="20251016110500 +0000" stop="20251016114400 +0000" channel="SICNovelas.pt"><title lang="pt">Floribella - Ep. 196</title></programme>
+<programme start="20251016114400 +0000" stop="20251016122900 +0000" channel="SICNovelas.pt"><title lang="pt">Paixão - Ep. 209</title></programme>
+<programme start="20251016122900 +0000" stop="20251016131600 +0000" channel="SICNovelas.pt"><title lang="pt">Vingança - Ep. 15</title></programme>
+<programme start="20251016131600 +0000" stop="20251016140300 +0000" channel="SICNovelas.pt"><title lang="pt">Laços De Sangue - Ep. 66</title></programme>
+<programme start="20251016140300 +0000" stop="20251016144600 +0000" channel="SICNovelas.pt"><title lang="pt">Golpe De Sorte T4 - Ep. 28</title></programme>
+<programme start="20251016144600 +0000" stop="20251016153300 +0000" channel="SICNovelas.pt"><title lang="pt">Resistirei - Ep. 45</title></programme>
+<programme start="20251016153300 +0000" stop="20251016162000 +0000" channel="SICNovelas.pt"><title lang="pt">Podia Acabar O Mundo - Ep. 164</title></programme>
+<programme start="20251016162000 +0000" stop="20251016170600 +0000" channel="SICNovelas.pt"><title lang="pt">Vingança - Ep. 15</title></programme>
+<programme start="20251016170600 +0000" stop="20251016175100 +0000" channel="SICNovelas.pt"><title lang="pt">Lua Vermelha - Ep. 77</title></programme>
+<programme start="20251016175100 +0000" stop="20251016182900 +0000" channel="SICNovelas.pt"><title lang="pt">Floribella - Ep. 196</title></programme>
+<programme start="20251016182900 +0000" stop="20251016190800 +0000" channel="SICNovelas.pt"><title lang="pt">Floribella - Ep. 197</title></programme>
+<programme start="20251016190800 +0000" stop="20251016195100 +0000" channel="SICNovelas.pt"><title lang="pt">Laços De Sangue - Ep. 67</title></programme>
+<programme start="20251016195100 +0000" stop="20251016203700 +0000" channel="SICNovelas.pt"><title lang="pt">Vingança - Ep. 16</title></programme>
+<programme start="20251016203700 +0000" stop="20251016210400 +0000" channel="SICNovelas.pt"><title lang="pt">Amor Maior - Ep. 366</title></programme>
+<programme start="20251016210400 +0000" stop="20251016214800 +0000" channel="SICNovelas.pt"><title lang="pt">Golpe De Sorte T4 - Ep. 29</title></programme>
+<programme start="20251016214800 +0000" stop="20251016222800 +0000" channel="SICNovelas.pt"><title lang="pt">Paixão - Ep. 210</title></programme>
+<programme start="20251016222800 +0000" stop="20251016231400 +0000" channel="SICNovelas.pt"><title lang="pt">Resistirei - Ep. 46</title></programme>
+<programme start="20251016231400 +0000" stop="20251016235900 +0000" channel="SICNovelas.pt"><title lang="pt">Podia Acabar O Mundo - Ep. 165</title></programme>
+<programme start="20251016235900 +0000" stop="20251017004300 +0000" channel="SICNovelas.pt"><title lang="pt">Laços De Sangue - Ep. 67</title></programme>
 <programme start="20251014233400 +0000" stop="20251015003800 +0000" channel="SICRadical.pt"><title lang="pt">Kitchen Nightmares (Spain) T6 - Ep. 3</title></programme>
 <programme start="20251015003800 +0000" stop="20251015010200 +0000" channel="SICRadical.pt"><title lang="pt">Preliminares T2 - Ep. 2</title></programme>
 <programme start="20251015010200 +0000" stop="20251015014400 +0000" channel="SICRadical.pt"><title lang="pt">Tonight Show With Jimmy Fallon T13 - Ep. 9</title></programme>
@@ -10939,35 +10968,35 @@
 <programme start="20251016024400 +0000" stop="20251016040900 +0000" channel="SICRadical.pt"><title lang="pt">Irritações T4 - Ep. 34</title></programme>
 <programme start="20251016040900 +0000" stop="20251016042400 +0000" channel="SICRadical.pt"><title lang="pt">Volante T34 - Ep. 5</title></programme>
 <programme start="20251016042400 +0000" stop="20251016043600 +0000" channel="SICRadical.pt"><title lang="pt">Cinetendinha T4 - Ep. 42</title></programme>
-<programme start="20251016043600 +0000" stop="20251016050000 +0000" channel="SICRadical.pt"><title lang="pt">Curto Circuito T20 - Ep. 101</title></programme>
-<programme start="20251016050000 +0000" stop="20251016054500 +0000" channel="SICRadical.pt"><title lang="pt">Curto Circuito T20 - Ep. 97</title></programme>
-<programme start="20251016054500 +0000" stop="20251016060000 +0000" channel="SICRadical.pt"><title lang="pt">Cinetendinha T4 - Ep. 42</title></programme>
-<programme start="20251016060000 +0000" stop="20251016064500 +0000" channel="SICRadical.pt"><title lang="pt">Retro_Gamers T2 - Ep. 6</title></programme>
-<programme start="20251016064500 +0000" stop="20251016070000 +0000" channel="SICRadical.pt"><title lang="pt">Boa Cama, Boa Mesa T25 - Ep. 14</title></programme>
-<programme start="20251016070000 +0000" stop="20251016080000 +0000" channel="SICRadical.pt"><title lang="pt">Irritações T4 - Ep. 35</title></programme>
-<programme start="20251016080000 +0000" stop="20251016084500 +0000" channel="SICRadical.pt"><title lang="pt">Curto Circuito T20 - Ep. 98</title></programme>
-<programme start="20251016084500 +0000" stop="20251016091500 +0000" channel="SICRadical.pt"><title lang="pt">Tonight Show With Jimmy Fallon T13 - Ep. 8</title></programme>
-<programme start="20251016091500 +0000" stop="20251016100000 +0000" channel="SICRadical.pt"><title lang="pt">Tonight Show With Jimmy Fallon T13 - Ep. 9</title></programme>
-<programme start="20251016100000 +0000" stop="20251016103000 +0000" channel="SICRadical.pt"><title lang="pt">Love Island Austrália T6 - Ep. 32</title></programme>
-<programme start="20251016103000 +0000" stop="20251016111500 +0000" channel="SICRadical.pt"><title lang="pt">Love Island Austrália T6 - Ep. 33</title></programme>
-<programme start="20251016111500 +0000" stop="20251016113000 +0000" channel="SICRadical.pt"><title lang="pt">Volante T34 - Ep. 5</title></programme>
-<programme start="20251016113000 +0000" stop="20251016114500 +0000" channel="SICRadical.pt"><title lang="pt">Boa Cama, Boa Mesa T25 - Ep. 14</title></programme>
-<programme start="20251016114500 +0000" stop="20251016123000 +0000" channel="SICRadical.pt"><title lang="pt">Tonight Show With Jimmy Fallon T13 - Ep. 10</title></programme>
-<programme start="20251016123000 +0000" stop="20251016131500 +0000" channel="SICRadical.pt"><title lang="pt">Love Island U.K. T11 - Ep. 33</title></programme>
-<programme start="20251016131500 +0000" stop="20251016140000 +0000" channel="SICRadical.pt"><title lang="pt">Balada De Hill Street T5 - Ep. 18</title></programme>
-<programme start="20251016140000 +0000" stop="20251016144500 +0000" channel="SICRadical.pt"><title lang="pt">Balada De Nova Iorque N.Y.P.D. Blue T2 - Ep. 17</title></programme>
-<programme start="20251016144500 +0000" stop="20251016154500 +0000" channel="SICRadical.pt"><title lang="pt">Love Island U.K. T11 - Ep. 31</title></programme>
-<programme start="20251016154500 +0000" stop="20251016163000 +0000" channel="SICRadical.pt"><title lang="pt">Love Island U.K. T11 - Ep. 32</title></programme>
-<programme start="20251016163000 +0000" stop="20251016170000 +0000" channel="SICRadical.pt"><title lang="pt">Love Island Austrália T6 - Ep. 33</title></programme>
-<programme start="20251016170000 +0000" stop="20251016174500 +0000" channel="SICRadical.pt"><title lang="pt">Love Island Austrália T6 - Ep. 34</title></programme>
-<programme start="20251016174500 +0000" stop="20251016183000 +0000" channel="SICRadical.pt"><title lang="pt">Balada De Nova Iorque N.Y.P.D. Blue T2 - Ep. 18</title></programme>
-<programme start="20251016183000 +0000" stop="20251016191500 +0000" channel="SICRadical.pt"><title lang="pt">Balada De Hill Street T5 - Ep. 18</title></programme>
-<programme start="20251016191500 +0000" stop="20251016200000 +0000" channel="SICRadical.pt"><title lang="pt">Lego Masters Austrália T5 - Ep. 16</title></programme>
-<programme start="20251016200000 +0000" stop="20251016204500 +0000" channel="SICRadical.pt"><title lang="pt">Tonight Show With Jimmy Fallon T13 - Ep. 11</title></programme>
-<programme start="20251016204500 +0000" stop="20251016213000 +0000" channel="SICRadical.pt"><title lang="pt">SAS: Who Dares Wins Celebrity 2023 T1 - Ep. 1</title></programme>
-<programme start="20251016213000 +0000" stop="20251016223000 +0000" channel="SICRadical.pt"><title lang="pt">SAS: Who Dares Wins Celebrity 2023 T1 - Ep. 2</title></programme>
-<programme start="20251016223000 +0000" stop="20251016233000 +0000" channel="SICRadical.pt"><title lang="pt">Kitchen Nightmares (Spain) T6 - Ep. 4</title></programme>
-<programme start="20251016233000 +0000" stop="20251017003000 +0000" channel="SICRadical.pt"><title lang="pt">Terra Nossa Penacova T9 - Ep. 11</title></programme>
+<programme start="20251016043600 +0000" stop="20251016052300 +0000" channel="SICRadical.pt"><title lang="pt">Curto Circuito T20 - Ep. 101</title></programme>
+<programme start="20251016052300 +0000" stop="20251016061000 +0000" channel="SICRadical.pt"><title lang="pt">Curto Circuito T20 - Ep. 97</title></programme>
+<programme start="20251016061000 +0000" stop="20251016061800 +0000" channel="SICRadical.pt"><title lang="pt">Cinetendinha T4 - Ep. 42</title></programme>
+<programme start="20251016061800 +0000" stop="20251016064300 +0000" channel="SICRadical.pt"><title lang="pt">Retro_Gamers T2 - Ep. 6</title></programme>
+<programme start="20251016064300 +0000" stop="20251016065300 +0000" channel="SICRadical.pt"><title lang="pt">Boa Cama, Boa Mesa T25 - Ep. 14</title></programme>
+<programme start="20251016065300 +0000" stop="20251016075500 +0000" channel="SICRadical.pt"><title lang="pt">Irritações T4 - Ep. 35</title></programme>
+<programme start="20251016075500 +0000" stop="20251016084400 +0000" channel="SICRadical.pt"><title lang="pt">Curto Circuito T20 - Ep. 98</title></programme>
+<programme start="20251016084400 +0000" stop="20251016092800 +0000" channel="SICRadical.pt"><title lang="pt">Tonight Show With Jimmy Fallon T13 - Ep. 8</title></programme>
+<programme start="20251016092800 +0000" stop="20251016101000 +0000" channel="SICRadical.pt"><title lang="pt">Tonight Show With Jimmy Fallon T13 - Ep. 9</title></programme>
+<programme start="20251016101000 +0000" stop="20251016105300 +0000" channel="SICRadical.pt"><title lang="pt">Love Island Austrália T6 - Ep. 32</title></programme>
+<programme start="20251016105300 +0000" stop="20251016113500 +0000" channel="SICRadical.pt"><title lang="pt">Love Island Austrália T6 - Ep. 33</title></programme>
+<programme start="20251016113500 +0000" stop="20251016115100 +0000" channel="SICRadical.pt"><title lang="pt">Volante T34 - Ep. 5</title></programme>
+<programme start="20251016115100 +0000" stop="20251016120100 +0000" channel="SICRadical.pt"><title lang="pt">Boa Cama, Boa Mesa T25 - Ep. 14</title></programme>
+<programme start="20251016120100 +0000" stop="20251016124400 +0000" channel="SICRadical.pt"><title lang="pt">Tonight Show With Jimmy Fallon T13 - Ep. 10</title></programme>
+<programme start="20251016124400 +0000" stop="20251016132500 +0000" channel="SICRadical.pt"><title lang="pt">Love Island U.K. T11 - Ep. 33</title></programme>
+<programme start="20251016132500 +0000" stop="20251016141600 +0000" channel="SICRadical.pt"><title lang="pt">Balada De Hill Street T5 - Ep. 18</title></programme>
+<programme start="20251016141600 +0000" stop="20251016150200 +0000" channel="SICRadical.pt"><title lang="pt">Balada De Nova Iorque N.Y.P.D. Blue T2 - Ep. 17</title></programme>
+<programme start="20251016150200 +0000" stop="20251016154300 +0000" channel="SICRadical.pt"><title lang="pt">Love Island U.K. T11 - Ep. 31</title></programme>
+<programme start="20251016154300 +0000" stop="20251016162500 +0000" channel="SICRadical.pt"><title lang="pt">Love Island U.K. T11 - Ep. 32</title></programme>
+<programme start="20251016162500 +0000" stop="20251016170500 +0000" channel="SICRadical.pt"><title lang="pt">Love Island Austrália T6 - Ep. 33</title></programme>
+<programme start="20251016170500 +0000" stop="20251016174400 +0000" channel="SICRadical.pt"><title lang="pt">Love Island Austrália T6 - Ep. 34</title></programme>
+<programme start="20251016174400 +0000" stop="20251016183000 +0000" channel="SICRadical.pt"><title lang="pt">Balada De Nova Iorque N.Y.P.D. Blue T2 - Ep. 18</title></programme>
+<programme start="20251016183000 +0000" stop="20251016192000 +0000" channel="SICRadical.pt"><title lang="pt">Balada De Hill Street T5 - Ep. 18</title></programme>
+<programme start="20251016192000 +0000" stop="20251016194800 +0000" channel="SICRadical.pt"><title lang="pt">Lego Masters Austrália T5 - Ep. 16</title></programme>
+<programme start="20251016194800 +0000" stop="20251016202900 +0000" channel="SICRadical.pt"><title lang="pt">Tonight Show With Jimmy Fallon T13 - Ep. 11</title></programme>
+<programme start="20251016202900 +0000" stop="20251016211800 +0000" channel="SICRadical.pt"><title lang="pt">SAS: Who Dares Wins Celebrity 2023 T1 - Ep. 1</title></programme>
+<programme start="20251016211800 +0000" stop="20251016220700 +0000" channel="SICRadical.pt"><title lang="pt">SAS: Who Dares Wins Celebrity 2023 T1 - Ep. 2</title></programme>
+<programme start="20251016220700 +0000" stop="20251016231800 +0000" channel="SICRadical.pt"><title lang="pt">Kitchen Nightmares (Spain) T6 - Ep. 4</title></programme>
+<programme start="20251016231800 +0000" stop="20251017003100 +0000" channel="SICRadical.pt"><title lang="pt">Terra Nossa Penacova T9 - Ep. 11</title></programme>
 <programme start="20251014233000 +0000" stop="20251015010000 +0000" channel="SkyNewsInternational.uk"><title lang="en">Press Preview</title></programme>
 <programme start="20251015010000 +0000" stop="20251015013000 +0000" channel="SkyNewsInternational.uk"><title lang="en">Sky News</title></programme>
 <programme start="20251015013000 +0000" stop="20251015020000 +0000" channel="SkyNewsInternational.uk"><title lang="en">Sky News</title></programme>
@@ -11309,8 +11338,8 @@
 <programme start="20251015230000 +0000" stop="20251016010500 +0000" channel="SportTV1.pt"><title lang="pt">Cabo Verde x Essuatíni - Qualif. Mundial 2026</title></programme>
 <programme start="20251016010500 +0000" stop="20251016030500 +0000" channel="SportTV1.pt"><title lang="pt">Irlanda Norte x Alemanha - UEFA European Qualifiers</title></programme>
 <programme start="20251016030500 +0000" stop="20251016050000 +0000" channel="SportTV1.pt"><title lang="pt">Dinamarca x Grécia - UEFA European Qualifiers</title></programme>
-<programme start="20251016050000 +0000" stop="20251016065500 +0000" channel="SportTV1.pt"><title lang="pt">Países Baixos x Finlândia - UEFA European Qualifiers</title></programme>
-<programme start="20251016065500 +0000" stop="20251016090000 +0000" channel="SportTV1.pt"><title lang="pt">Espanha x Bulgária - UEFA European Qualifiers</title></programme>
+<programme start="20251016050000 +0000" stop="20251016070000 +0000" channel="SportTV1.pt"><title lang="pt">Países Baixos x Finlândia - UEFA European Qualifiers</title></programme>
+<programme start="20251016070000 +0000" stop="20251016090000 +0000" channel="SportTV1.pt"><title lang="pt">Espanha x Bulgária - UEFA European Qualifiers</title></programme>
 <programme start="20251016090000 +0000" stop="20251016093000 +0000" channel="SportTV1.pt"><title lang="pt">Liga Argentina: Resumo Da Jornada</title></programme>
 <programme start="20251016093000 +0000" stop="20251016100000 +0000" channel="SportTV1.pt"><title lang="pt">Líbia x Cabo Verde - Qualif. Mundial 2026</title></programme>
 <programme start="20251016100000 +0000" stop="20251016103000 +0000" channel="SportTV1.pt"><title lang="pt">Cabo Verde x Essuatíni - Qualif. Mundial 2026</title></programme>
@@ -11359,19 +11388,19 @@
 <programme start="20251016121000 +0000" stop="20251016124000 +0000" channel="SportTV2.pt"><title lang="pt">Hipismo: Lignières, França - Fei Eventing Nations Cup (Resumo)</title></programme>
 <programme start="20251016124000 +0000" stop="20251016131000 +0000" channel="SportTV2.pt"><title lang="pt">Atletismo: MDS 120 Capadócia</title></programme>
 <programme start="20251016131000 +0000" stop="20251016140000 +0000" channel="SportTV2.pt"><title lang="pt">Surf: Inside Pro Surfing - Lexus US Open Of Surfing - WSL</title></programme>
-<programme start="20251016140000 +0000" stop="20251016160000 +0000" channel="SportTV2.pt"><title lang="pt">Ténis: Almaty - ATP World Tour 250 (Direto)</title></programme>
-<programme start="20251016160000 +0000" stop="20251016165000 +0000" channel="SportTV2.pt"><title lang="pt">Rugby: Filme Oficial - Camp. Mundo</title></programme>
-<programme start="20251016165000 +0000" stop="20251016184000 +0000" channel="SportTV2.pt"><title lang="pt">Basquetebol: Benfica x Spartak Office Shoes - Liga dos Campeões</title></programme>
-<programme start="20251016184000 +0000" stop="20251016203500 +0000" channel="SportTV2.pt"><title lang="pt">Andebol Fem.: Fuchse Berlim x Kolstad - Liga Dos Campeões (Direto)</title></programme>
-<programme start="20251016203500 +0000" stop="20251016223000 +0000" channel="SportTV2.pt"><title lang="pt">Basquetebol: Baxi Mansera x Hapoel Jerusalem - Eurocup</title></programme>
-<programme start="20251016223000 +0000" stop="20251016233000 +0000" channel="SportTV2.pt"><title lang="pt">Vela: Cádiz - Sail GP (Resumo)</title></programme>
+<programme start="20251016140000 +0000" stop="20251016155000 +0000" channel="SportTV2.pt"><title lang="pt">Ténis: Almaty - ATP World Tour 250 (Direto)</title></programme>
+<programme start="20251016155000 +0000" stop="20251016164500 +0000" channel="SportTV2.pt"><title lang="pt">Rugby: Filme Oficial - Camp. Mundo</title></programme>
+<programme start="20251016164500 +0000" stop="20251016184000 +0000" channel="SportTV2.pt"><title lang="pt">Basquetebol: Benfica x Spartak Office Shoes - Liga dos Campeões</title></programme>
+<programme start="20251016184000 +0000" stop="20251016204000 +0000" channel="SportTV2.pt"><title lang="pt">Andebol Fem.: Fuchse Berlim x Kolstad - Liga Dos Campeões (Direto)</title></programme>
+<programme start="20251016204000 +0000" stop="20251016223500 +0000" channel="SportTV2.pt"><title lang="pt">Basquetebol: Baxi Mansera x Hapoel Jerusalem - Eurocup</title></programme>
+<programme start="20251016223500 +0000" stop="20251016233000 +0000" channel="SportTV2.pt"><title lang="pt">Vela: Cádiz - Sail GP (Resumo)</title></programme>
 <programme start="20251016233000 +0000" stop="20251017012000 +0000" channel="SportTV2.pt"><title lang="pt">Ténis: Almaty - ATP World Tour 250</title></programme>
 <programme start="20251014231000 +0000" stop="20251015010000 +0000" channel="SportTV3.pt"><title lang="pt">One Friday Nights</title></programme>
 <programme start="20251015010000 +0000" stop="20251015060000 +0000" channel="SportTV3.pt"><title lang="pt">Fora De Horas - Sem Transmissão</title></programme>
 <programme start="20251015060000 +0000" stop="20251015120000 +0000" channel="SportTV3.pt"><title lang="pt">Fora De Horas - Sem Transmissão</title></programme>
 <programme start="20251015120000 +0000" stop="20251015125000 +0000" channel="SportTV3.pt"><title lang="pt">Rugby: Filme Oficial - Camp. Mundo</title></programme>
 <programme start="20251015125000 +0000" stop="20251015144000 +0000" channel="SportTV3.pt"><title lang="pt">Hóquei: NY Rangers x Edmonton Oilers - NHL</title></programme>
-<programme start="20251015144000 +0000" stop="20251015170000 +0000" channel="SportTV3.pt"><title lang="pt">NBA: Philadelphia x New York Knicks</title></programme>
+<programme start="20251015143500 +0000" stop="20251015170000 +0000" channel="SportTV3.pt"><title lang="pt">NBA: Philadelphia x New York Knicks</title></programme>
 <programme start="20251015170000 +0000" stop="20251015175000 +0000" channel="SportTV3.pt"><title lang="pt">Surf: Inside Pro Surfing Lexus US Open Of Surfing - WSL</title></programme>
 <programme start="20251015175000 +0000" stop="20251015184000 +0000" channel="SportTV3.pt"><title lang="pt">Rugby: Filme Oficial - Camp. Mundo</title></programme>
 <programme start="20251015184000 +0000" stop="20251015204000 +0000" channel="SportTV3.pt"><title lang="pt">Basquetebol: Baxi Mansera x Hapoel Jerusalem - Eurocup (Direto)</title></programme>
@@ -11397,13 +11426,13 @@
 <programme start="20251015120000 +0000" stop="20251015123000 +0000" channel="SportTV4.pt"><title lang="pt">Motociclismo: Camp. Mundo Enduro - Portugal (Resumo)</title></programme>
 <programme start="20251015123000 +0000" stop="20251015155500 +0000" channel="SportTV4.pt"><title lang="pt">NASCAR Cup Series: South Point 400</title></programme>
 <programme start="20251015155500 +0000" stop="20251015162500 +0000" channel="SportTV4.pt"><title lang="pt">Automobilismo: Rampa do Caramulo 2025</title></programme>
-<programme start="20251015162500 +0000" stop="20251015203000 +0000" channel="SportTV4.pt"><title lang="pt">Automobilismo: ELMS - 4 Horas Silverstone</title></programme>
-<programme start="20251015203000 +0000" stop="20251015210000 +0000" channel="SportTV4.pt"><title lang="pt">GP Magazine</title></programme>
-<programme start="20251015210000 +0000" stop="20251015221500 +0000" channel="SportTV4.pt"><title lang="pt">MotoGP: Corrida - GP Indonésia</title></programme>
-<programme start="20251015221500 +0000" stop="20251015231500 +0000" channel="SportTV4.pt"><title lang="pt">MotoGP: Moto2 - Corrida - GP Indonésia</title></programme>
-<programme start="20251015231500 +0000" stop="20251016002000 +0000" channel="SportTV4.pt"><title lang="pt">MotoGP: Moto3 - Corrida - GP Indonésia</title></programme>
-<programme start="20251015231500 +0000" stop="20251016002000 +0000" channel="SportTV4.pt"><title lang="pt">MotoGP: Moto3 - Corrida - GP Indonésia</title></programme>
-<programme start="20251016002000 +0000" stop="20251016020000 +0000" channel="SportTV4.pt"><title lang="pt">Mundial Superbike: GP Estoril - Resumo Do Dia</title></programme>
+<programme start="20251015162500 +0000" stop="20251015204500 +0000" channel="SportTV4.pt"><title lang="pt">Automobilismo: ELMS - 4 Horas Silverstone</title></programme>
+<programme start="20251015204500 +0000" stop="20251015211500 +0000" channel="SportTV4.pt"><title lang="pt">GP Magazine</title></programme>
+<programme start="20251015211500 +0000" stop="20251015222500 +0000" channel="SportTV4.pt"><title lang="pt">MotoGP: Corrida - GP Indonésia</title></programme>
+<programme start="20251015222500 +0000" stop="20251015232500 +0000" channel="SportTV4.pt"><title lang="pt">MotoGP: Moto2 - Corrida - GP Indonésia</title></programme>
+<programme start="20251015232500 +0000" stop="20251016003000 +0000" channel="SportTV4.pt"><title lang="pt">MotoGP: Moto3 - Corrida - GP Indonésia</title></programme>
+<programme start="20251015232500 +0000" stop="20251016003000 +0000" channel="SportTV4.pt"><title lang="pt">MotoGP: Moto3 - Corrida - GP Indonésia</title></programme>
+<programme start="20251016003000 +0000" stop="20251016020000 +0000" channel="SportTV4.pt"><title lang="pt">Mundial Superbike: GP Estoril - Resumo Do Dia</title></programme>
 <programme start="20251016020000 +0000" stop="20251016053000 +0000" channel="SportTV4.pt"><title lang="pt">Fora De Horas - Sem Transmissão</title></programme>
 <programme start="20251016053000 +0000" stop="20251016060000 +0000" channel="SportTV4.pt"><title lang="pt">WRC: Antevisão Rali Da Europa</title></programme>
 <programme start="20251016060000 +0000" stop="20251016063500 +0000" channel="SportTV4.pt"><title lang="pt">WRC: Rali Da Europa - Shakedown (Direto)</title></programme>
@@ -11426,7 +11455,7 @@
 <programme start="20251016212000 +0000" stop="20251016215500 +0000" channel="SportTV4.pt"><title lang="pt">MotoGP: Antevisão GP Austrália</title></programme>
 <programme start="20251016215500 +0000" stop="20251016224000 +0000" channel="SportTV4.pt"><title lang="pt">MotoGP: Moto3 - Treinos Livres 1 - GP Austrália (Direto)</title></programme>
 <programme start="20251016224000 +0000" stop="20251016233500 +0000" channel="SportTV4.pt"><title lang="pt">MotoGP: Moto2 - Treinos Livres 1 - GP Austrália (Direto)</title></programme>
-<programme start="20251016233500 +0000" stop="20251017005000 +0000" channel="SportTV4.pt"><title lang="pt">MotoGP: Treinos Livres 1 - GP Austrália (Direto)</title></programme>
+<programme start="20251016233500 +0000" stop="20251017004500 +0000" channel="SportTV4.pt"><title lang="pt">MotoGP: Treinos Livres 1 - GP Austrália (Direto)</title></programme>
 <programme start="20251014230000 +0000" stop="20251015050000 +0000" channel="SportTV5.pt"><title lang="pt">Fora de Horas - Sem Transmissão</title></programme>
 <programme start="20251015050000 +0000" stop="20251015090000 +0000" channel="SportTV5.pt"><title lang="pt">Fora de Horas - Sem Transmissão</title></programme>
 <programme start="20251015090000 +0000" stop="20251015130000 +0000" channel="SportTV5.pt"><title lang="pt">Fora de Horas - Sem Transmissão</title></programme>
@@ -12800,7 +12829,7 @@
 <programme start="20251016183000 +0000" stop="20251016190000 +0000" channel="TRTWorld.tr"><title lang="en">Nexus</title></programme>
 <programme start="20251016190000 +0000" stop="20251016200000 +0000" channel="TRTWorld.tr"><title lang="en">Newshour - London</title></programme>
 <programme start="20251016200000 +0000" stop="20251016203000 +0000" channel="TRTWorld.tr"><title lang="en">News - London</title></programme>
-<programme start="20251016203000 +0000" stop="20251016210000 +0000" channel="TRTWorld.tr"><title lang="en">Bigger Than Five</title></programme>
+<programme start="20251016203000 +0000" stop="20251016210000 +0000" channel="TRTWorld.tr"><title lang="en">Just 2 Degrees</title></programme>
 <programme start="20251016210000 +0000" stop="20251016213000 +0000" channel="TRTWorld.tr"><title lang="en">News - London</title></programme>
 <programme start="20251016213000 +0000" stop="20251016220000 +0000" channel="TRTWorld.tr"><title lang="en">Roundtable</title></programme>
 <programme start="20251016220000 +0000" stop="20251016223000 +0000" channel="TRTWorld.tr"><title lang="en">News</title></programme>
@@ -13232,16 +13261,16 @@
 <programme start="20251016051500 +0000" stop="20251016085000 +0000" channel="TVI.pt"><title lang="pt">Diário Da Manhã</title></programme>
 <programme start="20251016085000 +0000" stop="20251016115800 +0000" channel="TVI.pt"><title lang="pt">Dois às 10</title></programme>
 <programme start="20251016115800 +0000" stop="20251016130000 +0000" channel="TVI.pt"><title lang="pt">TVI Jornal</title></programme>
-<programme start="20251016130000 +0000" stop="20251016135000 +0000" channel="TVI.pt"><title lang="pt">TVI - Em Cima da Hora</title></programme>
-<programme start="20251016135000 +0000" stop="20251016160000 +0000" channel="TVI.pt"><title lang="pt">A Sentença</title></programme>
-<programme start="20251016160000 +0000" stop="20251016170000 +0000" channel="TVI.pt"><title lang="pt">Soma E Segue</title></programme>
-<programme start="20251016170000 +0000" stop="20251016180500 +0000" channel="TVI.pt"><title lang="pt">Secret Story: Última Hora</title></programme>
+<programme start="20251016130000 +0000" stop="20251016134000 +0000" channel="TVI.pt"><title lang="pt">TVI - Em Cima da Hora</title></programme>
+<programme start="20251016134000 +0000" stop="20251016163000 +0000" channel="TVI.pt"><title lang="pt">A Sentença</title></programme>
+<programme start="20251016163000 +0000" stop="20251016171000 +0000" channel="TVI.pt"><title lang="pt">Soma E Segue</title></programme>
+<programme start="20251016171000 +0000" stop="20251016180500 +0000" channel="TVI.pt"><title lang="pt">Secret Story: Última Hora</title></programme>
 <programme start="20251016180500 +0000" stop="20251016185500 +0000" channel="TVI.pt"><title lang="pt">Secret Story: Diário (Tarde)</title></programme>
-<programme start="20251016185500 +0000" stop="20251016204500 +0000" channel="TVI.pt"><title lang="pt">Jornal Nacional</title></programme>
-<programme start="20251016204500 +0000" stop="20251016212500 +0000" channel="TVI.pt"><title lang="pt">Secret Story: Especial</title></programme>
-<programme start="20251016212500 +0000" stop="20251016223000 +0000" channel="TVI.pt"><title lang="pt">A Fazenda - Ep. 230</title></programme>
-<programme start="20251016223000 +0000" stop="20251016230500 +0000" channel="TVI.pt"><title lang="pt">A Protegida - Ep. 165</title></programme>
-<programme start="20251016230500 +0000" stop="20251017010000 +0000" channel="TVI.pt"><title lang="pt">Secret Story: Extra</title></programme>
+<programme start="20251016185500 +0000" stop="20251016205000 +0000" channel="TVI.pt"><title lang="pt">Jornal Nacional</title></programme>
+<programme start="20251016205000 +0000" stop="20251016213000 +0000" channel="TVI.pt"><title lang="pt">Secret Story: Especial</title></programme>
+<programme start="20251016213000 +0000" stop="20251016223000 +0000" channel="TVI.pt"><title lang="pt">A Fazenda - Ep. 230</title></programme>
+<programme start="20251016223000 +0000" stop="20251016231000 +0000" channel="TVI.pt"><title lang="pt">A Protegida - Ep. 165</title></programme>
+<programme start="20251016231000 +0000" stop="20251017010000 +0000" channel="TVI.pt"><title lang="pt">Secret Story: Extra</title></programme>
 <programme start="20251014234500 +0000" stop="20251015020000 +0000" channel="TVIReality.pt"><title lang="pt">Secret Story</title></programme>
 <programme start="20251015020000 +0000" stop="20251015050000 +0000" channel="TVIReality.pt"><title lang="pt">Secret Story</title></programme>
 <programme start="20251015050000 +0000" stop="20251015073000 +0000" channel="TVIReality.pt"><title lang="pt">Secret Story</title></programme>
@@ -13597,29 +13626,29 @@
 <programme start="20251015175500 +0000" stop="20251015185000 +0000" channel="VPlusTVI.pt"><title lang="pt">Inspetor Max</title></programme>
 <programme start="20251015185000 +0000" stop="20251015205000 +0000" channel="VPlusTVI.pt"><title lang="pt">Morangos Com Açúcar - Ep. 336</title></programme>
 <programme start="20251015205000 +0000" stop="20251015223300 +0000" channel="VPlusTVI.pt"><title lang="pt">V+ Futebol: Super Craques</title></programme>
-<programme start="20251015223300 +0000" stop="20251015232300 +0000" channel="VPlusTVI.pt"><title lang="pt">V+ Fama</title></programme>
-<programme start="20251015232300 +0000" stop="20251016003100 +0000" channel="VPlusTVI.pt"><title lang="pt">A Sentença - Especiais</title></programme>
-<programme start="20251015232300 +0000" stop="20251016003100 +0000" channel="VPlusTVI.pt"><title lang="pt">A Sentença - Especiais</title></programme>
-<programme start="20251016003100 +0000" stop="20251016012000 +0000" channel="VPlusTVI.pt"><title lang="pt">Espírito Indomável - Ep. 146</title></programme>
-<programme start="20251016012000 +0000" stop="20251016013000 +0000" channel="VPlusTVI.pt"><title lang="pt">Os Batanetes</title></programme>
-<programme start="20251016013000 +0000" stop="20251016021600 +0000" channel="VPlusTVI.pt"><title lang="pt">Tv Shop</title></programme>
-<programme start="20251016021600 +0000" stop="20251016024900 +0000" channel="VPlusTVI.pt"><title lang="pt">Quero É Viver - Ep. 133</title></programme>
-<programme start="20251016024900 +0000" stop="20251016042200 +0000" channel="VPlusTVI.pt"><title lang="pt">Inspetor Max</title></programme>
-<programme start="20251016042200 +0000" stop="20251016065600 +0000" channel="VPlusTVI.pt"><title lang="pt">Morangos Com Açúcar - Ep. 336</title></programme>
-<programme start="20251016065600 +0000" stop="20251016071000 +0000" channel="VPlusTVI.pt"><title lang="pt">V+ Notícias</title></programme>
-<programme start="20251016071000 +0000" stop="20251016080100 +0000" channel="VPlusTVI.pt"><title lang="pt">Inspetor Max</title></programme>
-<programme start="20251016080100 +0000" stop="20251016100400 +0000" channel="VPlusTVI.pt"><title lang="pt">Bom Dia Alegria</title></programme>
-<programme start="20251016100400 +0000" stop="20251016105700 +0000" channel="VPlusTVI.pt"><title lang="pt">V+ Fama</title></programme>
-<programme start="20251016105700 +0000" stop="20251016125200 +0000" channel="VPlusTVI.pt"><title lang="pt">Inspetor Max</title></programme>
-<programme start="20251016125200 +0000" stop="20251016154100 +0000" channel="VPlusTVI.pt"><title lang="pt">Morangos Com Açúcar - Ep. 337</title></programme>
-<programme start="20251016154100 +0000" stop="20251016163900 +0000" channel="VPlusTVI.pt"><title lang="pt">Espírito Indomável - Ep. 147</title></programme>
-<programme start="20251016163900 +0000" stop="20251016172000 +0000" channel="VPlusTVI.pt"><title lang="pt">Queridos Papás - Ep. 44</title></programme>
-<programme start="20251016172000 +0000" stop="20251016175500 +0000" channel="VPlusTVI.pt"><title lang="pt">Quero É Viver - Ep. 134</title></programme>
-<programme start="20251016175500 +0000" stop="20251016184200 +0000" channel="VPlusTVI.pt"><title lang="pt">Inspetor Max</title></programme>
-<programme start="20251016184200 +0000" stop="20251016205000 +0000" channel="VPlusTVI.pt"><title lang="pt">Morangos Com Açúcar - Ep. 337</title></programme>
-<programme start="20251016205000 +0000" stop="20251016223400 +0000" channel="VPlusTVI.pt"><title lang="pt">V+ Futebol: Zona Frontal</title></programme>
-<programme start="20251016223400 +0000" stop="20251016232400 +0000" channel="VPlusTVI.pt"><title lang="pt">V+ Fama</title></programme>
-<programme start="20251016232400 +0000" stop="20251017002400 +0000" channel="VPlusTVI.pt"><title lang="pt">A Sentença - Especiais</title></programme>
+<programme start="20251015223300 +0000" stop="20251015232400 +0000" channel="VPlusTVI.pt"><title lang="pt">V+ Fama</title></programme>
+<programme start="20251015232400 +0000" stop="20251016001900 +0000" channel="VPlusTVI.pt"><title lang="pt">A Sentença - Especiais</title></programme>
+<programme start="20251015232400 +0000" stop="20251016001900 +0000" channel="VPlusTVI.pt"><title lang="pt">A Sentença - Especiais</title></programme>
+<programme start="20251016001900 +0000" stop="20251016010500 +0000" channel="VPlusTVI.pt"><title lang="pt">Espírito Indomável - Ep. 146</title></programme>
+<programme start="20251016010500 +0000" stop="20251016013300 +0000" channel="VPlusTVI.pt"><title lang="pt">Os Batanetes</title></programme>
+<programme start="20251016013300 +0000" stop="20251016021800 +0000" channel="VPlusTVI.pt"><title lang="pt">Tv Shop</title></programme>
+<programme start="20251016021800 +0000" stop="20251016025000 +0000" channel="VPlusTVI.pt"><title lang="pt">Quero É Viver - Ep. 133</title></programme>
+<programme start="20251016025000 +0000" stop="20251016042800 +0000" channel="VPlusTVI.pt"><title lang="pt">Inspetor Max</title></programme>
+<programme start="20251016042800 +0000" stop="20251016065300 +0000" channel="VPlusTVI.pt"><title lang="pt">Morangos Com Açúcar - Ep. 336</title></programme>
+<programme start="20251016065300 +0000" stop="20251016070600 +0000" channel="VPlusTVI.pt"><title lang="pt">V+ Notícias</title></programme>
+<programme start="20251016070600 +0000" stop="20251016080100 +0000" channel="VPlusTVI.pt"><title lang="pt">Inspetor Max</title></programme>
+<programme start="20251016080100 +0000" stop="20251016100300 +0000" channel="VPlusTVI.pt"><title lang="pt">Bom Dia Alegria</title></programme>
+<programme start="20251016100300 +0000" stop="20251016105600 +0000" channel="VPlusTVI.pt"><title lang="pt">V+ Fama</title></programme>
+<programme start="20251016105600 +0000" stop="20251016125500 +0000" channel="VPlusTVI.pt"><title lang="pt">Inspetor Max</title></programme>
+<programme start="20251016125500 +0000" stop="20251016154100 +0000" channel="VPlusTVI.pt"><title lang="pt">Morangos Com Açúcar - Ep. 337</title></programme>
+<programme start="20251016154100 +0000" stop="20251016163700 +0000" channel="VPlusTVI.pt"><title lang="pt">Espírito Indomável - Ep. 147</title></programme>
+<programme start="20251016163700 +0000" stop="20251016171800 +0000" channel="VPlusTVI.pt"><title lang="pt">Queridos Papás - Ep. 44</title></programme>
+<programme start="20251016171800 +0000" stop="20251016175000 +0000" channel="VPlusTVI.pt"><title lang="pt">Quero É Viver - Ep. 134</title></programme>
+<programme start="20251016175000 +0000" stop="20251016184500 +0000" channel="VPlusTVI.pt"><title lang="pt">Inspetor Max</title></programme>
+<programme start="20251016184500 +0000" stop="20251016205000 +0000" channel="VPlusTVI.pt"><title lang="pt">Morangos Com Açúcar - Ep. 337</title></programme>
+<programme start="20251016205000 +0000" stop="20251016223600 +0000" channel="VPlusTVI.pt"><title lang="pt">V+ Futebol: Zona Frontal</title></programme>
+<programme start="20251016223600 +0000" stop="20251016232600 +0000" channel="VPlusTVI.pt"><title lang="pt">V+ Fama</title></programme>
+<programme start="20251016232600 +0000" stop="20251017001000 +0000" channel="VPlusTVI.pt"><title lang="pt">A Sentença - Especiais</title></programme>
 <programme start="20251014230000 +0000" stop="20251015000000 +0000" channel="WSport.za"><title lang="pt">Cape to Cape &apos;24 HL</title></programme>
 <programme start="20251015000000 +0000" stop="20251015020000 +0000" channel="WSport.za"><title lang="pt">LIVE USL &apos;25/26: DC Power v Sporting Jax</title></programme>
 <programme start="20251015020000 +0000" stop="20251015053000 +0000" channel="WSport.za"><title lang="pt">Al Shaqab GP &apos;25</title></programme>
@@ -13651,7 +13680,7 @@
 <programme start="20251016113000 +0000" stop="20251016133000 +0000" channel="WSport.za"><title lang="pt">Serie A Women 25/26: Fiorentina v Inter</title></programme>
 <programme start="20251016133000 +0000" stop="20251016141000 +0000" channel="WSport.za"><title lang="pt">Spartan Race &apos;25: Mammoth (USA)</title></programme>
 <programme start="20251016141000 +0000" stop="20251016161000 +0000" channel="WSport.za"><title lang="pt">Serie A Women 25/26: Milan v Roma</title></programme>
-<programme start="20251016161000 +0000" stop="20251016180000 +0000" channel="WSport.za"><title lang="pt">Women&apos;s Football Friendly: Borussia Dortmund v Juventus</title></programme>
+<programme start="20251016161000 +0000" stop="20251016180000 +0000" channel="WSport.za"><title lang="pt">Women&apos;s Football Friendly &apos;25/26: Borussia Dortmund v Juventus</title></programme>
 <programme start="20251016180000 +0000" stop="20251016190000 +0000" channel="WSport.za"><title lang="pt">WSL Champs &apos;25 H/L&apos;s: R6 Bonsoy Gold Coast Pro</title></programme>
 <programme start="20251016190000 +0000" stop="20251016193000 +0000" channel="WSport.za"><title lang="pt">Vendee Globe 24/25 HL&apos;s</title></programme>
 <programme start="20251016193000 +0000" stop="20251016213000 +0000" channel="WSport.za"><title lang="pt">USL &apos;25/26: DC Power v Sporting Jax</title></programme>
