@@ -36,7 +36,8 @@
                     <p>A private search engine that doesn't track your search history, providing unbiased results.</p>
                     <div class="card-buttons">
                         <a href="https://duckduckgo.com" class="btn-link" target="_blank">Visit Site</a>
-                        <a href="tutorial.html?topic=duckduckgo" class="btn-link btn-secondary" target="_blank">Tutorial</a>
+                        <!-- This is now a button that opens the modal -->
+                        <button class="btn-link btn-secondary tutorial-button" data-topic="duckduckgo">Tutorial</button>
                     </div>
                 </div>
                 <!-- Add more cards for Privacy here -->
@@ -72,6 +73,110 @@
     <footer>
         <p>&copy; 2025 Your Megathread. All rights reserved.</p>
     </footer>
+
+    <!-- MODAL POPUP STRUCTURE (Initially hidden) -->
+    <div id="tutorial-modal" class="modal-overlay">
+        <div class="modal-content">
+            <button id="modal-close" class="modal-close">&times;</button>
+            <h2 id="tutorial-title">Tutorial Title</h2>
+            <div id="tutorial-content" class="tutorial-body">
+                <!-- Tutorial content will be injected here by JavaScript -->
+            </div>
+        </div>
+    </div>
+
+    <script>
+    // --- SCRIPT FOR MODAL TUTORIALS ---
+    document.addEventListener('DOMContentLoaded', () => {
+        const modalOverlay = document.getElementById('tutorial-modal');
+        const modalTitle = document.getElementById('tutorial-title');
+        const modalContent = document.getElementById('tutorial-content');
+        const closeModalButton = document.getElementById('modal-close');
+        const tutorialButtons = document.querySelectorAll('.tutorial-button');
+
+        // Function to open the modal and display content
+        const openModal = (topic) => {
+            // Find the right content for the topic
+            const content = getTutorialContent(topic);
+            
+            if (content) {
+                modalTitle.textContent = content.title;
+                modalContent.innerHTML = content.body;
+                modalOverlay.classList.add('visible');
+            } else {
+                // Fallback if topic is not found
+                modalTitle.textContent = 'Tutorial Not Found';
+                modalContent.innerHTML = '<p>Sorry, we could not find a tutorial for this topic.</p>';
+                modalOverlay.classList.add('visible');
+            }
+        };
+
+        // Function to close the modal
+        const closeModal = () => {
+            modalOverlay.classList.remove('visible');
+        };
+
+        // --- HOW TO ADD A NEW TUTORIAL ---
+        // 1. Add a new 'case' to this function.
+        // 2. The case name must match the `data-topic` in your button.
+        // 3. Add a 'title' and the 'body' HTML for your guide.
+        const getTutorialContent = (topic) => {
+            switch (topic) {
+                case 'duckduckgo':
+                    return {
+                        title: 'How to Set DuckDuckGo as Your Default Search Engine',
+                        body: `
+                            <p>Setting DuckDuckGo as your default search engine is a great step for privacy. Here are the steps for major browsers:</p>
+                            <h3>Google Chrome</h3>
+                            <ol>
+                                <li>Go to Settings > Search Engine.</li>
+                                <li>Find "Search engine used in the address bar" and select "DuckDuckGo" from the dropdown.</li>
+                            </ol>
+                            <h3>Mozilla Firefox</h3>
+                            <ol>
+                                <li>Go to Settings > Search.</li>
+                                <li>Under "Default Search Engine," choose "DuckDuckGo" from the list.</li>
+                            </ol>
+                            <p>That's it! Your searches will now be private.</p>
+                        `
+                    };
+                
+                // ADD YOUR NEXT TUTORIAL HERE
+                // case 'some-other-app':
+                //     return {
+                //         title: 'Title for Some Other App',
+                //         body: '<p>Your tutorial steps go here.</p>'
+                //     };
+
+                default:
+                    return null; // Topic not found
+            }
+        };
+
+        // Event Listeners
+        tutorialButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                const topic = button.getAttribute('data-topic');
+                openModal(topic);
+            });
+        });
+
+        closeModalButton.addEventListener('click', closeModal);
+        modalOverlay.addEventListener('click', (event) => {
+            // Only close if the dark background is clicked, not the content box
+            if (event.target === modalOverlay) {
+                closeModal();
+            }
+        });
+
+        // Close modal with the 'Escape' key
+        document.addEventListener('keydown', (event) => {
+            if (event.key === 'Escape' && modalOverlay.classList.contains('visible')) {
+                closeModal();
+            }
+        });
+    });
+    </script>
 
 </body>
 </html>

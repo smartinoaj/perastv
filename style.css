@@ -104,13 +104,6 @@ section h2 {
     align-items: center;
 }
 
-.icon {
-    width: 24px;
-    height: 24px;
-    margin-right: 12px;
-    fill: var(--accent-color);
-}
-
 /* --- Grid for Links/Apps --- */
 .grid-container {
     display: grid;
@@ -163,6 +156,8 @@ section h2 {
     font-weight: 500;
     transition: background-color 0.2s ease, color 0.2s ease;
     border: 1px solid var(--accent-color);
+    cursor: pointer; /* Added for button elements */
+    font-family: inherit; /* Added for button elements */
 }
 
 .btn-link:hover {
@@ -170,7 +165,6 @@ section h2 {
     border-color: #0056b3;
 }
 
-/* Style for the secondary (tutorial) button */
 .btn-secondary {
     background-color: transparent;
     color: var(--accent-color);
@@ -180,7 +174,6 @@ section h2 {
     background-color: var(--accent-color);
     color: #ffffff;
 }
-
 
 /* --- Footer --- */
 footer {
@@ -193,49 +186,81 @@ footer {
     font-size: 0.9rem;
 }
 
-/* --- Tutorial Page Specific Styles --- */
-.back-link {
-    display: inline-block;
-    color: var(--text-secondary);
-    text-decoration: none;
-    margin-bottom: 40px;
-    font-size: 0.95rem;
+/* --- NEW: MODAL (POPUP) STYLES --- */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    padding: 20px;
+    visibility: hidden;
+    opacity: 0;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
 }
 
-.back-link:hover {
-    color: var(--accent-color);
-    text-decoration: underline;
+.modal-overlay.visible {
+    visibility: visible;
+    opacity: 1;
 }
 
-.tutorial-container {
+.modal-content {
     background-color: var(--bg-secondary);
     border: 1px solid var(--border-color);
     border-radius: 8px;
     padding: 30px 40px;
+    width: 100%;
+    max-width: 800px;
+    max-height: 90vh;
+    overflow-y: auto;
+    position: relative;
+    transform: translateY(-20px);
+    transition: transform 0.3s ease;
 }
 
-.tutorial-container h1 {
+.modal-overlay.visible .modal-content {
+    transform: translateY(0);
+}
+
+.modal-close {
+    position: absolute;
+    top: 15px;
+    right: 20px;
+    background: none;
+    border: none;
+    color: var(--text-secondary);
     font-size: 2rem;
-    margin-bottom: 25px;
+    line-height: 1;
+    cursor: pointer;
+    transition: color 0.2s ease;
 }
 
-.tutorial-container h3 {
+.modal-close:hover {
+    color: var(--text-primary);
+}
+
+.tutorial-body h3 {
     font-size: 1.4rem;
     margin-top: 30px;
     margin-bottom: 15px;
     color: var(--accent-color);
 }
 
-.tutorial-container p, .tutorial-container ol {
+.tutorial-body p, .tutorial-body ol {
     line-height: 1.8;
     color: var(--text-secondary);
 }
 
-.tutorial-container ol {
+.tutorial-body ol {
     padding-left: 20px;
 }
 
-.tutorial-container ol li {
+.tutorial-body ol li {
     margin-bottom: 10px;
 }
 
@@ -247,10 +272,10 @@ footer {
     section h2 {
         font-size: 1.5rem;
     }
-    .tutorial-container {
+    .modal-content {
         padding: 20px;
     }
-    .tutorial-container h1 {
+    .modal-content h2 {
         font-size: 1.6rem;
     }
 }
