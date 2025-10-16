@@ -11,7 +11,7 @@
     --text-secondary: #9CA3AF;  /* Lighter gray for secondary text */
     --border-color: #374151;    /* Subtle border color */
     --recommended-color: #FBBF24; /* Amber/Gold for recommended */
-    --goat-color: #EF4444;       /* New: Red for GOAT status */
+    --goat-color: #22d3ee;       /* New: Aqua for GOAT status */
     --font-sans: 'Inter', sans-serif;
 }
 
@@ -149,7 +149,7 @@ header p { font-size: 1.125rem; color: var(--text-secondary); max-width: 600px; 
 }
 .card.recommended h3, .card.goat h3 { padding-right: 2rem; }
 
-/* --- Tooltip for Recommended Star --- */
+/* --- Tooltip for Icons --- */
 .recommended-star::after, .goat-icon::after {
     content: attr(data-tooltip);
     position: absolute;
@@ -174,10 +174,10 @@ header p { font-size: 1.125rem; color: var(--text-secondary); max-width: 600px; 
     visibility: visible;
 }
 
-/* --- NEW: GOAT Item Styles --- */
+/* --- GOAT Item Styles --- */
 .card.goat {
     border-color: var(--goat-color);
-    box-shadow: 0 0 20px rgba(239, 68, 68, 0.2);
+    box-shadow: 0 0 20px hsla(188, 85%, 53%, 0.25);
 }
 .card.goat:hover {
     border-color: var(--goat-color);
