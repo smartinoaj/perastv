@@ -11,6 +11,7 @@
     --text-secondary: #9CA3AF;  /* Lighter gray for secondary text */
     --border-color: #374151;    /* Subtle border color */
     --recommended-color: #FBBF24; /* Amber/Gold for recommended */
+    --goat-color: #EF4444;       /* New: Red for GOAT status */
     --font-sans: 'Inter', sans-serif;
 }
 
@@ -126,7 +127,7 @@ header p { font-size: 1.125rem; color: var(--text-secondary); max-width: 600px; 
     flex-direction: column;
     transition: all 0.2s ease;
     position: relative;
-    overflow: visible; /* Changed from hidden to visible */
+    overflow: visible;
 }
 .card:hover { transform: translateY(-4px); border-color: var(--accent-color); box-shadow: 0 10px 25px -5px rgba(0,0,0,0.2); }
 .card h3 { font-size: 1.25rem; font-weight: 600; margin-bottom: 0.75rem; color: var(--text-primary); }
@@ -146,14 +147,12 @@ header p { font-size: 1.125rem; color: var(--text-secondary); max-width: 600px; 
     cursor: pointer;
     z-index: 5;
 }
-
-.card.recommended h3 { padding-right: 2rem; }
+.card.recommended h3, .card.goat h3 { padding-right: 2rem; }
 
 /* --- Tooltip for Recommended Star --- */
-.recommended-star::after {
+.recommended-star::after, .goat-icon::after {
     content: attr(data-tooltip);
     position: absolute;
-    /* FIXED: Positioned to the left of the star */
     right: 140%; 
     top: 50%;
     transform: translateY(-50%);
@@ -170,10 +169,28 @@ header p { font-size: 1.125rem; color: var(--text-secondary); max-width: 600px; 
     transition: opacity 0.2s ease, visibility 0.2s ease;
     pointer-events: none;
 }
-
-.recommended-star:hover::after {
+.recommended-star:hover::after, .goat-icon:hover::after {
     opacity: 1;
     visibility: visible;
+}
+
+/* --- NEW: GOAT Item Styles --- */
+.card.goat {
+    border-color: var(--goat-color);
+    box-shadow: 0 0 20px rgba(239, 68, 68, 0.2);
+}
+.card.goat:hover {
+    border-color: var(--goat-color);
+}
+.goat-icon {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    width: 24px;
+    height: 24px;
+    color: var(--goat-color);
+    cursor: pointer;
+    z-index: 5;
 }
 
 
