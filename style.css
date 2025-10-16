@@ -66,28 +66,42 @@ header p { font-size: 1.125rem; color: var(--text-secondary); max-width: 600px; 
 .tab-content { display: none; animation: fadeIn 0.5s ease; }
 .tab-content.active { display: block; }
 
-/* --- NEW: Sub-Tab Navigation (for Emulation) --- */
+/* --- NEW: Sub-Tab Navigation (Pill Style) --- */
 .sub-tabs-nav {
     display: flex;
-    gap: 0.5rem;
-    border-bottom: 1px solid var(--border-color);
-    margin-bottom: 2rem;
+    justify-content: center; /* Center the buttons */
+    gap: 0.75rem; /* Space between buttons */
+    margin-bottom: 2.5rem; /* More space below */
+    padding: 0.5rem;
+    background-color: var(--bg-secondary); /* Give it a container */
+    border-radius: 999px; /* Pill shape for the container */
+    max-width: max-content; /* Fit the content */
+    margin-left: auto;
+    margin-right: auto;
 }
 .sub-tab-button {
     background: transparent;
     border: none;
-    border-bottom: 2px solid transparent;
     color: var(--text-secondary);
-    padding: 0.75rem 1rem;
-    font-size: 0.95rem;
-    font-weight: 500;
+    padding: 0.6rem 1.25rem; /* Adjusted padding */
+    font-size: 0.9rem; /* Slightly smaller font */
+    font-weight: 600;
+    border-radius: 999px; /* Pill shape for buttons */
     cursor: pointer;
-    transition: color 0.2s ease, border-color 0.2s ease;
+    transition: background-color 0.2s ease, color 0.2s ease;
 }
-.sub-tab-button:hover { color: var(--text-primary); }
-.sub-tab-button.active { color: var(--accent-color); border-bottom-color: var(--accent-color); }
+.sub-tab-button:hover { 
+    background-color: var(--bg-tertiary);
+    color: var(--text-primary); 
+}
+.sub-tab-button.active { 
+    background-color: var(--accent-color); 
+    color: #ffffff;
+    box-shadow: 0 4px 14px -4px var(--accent-color);
+}
 
-/* --- NEW: Sub-Tab Content Panels --- */
+
+/* --- Sub-Tab Content Panels --- */
 .sub-tab-content { display: none; animation: fadeIn 0.5s ease; }
 .sub-tab-content.active { display: block; }
 
@@ -173,5 +187,10 @@ footer { text-align: center; padding: 3rem 1rem; margin-top: 3rem; border-top: 1
     .tabs-nav { gap: 0.5rem; padding: 1rem; flex-wrap: wrap; }
     .tab-button { padding: 0.5rem 1rem; font-size: 0.9rem; }
     header h1 { font-size: 2rem; }
+    .sub-tabs-nav {
+        flex-wrap: wrap; /* Allow sub-tabs to wrap on small screens */
+        border-radius: 12px;
+        padding: 0.75rem;
+    }
 }
 
