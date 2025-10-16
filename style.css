@@ -28,10 +28,15 @@ body {
 /* --- Header --- */
 header {
     text-align: center;
-    padding: 5rem 1rem;
+    padding: 2.5rem 1rem; /* Reduced top/bottom padding */
     border-bottom: 1px solid var(--border-color);
 }
-header h1 { font-size: 2.75rem; font-weight: 700; margin-bottom: 1rem; color: var(--text-primary); }
+header h1 { 
+    font-size: 2.25rem; /* Made title slightly smaller */
+    font-weight: 700; 
+    margin-bottom: 0.75rem; /* Reduced space below title */
+    color: var(--text-primary); 
+}
 header p { font-size: 1.125rem; color: var(--text-secondary); max-width: 600px; margin: 0 auto; }
 
 /* --- Main Tab Navigation --- */
