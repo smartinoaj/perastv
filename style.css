@@ -188,7 +188,7 @@ header p { font-size: 1.125rem; color: var(--text-secondary); max-width: 600px; 
     right: 1rem;
     width: 24px;
     height: 24px;
-    color: var(--text-secondary); /* Changed from --goat-color */
+    color: var(--text-secondary);
     cursor: pointer;
     z-index: 5;
 }
