@@ -66,16 +66,16 @@ header p { font-size: 1.125rem; color: var(--text-secondary); max-width: 600px; 
 .tab-content { display: none; animation: fadeIn 0.5s ease; }
 .tab-content.active { display: block; }
 
-/* --- NEW: Sub-Tab Navigation (Pill Style) --- */
+/* --- Sub-Tab Navigation (Pill Style) --- */
 .sub-tabs-nav {
     display: flex;
-    justify-content: center; /* Center the buttons */
-    gap: 0.75rem; /* Space between buttons */
-    margin-bottom: 2.5rem; /* More space below */
+    justify-content: center;
+    gap: 0.75rem;
+    margin-bottom: 2.5rem;
     padding: 0.5rem;
-    background-color: var(--bg-secondary); /* Give it a container */
-    border-radius: 999px; /* Pill shape for the container */
-    max-width: max-content; /* Fit the content */
+    background-color: var(--bg-secondary);
+    border-radius: 999px;
+    max-width: max-content;
     margin-left: auto;
     margin-right: auto;
 }
@@ -83,10 +83,10 @@ header p { font-size: 1.125rem; color: var(--text-secondary); max-width: 600px; 
     background: transparent;
     border: none;
     color: var(--text-secondary);
-    padding: 0.6rem 1.25rem; /* Adjusted padding */
-    font-size: 0.9rem; /* Slightly smaller font */
+    padding: 0.6rem 1.25rem;
+    font-size: 0.9rem;
     font-weight: 600;
-    border-radius: 999px; /* Pill shape for buttons */
+    border-radius: 999px;
     cursor: pointer;
     transition: background-color 0.2s ease, color 0.2s ease;
 }
@@ -135,8 +135,47 @@ header p { font-size: 1.125rem; color: var(--text-secondary); max-width: 600px; 
 /* --- Recommended Item Styles --- */
 .card.recommended { border-color: var(--recommended-color); box-shadow: 0 0 20px rgba(251, 191, 36, 0.1); }
 .card.recommended:hover { border-color: var(--recommended-color); }
-.recommended-star { position: absolute; top: 1rem; right: 1rem; width: 24px; height: 24px; color: var(--recommended-color); }
+.recommended-star { 
+    position: absolute; 
+    top: 1rem; 
+    right: 1rem; 
+    width: 24px; 
+    height: 24px; 
+    color: var(--recommended-color);
+    cursor: pointer;
+}
 .card.recommended h3 { padding-right: 2rem; }
+
+/* --- NEW: Tooltip for Recommended Star --- */
+.recommended-star {
+    position: relative; /* Needed for tooltip positioning */
+}
+
+.recommended-star::after {
+    content: attr(data-tooltip);
+    position: absolute;
+    bottom: 125%; /* Position above the star */
+    right: 50%;
+    transform: translateX(50%);
+    background-color: var(--bg-tertiary);
+    color: var(--text-primary);
+    padding: 0.5rem 0.75rem;
+    border-radius: 6px;
+    font-size: 0.85rem;
+    font-weight: 500;
+    white-space: nowrap;
+    z-index: 10;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.2s ease, visibility 0.2s ease;
+    pointer-events: none; /* Make sure it doesn't interfere with mouse events */
+}
+
+.recommended-star:hover::after {
+    opacity: 1;
+    visibility: visible;
+}
+
 
 /* --- Button Styles --- */
 .card-buttons { display: flex; flex-wrap: wrap; gap: 0.75rem; margin-top: auto; }
@@ -188,7 +227,7 @@ footer { text-align: center; padding: 3rem 1rem; margin-top: 3rem; border-top: 1
     .tab-button { padding: 0.5rem 1rem; font-size: 0.9rem; }
     header h1 { font-size: 2rem; }
     .sub-tabs-nav {
-        flex-wrap: wrap; /* Allow sub-tabs to wrap on small screens */
+        flex-wrap: wrap;
         border-radius: 12px;
         padding: 0.75rem;
     }
