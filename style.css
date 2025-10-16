@@ -147,10 +147,10 @@ header p { font-size: 1.125rem; color: var(--text-secondary); max-width: 600px; 
     cursor: pointer;
     z-index: 5;
 }
-.card.recommended h3, .card.goat h3 { padding-right: 2rem; }
+.card.recommended h3, .card.diamond h3 { padding-right: 2rem; }
 
 /* --- Tooltip for Icons --- */
-.recommended-star::after, .goat-icon::after {
+.recommended-star::after, .diamond-icon::after {
     content: attr(data-tooltip);
     position: absolute;
     right: 140%; 
@@ -169,26 +169,26 @@ header p { font-size: 1.125rem; color: var(--text-secondary); max-width: 600px; 
     transition: opacity 0.2s ease, visibility 0.2s ease;
     pointer-events: none;
 }
-.recommended-star:hover::after, .goat-icon:hover::after {
+.recommended-star:hover::after, .diamond-icon:hover::after {
     opacity: 1;
     visibility: visible;
 }
 
-/* --- GOAT Item Styles --- */
-.card.goat {
+/* --- Diamond (GOAT) Item Styles --- */
+.card.diamond {
     border-color: var(--goat-color);
-    box-shadow: 0 0 20px hsla(188, 85%, 53%, 0.25);
+    box-shadow: 0 0 25px hsla(188, 85%, 53%, 0.45);
 }
-.card.goat:hover {
+.card.diamond:hover {
     border-color: var(--goat-color);
 }
-.goat-icon {
+.diamond-icon {
     position: absolute;
     top: 1rem;
     right: 1rem;
     width: 24px;
     height: 24px;
-    color: var(--text-secondary);
+    color: var(--goat-color);
     cursor: pointer;
     z-index: 5;
 }
