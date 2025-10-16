@@ -135,28 +135,28 @@ header p { font-size: 1.125rem; color: var(--text-secondary); max-width: 600px; 
 /* --- Recommended Item Styles --- */
 .card.recommended { border-color: var(--recommended-color); box-shadow: 0 0 20px rgba(251, 191, 36, 0.1); }
 .card.recommended:hover { border-color: var(--recommended-color); }
-.recommended-star { 
-    position: absolute; 
-    top: 1rem; 
-    right: 1rem; 
-    width: 24px; 
-    height: 24px; 
+
+/* FIXED: Corrected star positioning */
+.recommended-star {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    width: 24px;
+    height: 24px;
     color: var(--recommended-color);
     cursor: pointer;
+    z-index: 5; /* Ensure star is above other content */
 }
+
 .card.recommended h3 { padding-right: 2rem; }
 
-/* --- NEW: Tooltip for Recommended Star --- */
-.recommended-star {
-    position: relative; /* Needed for tooltip positioning */
-}
-
+/* --- Tooltip for Recommended Star --- */
 .recommended-star::after {
     content: attr(data-tooltip);
     position: absolute;
     bottom: 125%; /* Position above the star */
-    right: 50%;
-    transform: translateX(50%);
+    left: 50%;
+    transform: translateX(-50%); /* Center the tooltip */
     background-color: var(--bg-tertiary);
     color: var(--text-primary);
     padding: 0.5rem 0.75rem;
@@ -168,7 +168,7 @@ header p { font-size: 1.125rem; color: var(--text-secondary); max-width: 600px; 
     opacity: 0;
     visibility: hidden;
     transition: opacity 0.2s ease, visibility 0.2s ease;
-    pointer-events: none; /* Make sure it doesn't interfere with mouse events */
+    pointer-events: none;
 }
 
 .recommended-star:hover::after {
