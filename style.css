@@ -146,40 +146,6 @@ header p { font-size: 1.125rem; color: var(--text-secondary); max-width: 600px; 
 }
 .card p { color: var(--text-secondary); flex-grow: 1; margin-bottom: 1.5rem; }
 
-/* --- Split Card Styles --- */
-.card-split-h {
-    padding: 0;
-    flex-direction: row;
-}
-.split-section-h {
-    padding: 1.5rem;
-    display: flex;
-    flex-direction: column;
-    flex-grow: 1;
-    width: 50%;
-    justify-content: space-between;
-}
-.card-split-h .diamond-icon {
-    left: 50%;
-    top: 1rem;
-    transform: translateX(-50%);
-}
-
-.cineby-bg {
-    background-color: rgba(239, 68, 68, 0.25); /* Vibrant Red */
-    border-radius: 11px 0 0 11px;
-}
-.bitcine-bg {
-    background-color: rgba(139, 92, 246, 0.25); /* Vibrant Purple */
-    border-radius: 0 11px 11px 0;
-    text-align: right;
-    align-items: flex-end; 
-}
-.bitcine-bg h3 {
-    justify-content: flex-end;
-}
-
-
 /* --- Recommended Item Styles --- */
 .card.recommended { border-color: var(--recommended-color); box-shadow: 0 0 20px rgba(251, 191, 36, 0.1); }
 .card.recommended:hover { border-color: var(--recommended-color); }
@@ -195,7 +161,6 @@ header p { font-size: 1.125rem; color: var(--text-secondary); max-width: 600px; 
     z-index: 5;
 }
 .card.recommended h3, .card.diamond h3 { padding-right: 2rem; }
-.card-split-h h3 { padding-right: 0; } /* Reset padding for split card */
 
 /* --- Tooltip for Icons --- */
 .recommended-star::after, .diamond-icon::after, .info-icon::after {
@@ -326,20 +291,6 @@ footer { text-align: center; padding: 3rem 1rem; margin-top: 3rem; border-top: 1
         flex-wrap: wrap;
         border-radius: 12px;
         padding: 0.75rem;
-    }
-    .card-split-h {
-        flex-direction: column;
-    }
-    .split-section-h {
-        width: 100%;
-    }
-    .cineby-bg {
-        border-radius: 11px 11px 0 0;
-    }
-    .bitcine-bg {
-        border-radius: 0 0 11px 11px;
-        align-items: flex-start; /* Reset alignment for vertical stack */
-        text-align: left; /* Reset alignment for vertical stack */
     }
 }
 
