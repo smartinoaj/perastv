@@ -163,7 +163,7 @@ header p { font-size: 1.125rem; color: var(--text-secondary); max-width: 600px; 
 .card.recommended h3, .card.diamond h3 { padding-right: 2rem; }
 
 /* --- Tooltip for Icons --- */
-.recommended-star::after, .diamond-icon::after, .info-icon::after {
+.recommended-star::after, .diamond-icon::after {
     content: attr(data-tooltip);
     position: absolute;
     right: 140%; 
@@ -182,6 +182,27 @@ header p { font-size: 1.125rem; color: var(--text-secondary); max-width: 600px; 
     transition: opacity 0.2s ease, visibility 0.2s ease;
     pointer-events: none;
 }
+/* FIXED: Tooltip for info icon */
+.info-icon::after {
+    content: attr(data-tooltip);
+    position: absolute;
+    left: 120%; /* Position to the right */
+    top: 50%;
+    transform: translateY(-50%);
+    background-color: var(--bg-tertiary);
+    color: var(--text-primary);
+    padding: 0.5rem 0.75rem;
+    border-radius: 6px;
+    font-size: 0.85rem;
+    font-weight: 500;
+    white-space: nowrap;
+    z-index: 10;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.2s ease, visibility 0.2s ease;
+    pointer-events: none;
+}
+
 .recommended-star:hover::after, .diamond-icon:hover::after, .info-icon:hover::after {
     opacity: 1;
     visibility: visible;
@@ -206,9 +227,10 @@ header p { font-size: 1.125rem; color: var(--text-secondary); max-width: 600px; 
     z-index: 5;
 }
 
-/* --- NEW: Info Icon --- */
+/* --- Info Icon --- */
 .info-icon {
-    display: inline-block;
+    display: inline-flex; /* Use flex to align its inner content */
+    align-items: center;
     width: 16px;
     height: 16px;
     color: var(--text-secondary);
