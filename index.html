@@ -5,353 +5,213 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>The Ultimate Megathread</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
 </head>
 <body class="antialiased">
-    <div class="flex min-h-screen">
-        <!-- Sidebar Navigation -->
-        <aside class="sidebar w-64 bg-slate-900/70 backdrop-blur-lg border-r border-slate-800 flex-col sticky top-0 h-screen overflow-y-auto hidden lg:flex">
-            <div class="p-6 text-center border-b border-slate-800">
-                <h1 class="text-xl font-bold text-white">The Ultimate Megathread</h1>
-                <p class="text-xs text-slate-400 mt-1">A curated collection of useful links, apps, and tutorials.</p>
-            </div>
-            <nav class="p-4 flex-grow tabs-nav">
-                <ul class="space-y-2">
-                    <li>
-                        <a href="#" class="tab-button flex items-center gap-3 px-4 py-2 rounded-lg text-slate-300 hover:bg-slate-800 hover:text-white transition-colors duration-200 active" data-tab="privacy">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 24 24" fill="currentColor"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm0 10.99h7c-.53 4.12-3.28 7.79-7 8.94V12H5V6.3l7-3.11v8.8z"/></svg>
-                            <span>Privacy</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#" class="tab-button flex items-center gap-3 px-4 py-2 rounded-lg text-slate-300 hover:bg-slate-800 hover:text-white transition-colors duration-200" data-tab="emulation">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 24 24" fill="currentColor"><path d="M21,6H3V4H21V6M7,12V10H9V12H7M13.5,12V10H11V8H13V6H15V8H17V10H15.5V12H13.5M21,16H3V14H21V16z" /></svg>
-                            <span>Emulation</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#" class="tab-button flex items-center gap-3 px-4 py-2 rounded-lg text-slate-300 hover:bg-slate-800 hover:text-white transition-colors duration-200" data-tab="gaming">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 24 24" fill="currentColor"><path d="M16.5 9l-1.41 1.41L16.67 12H7.33l1.59-1.59L7.5 9 4 12.5 7.5 16l1.41-1.41L7.33 13h9.34l-1.58 1.59L16.5 16l3.5-3.5L16.5 9zM21 4H3c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h18c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 14H3V6h18v12z"/></svg>
-                            <span>Gaming</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#" class="tab-button flex items-center gap-3 px-4 py-2 rounded-lg text-slate-300 hover:bg-slate-800 hover:text-white transition-colors duration-200" data-tab="movies-tv">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 24 24" fill="currentColor"><path d="M21 3H3c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h5v2h8v-2h5c1.1 0 1.99-.9 1.99-2L23 5c0-1.1-.9-2-2-2zm0 14H3V5h18v12z"/></svg>
-                            <span>Movies / TV</span>
-                        </a>
-                    </li>
-                </ul>
-            </nav>
-            <div class="p-4 mt-auto border-t border-slate-800 text-center">
-                <p class="text-xs text-slate-500">&copy; 2025 The Ultimate Megathread</p>
-            </div>
-        </aside>
-
-        <!-- Main Content -->
-        <main class="flex-1 p-4 sm:p-6 lg:p-8">
-            <div class="max-w-7xl mx-auto">
-                
-                <!-- Header for Mobile -->
-                <div class="lg:hidden text-center mb-6">
-                    <h1 class="text-2xl font-bold text-white">The Ultimate Megathread</h1>
-                    <p class="text-sm text-slate-400 mt-1">A curated collection of useful links, apps, and tutorials.</p>
-                </div>
-
-                <!-- Global Filter Input -->
-                <div class="relative mb-6">
-                    <input id="global-filter" type="search" placeholder="Filter visible cards… (Ctrl/Cmd + K)" class="w-full bg-slate-800 border border-slate-700 rounded-full py-3 pl-12 pr-4 text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-sky-500">
-                    <div class="absolute inset-y-0 left-0 flex items-center pl-4 text-slate-400">
-                        <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+    <!-- Header -->
+    <header class="sticky top-0 z-40 w-full border-b border-slate-800 bg-slate-900/80 backdrop-blur-lg">
+        <div class="max-w-screen-2xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16">
+                <div class="flex items-center gap-4">
+                    <div class="flex-shrink-0">
+                       <svg class="h-8 w-8 text-violet-400" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                          <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 12.156-6.75 6.75m11.125-2.625L21 11.125-9 21-3 15-2.25 3.75-7.5 2.25-12.75 9l9.375 9.375L3.75 12.156Z" />
+                        </svg>
+                    </div>
+                    <div class="hidden md:block">
+                        <h1 class="text-lg font-bold text-white">The Ultimate Megathread</h1>
+                        <p class="text-xs text-slate-400">A curated collection of links & tutorials.</p>
                     </div>
                 </div>
-
-                <!-- Tabs Content -->
-                <div class="tabs-content">
-                    <!-- Privacy Panel -->
-                    <div id="privacy" class="tab-content active">
-                        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                            <!-- DuckDuckGo Card -->
-                            <div class="card rounded-xl p-6 flex flex-col tag-recommended">
-                                <div class="flex items-start justify-between">
-                                    <h3 class="text-lg font-semibold text-white">DuckDuckGo</h3>
-                                    <div class="flex-shrink-0 text-yellow-400" title="Most trusted by the community">
-                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" viewBox="0 0 24 24" fill="currentColor"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
-                                    </div>
-                                </div>
-                                <p class="text-slate-400 mt-2 flex-grow">A private search engine that doesn't track your search history, providing unbiased results.</p>
-                                <div class="mt-6 flex gap-3">
-                                    <a href="https://duckduckgo.com" target="_blank" class="w-full text-center px-4 py-2 rounded-lg bg-yellow-400 text-slate-900 font-semibold hover:bg-yellow-300 transition-colors">Visit Site</a>
-                                    <button class="tutorial-button w-full px-4 py-2 rounded-lg bg-slate-700 hover:bg-slate-600 font-semibold transition-colors" data-topic="duckduckgo">Tutorial</button>
-                                </div>
+                <div class="flex-1 flex justify-center px-2 lg:ml-6 lg:justify-end">
+                     <div class="max-w-lg w-full lg:max-w-xs">
+                        <label for="global-filter" class="sr-only">Search</label>
+                        <div class="relative">
+                            <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                <svg class="h-5 w-5 text-slate-400" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clip-rule="evenodd" /></svg>
                             </div>
-                        </div>
-                    </div>
-                    <!-- Emulation Panel -->
-                    <div id="emulation" class="tab-content">
-                        <div class="sub-tabs-nav flex flex-wrap justify-center gap-2 mb-8 bg-slate-800 p-2 rounded-full">
-                            <button class="sub-tab-button px-4 py-2 text-sm font-semibold rounded-full text-slate-300 hover:bg-slate-700/50 hover:text-white transition-colors active" data-subtab="roms">ROM Sites</button>
-                            <button class="sub-tab-button px-4 py-2 text-sm font-semibold rounded-full text-slate-300 hover:bg-slate-700/50 hover:text-white transition-colors" data-subtab="emulators">Emulators</button>
-                            <button class="sub-tab-button px-4 py-2 text-sm font-semibold rounded-full text-slate-300 hover:bg-slate-700/50 hover:text-white transition-colors" data-subtab="compatibility">Compatibility</button>
-                        </div>
-                        <div class="sub-tabs-content">
-                            <!-- ROM Sites -->
-                            <div id="roms" class="sub-tab-content active">
-                                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                                    <!-- CrocDB -->
-                                    <div class="card rounded-xl p-6 flex flex-col tag-goat">
-                                        <div class="flex items-start justify-between">
-                                            <h3 class="text-lg font-semibold text-white">CrocDB</h3>
-                                            <div class="flex-shrink-0 text-cyan-400" title="The GOAT of this category"><svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2L2 9.5l10 12.5L22 9.5 12 2z"/></svg></div>
-                                        </div>
-                                        <p class="text-slate-400 mt-2 flex-grow">A collection of ROM links indexed from freely accessible sources on the Internet.</p>
-                                        <div class="mt-6"><a href="https://crocdb.net/" target="_blank" class="block text-center px-4 py-2 rounded-lg bg-cyan-400 text-slate-900 font-semibold hover:bg-cyan-300 transition-colors">Visit Site</a></div>
-                                    </div>
-                                    <!-- Myrient -->
-                                    <div class="card rounded-xl p-6 flex flex-col tag-goat">
-                                        <div class="flex items-start justify-between">
-                                            <h3 class="text-lg font-semibold text-white">Myrient</h3>
-                                            <div class="flex-shrink-0 text-cyan-400" title="The GOAT of this category"><svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2L2 9.5l10 12.5L22 9.5 12 2z"/></svg></div>
-                                        </div>
-                                        <p class="text-slate-400 mt-2 flex-grow">A massive archive for game preservation, offering fast downloads for a huge library of titles.</p>
-                                        <div class="mt-6"><a href="https://myrient.erista.me/" target="_blank" class="block text-center px-4 py-2 rounded-lg bg-cyan-400 text-slate-900 font-semibold hover:bg-cyan-300 transition-colors">Visit Site</a></div>
-                                    </div>
-                                    <!-- Vimm's Lair -->
-                                    <div class="card rounded-xl p-6 flex flex-col tag-goat">
-                                        <div class="flex items-start justify-between">
-                                            <h3 class="text-lg font-semibold text-white">Vimm's Lair</h3>
-                                            <div class="flex-shrink-0 text-cyan-400" title="The GOAT of this category"><svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2L2 9.5l10 12.5L22 9.5 12 2z"/></svg></div>
-                                        </div>
-                                        <p class="text-slate-400 mt-2 flex-grow">A highly-respected preservation site for classic video games. Known for safe and accurate ROMs.</p>
-                                        <div class="mt-6"><a href="https://vimm.net/" target="_blank" class="block text-center px-4 py-2 rounded-lg bg-cyan-400 text-slate-900 font-semibold hover:bg-cyan-300 transition-colors">Visit Site</a></div>
-                                    </div>
-                                    <!-- AlvRo -->
-                                    <div class="card rounded-xl p-6 flex flex-col tag-recommended">
-                                        <div class="flex items-start justify-between">
-                                            <h3 class="text-lg font-semibold text-white">AlvRo</h3>
-                                            <div class="flex-shrink-0 text-yellow-400" title="Most trusted by the community"><svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" viewBox="0 0 24 24" fill="currentColor"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg></div>
-                                        </div>
-                                        <p class="text-slate-400 mt-2 flex-grow">PS2 Redumps by AlvRo.</p>
-                                        <div class="mt-6 flex gap-3">
-                                            <a href="https://archive.org/download/ps2usaredump1" target="_blank" class="w-full text-center px-4 py-2 rounded-lg bg-yellow-400 text-slate-900 font-semibold hover:bg-yellow-300 transition-colors">Part 1</a>
-                                            <a href="https://archive.org/download/ps2usaredump1_20200816_1458" target="_blank" class="w-full text-center px-4 py-2 rounded-lg bg-yellow-400 text-slate-900 font-semibold hover:bg-yellow-300 transition-colors">Part 2</a>
-                                        </div>
-                                    </div>
-                                    <!-- ROM Heaven -->
-                                    <div class="card rounded-xl p-6 flex flex-col tag-recommended">
-                                        <div class="flex items-start justify-between">
-                                            <h3 class="text-lg font-semibold text-white">ROM Heaven</h3>
-                                            <div class="flex-shrink-0 text-yellow-400" title="Most trusted by the community"><svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" viewBox="0 0 24 24" fill="currentColor"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg></div>
-                                        </div>
-                                        <p class="text-slate-400 mt-2 flex-grow">A truly permanent, decentralized video game preservation effort.</p>
-                                        <div class="mt-6 flex gap-3">
-                                            <a href="https://romheaven.com/" target="_blank" class="w-full text-center px-4 py-2 rounded-lg bg-yellow-400 text-slate-900 font-semibold hover:bg-yellow-300 transition-colors">Main</a>
-                                            <a href="https://romheaven.com/switch" target="_blank" class="w-full text-center px-4 py-2 rounded-lg bg-yellow-400 text-slate-900 font-semibold hover:bg-yellow-300 transition-colors">Switch</a>
-                                        </div>
-                                    </div>
-                                    <!-- RuTracker ROMs -->
-                                    <div class="card rounded-xl p-6 flex flex-col tag-recommended">
-                                        <div class="flex items-start justify-between">
-                                            <h3 class="text-lg font-semibold text-white">RuTracker ROMs</h3>
-                                            <div class="flex-shrink-0 text-yellow-400" title="Most trusted by the community"><svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" viewBox="0 0 24 24" fill="currentColor"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg></div>
-                                        </div>
-                                        <p class="text-slate-400 mt-2 flex-grow">Torrent ROM downloads.</p>
-                                        <div class="mt-6"><a href="https://rutracker.org/forum/viewforum.php?f=548" target="_blank" class="block text-center px-4 py-2 rounded-lg bg-yellow-400 text-slate-900 font-semibold hover:bg-yellow-300 transition-colors">Visit Site</a></div>
-                                    </div>
-                                    <!-- ROMSPURE -->
-                                    <div class="card rounded-xl p-6 flex flex-col">
-                                        <h3 class="text-lg font-semibold text-white">ROMSPURE</h3>
-                                        <p class="text-slate-400 mt-2 flex-grow">Provides the most complete roms now with more than 30,000 Redump and No-Intro verified roms.</p>
-                                        <div class="mt-6"><a href="https://romspure.cc/" target="_blank" class="block text-center px-4 py-2 rounded-lg bg-sky-500 text-white font-semibold hover:bg-sky-400 transition-colors">Visit Site</a></div>
-                                    </div>
-                                     <!-- BlueROMs -->
-                                     <div class="card rounded-xl p-6 flex flex-col">
-                                        <h3 class="text-lg font-semibold text-white">BlueROMs</h3>
-                                        <p class="text-slate-400 mt-2 flex-grow">All consoles, including SWITCH ROMS.</p>
-                                        <div class="mt-6"><a href="https://www.blueroms.ws/" target="_blank" class="block text-center px-4 py-2 rounded-lg bg-sky-500 text-white font-semibold hover:bg-sky-400 transition-colors">Visit Site</a></div>
-                                    </div>
-                                     <!-- WowROMs -->
-                                     <div class="card rounded-xl p-6 flex flex-col">
-                                        <h3 class="text-lg font-semibold text-white">WowROMs</h3>
-                                        <p class="text-slate-400 mt-2 flex-grow">ROMs for almost every console.</p>
-                                        <div class="mt-6"><a href="https://wowroms.com/en" target="_blank" class="block text-center px-4 py-2 rounded-lg bg-sky-500 text-white font-semibold hover:bg-sky-400 transition-colors">Visit Site</a></div>
-                                    </div>
-                                </div>
-                            </div>
-                            <!-- Emulators -->
-                            <div id="emulators" class="sub-tab-content">
-                                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                                    <!-- PCSX2 -->
-                                    <div class="card rounded-xl p-6 flex flex-col tag-recommended">
-                                        <div class="flex items-start justify-between">
-                                            <h3 class="text-lg font-semibold text-white">PCSX2</h3>
-                                            <div class="flex-shrink-0 text-yellow-400" title="Most trusted by the community"><svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" viewBox="0 0 24 24" fill="currentColor"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg></div>
-                                        </div>
-                                        <p class="text-slate-400 mt-2 flex-grow">The leading open-source emulator for PlayStation 2.</p>
-                                        <div class="mt-6 flex gap-3">
-                                            <a href="https://pcsx2.net/" target="_blank" class="w-full text-center px-4 py-2 rounded-lg bg-yellow-400 text-slate-900 font-semibold hover:bg-yellow-300 transition-colors">Visit Site</a>
-                                            <a href="https://archive.org/download/ps2-bios-megadump/PS2_BIOS.zip" target="_blank" class="w-full text-center px-4 py-2 rounded-lg bg-slate-700 hover:bg-slate-600 font-semibold transition-colors">Bios</a>
-                                        </div>
-                                    </div>
-                                    <!-- Dolphin -->
-                                    <div class="card rounded-xl p-6 flex flex-col tag-recommended">
-                                        <div class="flex items-start justify-between">
-                                            <h3 class="text-lg font-semibold text-white">Dolphin</h3>
-                                            <div class="flex-shrink-0 text-yellow-400" title="Most trusted by the community"><svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" viewBox="0 0 24 24" fill="currentColor"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg></div>
-                                        </div>
-                                        <p class="text-slate-400 mt-2 flex-grow">The definitive emulator for GameCube and Wii games.</p>
-                                        <div class="mt-6"><a href="https://dolphin-emu.org/" target="_blank" class="block text-center px-4 py-2 rounded-lg bg-yellow-400 text-slate-900 font-semibold hover:bg-yellow-300 transition-colors">Visit Site</a></div>
-                                    </div>
-                                    <!-- Other Emulators... -->
-                                    <div class="card rounded-xl p-6 flex flex-col tag-recommended">
-                                        <h3 class="text-lg font-semibold text-white">PPSSPP</h3>
-                                        <p class="text-slate-400 mt-2 flex-grow">The leading open-source PlayStation Portable (PSP) emulator.</p>
-                                        <div class="mt-6"><a href="https://www.ppsspp.org/" target="_blank" class="block text-center px-4 py-2 rounded-lg bg-yellow-400 text-slate-900 font-semibold hover:bg-yellow-300 transition-colors">Visit Site</a></div>
-                                    </div>
-                                    <div class="card rounded-xl p-6 flex flex-col tag-recommended">
-                                        <h3 class="text-lg font-semibold text-white">DuckStation</h3>
-                                        <p class="text-slate-400 mt-2 flex-grow">An accuracy-focused PlayStation 1 (PSX) emulator.</p>
-                                        <div class="mt-6 flex gap-3">
-                                            <a href="https://www.duckstation.org/" target="_blank" class="w-full text-center px-4 py-2 rounded-lg bg-yellow-400 text-slate-900 font-semibold hover:bg-yellow-300 transition-colors">Visit Site</a>
-                                            <a href="https://download2444.mediafire.com/ywkyh8el8pugTi8r338-l68atpFIrQyhWep8fLYTVUI9AmkQVnnm-mv7XiwKY-zXzw8AdOwR8hUIf92FRN9v9WZYhIiSZyr4WLl4qilCjnDOSydb9FCQT5UhxHfRKw97TozAUPwZiJ0LIAHDqCruiXaJgFVrLkor5Evadgj0w8dgXe0/s11dvh2snfrmy29/PS1_BIOS.zip" target="_blank" class="w-full text-center px-4 py-2 rounded-lg bg-slate-700 hover:bg-slate-600 font-semibold transition-colors">Bios</a>
-                                        </div>
-                                    </div>
-                                     <div class="card rounded-xl p-6 flex flex-col tag-recommended">
-                                        <h3 class="text-lg font-semibold text-white">RetroArch</h3>
-                                        <p class="text-slate-400 mt-2 flex-grow">A popular, cross-platform frontend for emulators and game engines.</p>
-                                        <div class="mt-6"><a href="https://www.retroarch.com/" target="_blank" class="block text-center px-4 py-2 rounded-lg bg-yellow-400 text-slate-900 font-semibold hover:bg-yellow-300 transition-colors">Visit Site</a></div>
-                                    </div>
-                                     <div class="card rounded-xl p-6 flex flex-col tag-recommended">
-                                        <h3 class="text-lg font-semibold text-white">RPCS3</h3>
-                                        <p class="text-slate-400 mt-2 flex-grow">An impressive open-source PlayStation 3 emulator.</p>
-                                        <div class="mt-6 flex gap-3">
-                                            <a href="https://rpcs3.net/" target="_blank" class="w-full text-center px-4 py-2 rounded-lg bg-yellow-400 text-slate-900 font-semibold hover:bg-yellow-300 transition-colors">Visit Site</a>
-                                            <a href="http://dus01.ps3.update.playstation.net/update/ps3/image/us/2025_0305_c179ad173bbc08b55431d30947725a4b/PS3UPDAT.PUP" target="_blank" class="w-full text-center px-4 py-2 rounded-lg bg-slate-700 hover:bg-slate-600 font-semibold transition-colors">Bios</a>
-                                        </div>
-                                    </div>
-                                    <div class="card rounded-xl p-6 flex flex-col"><h3 class="text-lg font-semibold text-white">Xenia</h3><p class="text-slate-400 mt-2 flex-grow">An experimental open-source emulator for the Xbox 360.</p><div class="mt-6"><a href="https://xenia.jp/" target="_blank" class="block text-center px-4 py-2 rounded-lg bg-sky-500 text-white font-semibold hover:bg-sky-400 transition-colors">Visit Site</a></div></div>
-                                    <div class="card rounded-xl p-6 flex flex-col"><h3 class="text-lg font-semibold text-white">Citra</h3><p class="text-slate-400 mt-2 flex-grow">The world's most popular open-source emulator for the Nintendo 3DS.</p><div class="mt-6"><a href="https://citra-emu.org/" target="_blank" class="block text-center px-4 py-2 rounded-lg bg-sky-500 text-white font-semibold hover:bg-sky-400 transition-colors">Visit Site</a></div></div>
-                                    <div class="card rounded-xl p-6 flex flex-col"><h3 class="text-lg font-semibold text-white">Cemu</h3><p class="text-slate-400 mt-2 flex-grow">A highly effective closed-source emulator for the Nintendo Wii U.</p><div class="mt-6"><a href="https://cemu.info/" target="_blank" class="block text-center px-4 py-2 rounded-lg bg-sky-500 text-white font-semibold hover:bg-sky-400 transition-colors">Visit Site</a></div></div>
-                                    <div class="card rounded-xl p-6 flex flex-col"><h3 class="text-lg font-semibold text-white">Mesen</h3><p class="text-slate-400 mt-2 flex-grow">A high-accuracy open-source emulator for the NES, Famicom, and Famicom Disk System.</p><div class="mt-6"><a href="https://www.mesen.ca/" target="_blank" class="block text-center px-4 py-2 rounded-lg bg-sky-500 text-white font-semibold hover:bg-sky-400 transition-colors">Visit Site</a></div></div>
-                                    <div class="card rounded-xl p-6 flex flex-col"><h3 class="text-lg font-semibold text-white">Snes9x</h3><p class="text-slate-400 mt-2 flex-grow">A portable, freeware Super Nintendo Entertainment System (SNES) emulator.</p><div class="mt-6"><a href="https://www.snes9x.com/" target="_blank" class="block text-center px-4 py-2 rounded-lg bg-sky-500 text-white font-semibold hover:bg-sky-400 transition-colors">Visit Site</a></div></div>
-                                    <div class="card rounded-xl p-6 flex flex-col"><h3 class="text-lg font-semibold text-white">mGBA</h3><p class="text-slate-400 mt-2 flex-grow">A fast, accurate, and feature-rich open-source emulator for Game Boy Advance.</p><div class="mt-6"><a href="https://mgba.io/" target="_blank" class="block text-center px-4 py-2 rounded-lg bg-sky-500 text-white font-semibold hover:bg-sky-400 transition-colors">Visit Site</a></div></div>
-                                    <div class="card rounded-xl p-6 flex flex-col"><h3 class="text-lg font-semibold text-white">melonDS</h3><p class="text-slate-400 mt-2 flex-grow">An open-source Nintendo DS emulator focused on accuracy and performance.</p><div class="mt-6"><a href="http://melonds.kuribo64.net/" target="_blank" class="block text-center px-4 py-2 rounded-lg bg-sky-500 text-white font-semibold hover:bg-sky-400 transition-colors">Visit Site</a></div></div>
-                                    <div class="card rounded-xl p-6 flex flex-col"><h3 class="text-lg font-semibold text-white">Vita3K</h3><p class="text-slate-400 mt-2 flex-grow">The world's first experimental open-source PlayStation Vita emulator.</p><div class="mt-6"><a href="https://vita3k.org/" target="_blank" class="block text-center px-4 py-2 rounded-lg bg-sky-500 text-white font-semibold hover:bg-sky-400 transition-colors">Visit Site</a></div></div>
-                                    <div class="card rounded-xl p-6 flex flex-col"><h3 class="text-lg font-semibold text-white">Playnite</h3><p class="text-slate-400 mt-2 flex-grow">An open-source video game library manager and unified interface for all your games.</p><div class="mt-6"><a href="https://playnite.link/" target="_blank" class="block text-center px-4 py-2 rounded-lg bg-sky-500 text-white font-semibold hover:bg-sky-400 transition-colors">Visit Site</a></div></div>
-                                    <div class="card rounded-xl p-6 flex flex-col"><h3 class="text-lg font-semibold text-white">LaunchBox</h3><p class="text-slate-400 mt-2 flex-grow">An attractive frontend for DOSBox, modern PC games, and emulation.</p><div class="mt-6"><a href="https://www.launchbox-app.com/" target="_blank" class="block text-center px-4 py-2 rounded-lg bg-sky-500 text-white font-semibold hover:bg-sky-400 transition-colors">Visit Site</a></div></div>
-                                </div>
-                            </div>
-                            <!-- Compatibility -->
-                            <div id="compatibility" class="sub-tab-content">
-                                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                                    <div class="card rounded-xl p-6 flex flex-col"><h3 class="text-lg font-semibold text-white">PCSX2 List</h3><p class="text-slate-400 mt-2 flex-grow">Official game compatibility list for the PCSX2 (PlayStation 2) emulator.</p><div class="mt-6"><a href="https://pcsx2.net/compat/" target="_blank" class="block text-center px-4 py-2 rounded-lg bg-sky-500 text-white font-semibold hover:bg-sky-400 transition-colors">View List</a></div></div>
-                                    <div class="card rounded-xl p-6 flex flex-col"><h3 class="text-lg font-semibold text-white">Dolphin List</h3><p class="text-slate-400 mt-2 flex-grow">Official game compatibility list for the Dolphin (GameCube & Wii) emulator.</p><div class="mt-6"><a href="https://dolphin-emu.org/compat/" target="_blank" class="block text-center px-4 py-2 rounded-lg bg-sky-500 text-white font-semibold hover:bg-sky-400 transition-colors">View List</a></div></div>
-                                    <div class="card rounded-xl p-6 flex flex-col"><h3 class="text-lg font-semibold text-white">PPSSPP List</h3><p class="text-slate-400 mt-2 flex-grow">Community-curated compatibility list for the PPSSPP (PSP) emulator.</p><div class="mt-6"><a href="https://forums.ppsspp.org/showthread.php?tid=1473" target="_blank" class="block text-center px-4 py-2 rounded-lg bg-sky-500 text-white font-semibold hover:bg-sky-400 transition-colors">View List</a></div></div>
-                                    <div class="card rounded-xl p-6 flex flex-col"><h3 class="text-lg font-semibold text-white">RPCS3 List</h3><p class="text-slate-400 mt-2 flex-grow">Official game compatibility list for the RPCS3 (PlayStation 3) emulator.</p><div class="mt-6"><a href="https://rpcs3.net/compatibility?p=2" target="_blank" class="block text-center px-4 py-2 rounded-lg bg-sky-500 text-white font-semibold hover:bg-sky-400 transition-colors">View List</a></div></div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                     <!-- Gaming Panel -->
-                    <div id="gaming" class="tab-content">
-                        <div class="sub-tabs-nav flex flex-wrap justify-center gap-2 mb-8 bg-slate-800 p-2 rounded-full">
-                            <button class="sub-tab-button px-4 py-2 text-sm font-semibold rounded-full text-slate-300 hover:bg-slate-700/50 hover:text-white transition-colors active" data-subtab="direct-downloads">Direct Downloads</button>
-                            <button class="sub-tab-button px-4 py-2 text-sm font-semibold rounded-full text-slate-300 hover:bg-slate-700/50 hover:text-white transition-colors" data-subtab="repacks">Repacks</button>
-                            <button class="sub-tab-button px-4 py-2 text-sm font-semibold rounded-full text-slate-300 hover:bg-slate-700/50 hover:text-white transition-colors" data-subtab="forum-downloads">Forum Downloads</button>
-                        </div>
-                        <div class="sub-tabs-content">
-                             <!-- Direct Downloads -->
-                             <div id="direct-downloads" class="sub-tab-content active">
-                                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                                    <div class="card rounded-xl p-6 flex flex-col tag-goat"> <h3 class="text-lg font-semibold text-white">SteamRIP</h3><p class="text-slate-400 mt-2 flex-grow">Pre-installed Steam games ready to play.</p><div class="mt-6"><a href="https://steamrip.com/" target="_blank" class="block text-center px-4 py-2 rounded-lg bg-cyan-400 text-slate-900 font-semibold hover:bg-cyan-300 transition-colors">Visit Site</a></div></div>
-                                    <div class="card rounded-xl p-6 flex flex-col tag-goat"> <h3 class="text-lg font-semibold text-white">GOG Games</h3><p class="text-slate-400 mt-2 flex-grow">DRM-free games from GOG (Good Old Games).</p><div class="mt-6"><a href="https://gog-games.to/" target="_blank" class="block text-center px-4 py-2 rounded-lg bg-cyan-400 text-slate-900 font-semibold hover:bg-cyan-300 transition-colors">Visit Site</a></div></div>
-                                    <div class="card rounded-xl p-6 flex flex-col tag-goat"> <h3 class="text-lg font-semibold text-white">Online Fix</h3><p class="text-slate-400 mt-2 flex-grow">Provides online multiplayer fixes for many games.</p><div class="mt-6"><a href="https://online-fix.me/" target="_blank" class="block text-center px-4 py-2 rounded-lg bg-cyan-400 text-slate-900 font-semibold hover:bg-cyan-300 transition-colors">Visit Site</a></div></div>
-                                    <div class="card rounded-xl p-6 flex flex-col tag-recommended"> <h3 class="text-lg font-semibold text-white">UnionCrax</h3><p class="text-slate-400 mt-2 flex-grow">Direct downloads for a variety of PC games.</p><div class="mt-6"><a href="https://union-crax.xyz/" target="_blank" class="block text-center px-4 py-2 rounded-lg bg-yellow-400 text-slate-900 font-semibold hover:bg-yellow-300 transition-colors">Visit Site</a></div></div>
-                                    <div class="card rounded-xl p-6 flex flex-col tag-recommended"> <h3 class="text-lg font-semibold text-white">AnkerGames</h3><p class="text-slate-400 mt-2 flex-grow">A source for various PC game downloads.</p><div class="mt-6"><a href="https://ankergames.net/" target="_blank" class="block text-center px-4 py-2 rounded-lg bg-yellow-400 text-slate-900 font-semibold hover:bg-yellow-300 transition-colors">Visit Site</a></div></div>
-                                    <div class="card rounded-xl p-6 flex flex-col tag-recommended"> <h3 class="text-lg font-semibold text-white">GameBounty</h3><p class="text-slate-400 mt-2 flex-grow">A forum and download site for PC games.</p><div class="mt-6"><a href="https://gamebounty.world/" target="_blank" class="block text-center px-4 py-2 rounded-lg bg-yellow-400 text-slate-900 font-semibold hover:bg-yellow-300 transition-colors">Visit Site</a></div></div>
-                                    <div class="card rounded-xl p-6 flex flex-col tag-recommended"> <h3 class="text-lg font-semibold text-white">SteamUnderground</h3><p class="text-slate-400 mt-2 flex-grow">A community for sharing and discussing PC games.</p><div class="mt-6"><a href="https://steamunderground.net/" target="_blank" class="block text-center px-4 py-2 rounded-lg bg-yellow-400 text-slate-900 font-semibold hover:bg-yellow-300 transition-colors">Visit Site</a></div></div>
-                                </div>
-                             </div>
-                             <!-- Repacks -->
-                             <div id="repacks" class="sub-tab-content">
-                                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                                    <div class="card rounded-xl p-6 flex flex-col tag-goat"> <h3 class="text-lg font-semibold text-white">Fitgirl</h3><p class="text-slate-400 mt-2 flex-grow">Known for highly compressed game repacks, saving bandwidth and download time.</p><div class="mt-6"><a href="https://fitgirl-repacks.site/" target="_blank" class="block text-center px-4 py-2 rounded-lg bg-cyan-400 text-slate-900 font-semibold hover:bg-cyan-300 transition-colors">Visit Site</a></div></div>
-                                    <div class="card rounded-xl p-6 flex flex-col tag-recommended"> <h3 class="text-lg font-semibold text-white">KaOsKrew</h3><p class="text-slate-400 mt-2 flex-grow">A team that provides quality, tested game repacks for the community.</p><div class="mt-6"><a href="https://kaoskrew.org" target="_blank" class="block text-center px-4 py-2 rounded-lg bg-yellow-400 text-slate-900 font-semibold hover:bg-yellow-300 transition-colors">Visit Site</a></div></div>
-                                    <div class="card rounded-xl p-6 flex flex-col"><h3 class="text-lg font-semibold text-white">DODI</h3><p class="text-slate-400 mt-2 flex-grow">A popular source for game repacks, offering fast installation times.</p><div class="mt-6"><a href="https://dodi-repacks.site/" target="_blank" class="block text-center px-4 py-2 rounded-lg bg-sky-500 text-white font-semibold hover:bg-sky-400 transition-colors">Visit Site</a></div></div>
-                                 </div>
-                             </div>
-                             <!-- Forum Downloads -->
-                             <div id="forum-downloads" class="sub-tab-content">
-                                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                                    <div class="card rounded-xl p-6 flex flex-col tag-goat"> <h3 class="text-lg font-semibold text-white flex items-center gap-2">CS.RIN.RU <span class="text-slate-400 text-xs">(Sign in)</span></h3><p class="text-slate-400 mt-2 flex-grow">A major forum for game discussion, fixes, and community support.</p><div class="mt-6"><a href="https://cs.rin.ru/forum/" target="_blank" class="block text-center px-4 py-2 rounded-lg bg-cyan-400 text-slate-900 font-semibold hover:bg-cyan-300 transition-colors">Visit Site</a></div></div>
-                                    <div class="card rounded-xl p-6 flex flex-col"><h3 class="text-lg font-semibold text-white">Rutor</h3><p class="text-slate-400 mt-2 flex-grow">A popular Russian torrent tracker with a large collection of games.</p><div class="mt-6"><a href="https://rutor.info/" target="_blank" class="block text-center px-4 py-2 rounded-lg bg-sky-500 text-white font-semibold hover:bg-sky-400 transition-colors">Visit Site</a></div></div>
-                                    <div class="card rounded-xl p-6 flex flex-col"><h3 class="text-lg font-semibold text-white flex items-center gap-2">Rustorka <span class="text-slate-400 text-xs">(Sign in)</span></h3><p class="text-slate-400 mt-2 flex-grow">Another well-known Russian torrent forum with a dedicated gaming section.</p><div class="mt-6"><a href="https://rustorka.com/forum/index.php" target="_blank" class="block text-center px-4 py-2 rounded-lg bg-sky-500 text-white font-semibold hover:bg-sky-400 transition-colors">Visit Site</a></div></div>
-                                </div>
-                             </div>
-                        </div>
-                    </div>
-                     <!-- Movies / TV Panel -->
-                    <div id="movies-tv" class="tab-content">
-                         <div class="sub-tabs-nav flex flex-wrap justify-center gap-2 mb-8 bg-slate-800 p-2 rounded-full">
-                            <button class="sub-tab-button px-4 py-2 text-sm font-semibold rounded-full text-slate-300 hover:bg-slate-700/50 hover:text-white transition-colors active" data-subtab="stremio">Stremio</button>
-                            <button class="sub-tab-button px-4 py-2 text-sm font-semibold rounded-full text-slate-300 hover:bg-slate-700/50 hover:text-white transition-colors" data-subtab="streaming-sites">Streaming Sites</button>
-                        </div>
-                        <div class="sub-tabs-content">
-                            <!-- Stremio -->
-                            <div id="stremio" class="sub-tab-content active">
-                                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                                    <div class="card rounded-xl p-6 flex flex-col"><h3 class="text-lg font-semibold text-white">Stremio</h3><p class="text-slate-400 mt-2 flex-grow">A modern media center that's a one-stop solution for your video entertainment.</p><div class="mt-6"><a href="https://www.stremio.com/" target="_blank" class="block text-center px-4 py-2 rounded-lg bg-sky-500 text-white font-semibold hover:bg-sky-400 transition-colors">Visit Site</a></div></div>
-                                    <div class="card rounded-xl p-6 flex flex-col"><h3 class="text-lg font-semibold text-white">Stremio Addons</h3><p class="text-slate-400 mt-2 flex-grow">A curated list of the best community addons for Stremio.</p><div class="mt-6"><a href="https://stremio-addons.net/" target="_blank" class="block text-center px-4 py-2 rounded-lg bg-sky-500 text-white font-semibold hover:bg-sky-400 transition-colors">Visit Site</a></div></div>
-                                    <div class="card rounded-xl p-6 flex flex-col"><h3 class="text-lg font-semibold text-white">Stremio Guides</h3><p class="text-slate-400 mt-2 flex-grow">Comprehensive guides for setting up and using Stremio.</p><div class="mt-6 flex gap-3"><a href="https://bye.undi.rest/" target="_blank" class="w-full text-center px-4 py-2 rounded-lg bg-sky-500 text-white font-semibold hover:bg-sky-400 transition-colors">Simple Guide</a><a href="https://guides.viren070.me/stremio" target="_blank" class="w-full text-center px-4 py-2 rounded-lg bg-slate-700 hover:bg-slate-600 font-semibold transition-colors">Advanced Guide</a></div></div>
-                                </div>
-                            </div>
-                            <!-- Streaming Sites -->
-                            <div id="streaming-sites" class="sub-tab-content">
-                               <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                                   <div class="card rounded-xl p-6 flex flex-col tag-goat"><h3 class="text-lg font-semibold text-white">Cineby</h3><p class="text-slate-400 mt-2 flex-grow">A clean and modern streaming site for movies and TV shows.</p><div class="mt-6"><a href="https://www.cineby.app/" target="_blank" class="block text-center px-4 py-2 rounded-lg bg-cyan-400 text-slate-900 font-semibold hover:bg-cyan-300 transition-colors">Visit Site</a></div></div>
-                                   <div class="card rounded-xl p-6 flex flex-col tag-goat"><h3 class="text-lg font-semibold text-white">Bitcine</h3><p class="text-slate-400 mt-2 flex-grow">A sister site to Cineby, offering a similar high-quality streaming experience.</p><div class="mt-6"><a href="https://www.bitcine.app/" target="_blank" class="block text-center px-4 py-2 rounded-lg bg-cyan-400 text-slate-900 font-semibold hover:bg-cyan-300 transition-colors">Visit Site</a></div></div>
-                                   <div class="card rounded-xl p-6 flex flex-col tag-goat"><h3 class="text-lg font-semibold text-white">Fmovies</h3><p class="text-slate-400 mt-2 flex-grow">A long-standing and popular site with a massive library of content.</p><div class="mt-6"><a href="https://www.fmovies.gd/home" target="_blank" class="block text-center px-4 py-2 rounded-lg bg-cyan-400 text-slate-900 font-semibold hover:bg-cyan-300 transition-colors">Visit Site</a></div></div>
-                                   <div class="card rounded-xl p-6 flex flex-col tag-recommended"><h3 class="text-lg font-semibold text-white">Xprime</h3><p class="text-slate-400 mt-2 flex-grow">A streaming site known for its clean interface and good video quality.</p><div class="mt-6"><a href="https://xprime.tv/" target="_blank" class="block text-center px-4 py-2 rounded-lg bg-yellow-400 text-slate-900 font-semibold hover:bg-yellow-300 transition-colors">Visit Site</a></div></div>
-                                   <div class="card rounded-xl p-6 flex flex-col tag-recommended"><h3 class="text-lg font-semibold text-white">P-stream</h3><p class="text-slate-400 mt-2 flex-grow">A reliable streaming source with a wide variety of movies and shows.</p><div class="mt-6"><a href="https://pstream.mov/" target="_blank" class="block text-center px-4 py-2 rounded-lg bg-yellow-400 text-slate-900 font-semibold hover:bg-yellow-300 transition-colors">Visit Site</a></div></div>
-                                   <div class="card rounded-xl p-6 flex flex-col tag-recommended"><h3 class="text-lg font-semibold text-white">VeloraTV</h3><p class="text-slate-400 mt-2 flex-grow">A streaming site focusing on a high-quality user experience.</p><div class="mt-6"><a href="https://veloratv.ru/" target="_blank" class="block text-center px-4 py-2 rounded-lg bg-yellow-400 text-slate-900 font-semibold hover:bg-yellow-300 transition-colors">Visit Site</a></div></div>
-                                   <div class="card rounded-xl p-6 flex flex-col tag-recommended"><h3 class="text-lg font-semibold text-white">SpenFlix</h3><p class="text-slate-400 mt-2 flex-grow">A community-driven streaming project with a clean design.</p><div class="mt-6"><a href="https://watch.spencerdevs.xyz/" target="_blank" class="block text-center px-4 py-2 rounded-lg bg-yellow-400 text-slate-900 font-semibold hover:bg-yellow-300 transition-colors">Visit Site</a></div></div>
-                                   <div class="card rounded-xl p-6 flex flex-col tag-recommended"><h3 class="text-lg font-semibold text-white">Flixer</h3><p class="text-slate-400 mt-2 flex-grow">A source for streaming the latest movies and TV series.</p><div class="mt-6"><a href="https://flixer.sh/" target="_blank" class="block text-center px-4 py-2 rounded-lg bg-yellow-400 text-slate-900 font-semibold hover:bg-yellow-300 transition-colors">Visit Site</a></div></div>
-                               </div>
-                            </div>
+                            <input id="global-filter" name="global-filter" class="block w-full pl-10 pr-3 py-2 border border-transparent rounded-full bg-slate-800 text-white placeholder-slate-400 focus:outline-none focus:bg-white focus:text-slate-900 focus:placeholder-slate-500 focus:ring-0 sm:text-sm" placeholder="Search (Ctrl+K)" type="search">
                         </div>
                     </div>
                 </div>
             </div>
-        </main>
-    </div>
-
-    <!-- Mobile Navigation -->
-    <nav class="lg:hidden fixed bottom-0 left-0 right-0 bg-slate-900/80 backdrop-blur-lg border-t border-slate-800 p-2 z-50">
-        <div class="tabs-nav flex justify-around">
-            <a href="#" class="tab-button flex flex-col items-center gap-1 text-slate-400 p-2 rounded-md active" data-tab="privacy">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" viewBox="0 0 24 24" fill="currentColor"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4z"/></svg>
-                <span class="text-xs">Privacy</span>
-            </a>
-            <a href="#" class="tab-button flex flex-col items-center gap-1 text-slate-400 p-2 rounded-md" data-tab="emulation">
-                 <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" viewBox="0 0 24 24" fill="currentColor"><path d="M21,6H3V4H21V6M7,12V10H9V12H7M13.5,12V10H11V8H13V6H15V8H17V10H15.5V12H13.5M21,16H3V14H21V16z" /></svg>
-                <span class="text-xs">Emulation</span>
-            </a>
-            <a href="#" class="tab-button flex flex-col items-center gap-1 text-slate-400 p-2 rounded-md" data-tab="gaming">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" viewBox="0 0 24 24" fill="currentColor"><path d="M16.5 9l-1.41 1.41L16.67 12H7.33l1.59-1.59L7.5 9 4 12.5 7.5 16l1.41-1.41L7.33 13h9.34l-1.58 1.59L16.5 16l3.5-3.5L16.5 9z"/></svg>
-                <span class="text-xs">Gaming</span>
-            </a>
-            <a href="#" class="tab-button flex flex-col items-center gap-1 text-slate-400 p-2 rounded-md" data-tab="movies-tv">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" viewBox="0 0 24 24" fill="currentColor"><path d="M21 3H3c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h5v2h8v-2h5c1.1 0 1.99-.9 1.99-2L23 5c0-1.1-.9-2-2-2z"/></svg>
-                <span class="text-xs">Movies/TV</span>
-            </a>
         </div>
-    </nav>
+        <!-- Main Navigation -->
+        <nav class="tabs-nav max-w-screen-2xl mx-auto px-4 sm:px-6 lg:px-8 border-t border-slate-800">
+            <div class="flex items-center justify-center md:justify-start space-x-2 sm:space-x-4 overflow-x-auto -mb-px">
+                 <a href="#" class="tab-button whitespace-nowrap py-3 px-1 border-b-2 font-medium text-sm flex items-center gap-2 active" data-tab="privacy">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 24 24" fill="currentColor"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm0 10.99h7c-.53 4.12-3.28 7.79-7 8.94V12H5V6.3l7-3.11v8.8z"/></svg>
+                    Privacy
+                </a>
+                <a href="#" class="tab-button whitespace-nowrap py-3 px-1 border-b-2 font-medium text-sm flex items-center gap-2" data-tab="emulation">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 24 24" fill="currentColor"><path d="M21,6H3V4H21V6M7,12V10H9V12H7M13.5,12V10H11V8H13V6H15V8H17V10H15.5V12H13.5M21,16H3V14H21V16z" /></svg>
+                    Emulation
+                </a>
+                <a href="#" class="tab-button whitespace-nowrap py-3 px-1 border-b-2 font-medium text-sm flex items-center gap-2" data-tab="gaming">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 24 24" fill="currentColor"><path d="M16.5 9l-1.41 1.41L16.67 12H7.33l1.59-1.59L7.5 9 4 12.5 7.5 16l1.41-1.41L7.33 13h9.34l-1.58 1.59L16.5 16l3.5-3.5L16.5 9zM21 4H3c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h18c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 14H3V6h18v12z"/></svg>
+                    Gaming
+                </a>
+                <a href="#" class="tab-button whitespace-nowrap py-3 px-1 border-b-2 font-medium text-sm flex items-center gap-2" data-tab="movies-tv">
+                     <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 24 24" fill="currentColor"><path d="M21 3H3c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h5v2h8v-2h5c1.1 0 1.99-.9 1.99-2L23 5c0-1.1-.9-2-2-2zm0 14H3V5h18v12z"/></svg>
+                    Movies / TV
+                </a>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Main Content -->
+    <main class="max-w-screen-2xl mx-auto p-4 sm:p-6 lg:p-8">
+        <div class="tabs-content">
+            <!-- Privacy Panel -->
+            <div id="privacy" class="tab-content active">
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+                    <!-- DuckDuckGo Card -->
+                    <div class="card rounded-xl p-6 flex flex-col tag-recommended">
+                        <div class="flex items-start justify-between">
+                            <h3 class="text-lg font-semibold text-white">DuckDuckGo</h3>
+                            <div class="flex-shrink-0 text-amber-400" title="Most trusted by the community">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" viewBox="0 0 24 24" fill="currentColor"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                            </div>
+                        </div>
+                        <p class="text-slate-400 mt-2 flex-grow">A private search engine that doesn't track your search history, providing unbiased results.</p>
+                        <div class="mt-6 flex gap-3">
+                            <a href="https://duckduckgo.com" target="_blank" class="w-full text-center px-4 py-2 rounded-lg bg-amber-400 text-slate-900 font-semibold hover:bg-amber-300 transition-colors">Visit Site</a>
+                            <button class="tutorial-button w-full px-4 py-2 rounded-lg bg-slate-700 hover:bg-slate-600 font-semibold transition-colors" data-topic="duckduckgo">Tutorial</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Emulation Panel -->
+            <div id="emulation" class="tab-content">
+                <div class="sub-tabs-nav flex flex-wrap justify-center gap-2 mb-8 bg-slate-800 p-2 rounded-full">
+                    <button class="sub-tab-button px-4 py-2 text-sm font-semibold rounded-full text-slate-300 hover:bg-slate-700/50 hover:text-white transition-colors active" data-subtab="roms">ROM Sites</button>
+                    <button class="sub-tab-button px-4 py-2 text-sm font-semibold rounded-full text-slate-300 hover:bg-slate-700/50 hover:text-white transition-colors" data-subtab="emulators">Emulators</button>
+                    <button class="sub-tab-button px-4 py-2 text-sm font-semibold rounded-full text-slate-300 hover:bg-slate-700/50 hover:text-white transition-colors" data-subtab="compatibility">Compatibility</button>
+                </div>
+                <div class="sub-tabs-content">
+                    <!-- ROM Sites -->
+                    <div id="roms" class="sub-tab-content active">
+                        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+                           <div class="card rounded-xl p-6 flex flex-col tag-goat"> <div class="flex items-start justify-between"> <h3 class="text-lg font-semibold text-white">CrocDB</h3> <div class="flex-shrink-0 text-cyan-400" title="The GOAT of this category"><svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2L2 9.5l10 12.5L22 9.5 12 2z"/></svg></div> </div> <p class="text-slate-400 mt-2 flex-grow">A collection of ROM links indexed from freely accessible sources on the Internet.</p> <div class="mt-6"><a href="https://crocdb.net/" target="_blank" class="block text-center px-4 py-2 rounded-lg bg-cyan-400 text-slate-900 font-semibold hover:bg-cyan-300 transition-colors">Visit Site</a></div> </div>
+                           <div class="card rounded-xl p-6 flex flex-col tag-goat"> <div class="flex items-start justify-between"> <h3 class="text-lg font-semibold text-white">Myrient</h3> <div class="flex-shrink-0 text-cyan-400" title="The GOAT of this category"><svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2L2 9.5l10 12.5L22 9.5 12 2z"/></svg></div> </div> <p class="text-slate-400 mt-2 flex-grow">A massive archive for game preservation, offering fast downloads for a huge library of titles.</p> <div class="mt-6"><a href="https://myrient.erista.me/" target="_blank" class="block text-center px-4 py-2 rounded-lg bg-cyan-400 text-slate-900 font-semibold hover:bg-cyan-300 transition-colors">Visit Site</a></div> </div>
+                           <div class="card rounded-xl p-6 flex flex-col tag-goat"> <div class="flex items-start justify-between"> <h3 class="text-lg font-semibold text-white">Vimm's Lair</h3> <div class="flex-shrink-0 text-cyan-400" title="The GOAT of this category"><svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2L2 9.5l10 12.5L22 9.5 12 2z"/></svg></div> </div> <p class="text-slate-400 mt-2 flex-grow">A highly-respected preservation site for classic video games. Known for safe and accurate ROMs.</p> <div class="mt-6"><a href="https://vimm.net/" target="_blank" class="block text-center px-4 py-2 rounded-lg bg-cyan-400 text-slate-900 font-semibold hover:bg-cyan-300 transition-colors">Visit Site</a></div> </div>
+                           <div class="card rounded-xl p-6 flex flex-col tag-recommended"> <div class="flex items-start justify-between"> <h3 class="text-lg font-semibold text-white">AlvRo</h3> <div class="flex-shrink-0 text-amber-400" title="Most trusted by the community"><svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" viewBox="0 0 24 24" fill="currentColor"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg></div> </div> <p class="text-slate-400 mt-2 flex-grow">PS2 Redumps by AlvRo.</p> <div class="mt-6 flex gap-3"> <a href="https://archive.org/download/ps2usaredump1" target="_blank" class="w-full text-center px-4 py-2 rounded-lg bg-amber-400 text-slate-900 font-semibold hover:bg-amber-300 transition-colors">Part 1</a> <a href="https://archive.org/download/ps2usaredump1_20200816_1458" target="_blank" class="w-full text-center px-4 py-2 rounded-lg bg-amber-400 text-slate-900 font-semibold hover:bg-amber-300 transition-colors">Part 2</a> </div> </div>
+                           <div class="card rounded-xl p-6 flex flex-col tag-recommended"> <div class="flex items-start justify-between"> <h3 class="text-lg font-semibold text-white">ROM Heaven</h3> <div class="flex-shrink-0 text-amber-400" title="Most trusted by the community"><svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" viewBox="0 0 24 24" fill="currentColor"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg></div> </div> <p class="text-slate-400 mt-2 flex-grow">A truly permanent, decentralized video game preservation effort.</p> <div class="mt-6 flex gap-3"> <a href="https://romheaven.com/" target="_blank" class="w-full text-center px-4 py-2 rounded-lg bg-amber-400 text-slate-900 font-semibold hover:bg-amber-300 transition-colors">Main</a> <a href="https://romheaven.com/switch" target="_blank" class="w-full text-center px-4 py-2 rounded-lg bg-amber-400 text-slate-900 font-semibold hover:bg-amber-300 transition-colors">Switch</a> </div> </div>
+                           <div class="card rounded-xl p-6 flex flex-col tag-recommended"> <div class="flex items-start justify-between"> <h3 class="text-lg font-semibold text-white">RuTracker ROMs</h3> <div class="flex-shrink-0 text-amber-400" title="Most trusted by the community"><svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" viewBox="0 0 24 24" fill="currentColor"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg></div> </div> <p class="text-slate-400 mt-2 flex-grow">Torrent ROM downloads.</p> <div class="mt-6"><a href="https://rutracker.org/forum/viewforum.php?f=548" target="_blank" class="block text-center px-4 py-2 rounded-lg bg-amber-400 text-slate-900 font-semibold hover:bg-amber-300 transition-colors">Visit Site</a></div> </div>
+                           <div class="card rounded-xl p-6 flex flex-col"> <h3 class="text-lg font-semibold text-white">ROMSPURE</h3> <p class="text-slate-400 mt-2 flex-grow">Provides the most complete roms now with more than 30,000 Redump and No-Intro verified roms.</p> <div class="mt-6"><a href="https://romspure.cc/" target="_blank" class="block text-center px-4 py-2 rounded-lg bg-violet-500 text-white font-semibold hover:bg-violet-400 transition-colors">Visit Site</a></div> </div>
+                           <div class="card rounded-xl p-6 flex flex-col"> <h3 class="text-lg font-semibold text-white">BlueROMs</h3> <p class="text-slate-400 mt-2 flex-grow">All consoles, including SWITCH ROMS.</p> <div class="mt-6"><a href="https://www.blueroms.ws/" target="_blank" class="block text-center px-4 py-2 rounded-lg bg-violet-500 text-white font-semibold hover:bg-violet-400 transition-colors">Visit Site</a></div> </div>
+                           <div class="card rounded-xl p-6 flex flex-col"> <h3 class="text-lg font-semibold text-white">WowROMs</h3> <p class="text-slate-400 mt-2 flex-grow">ROMs for almost every console.</p> <div class="mt-6"><a href="https://wowroms.com/en" target="_blank" class="block text-center px-4 py-2 rounded-lg bg-violet-500 text-white font-semibold hover:bg-violet-400 transition-colors">Visit Site</a></div> </div>
+                        </div>
+                    </div>
+                    <!-- Emulators -->
+                    <div id="emulators" class="sub-tab-content">
+                        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+                            <!-- ... Emulators Cards here, formatted like ROM sites ... -->
+                           <div class="card rounded-xl p-6 flex flex-col tag-recommended"> <h3 class="text-lg font-semibold text-white">PCSX2</h3><p class="text-slate-400 mt-2 flex-grow">The leading open-source emulator for PlayStation 2.</p> <div class="mt-6 flex gap-3"><a href="https://pcsx2.net/" target="_blank" class="w-full text-center px-4 py-2 rounded-lg bg-amber-400 text-slate-900 font-semibold hover:bg-amber-300 transition-colors">Visit Site</a><a href="https://archive.org/download/ps2-bios-megadump/PS2_BIOS.zip" target="_blank" class="w-full text-center px-4 py-2 rounded-lg bg-slate-700 hover:bg-slate-600 font-semibold transition-colors">Bios</a></div></div>
+                           <div class="card rounded-xl p-6 flex flex-col tag-recommended"> <h3 class="text-lg font-semibold text-white">Dolphin</h3><p class="text-slate-400 mt-2 flex-grow">The definitive emulator for GameCube and Wii games.</p> <div class="mt-6"><a href="https://dolphin-emu.org/" target="_blank" class="block text-center px-4 py-2 rounded-lg bg-amber-400 text-slate-900 font-semibold hover:bg-amber-300 transition-colors">Visit Site</a></div></div>
+                           <div class="card rounded-xl p-6 flex flex-col tag-recommended"> <h3 class="text-lg font-semibold text-white">PPSSPP</h3><p class="text-slate-400 mt-2 flex-grow">The leading open-source PlayStation Portable (PSP) emulator.</p> <div class="mt-6"><a href="https://www.ppsspp.org/" target="_blank" class="block text-center px-4 py-2 rounded-lg bg-amber-400 text-slate-900 font-semibold hover:bg-amber-300 transition-colors">Visit Site</a></div></div>
+                           <div class="card rounded-xl p-6 flex flex-col tag-recommended"> <h3 class="text-lg font-semibold text-white">DuckStation</h3><p class="text-slate-400 mt-2 flex-grow">An accuracy-focused PlayStation 1 (PSX) emulator.</p> <div class="mt-6 flex gap-3"><a href="https://www.duckstation.org/" target="_blank" class="w-full text-center px-4 py-2 rounded-lg bg-amber-400 text-slate-900 font-semibold hover:bg-amber-300 transition-colors">Visit Site</a><a href="https://download2444.mediafire.com/ywkyh8el8pugTi8r338-l68atpFIrQyhWep8fLYTVUI9AmkQVnnm-mv7XiwKY-zXzw8AdOwR8hUIf92FRN9v9WZYhIiSZyr4WLl4qilCjnDOSydb9FCQT5UhxHfRKw97TozAUPwZiJ0LIAHDqCruiXaJgFVrLkor5Evadgj0w8dgXe0/s11dvh2snfrmy29/PS1_BIOS.zip" target="_blank" class="w-full text-center px-4 py-2 rounded-lg bg-slate-700 hover:bg-slate-600 font-semibold transition-colors">Bios</a></div></div>
+                           <div class="card rounded-xl p-6 flex flex-col tag-recommended"> <h3 class="text-lg font-semibold text-white">RetroArch</h3><p class="text-slate-400 mt-2 flex-grow">A popular, cross-platform frontend for emulators and game engines.</p> <div class="mt-6"><a href="https://www.retroarch.com/" target="_blank" class="block text-center px-4 py-2 rounded-lg bg-amber-400 text-slate-900 font-semibold hover:bg-amber-300 transition-colors">Visit Site</a></div></div>
+                           <div class="card rounded-xl p-6 flex flex-col tag-recommended"> <h3 class="text-lg font-semibold text-white">RPCS3</h3><p class="text-slate-400 mt-2 flex-grow">An impressive open-source PlayStation 3 emulator.</p> <div class="mt-6 flex gap-3"><a href="https://rpcs3.net/" target="_blank" class="w-full text-center px-4 py-2 rounded-lg bg-amber-400 text-slate-900 font-semibold hover:bg-amber-300 transition-colors">Visit Site</a><a href="http://dus01.ps3.update.playstation.net/update/ps3/image/us/2025_0305_c179ad173bbc08b55431d30947725a4b/PS3UPDAT.PUP" target="_blank" class="w-full text-center px-4 py-2 rounded-lg bg-slate-700 hover:bg-slate-600 font-semibold transition-colors">Bios</a></div></div>
+                           <div class="card rounded-xl p-6 flex flex-col"><h3 class="text-lg font-semibold text-white">Xenia</h3><p class="text-slate-400 mt-2 flex-grow">An experimental open-source emulator for the Xbox 360.</p><div class="mt-6"><a href="https://xenia.jp/" target="_blank" class="block text-center px-4 py-2 rounded-lg bg-violet-500 text-white font-semibold hover:bg-violet-400 transition-colors">Visit Site</a></div></div>
+                           <div class="card rounded-xl p-6 flex flex-col"><h3 class="text-lg font-semibold text-white">Citra</h3><p class="text-slate-400 mt-2 flex-grow">The world's most popular open-source emulator for the Nintendo 3DS.</p><div class="mt-6"><a href="https://citra-emu.org/" target="_blank" class="block text-center px-4 py-2 rounded-lg bg-violet-500 text-white font-semibold hover:bg-violet-400 transition-colors">Visit Site</a></div></div>
+                           <div class="card rounded-xl p-6 flex flex-col"><h3 class="text-lg font-semibold text-white">Cemu</h3><p class="text-slate-400 mt-2 flex-grow">A highly effective closed-source emulator for the Nintendo Wii U.</p><div class="mt-6"><a href="https://cemu.info/" target="_blank" class="block text-center px-4 py-2 rounded-lg bg-violet-500 text-white font-semibold hover:bg-violet-400 transition-colors">Visit Site</a></div></div>
+                           <div class="card rounded-xl p-6 flex flex-col"><h3 class="text-lg font-semibold text-white">Mesen</h3><p class="text-slate-400 mt-2 flex-grow">A high-accuracy open-source emulator for the NES, Famicom, and Famicom Disk System.</p><div class="mt-6"><a href="https://www.mesen.ca/" target="_blank" class="block text-center px-4 py-2 rounded-lg bg-violet-500 text-white font-semibold hover:bg-violet-400 transition-colors">Visit Site</a></div></div>
+                           <div class="card rounded-xl p-6 flex flex-col"><h3 class="text-lg font-semibold text-white">Snes9x</h3><p class="text-slate-400 mt-2 flex-grow">A portable, freeware Super Nintendo Entertainment System (SNES) emulator.</p><div class="mt-6"><a href="https://www.snes9x.com/" target="_blank" class="block text-center px-4 py-2 rounded-lg bg-violet-500 text-white font-semibold hover:bg-violet-400 transition-colors">Visit Site</a></div></div>
+                           <div class="card rounded-xl p-6 flex flex-col"><h3 class="text-lg font-semibold text-white">mGBA</h3><p class="text-slate-400 mt-2 flex-grow">A fast, accurate, and feature-rich open-source emulator for Game Boy Advance.</p><div class="mt-6"><a href="https://mgba.io/" target="_blank" class="block text-center px-4 py-2 rounded-lg bg-violet-500 text-white font-semibold hover:bg-violet-400 transition-colors">Visit Site</a></div></div>
+                           <div class="card rounded-xl p-6 flex flex-col"><h3 class="text-lg font-semibold text-white">melonDS</h3><p class="text-slate-400 mt-2 flex-grow">An open-source Nintendo DS emulator focused on accuracy and performance.</p><div class="mt-6"><a href="http://melonds.kuribo64.net/" target="_blank" class="block text-center px-4 py-2 rounded-lg bg-violet-500 text-white font-semibold hover:bg-violet-400 transition-colors">Visit Site</a></div></div>
+                           <div class="card rounded-xl p-6 flex flex-col"><h3 class="text-lg font-semibold text-white">Vita3K</h3><p class="text-slate-400 mt-2 flex-grow">The world's first experimental open-source PlayStation Vita emulator.</p><div class="mt-6"><a href="https://vita3k.org/" target="_blank" class="block text-center px-4 py-2 rounded-lg bg-violet-500 text-white font-semibold hover:bg-violet-400 transition-colors">Visit Site</a></div></div>
+                           <div class="card rounded-xl p-6 flex flex-col"><h3 class="text-lg font-semibold text-white">Playnite</h3><p class="text-slate-400 mt-2 flex-grow">An open-source video game library manager and unified interface for all your games.</p><div class="mt-6"><a href="https://playnite.link/" target="_blank" class="block text-center px-4 py-2 rounded-lg bg-violet-500 text-white font-semibold hover:bg-violet-400 transition-colors">Visit Site</a></div></div>
+                           <div class="card rounded-xl p-6 flex flex-col"><h3 class="text-lg font-semibold text-white">LaunchBox</h3><p class="text-slate-400 mt-2 flex-grow">An attractive frontend for DOSBox, modern PC games, and emulation.</p><div class="mt-6"><a href="https://www.launchbox-app.com/" target="_blank" class="block text-center px-4 py-2 rounded-lg bg-violet-500 text-white font-semibold hover:bg-violet-400 transition-colors">Visit Site</a></div></div>
+                        </div>
+                    </div>
+                    <!-- Compatibility -->
+                    <div id="compatibility" class="sub-tab-content">
+                        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+                            <!-- ... Compatibility Cards here ... -->
+                            <div class="card rounded-xl p-6 flex flex-col"><h3 class="text-lg font-semibold text-white">PCSX2 List</h3><p class="text-slate-400 mt-2 flex-grow">Official game compatibility list for the PCSX2 (PlayStation 2) emulator.</p><div class="mt-6"><a href="https://pcsx2.net/compat/" target="_blank" class="block text-center px-4 py-2 rounded-lg bg-violet-500 text-white font-semibold hover:bg-violet-400 transition-colors">View List</a></div></div>
+                            <div class="card rounded-xl p-6 flex flex-col"><h3 class="text-lg font-semibold text-white">Dolphin List</h3><p class="text-slate-400 mt-2 flex-grow">Official game compatibility list for the Dolphin (GameCube & Wii) emulator.</p><div class="mt-6"><a href="https://dolphin-emu.org/compat/" target="_blank" class="block text-center px-4 py-2 rounded-lg bg-violet-500 text-white font-semibold hover:bg-violet-400 transition-colors">View List</a></div></div>
+                            <div class="card rounded-xl p-6 flex flex-col"><h3 class="text-lg font-semibold text-white">PPSSPP List</h3><p class="text-slate-400 mt-2 flex-grow">Community-curated compatibility list for the PPSSPP (PSP) emulator.</p><div class="mt-6"><a href="https://forums.ppsspp.org/showthread.php?tid=1473" target="_blank" class="block text-center px-4 py-2 rounded-lg bg-violet-500 text-white font-semibold hover:bg-violet-400 transition-colors">View List</a></div></div>
+                            <div class="card rounded-xl p-6 flex flex-col"><h3 class="text-lg font-semibold text-white">RPCS3 List</h3><p class="text-slate-400 mt-2 flex-grow">Official game compatibility list for the RPCS3 (PlayStation 3) emulator.</p><div class="mt-6"><a href="https://rpcs3.net/compatibility?p=2" target="_blank" class="block text-center px-4 py-2 rounded-lg bg-violet-500 text-white font-semibold hover:bg-violet-400 transition-colors">View List</a></div></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- ... Other Panels (Gaming, Movies/TV) follow same structure ... -->
+            <div id="gaming" class="tab-content">
+                 <div class="sub-tabs-nav flex flex-wrap justify-center gap-2 mb-8 bg-slate-800 p-2 rounded-full">
+                    <button class="sub-tab-button px-4 py-2 text-sm font-semibold rounded-full text-slate-300 hover:bg-slate-700/50 hover:text-white transition-colors active" data-subtab="direct-downloads">Direct Downloads</button>
+                    <button class="sub-tab-button px-4 py-2 text-sm font-semibold rounded-full text-slate-300 hover:bg-slate-700/50 hover:text-white transition-colors" data-subtab="repacks">Repacks</button>
+                    <button class="sub-tab-button px-4 py-2 text-sm font-semibold rounded-full text-slate-300 hover:bg-slate-700/50 hover:text-white transition-colors" data-subtab="forum-downloads">Forum Downloads</button>
+                </div>
+                <div class="sub-tabs-content">
+                     <div id="direct-downloads" class="sub-tab-content active">
+                        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+                             <div class="card rounded-xl p-6 flex flex-col tag-goat"> <h3 class="text-lg font-semibold text-white">SteamRIP</h3><p class="text-slate-400 mt-2 flex-grow">Pre-installed Steam games ready to play.</p><div class="mt-6"><a href="https://steamrip.com/" target="_blank" class="block text-center px-4 py-2 rounded-lg bg-cyan-400 text-slate-900 font-semibold hover:bg-cyan-300 transition-colors">Visit Site</a></div></div>
+                             <div class="card rounded-xl p-6 flex flex-col tag-goat"> <h3 class="text-lg font-semibold text-white">GOG Games</h3><p class="text-slate-400 mt-2 flex-grow">DRM-free games from GOG.</p><div class="mt-6"><a href="https://gog-games.to/" target="_blank" class="block text-center px-4 py-2 rounded-lg bg-cyan-400 text-slate-900 font-semibold hover:bg-cyan-300 transition-colors">Visit Site</a></div></div>
+                             <div class="card rounded-xl p-6 flex flex-col tag-goat"> <h3 class="text-lg font-semibold text-white">Online Fix</h3><p class="text-slate-400 mt-2 flex-grow">Provides online multiplayer fixes.</p><div class="mt-6"><a href="https://online-fix.me/" target="_blank" class="block text-center px-4 py-2 rounded-lg bg-cyan-400 text-slate-900 font-semibold hover:bg-cyan-300 transition-colors">Visit Site</a></div></div>
+                             <div class="card rounded-xl p-6 flex flex-col tag-recommended"> <h3 class="text-lg font-semibold text-white">UnionCrax</h3><p class="text-slate-400 mt-2 flex-grow">Direct downloads for PC games.</p><div class="mt-6"><a href="https://union-crax.xyz/" target="_blank" class="block text-center px-4 py-2 rounded-lg bg-amber-400 text-slate-900 font-semibold hover:bg-amber-300 transition-colors">Visit Site</a></div></div>
+                             <div class="card rounded-xl p-6 flex flex-col tag-recommended"> <h3 class="text-lg font-semibold text-white">AnkerGames</h3><p class="text-slate-400 mt-2 flex-grow">A source for various PC game downloads.</p><div class="mt-6"><a href="https://ankergames.net/" target="_blank" class="block text-center px-4 py-2 rounded-lg bg-amber-400 text-slate-900 font-semibold hover:bg-amber-300 transition-colors">Visit Site</a></div></div>
+                             <div class="card rounded-xl p-6 flex flex-col tag-recommended"> <h3 class="text-lg font-semibold text-white">GameBounty</h3><p class="text-slate-400 mt-2 flex-grow">A forum and download site for PC games.</p><div class="mt-6"><a href="https://gamebounty.world/" target="_blank" class="block text-center px-4 py-2 rounded-lg bg-amber-400 text-slate-900 font-semibold hover:bg-amber-300 transition-colors">Visit Site</a></div></div>
+                             <div class="card rounded-xl p-6 flex flex-col tag-recommended"> <h3 class="text-lg font-semibold text-white">SteamUnderground</h3><p class="text-slate-400 mt-2 flex-grow">A community for sharing PC games.</p><div class="mt-6"><a href="https://steamunderground.net/" target="_blank" class="block text-center px-4 py-2 rounded-lg bg-amber-400 text-slate-900 font-semibold hover:bg-amber-300 transition-colors">Visit Site</a></div></div>
+                        </div>
+                     </div>
+                     <div id="repacks" class="sub-tab-content">
+                         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+                            <div class="card rounded-xl p-6 flex flex-col tag-goat"> <h3 class="text-lg font-semibold text-white">Fitgirl</h3><p class="text-slate-400 mt-2 flex-grow">Known for highly compressed game repacks.</p><div class="mt-6"><a href="https://fitgirl-repacks.site/" target="_blank" class="block text-center px-4 py-2 rounded-lg bg-cyan-400 text-slate-900 font-semibold hover:bg-cyan-300 transition-colors">Visit Site</a></div></div>
+                            <div class="card rounded-xl p-6 flex flex-col tag-recommended"> <h3 class="text-lg font-semibold text-white">KaOsKrew</h3><p class="text-slate-400 mt-2 flex-grow">Provides quality, tested game repacks.</p><div class="mt-6"><a href="https://kaoskrew.org" target="_blank" class="block text-center px-4 py-2 rounded-lg bg-amber-400 text-slate-900 font-semibold hover:bg-amber-300 transition-colors">Visit Site</a></div></div>
+                            <div class="card rounded-xl p-6 flex flex-col"><h3 class="text-lg font-semibold text-white">DODI</h3><p class="text-slate-400 mt-2 flex-grow">Popular source for game repacks.</p><div class="mt-6"><a href="https://dodi-repacks.site/" target="_blank" class="block text-center px-4 py-2 rounded-lg bg-violet-500 text-white font-semibold hover:bg-violet-400 transition-colors">Visit Site</a></div></div>
+                         </div>
+                     </div>
+                     <div id="forum-downloads" class="sub-tab-content">
+                        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+                            <div class="card rounded-xl p-6 flex flex-col tag-goat"> <h3 class="text-lg font-semibold text-white flex items-center gap-2">CS.RIN.RU <span class="text-slate-400 text-xs">(Sign in)</span></h3><p class="text-slate-400 mt-2 flex-grow">A major forum for game discussion & fixes.</p><div class="mt-6"><a href="https://cs.rin.ru/forum/" target="_blank" class="block text-center px-4 py-2 rounded-lg bg-cyan-400 text-slate-900 font-semibold hover:bg-cyan-300 transition-colors">Visit Site</a></div></div>
+                            <div class="card rounded-xl p-6 flex flex-col"><h3 class="text-lg font-semibold text-white">Rutor</h3><p class="text-slate-400 mt-2 flex-grow">A popular Russian torrent tracker for games.</p><div class="mt-6"><a href="https://rutor.info/" target="_blank" class="block text-center px-4 py-2 rounded-lg bg-violet-500 text-white font-semibold hover:bg-violet-400 transition-colors">Visit Site</a></div></div>
+                            <div class="card rounded-xl p-6 flex flex-col"><h3 class="text-lg font-semibold text-white flex items-center gap-2">Rustorka <span class="text-slate-400 text-xs">(Sign in)</span></h3><p class="text-slate-400 mt-2 flex-grow">Russian torrent forum with a gaming section.</p><div class="mt-6"><a href="https://rustorka.com/forum/index.php" target="_blank" class="block text-center px-4 py-2 rounded-lg bg-violet-500 text-white font-semibold hover:bg-violet-400 transition-colors">Visit Site</a></div></div>
+                        </div>
+                     </div>
+                </div>
+            </div>
+            <div id="movies-tv" class="tab-content">
+                <div class="sub-tabs-nav flex flex-wrap justify-center gap-2 mb-8 bg-slate-800 p-2 rounded-full">
+                    <button class="sub-tab-button px-4 py-2 text-sm font-semibold rounded-full text-slate-300 hover:bg-slate-700/50 hover:text-white transition-colors active" data-subtab="stremio">Stremio</button>
+                    <button class="sub-tab-button px-4 py-2 text-sm font-semibold rounded-full text-slate-300 hover:bg-slate-700/50 hover:text-white transition-colors" data-subtab="streaming-sites">Streaming Sites</button>
+                </div>
+                <div class="sub-tabs-content">
+                     <div id="stremio" class="sub-tab-content active">
+                        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+                             <div class="card rounded-xl p-6 flex flex-col"><h3 class="text-lg font-semibold text-white">Stremio</h3><p class="text-slate-400 mt-2 flex-grow">A modern media center that's a one-stop solution for your video entertainment.</p><div class="mt-6"><a href="https://www.stremio.com/" target="_blank" class="block text-center px-4 py-2 rounded-lg bg-violet-500 text-white font-semibold hover:bg-violet-400 transition-colors">Visit Site</a></div></div>
+                             <div class="card rounded-xl p-6 flex flex-col"><h3 class="text-lg font-semibold text-white">Stremio Addons</h3><p class="text-slate-400 mt-2 flex-grow">A curated list of the best community addons for Stremio.</p><div class="mt-6"><a href="https://stremio-addons.net/" target="_blank" class="block text-center px-4 py-2 rounded-lg bg-violet-500 text-white font-semibold hover:bg-violet-400 transition-colors">Visit Site</a></div></div>
+                             <div class="card rounded-xl p-6 flex flex-col"><h3 class="text-lg font-semibold text-white">Stremio Guides</h3><p class="text-slate-400 mt-2 flex-grow">Comprehensive guides for setting up and using Stremio.</p><div class="mt-6 flex gap-3"><a href="https://bye.undi.rest/" target="_blank" class="w-full text-center px-4 py-2 rounded-lg bg-violet-500 text-white font-semibold hover:bg-violet-400 transition-colors">Simple</a><a href="https://guides.viren070.me/stremio" target="_blank" class="w-full text-center px-4 py-2 rounded-lg bg-slate-700 hover:bg-slate-600 font-semibold transition-colors">Advanced</a></div></div>
+                        </div>
+                     </div>
+                     <div id="streaming-sites" class="sub-tab-content">
+                        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+                           <div class="card rounded-xl p-6 flex flex-col tag-goat"><h3 class="text-lg font-semibold text-white">Cineby</h3><p class="text-slate-400 mt-2 flex-grow">A clean and modern streaming site.</p><div class="mt-6"><a href="https://www.cineby.app/" target="_blank" class="block text-center px-4 py-2 rounded-lg bg-cyan-400 text-slate-900 font-semibold hover:bg-cyan-300 transition-colors">Visit Site</a></div></div>
+                           <div class="card rounded-xl p-6 flex flex-col tag-goat"><h3 class="text-lg font-semibold text-white">Bitcine</h3><p class="text-slate-400 mt-2 flex-grow">Sister site to Cineby, similar experience.</p><div class="mt-6"><a href="https://www.bitcine.app/" target="_blank" class="block text-center px-4 py-2 rounded-lg bg-cyan-400 text-slate-900 font-semibold hover:bg-cyan-300 transition-colors">Visit Site</a></div></div>
+                           <div class="card rounded-xl p-6 flex flex-col tag-goat"><h3 class="text-lg font-semibold text-white">Fmovies</h3><p class="text-slate-400 mt-2 flex-grow">Long-standing site with a massive library.</p><div class="mt-6"><a href="https://www.fmovies.gd/home" target="_blank" class="block text-center px-4 py-2 rounded-lg bg-cyan-400 text-slate-900 font-semibold hover:bg-cyan-300 transition-colors">Visit Site</a></div></div>
+                           <div class="card rounded-xl p-6 flex flex-col tag-recommended"><h3 class="text-lg font-semibold text-white">Xprime</h3><p class="text-slate-400 mt-2 flex-grow">Clean interface and good video quality.</p><div class="mt-6"><a href="https://xprime.tv/" target="_blank" class="block text-center px-4 py-2 rounded-lg bg-amber-400 text-slate-900 font-semibold hover:bg-amber-300 transition-colors">Visit Site</a></div></div>
+                           <div class="card rounded-xl p-6 flex flex-col tag-recommended"><h3 class="text-lg font-semibold text-white">P-stream</h3><p class="text-slate-400 mt-2 flex-grow">Reliable streaming source for movies & shows.</p><div class="mt-6"><a href="https://pstream.mov/" target="_blank" class="block text-center px-4 py-2 rounded-lg bg-amber-400 text-slate-900 font-semibold hover:bg-amber-300 transition-colors">Visit Site</a></div></div>
+                           <div class="card rounded-xl p-6 flex flex-col tag-recommended"><h3 class="text-lg font-semibold text-white">VeloraTV</h3><p class="text-slate-400 mt-2 flex-grow">Focusing on a high-quality user experience.</p><div class="mt-6"><a href="https://veloratv.ru/" target="_blank" class="block text-center px-4 py-2 rounded-lg bg-amber-400 text-slate-900 font-semibold hover:bg-amber-300 transition-colors">Visit Site</a></div></div>
+                           <div class="card rounded-xl p-6 flex flex-col tag-recommended"><h3 class="text-lg font-semibold text-white">SpenFlix</h3><p class="text-slate-400 mt-2 flex-grow">Community-driven streaming project.</p><div class="mt-6"><a href="https://watch.spencerdevs.xyz/" target="_blank" class="block text-center px-4 py-2 rounded-lg bg-amber-400 text-slate-900 font-semibold hover:bg-amber-300 transition-colors">Visit Site</a></div></div>
+                           <div class="card rounded-xl p-6 flex flex-col tag-recommended"><h3 class="text-lg font-semibold text-white">Flixer</h3><p class="text-slate-400 mt-2 flex-grow">Source for the latest movies and TV series.</p><div class="mt-6"><a href="https://flixer.sh/" target="_blank" class="block text-center px-4 py-2 rounded-lg bg-amber-400 text-slate-900 font-semibold hover:bg-amber-300 transition-colors">Visit Site</a></div></div>
+                        </div>
+                     </div>
+                </div>
+            </div>
+        </div>
+    </main>
+    
+    <!-- Footer -->
+    <footer class="max-w-screen-2xl mx-auto p-4 sm:p-6 lg:p-8 mt-8 border-t border-slate-800 text-center">
+        <p class="text-sm text-slate-500">&copy; 2025 The Ultimate Megathread. All rights reserved.</p>
+    </footer>
 
     <!-- Tutorial Modal -->
     <div id="tutorial-modal" class="modal-overlay fixed inset-0 z-50 flex items-center justify-center p-4 hidden">
         <div class="modal-content bg-slate-800 border border-slate-700 rounded-2xl p-8 w-full max-w-2xl max-h-[90vh] overflow-y-auto relative shadow-2xl">
-            <button id="modal-close" class="absolute top-4 right-4 text-slate-400 hover:text-white transition-colors">&times;</button>
+            <button id="modal-close" class="absolute top-4 right-4 text-slate-400 hover:text-white transition-colors text-3xl font-bold">&times;</button>
             <h2 id="tutorial-title" class="text-2xl font-bold text-white mb-4"></h2>
             <div id="tutorial-content" class="prose prose-invert text-slate-300"></div>
         </div>

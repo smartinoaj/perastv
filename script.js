@@ -1,64 +1,56 @@
 document.addEventListener('DOMContentLoaded', () => {
     // --- REVEAL ON SCROLL ---
-    const cards = document.querySelectorAll('.card');
-    const observer = new IntersectionObserver((entries) => {
-        entries.forEach((entry, index) => {
-            if (entry.isIntersecting) {
-                // Add a staggered delay for a nice effect
-                setTimeout(() => {
-                    entry.target.classList.add('is-visible');
-                }, index * 50); // 50ms delay between each card
-                observer.unobserve(entry.target);
-            }
-        });
-    }, {
-        threshold: 0.1 // Trigger when 10% of the card is visible
-    });
+    let observer;
 
-    cards.forEach(card => {
-        observer.observe(card);
-    });
-
-    // Function to re-observe cards when tabs change
-    const observeVisibleCards = () => {
-        const visibleCards = document.querySelectorAll('.tab-content.active .card, .sub-tab-content.active .card');
-        visibleCards.forEach(card => {
-            // Reset animation for re-triggered observation if needed
-            if (!card.classList.contains('is-visible')) {
-                 observer.observe(card);
-            }
+    const setupObserver = () => {
+        observer = new IntersectionObserver((entries) => {
+            entries.forEach((entry) => {
+                if (entry.isIntersecting) {
+                    // Staggering delay based on position for a wave effect
+                    const delay = (entry.target.offsetTop % window.innerHeight) / 3;
+                    setTimeout(() => {
+                        entry.target.classList.add('is-visible');
+                    }, delay);
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px' // Start loading a bit before they enter viewport
         });
     };
 
-    const handleTabSwitching = (navSelector) => {
-        const navs = document.querySelectorAll(navSelector);
-        if (navs.length === 0) return;
-
-        navs.forEach(nav => {
-            nav.addEventListener('click', (e) => {
-                const button = e.target.closest('.tab-button');
-                if (!button) return;
-                e.preventDefault();
-                
-                const tabId = button.dataset.tab;
-                
-                // Update all navs of the same type
-                document.querySelectorAll(navSelector).forEach(n => {
-                    n.querySelectorAll('.tab-button').forEach(btn => {
-                        const isActive = btn.dataset.tab === tabId;
-                        btn.classList.toggle('active', isActive);
-                        btn.classList.toggle('bg-slate-800', isActive);
-                        btn.classList.toggle('text-white', isActive);
-                    });
-                });
+    const observeVisibleCards = () => {
+        const cards = document.querySelectorAll('.card:not(.is-visible)');
+        cards.forEach(card => {
+            observer.observe(card);
+        });
+    };
     
-                document.querySelectorAll('.tab-content').forEach(content => {
-                    content.classList.toggle('active', content.id === tabId);
-                });
+    setupObserver();
 
-                runFilter();
-                observeVisibleCards(); // Re-run observer for new cards
+
+    const handleTabSwitching = (navSelector) => {
+        const nav = document.querySelector(navSelector);
+        if (!nav) return;
+
+        nav.addEventListener('click', (e) => {
+            const button = e.target.closest('.tab-button');
+            if (!button || button.classList.contains('active')) return;
+            e.preventDefault();
+            
+            const tabId = button.dataset.tab;
+            
+            nav.querySelectorAll('.tab-button').forEach(btn => {
+                btn.classList.toggle('active', btn.dataset.tab === tabId);
             });
+
+            document.querySelectorAll('.tab-content').forEach(content => {
+                content.classList.toggle('active', content.id === tabId);
+            });
+
+            runFilter();
+            observeVisibleCards();
         });
     };
     
@@ -70,16 +62,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
          subNav.addEventListener('click', (e) => {
              const button = e.target.closest('.sub-tab-button');
-             if(!button) return;
+             if(!button || button.classList.contains('active')) return;
              e.preventDefault();
 
              const subTabId = button.dataset.subtab;
 
              subNav.querySelectorAll('.sub-tab-button').forEach(btn => {
-                 const isActive = btn.dataset.subtab === subTabId;
-                 btn.classList.toggle('active', isActive);
-                 btn.classList.toggle('bg-sky-500', isActive);
-                 btn.classList.toggle('text-white', isActive);
+                 btn.classList.toggle('active', btn.dataset.subtab === subTabId);
              });
              
              panel.querySelectorAll('.sub-tab-content').forEach(content => {
@@ -87,15 +76,12 @@ document.addEventListener('DOMContentLoaded', () => {
              });
 
              runFilter();
-             observeVisibleCards(); // Re-run observer for new cards
+             observeVisibleCards();
          });
     };
 
-    // Main tabs for both desktop and mobile
-    handleTabSwitching('aside.sidebar .tabs-nav');
-    handleTabSwitching('nav.lg\\:hidden .tabs-nav');
+    handleTabSwitching('header .tabs-nav');
     
-    // Sub tabs for each main category
     handleSubTabSwitching('#emulation');
     handleSubTabSwitching('#gaming');
     handleSubTabSwitching('#movies-tv');
@@ -127,7 +113,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     <p class="mb-4">Setting DuckDuckGo as your default search engine is a great step for privacy. Here's how to do it in major browsers:</p>
                     <div class="space-y-6">
                         <div>
-                            <h3 class="text-lg font-semibold text-sky-400 mb-2">Google Chrome</h3>
+                            <h3 class="text-lg font-semibold text-violet-400 mb-2">Google Chrome</h3>
                             <ol class="list-decimal list-inside space-y-1">
                                 <li>Go to <strong>Settings</strong> by clicking the three dots in the top-right corner.</li>
                                 <li>Select <strong>Search Engine</strong> from the left sidebar.</li>
@@ -135,7 +121,7 @@ document.addEventListener('DOMContentLoaded', () => {
                             </ol>
                         </div>
                         <div>
-                            <h3 class="text-lg font-semibold text-sky-400 mb-2">Mozilla Firefox</h3>
+                            <h3 class="text-lg font-semibold text-violet-400 mb-2">Mozilla Firefox</h3>
                             <ol class="list-decimal list-inside space-y-1">
                                 <li>Go to <strong>Settings</strong> by clicking the three lines in the top-right corner.</li>
                                 <li>Select <strong>Search</strong> from the left sidebar.</li>
@@ -150,8 +136,9 @@ document.addEventListener('DOMContentLoaded', () => {
     };
     
     document.body.addEventListener('click', (event) => {
-        if (event.target.closest('.tutorial-button')) {
-            openModal(event.target.closest('.tutorial-button').dataset.topic);
+        const tutorialButton = event.target.closest('.tutorial-button');
+        if (tutorialButton) {
+            openModal(tutorialButton.dataset.topic);
         }
     });
 
@@ -171,23 +158,24 @@ document.addEventListener('DOMContentLoaded', () => {
         const activeSubPanel = activePanel.querySelector('.sub-tab-content.active') || activePanel;
 
         const cards = activeSubPanel.querySelectorAll('.card');
+        let visibleCount = 0;
         cards.forEach(card => {
-            const text = card.innerText.toLowerCase();
-            card.style.display = text.includes(query) ? '' : 'flex'; // Use flex for consistency with HTML
+            const isVisible = card.innerText.toLowerCase().includes(query);
+            card.style.display = isVisible ? 'flex' : 'none';
+            if (isVisible) visibleCount++;
         });
     };
     
     if (filterInput) {
         filterInput.addEventListener('input', runFilter);
         window.addEventListener('keydown', (e) => {
-            if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'k') {
+            if ((e.ctrlKey || e.metaKey) && (e.key.toLowerCase() === 'k' || e.key === '/')) {
                 e.preventDefault(); 
                 filterInput.focus();
             }
         });
     }
 
-    // Initial check for visible cards on page load
     observeVisibleCards();
 });
 
