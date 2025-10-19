@@ -1,647 +1,548 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta
-    name="viewport"
-    content="width=device-width, initial-scale=1, viewport-fit=cover"
-  />
-  <title>The Ultimate Megathread</title>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="style.css" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Ultimate Megathread</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 </head>
 <body>
-  <!-- App Shell -->
-  <header class="app-header" role="banner">
-    <div class="header-inner">
-      <div class="brand">
-        <span class="brand-logo" aria-hidden="true">🕸️</span>
-        <h1 class="brand-title">The Ultimate Megathread</h1>
-      </div>
-      <p class="brand-subtitle">A curated collection of useful links, apps, and tutorials.</p>
+    <header>
+        <h1>The Ultimate Megathread</h1>
+        <p>A curated collection of useful links, apps, and tutorials.</p>
+    </header>
 
-      <div class="header-actions">
-        <button class="kbd-tip" aria-label="Skip to content" onclick="document.querySelector('#main').focus()">Skip</button>
-        <div class="search-wrap" role="search">
-          <input id="quick-search" class="search-input" type="search" placeholder="Quick filter…" aria-label="Filter by title" />
-        </div>
-      </div>
-    </div>
-  </header>
+    <main class="container">
 
-  <div class="app-layout">
-    <!-- Sidebar main tabs -->
-    <nav class="sidebar" aria-label="Primary">
-      <ul class="main-tabs" role="tablist" aria-orientation="vertical">
-        <li>
-          <button class="tab-button active" role="tab" aria-selected="true" aria-controls="privacy" data-tab="privacy">
-            <span class="icon" aria-hidden="true">🛡️</span> Privacy
-          </button>
-        </li>
-        <li>
-          <button class="tab-button" role="tab" aria-selected="false" aria-controls="emulation" data-tab="emulation">
-            <span class="icon" aria-hidden="true">🎮</span> Emulation
-          </button>
-        </li>
-        <li>
-          <button class="tab-button" role="tab" aria-selected="false" aria-controls="gaming" data-tab="gaming">
-            <span class="icon" aria-hidden="true">🕹️</span> Gaming
-          </button>
-        </li>
-        <li>
-          <button class="tab-button" role="tab" aria-selected="false" aria-controls="movies-tv" data-tab="movies-tv">
-            <span class="icon" aria-hidden="true">📺</span> Movies / TV
-          </button>
-        </li>
-      </ul>
-    </nav>
-
-    <!-- Main content -->
-    <main id="main" class="content" tabindex="-1">
-      <section class="panel active" id="privacy" role="tabpanel" aria-labelledby="privacy">
-        <div class="panel-header">
-          <h2>Privacy</h2>
-          <p class="muted">Stay private online with trusted tools.</p>
+        <!-- Main Tab Navigation -->
+        <div class="tabs-nav">
+            <button class="tab-button active" data-tab="privacy">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm0 10.99h7c-.53 4.12-3.28 7.79-7 8.94V12H5V6.3l7-3.11v8.8z"/></svg>
+                Privacy
+            </button>
+            <button class="tab-button" data-tab="emulation">
+                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M21,6H3V4H21V6M7,12V10H9V12H7M13.5,12V10H11V8H13V6H15V8H17V10H15.5V12H13.5M21,16H3V14H21V16z" /></svg>
+                Emulation
+            </button>
+            <button class="tab-button" data-tab="gaming">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M16.5 9l-1.41 1.41L16.67 12H7.33l1.59-1.59L7.5 9 4 12.5 7.5 16l1.41-1.41L7.33 13h9.34l-1.58 1.59L16.5 16l3.5-3.5L16.5 9zM21 4H3c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h18c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 14H3V6h18v12z"/></svg>
+                Gaming
+            </button>
+            <button class="tab-button" data-tab="movies-tv">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M21 3H3c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h5v2h8v-2h5c1.1 0 1.99-.9 1.99-2L23 5c0-1.1-.9-2-2-2zm0 14H3V5h18v12z"/></svg>
+                Movies / TV
+            </button>
         </div>
 
-        <div class="grid">
-          <article class="card recommended">
-            <span class="badge badge-rec" title="Most trusted by the community">Recommended</span>
-            <h3>DuckDuckGo</h3>
-            <p>A private search engine that doesn't track your search history, providing unbiased results.</p>
-            <div class="card-actions">
-              <a href="https://duckduckgo.com" class="btn btn-primary" target="_blank" rel="noopener">Visit Site</a>
-              <button class="btn btn-ghost tutorial-button" data-topic="duckduckgo">Tutorial</button>
-            </div>
-          </article>
-        </div>
-      </section>
+        <!-- Tab Content Panels -->
+        <div class="tabs-content">
 
-      <section class="panel" id="emulation" role="tabpanel" aria-labelledby="emulation">
-        <div class="panel-header">
-          <h2>Emulation</h2>
-          <p class="muted">ROMs, emulators, and compatibility.</p>
-        </div>
-
-        <!-- sub-tabs -->
-        <div class="subtabs" role="tablist" aria-label="Emulation subsections">
-          <button class="subtab active" role="tab" aria-selected="true" aria-controls="roms" data-subtab="roms">ROM Sites</button>
-          <button class="subtab" role="tab" aria-selected="false" aria-controls="emulators" data-subtab="emulators">Emulators</button>
-          <button class="subtab" role="tab" aria-selected="false" aria-controls="compatibility" data-subtab="compatibility">Compatibility</button>
-        </div>
-
-        <div class="subpanels">
-          <!-- ROMS -->
-          <div id="roms" class="subpanel active" role="tabpanel">
-            <div class="grid">
-              <article class="card diamond">
-                <span class="badge badge-goat" title="The GOAT of this category">GOAT</span>
-                <h3>CrocDB</h3>
-                <p>Crocdb is a collection of ROM links indexed from freely accessible sources on the Internet.</p>
-                <div class="card-actions"><a href="https://crocdb.net/" class="btn btn-goat" target="_blank" rel="noopener">Visit Site</a></div>
-              </article>
-
-              <article class="card diamond">
-                <span class="badge badge-goat">GOAT</span>
-                <h3>Myrient</h3>
-                <p>A massive archive for game preservation, offering fast downloads for a huge library of titles.</p>
-                <div class="card-actions"><a href="https://myrient.erista.me/" class="btn btn-goat" target="_blank" rel="noopener">Visit Site</a></div>
-              </article>
-
-              <article class="card diamond">
-                <span class="badge badge-goat">GOAT</span>
-                <h3>Vimm's Lair</h3>
-                <p>A highly-respected preservation site for classic video games. Known for safe and accurate ROMs.</p>
-                <div class="card-actions"><a href="https://vimm.net/" class="btn btn-goat" target="_blank" rel="noopener">Visit Site</a></div>
-              </article>
-
-              <article class="card recommended">
-                <span class="badge badge-rec">Recommended</span>
-                <h3>AlvRo</h3>
-                <p>PS2 Redumps by AlvRo</p>
-                <div class="card-actions">
-                  <a href="https://archive.org/download/ps2usaredump1" class="btn btn-primary" target="_blank" rel="noopener">Part 1</a>
-                  <a href="https://archive.org/download/ps2usaredump1_20200816_1458" class="btn btn-primary" target="_blank" rel="noopener">Part 2</a>
+            <!-- Privacy Panel -->
+            <div id="privacy" class="tab-content active">
+                <div class="grid-container">
+                    <div class="card recommended">
+                        <div class="recommended-star" data-tooltip="Most trusted by the community"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg></div>
+                        <h3>DuckDuckGo</h3>
+                        <p>A private search engine that doesn't track your search history, providing unbiased results.</p>
+                        <div class="card-buttons">
+                            <a href="https://duckduckgo.com" class="btn-link btn-primary-rec" target="_blank">Visit Site</a>
+                            <button class="btn-link btn-secondary tutorial-button" data-topic="duckduckgo">Tutorial</button>
+                        </div>
+                    </div>
                 </div>
-              </article>
+            </div>
 
-              <article class="card recommended">
-                <span class="badge badge-rec">Recommended</span>
-                <h3>ROM Heaven</h3>
-                <p>Romheaven is a truly permanent, decentralized video game preservation effort.</p>
-                <div class="card-actions">
-                  <a href="https://romheaven.com/" class="btn btn-primary" target="_blank" rel="noopener">Main</a>
-                  <a href="https://romheaven.com/switch" class="btn btn-primary" target="_blank" rel="noopener">Switch</a>
+            <!-- Emulation Panel -->
+            <div id="emulation" class="tab-content">
+                <!-- Sub-Tab Navigation for Emulation -->
+                <div class="sub-tabs-nav">
+                    <button class="sub-tab-button active" data-subtab="roms">ROM Sites</button>
+                    <button class="sub-tab-button" data-subtab="emulators">Emulators</button>
+                    <button class="sub-tab-button" data-subtab="compatibility">Compatibility</button>
                 </div>
-              </article>
 
-              <article class="card recommended">
-                <span class="badge badge-rec">Recommended</span>
-                <h3>RuTracker ROMs</h3>
-                <p>Torrent ROM downloads</p>
-                <div class="card-actions"><a href="https://rutracker.org/forum/viewforum.php?f=548" class="btn btn-primary" target="_blank" rel="noopener">Visit Site</a></div>
-              </article>
-
-              <article class="card">
-                <h3>ROMSPURE</h3>
-                <p>More than 30,000 Redump and No-Intro verified ROMs.</p>
-                <div class="card-actions"><a href="https://romspure.cc/" class="btn" target="_blank" rel="noopener">Visit Site</a></div>
-              </article>
-
-              <article class="card">
-                <h3>BlueROMs</h3>
-                <p>All consoles, including SWITCH ROMS</p>
-                <div class="card-actions"><a href="https://www.blueroms.ws/" class="btn" target="_blank" rel="noopener">Visit Site</a></div>
-              </article>
-
-              <article class="card">
-                <h3>WowROMs</h3>
-                <p>ROMs for almost every console</p>
-                <div class="card-actions"><a href="https://wowroms.com/en" class="btn" target="_blank" rel="noopener">Visit Site</a></div>
-              </article>
-            </div>
-          </div>
-
-          <!-- EMULATORS -->
-          <div id="emulators" class="subpanel" role="tabpanel">
-            <div class="grid">
-              <article class="card recommended">
-                <span class="badge badge-rec">Recommended</span>
-                <h3>PCSX2</h3>
-                <p>The leading open-source emulator for PlayStation 2.</p>
-                <div class="card-actions">
-                  <a href="https://pcsx2.net/" class="btn btn-primary" target="_blank" rel="noopener">Visit Site</a>
-                  <a href="https://archive.org/download/ps2-bios-megadump/PS2_BIOS.zip" class="btn btn-ghost" target="_blank" rel="noopener">Bios</a>
+                <div class="sub-tabs-content">
+                    <!-- ROM Sites Sub-Panel -->
+                    <div id="roms" class="sub-tab-content active">
+                        <div class="grid-container">
+                            <div class="card diamond">
+                                <div class="diamond-icon" data-tooltip="The GOAT of this category"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2L2 9.5l10 12.5L22 9.5 12 2z"/></svg></div>
+                                <h3>CrocDB</h3>
+                                <p>Crocdb is a collection of ROM links indexed from freely accessible sources on the Internet.</p>
+                                <div class="card-buttons"><a href="https://crocdb.net/" class="btn-link btn-diamond" target="_blank">Visit Site</a></div>
+                            </div>
+                            <div class="card diamond">
+                                <div class="diamond-icon" data-tooltip="The GOAT of this category"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2L2 9.5l10 12.5L22 9.5 12 2z"/></svg></div>
+                                <h3>Myrient</h3>
+                                <p>A massive archive for game preservation, offering fast downloads for a huge library of titles.</p>
+                                <div class="card-buttons"><a href="https://myrient.erista.me/" class="btn-link btn-diamond" target="_blank">Visit Site</a></div>
+                            </div>
+                             <div class="card diamond">
+                                <div class="diamond-icon" data-tooltip="The GOAT of this category"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2L2 9.5l10 12.5L22 9.5 12 2z"/></svg></div>
+                                <h3>Vimm's Lair</h3>
+                                <p>A highly-respected preservation site for classic video games. Known for safe and accurate ROMs.</p>
+                                <div class="card-buttons"><a href="https://vimm.net/" class="btn-link btn-diamond" target="_blank">Visit Site</a></div>
+                            </div>
+                            <div class="card recommended">
+                                <div class="recommended-star" data-tooltip="Most trusted by the community"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg></div>
+                                <h3>AlvRo</h3>
+                                <p>PS2 Redumps by AlvRo</p>
+                                <div class="card-buttons">
+                                    <a href="https://archive.org/download/ps2usaredump1" class="btn-link btn-primary-rec" target="_blank">Part 1</a>
+                                    <a href="https://archive.org/download/ps2usaredump1_20200816_1458" class="btn-link btn-primary-rec" target="_blank">Part 2</a>
+                                </div>
+                            </div>
+                            <div class="card recommended">
+                                <div class="recommended-star" data-tooltip="Most trusted by the community"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg></div>
+                                <h3>ROM Heaven</h3>
+                                <p>Romheaven is a truly permanent, decentralized video game preservation effort.</p>
+                                <div class="card-buttons">
+                                    <a href="https://romheaven.com/" class="btn-link btn-primary-rec" target="_blank">Main</a>
+                                    <a href="https://romheaven.com/switch" class="btn-link btn-primary-rec" target="_blank">Switch</a>
+                                </div>
+                             </div>
+                             <div class="card recommended">
+                                <div class="recommended-star" data-tooltip="Most trusted by the community"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg></div>
+                                <h3>RuTracker ROMs</h3>
+                                <p>Torrent ROM downloads</p>
+                                <div class="card-buttons"><a href="https://rutracker.org/forum/viewforum.php?f=548" class="btn-link btn-primary-rec" target="_blank">Visit Site</a></div>
+                            </div>
+                            <div class="card"><h3>ROMSPURE</h3><p>ROMSPURE.CC is a website that provides the most complete roms now with more than 30,000 Redump and No-Intro verified roms.</p><div class="card-buttons"><a href="https://romspure.cc/" class="btn-link btn-primary" target="_blank">Visit Site</a></div></div>
+                            <div class="card"><h3>BlueROMs</h3><p>All consoles, including SWITCH ROMS</p><div class="card-buttons"><a href="https://www.blueroms.ws/" class="btn-link btn-primary" target="_blank">Visit Site</a></div></div>
+                            <div class="card"><h3>WowROMs</h3><p>ROMs for almost every console</p><div class="card-buttons"><a href="https://wowroms.com/en" class="btn-link btn-primary" target="_blank">Visit Site</a></div></div>
+                        </div>
+                    </div>
+                    <!-- Emulators Sub-Panel -->
+                    <div id="emulators" class="sub-tab-content">
+                        <div class="grid-container">
+                            <div class="card recommended">
+                                <div class="recommended-star" data-tooltip="Most trusted by the community"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg></div>
+                                <h3>PCSX2</h3><p>The leading open-source emulator for PlayStation 2. Allows you to play PS2 games on your PC.</p>
+                                <div class="card-buttons">
+                                    <a href="https://pcsx2.net/" class="btn-link btn-primary-rec" target="_blank">Visit Site</a>
+                                    <a href="https://archive.org/download/ps2-bios-megadump/PS2_BIOS.zip" class="btn-link btn-secondary" target="_blank">Bios</a>
+                                </div>
+                            </div>
+                            <div class="card recommended">
+                                <div class="recommended-star" data-tooltip="Most trusted by the community"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg></div>
+                                <h3>Dolphin</h3><p>The definitive emulator for GameCube and Wii games, with high compatibility and enhancement features.</p>
+                                <div class="card-buttons"><a href="https://dolphin-emu.org/" class="btn-link btn-primary-rec" target="_blank">Visit Site</a></div>
+                            </div>
+                             <div class="card recommended">
+                                <div class="recommended-star" data-tooltip="Most trusted by the community"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg></div>
+                                <h3>PPSSPP</h3><p>The leading open-source PlayStation Portable (PSP) emulator, available on many platforms.</p>
+                                <div class="card-buttons">
+                                    <a href="https://www.ppsspp.org/" class="btn-link btn-primary-rec" target="_blank">Visit Site</a>
+                                </div>
+                            </div>
+                             <div class="card recommended">
+                                <div class="recommended-star" data-tooltip="Most trusted by the community"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg></div>
+                                <h3>DuckStation</h3><p>An accuracy-focused PlayStation 1 (PSX) emulator with many enhancement features.</p>
+                                <div class="card-buttons">
+                                    <a href="https://www.duckstation.org/" class="btn-link btn-primary-rec" target="_blank">Visit Site</a>
+                                    <a href="https://download2444.mediafire.com/ywkyh8el8pugTi8r338-l68atpFIrQyhWep8fLYTVUI9AmkQVnnm-mv7XiwKY-zXzw8AdOwR8hUIf92FRN9v9WZYhIiSZyr4WLl4qilCjnDOSydb9FCQT5UhxHfRKw97TozAUPwZiJ0LIAHDqCruiXaJgFVrLkor5Evadgj0w8dgXe0/s11dvh2snfrmy29/PS1_BIOS.zip" class="btn-link btn-secondary" target="_blank">Bios</a>
+                                </div>
+                            </div>
+                            <div class="card recommended">
+                                <div class="recommended-star" data-tooltip="Most trusted by the community"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg></div>
+                                <h3>RetroArch</h3><p>A popular, cross-platform frontend for emulators and game engines.</p><div class="card-buttons"><a href="https://www.retroarch.com/" class="btn-link btn-primary-rec" target="_blank">Visit Site</a></div>
+                            </div>
+                            <div class="card recommended">
+                                <div class="recommended-star" data-tooltip="Most trusted by the community"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg></div>
+                                <h3>RPCS3</h3><p>An impressive open-source PlayStation 3 emulator that is constantly improving its compatibility.</p>
+                                <div class="card-buttons">
+                                    <a href="https://rpcs3.net/" class="btn-link btn-primary-rec" target="_blank">Visit Site</a>
+                                    <a href="http://dus01.ps3.update.playstation.net/update/ps3/image/us/2025_0305_c179ad173bbc08b55431d30947725a4b/PS3UPDAT.PUP" class="btn-link btn-secondary" target="_blank">Bios</a>
+                                </div>
+                            </div>
+                            <div class="card"><h3>Xenia</h3><p>An experimental open-source emulator for the Xbox 360, actively in development.</p><div class="card-buttons"><a href="https://xenia.jp/" class="btn-link btn-primary" target="_blank">Visit Site</a></div></div>
+                            <div class="card"><h3>Citron</h3><p>The world's most popular open-source emulator for the Nintendo 3DS.</p>
+                                <div class="card-buttons">
+                                    <a href="https://citra-emu.org/" class="btn-link btn-primary" target="_blank">Visit Site</a>
+                                    <a href="#" class="btn-link btn-secondary" target="_blank">Bios</a>
+                                    <a href="#" class="btn-link btn-secondary" target="_blank">ProdKeys</a>
+                                </div>
+                            </div>
+                            <div class="card"><h3>Cemu</h3><p>A highly effective closed-source emulator for the Nintendo Wii U, known for its performance.</p><div class="card-buttons"><a href="https://cemu.info/" class="btn-link btn-primary" target="_blank">Visit Site</a></div></div>
+                            <div class="card"><h3>Mesen</h3><p>A high-accuracy open-source emulator for the NES, Famicom, and Famicom Disk System.</p><div class="card-buttons"><a href="https://www.mesen.ca/" class="btn-link btn-primary" target="_blank">Visit Site</a></div></div>
+                            <div class="card"><h3>Snes9x</h3><p>A portable, freeware Super Nintendo Entertainment System (SNES) emulator.</p><div class="card-buttons"><a href="https://www.snes9x.com/" class="btn-link btn-primary" target="_blank">Visit Site</a></div></div>
+                            <div class="card"><h3>mGBA</h3><p>A fast, accurate, and feature-rich open-source emulator for Game Boy Advance.</p><div class="card-buttons"><a href="https://mgba.io/" class="btn-link btn-primary" target="_blank">Visit Site</a></div></div>
+                            <div class="card"><h3>melonDS</h3><p>An open-source Nintendo DS emulator focused on accuracy and performance, with Wi-Fi support.</p><div class="card-buttons"><a href="http://melonds.kuribo64.net/" class="btn-link btn-primary" target="_blank">Visit Site</a></div></div>
+                            <div class="card"><h3>Vita3K</h3><p>The world's first experimental open-source PlayStation Vita emulator.</p><div class="card-buttons"><a href="https://vita3k.org/" class="btn-link btn-primary" target="_blank">Visit Site</a></div></div>
+                            <div class="card"><h3>Playnite</h3><p>An open-source video game library manager with one simple goal: To provide a unified interface for all of your games.</p><div class="card-buttons"><a href="https://playnite.link/" class="btn-link btn-primary" target="_blank">Visit Site</a></div></div>
+                            <div class="card"><h3>LaunchBox</h3><p>Originally built as an attractive frontend for DOSBox, it has since expanded to support modern PC games and emulation.</p><div class="card-buttons"><a href="https://www.launchbox-app.com/" class="btn-link btn-primary" target="_blank">Visit Site</a></div></div>
+                        </div>
+                    </div>
+                     <!-- Compatibility Sub-Panel -->
+                    <div id="compatibility" class="sub-tab-content">
+                        <div class="grid-container">
+                            <div class="card">
+                                <h3>PCSX2 List</h3>
+                                <p>Official game compatibility list for the PCSX2 (PlayStation 2) emulator.</p>
+                                <div class="card-buttons"><a href="https://pcsx2.net/compat/" class="btn-link btn-primary" target="_blank">View List</a></div>
+                            </div>
+                            <div class="card">
+                                <h3>Dolphin List</h3>
+                                <p>Official game compatibility list for the Dolphin (GameCube & Wii) emulator.</p>
+                                <div class="card-buttons"><a href="https://dolphin-emu.org/compat/" class="btn-link btn-primary" target="_blank">View List</a></div>
+                            </div>
+                            <div class="card">
+                                <h3>PPSSPP List</h3>
+                                <p>Community-curated compatibility list for the PPSSPP (PlayStation Portable) emulator.</p>
+                                <div class="card-buttons"><a href="https://forums.ppsspp.org/showthread.php?tid=1473" class="btn-link btn-primary" target="_blank">View List</a></div>
+                            </div>
+                            <div class="card">
+                                <h3>RPCS3 List</h3>
+                                <p>Official game compatibility list for the RPCS3 (PlayStation 3) emulator.</p>
+                                <div class="card-buttons"><a href="https://rpcs3.net/compatibility?p=2" class="btn-link btn-primary" target="_blank">View List</a></div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-              </article>
+            </div>
 
-              <article class="card recommended">
-                <span class="badge badge-rec">Recommended</span>
-                <h3>Dolphin</h3>
-                <p>Definitive emulator for GameCube and Wii.</p>
-                <div class="card-actions"><a href="https://dolphin-emu.org/" class="btn btn-primary" target="_blank" rel="noopener">Visit Site</a></div>
-              </article>
-
-              <article class="card recommended">
-                <span class="badge badge-rec">Recommended</span>
-                <h3>PPSSPP</h3>
-                <p>Leading open-source PSP emulator.</p>
-                <div class="card-actions"><a href="https://www.ppsspp.org/" class="btn btn-primary" target="_blank" rel="noopener">Visit Site</a></div>
-              </article>
-
-              <article class="card recommended">
-                <span class="badge badge-rec">Recommended</span>
-                <h3>DuckStation</h3>
-                <p>Accuracy-focused PS1 emulator.</p>
-                <div class="card-actions">
-                  <a href="https://www.duckstation.org/" class="btn btn-primary" target="_blank" rel="noopener">Visit Site</a>
-                  <a href="https://download2444.mediafire.com/ywkyh8el8pugTi8r338-l68atpFIrQyhWep8fLYTVUI9AmkQVnnm-mv7XiwKY-zXzw8AdOwR8hUIf92FRN9v9WZYhIiSZyr4WLl4qilCjnDOSydb9FCQT5UhxHfRKw97TozAUPwZiJ0LIAHDqCruiXaJgFVrLkor5Evadgj0w8dgXe0/s11dvh2snfrmy29/PS1_BIOS.zip" class="btn btn-ghost" target="_blank" rel="noopener">Bios</a>
+            <!-- Gaming Panel -->
+            <div id="gaming" class="tab-content">
+                <div class="sub-tabs-nav">
+                    <button class="sub-tab-button active" data-subtab="direct-downloads">Direct Downloads</button>
+                    <button class="sub-tab-button" data-subtab="repacks">Repacks</button>
+                    <button class="sub-tab-button" data-subtab="forum-downloads">Forum Downloads</button>
                 </div>
-              </article>
-
-              <article class="card recommended">
-                <span class="badge badge-rec">Recommended</span>
-                <h3>RetroArch</h3>
-                <p>Cross-platform frontend for emulators.</p>
-                <div class="card-actions"><a href="https://www.retroarch.com/" class="btn btn-primary" target="_blank" rel="noopener">Visit Site</a></div>
-              </article>
-
-              <article class="card recommended">
-                <span class="badge badge-rec">Recommended</span>
-                <h3>RPCS3</h3>
-                <p>Open-source PlayStation 3 emulator.</p>
-                <div class="card-actions">
-                  <a href="https://rpcs3.net/" class="btn btn-primary" target="_blank" rel="noopener">Visit Site</a>
-                  <a href="http://dus01.ps3.update.playstation.net/update/ps3/image/us/2025_0305_c179ad173bbc08b55431d30947725a4b/PS3UPDAT.PUP" class="btn btn-ghost" target="_blank" rel="noopener">Bios</a>
+                <div class="sub-tabs-content">
+                    <div id="direct-downloads" class="sub-tab-content active">
+                        <div class="grid-container">
+                            <div class="card diamond">
+                                <div class="diamond-icon" data-tooltip="The GOAT of this category"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2L2 9.5l10 12.5L22 9.5 12 2z"/></svg></div>
+                                <h3>SteamRIP</h3>
+                                <p>Pre-installed Steam games ready to play.</p>
+                                <div class="card-buttons"><a href="https://steamrip.com/" class="btn-link btn-diamond" target="_blank">Visit Site</a></div>
+                            </div>
+                            <div class="card diamond">
+                                <div class="diamond-icon" data-tooltip="The GOAT of this category"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2L2 9.5l10 12.5L22 9.5 12 2z"/></svg></div>
+                                <h3>GOG Games</h3>
+                                <p>DRM-free games from GOG (Good Old Games).</p>
+                                <div class="card-buttons"><a href="https://gog-games.to/" class="btn-link btn-diamond" target="_blank">Visit Site</a></div>
+                            </div>
+                            <div class="card diamond">
+                                <div class="diamond-icon" data-tooltip="The GOAT of this category"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2L2 9.5l10 12.5L22 9.5 12 2z"/></svg></div>
+                                <h3>Online Fix</h3>
+                                <p>Provides online multiplayer fixes for many games.</p>
+                                <div class="card-buttons"><a href="https://online-fix.me/" class="btn-link btn-diamond" target="_blank">Visit Site</a></div>
+                            </div>
+                            <div class="card recommended">
+                                <div class="recommended-star" data-tooltip="Most trusted by the community"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg></div>
+                                <h3>UnionCrax</h3>
+                                <p>Direct downloads for a variety of PC games.</p>
+                                <div class="card-buttons"><a href="https://union-crax.xyz/" class="btn-link btn-primary-rec" target="_blank">Visit Site</a></div>
+                            </div>
+                            <div class="card recommended">
+                                <div class="recommended-star" data-tooltip="Most trusted by the community"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg></div>
+                                <h3>AnkerGames</h3>
+                                <p>A source for various PC game downloads.</p>
+                                <div class="card-buttons"><a href="https://ankergames.net/" class="btn-link btn-primary-rec" target="_blank">Visit Site</a></div>
+                            </div>
+                            <div class="card recommended">
+                                <div class="recommended-star" data-tooltip="Most trusted by the community"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg></div>
+                                <h3>GameBounty</h3>
+                                <p>A forum and download site for PC games.</p>
+                                <div class="card-buttons"><a href="https://gamebounty.world/" class="btn-link btn-primary-rec" target="_blank">Visit Site</a></div>
+                            </div>
+                            <div class="card recommended">
+                                <div class="recommended-star" data-tooltip="Most trusted by the community"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg></div>
+                                <h3>SteamUnderground</h3>
+                                <p>A community for sharing and discussing PC games.</p>
+                                <div class="card-buttons"><a href="https://steamunderground.net/" class="btn-link btn-primary-rec" target="_blank">Visit Site</a></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="repacks" class="sub-tab-content">
+                        <div class="grid-container">
+                            <div class="card diamond">
+                                <div class="diamond-icon" data-tooltip="The GOAT of this category"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2L2 9.5l10 12.5L22 9.5 12 2z"/></svg></div>
+                                <h3>Fitgirl</h3>
+                                <p>Known for highly compressed game repacks, saving bandwidth and download time.</p>
+                                <div class="card-buttons"><a href="https://fitgirl-repacks.site/" class="btn-link btn-diamond" target="_blank">Visit Site</a></div>
+                            </div>
+                            <div class="card recommended">
+                                <div class="recommended-star" data-tooltip="Most trusted by the community"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg></div>
+                                <h3>KaOsKrew</h3>
+                                <p>A team that provides quality, tested game repacks for the community.</p>
+                                <div class="card-buttons"><a href="https://kaoskrew.org" class="btn-link btn-primary-rec" target="_blank">Visit Site</a></div>
+                            </div>
+                            <div class="card">
+                                <h3>DODI</h3>
+                                <p>A popular source for game repacks, offering fast installation times.</p>
+                                <div class="card-buttons"><a href="https://dodi-repacks.site/" class="btn-link btn-primary" target="_blank">Visit Site</a></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="forum-downloads" class="sub-tab-content">
+                        <div class="grid-container">
+                            <div class="card diamond">
+                                <div class="diamond-icon" data-tooltip="The GOAT of this category"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2L2 9.5l10 12.5L22 9.5 12 2z"/></svg></div>
+                                <h3>
+                                    CS.RIN.RU
+                                    <span class="info-icon" data-tooltip="Sign in required">
+                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/></svg>
+                                    </span>
+                                </h3>
+                                <p>A major forum for game discussion, fixes, and community support.</p>
+                                <div class="card-buttons"><a href="https://cs.rin.ru/forum/" class="btn-link btn-diamond" target="_blank">Visit Site</a></div>
+                            </div>
+                             <div class="card">
+                                <h3>Rutor</h3>
+                                <p>A popular Russian torrent tracker with a large collection of games.</p>
+                                <div class="card-buttons"><a href="https://rutor.info/" class="btn-link btn-primary" target="_blank">Visit Site</a></div>
+                            </div>
+                             <div class="card">
+                                <h3>
+                                    Rustorka
+                                    <span class="info-icon" data-tooltip="Sign in required">
+                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/></svg>
+                                    </span>
+                                </h3>
+                                <p>Another well-known Russian torrent forum with a dedicated gaming section.</p>
+                                <div class="card-buttons"><a href="https://rustorka.com/forum/index.php" class="btn-link btn-primary" target="_blank">Visit Site</a></div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-              </article>
+            </div>
 
-              <article class="card">
-                <h3>Xenia</h3>
-                <p>Experimental open-source Xbox 360 emulator.</p>
-                <div class="card-actions"><a href="https://xenia.jp/" class="btn" target="_blank" rel="noopener">Visit Site</a></div>
-              </article>
-
-              <article class="card">
-                <h3>Citron</h3>
-                <p>Nintendo 3DS emulator.</p>
-                <div class="card-actions">
-                  <a href="https://citra-emu.org/" class="btn" target="_blank" rel="noopener">Visit Site</a>
-                  <a href="#" class="btn btn-ghost">Bios</a>
-                  <a href="#" class="btn btn-ghost">ProdKeys</a>
+            <!-- Movies / TV Panel -->
+            <div id="movies-tv" class="tab-content">
+                <div class="sub-tabs-nav">
+                    <button class="sub-tab-button active" data-subtab="stremio">Stremio</button>
+                    <button class="sub-tab-button" data-subtab="streaming-sites">Streaming Sites</button>
                 </div>
-              </article>
-
-              <article class="card">
-                <h3>Cemu</h3>
-                <p>Closed-source Nintendo Wii U emulator with great performance.</p>
-                <div class="card-actions"><a href="https://cemu.info/" class="btn" target="_blank" rel="noopener">Visit Site</a></div>
-              </article>
-
-              <article class="card">
-                <h3>Mesen</h3>
-                <p>High-accuracy emulator for the NES and Famicom systems.</p>
-                <div class="card-actions"><a href="https://www.mesen.ca/" class="btn" target="_blank" rel="noopener">Visit Site</a></div>
-              </article>
-
-              <article class="card">
-                <h3>Snes9x</h3>
-                <p>Portable, freeware SNES emulator.</p>
-                <div class="card-actions"><a href="https://www.snes9x.com/" class="btn" target="_blank" rel="noopener">Visit Site</a></div>
-              </article>
-
-              <article class="card">
-                <h3>mGBA</h3>
-                <p>Fast and accurate GBA emulator.</p>
-                <div class="card-actions"><a href="https://mgba.io/" class="btn" target="_blank" rel="noopener">Visit Site</a></div>
-              </article>
-
-              <article class="card">
-                <h3>melonDS</h3>
-                <p>Nintendo DS emulator with Wi-Fi support.</p>
-                <div class="card-actions"><a href="http://melonds.kuribo64.net/" class="btn" target="_blank" rel="noopener">Visit Site</a></div>
-              </article>
-
-              <article class="card">
-                <h3>Vita3K</h3>
-                <p>Open-source PlayStation Vita emulator.</p>
-                <div class="card-actions"><a href="https://vita3k.org/" class="btn" target="_blank" rel="noopener">Visit Site</a></div>
-              </article>
-
-              <article class="card">
-                <h3>Playnite</h3>
-                <p>Open-source video game library manager.</p>
-                <div class="card-actions"><a href="https://playnite.link/" class="btn" target="_blank" rel="noopener">Visit Site</a></div>
-              </article>
-
-              <article class="card">
-                <h3>LaunchBox</h3>
-                <p>Frontend for DOSBox, modern PC, and emulation.</p>
-                <div class="card-actions"><a href="https://www.launchbox-app.com/" class="btn" target="_blank" rel="noopener">Visit Site</a></div>
-              </article>
-            </div>
-          </div>
-
-          <!-- COMPATIBILITY -->
-          <div id="compatibility" class="subpanel" role="tabpanel">
-            <div class="grid">
-              <article class="card">
-                <h3>PCSX2 List</h3>
-                <p>Official compatibility list for PCSX2.</p>
-                <div class="card-actions"><a href="https://pcsx2.net/compat/" class="btn" target="_blank" rel="noopener">View List</a></div>
-              </article>
-
-              <article class="card">
-                <h3>Dolphin List</h3>
-                <p>Official compatibility list for Dolphin.</p>
-                <div class="card-actions"><a href="https://dolphin-emu.org/compat/" class="btn" target="_blank" rel="noopener">View List</a></div>
-              </article>
-
-              <article class="card">
-                <h3>PPSSPP List</h3>
-                <p>Community compatibility list for PPSSPP.</p>
-                <div class="card-actions"><a href="https://forums.ppsspp.org/showthread.php?tid=1473" class="btn" target="_blank" rel="noopener">View List</a></div>
-              </article>
-
-              <article class="card">
-                <h3>RPCS3 List</h3>
-                <p>Official compatibility list for RPCS3.</p>
-                <div class="card-actions"><a href="https://rpcs3.net/compatibility?p=2" class="btn" target="_blank" rel="noopener">View List</a></div>
-              </article>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <section class="panel" id="gaming" role="tabpanel" aria-labelledby="gaming">
-        <div class="panel-header">
-          <h2>Gaming</h2>
-          <p class="muted">Direct downloads, repacks, and forum sources.</p>
-        </div>
-
-        <div class="subtabs" role="tablist" aria-label="Gaming subsections">
-          <button class="subtab active" role="tab" aria-selected="true" aria-controls="direct-downloads" data-subtab="direct-downloads">Direct Downloads</button>
-          <button class="subtab" role="tab" aria-selected="false" aria-controls="repacks" data-subtab="repacks">Repacks</button>
-          <button class="subtab" role="tab" aria-selected="false" aria-controls="forum-downloads" data-subtab="forum-downloads">Forum Downloads</button>
-        </div>
-
-        <div class="subpanels">
-          <div id="direct-downloads" class="subpanel active" role="tabpanel">
-            <div class="grid">
-              <article class="card diamond">
-                <span class="badge badge-goat">GOAT</span>
-                <h3>SteamRIP</h3>
-                <p>Pre-installed Steam games ready to play.</p>
-                <div class="card-actions"><a href="https://steamrip.com/" class="btn btn-goat" target="_blank" rel="noopener">Visit Site</a></div>
-              </article>
-
-              <article class="card diamond">
-                <span class="badge badge-goat">GOAT</span>
-                <h3>GOG Games</h3>
-                <p>DRM-free games from GOG.</p>
-                <div class="card-actions"><a href="https://gog-games.to/" class="btn btn-goat" target="_blank" rel="noopener">Visit Site</a></div>
-              </article>
-
-              <article class="card diamond">
-                <span class="badge badge-goat">GOAT</span>
-                <h3>Online Fix</h3>
-                <p>Online multiplayer fixes for many games.</p>
-                <div class="card-actions"><a href="https://online-fix.me/" class="btn btn-goat" target="_blank" rel="noopener">Visit Site</a></div>
-              </article>
-
-              <article class="card recommended">
-                <span class="badge badge-rec">Recommended</span>
-                <h3>UnionCrax</h3>
-                <p>Direct downloads for a variety of PC games.</p>
-                <div class="card-actions"><a href="https://union-crax.xyz/" class="btn btn-primary" target="_blank" rel="noopener">Visit Site</a></div>
-              </article>
-
-              <article class="card recommended">
-                <span class="badge badge-rec">Recommended</span>
-                <h3>AnkerGames</h3>
-                <p>Various PC game downloads.</p>
-                <div class="card-actions"><a href="https://ankergames.net/" class="btn btn-primary" target="_blank" rel="noopener">Visit Site</a></div>
-              </article>
-
-              <article class="card recommended">
-                <span class="badge badge-rec">Recommended</span>
-                <h3>GameBounty</h3>
-                <p>Forum and download site for PC games.</p>
-                <div class="card-actions"><a href="https://gamebounty.world/" class="btn btn-primary" target="_blank" rel="noopener">Visit Site</a></div>
-              </article>
-
-              <article class="card recommended">
-                <span class="badge badge-rec">Recommended</span>
-                <h3>SteamUnderground</h3>
-                <p>Community for sharing and discussing PC games.</p>
-                <div class="card-actions"><a href="https://steamunderground.net/" class="btn btn-primary" target="_blank" rel="noopener">Visit Site</a></div>
-              </article>
-            </div>
-          </div>
-
-          <div id="repacks" class="subpanel" role="tabpanel">
-            <div class="grid">
-              <article class="card diamond">
-                <span class="badge badge-goat">GOAT</span>
-                <h3>Fitgirl</h3>
-                <p>Highly compressed game repacks.</p>
-                <div class="card-actions"><a href="https://fitgirl-repacks.site/" class="btn btn-goat" target="_blank" rel="noopener">Visit Site</a></div>
-              </article>
-
-              <article class="card recommended">
-                <span class="badge badge-rec">Recommended</span>
-                <h3>KaOsKrew</h3>
-                <p>Quality, tested game repacks.</p>
-                <div class="card-actions"><a href="https://kaoskrew.org" class="btn btn-primary" target="_blank" rel="noopener">Visit Site</a></div>
-              </article>
-
-              <article class="card">
-                <h3>DODI</h3>
-                <p>Popular repacks with fast installs.</p>
-                <div class="card-actions"><a href="https://dodi-repacks.site/" class="btn" target="_blank" rel="noopener">Visit Site</a></div>
-              </article>
-            </div>
-          </div>
-
-          <div id="forum-downloads" class="subpanel" role="tabpanel">
-            <div class="grid">
-              <article class="card diamond">
-                <span class="badge badge-goat">GOAT</span>
-                <h3>CS.RIN.RU <span class="info-pill" title="Sign in required">i</span></h3>
-                <p>Major forum for game discussion, fixes, and community support.</p>
-                <div class="card-actions"><a href="https://cs.rin.ru/forum/" class="btn btn-goat" target="_blank" rel="noopener">Visit Site</a></div>
-              </article>
-
-              <article class="card">
-                <h3>Rutor</h3>
-                <p>Popular Russian torrent tracker with a large collection of games.</p>
-                <div class="card-actions"><a href="https://rutor.info/" class="btn" target="_blank" rel="noopener">Visit Site</a></div>
-              </article>
-
-              <article class="card">
-                <h3>Rustorka <span class="info-pill" title="Sign in required">i</span></h3>
-                <p>Russian torrent forum with a dedicated gaming section.</p>
-                <div class="card-actions"><a href="https://rustorka.com/forum/index.php" class="btn" target="_blank" rel="noopener">Visit Site</a></div>
-              </article>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <section class="panel" id="movies-tv" role="tabpanel" aria-labelledby="movies-tv">
-        <div class="panel-header">
-          <h2>Movies / TV</h2>
-          <p class="muted">Stremio & streaming sites.</p>
-        </div>
-
-        <div class="subtabs" role="tablist" aria-label="Movies/TV subsections">
-          <button class="subtab active" role="tab" aria-selected="true" aria-controls="stremio" data-subtab="stremio">Stremio</button>
-          <button class="subtab" role="tab" aria-selected="false" aria-controls="streaming-sites" data-subtab="streaming-sites">Streaming Sites</button>
-        </div>
-
-        <div class="subpanels">
-          <div id="stremio" class="subpanel active" role="tabpanel">
-            <div class="grid">
-              <article class="card">
-                <h3>Stremio</h3>
-                <p>A modern media center that's a one-stop solution for your video entertainment.</p>
-                <div class="card-actions"><a href="https://www.stremio.com/" class="btn" target="_blank" rel="noopener">Visit Site</a></div>
-              </article>
-
-              <article class="card">
-                <h3>Stremio Addons</h3>
-                <p>A curated list of the best community addons for Stremio.</p>
-                <div class="card-actions"><a href="https://stremio-addons.net/" class="btn" target="_blank" rel="noopener">Visit Site</a></div>
-              </article>
-
-              <article class="card">
-                <h3>Stremio Guides</h3>
-                <p>Comprehensive guides for setting up and using Stremio.</p>
-                <div class="card-actions">
-                  <a href="https://bye.undi.rest/" class="btn" target="_blank" rel="noopener">Simple Guide</a>
-                  <a href="https://guides.viren070.me/stremio" class="btn btn-ghost" target="_blank" rel="noopener">Advanced Guide</a>
+                <div class="sub-tabs-content">
+                     <div id="stremio" class="sub-tab-content active">
+                        <div class="grid-container">
+                            <div class="card">
+                                <h3>Stremio</h3>
+                                <p>A modern media center that's a one-stop solution for your video entertainment.</p>
+                                <div class="card-buttons"><a href="https://www.stremio.com/" class="btn-link btn-primary" target="_blank">Visit Site</a></div>
+                            </div>
+                             <div class="card">
+                                <h3>Stremio Addons</h3>
+                                <p>A curated list of the best community addons for Stremio.</p>
+                                <div class="card-buttons"><a href="https://stremio-addons.net/" class="btn-link btn-primary" target="_blank">Visit Site</a></div>
+                            </div>
+                             <div class="card">
+                                <h3>Stremio Guides</h3>
+                                <p>Comprehensive guides for setting up and using Stremio.</p>
+                                <div class="card-buttons">
+                                    <a href="https://bye.undi.rest/" class="btn-link btn-primary" target="_blank">Simple Guide</a>
+                                    <a href="https://guides.viren070.me/stremio" class="btn-link btn-secondary" target="_blank">Advanced Guide</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="streaming-sites" class="sub-tab-content">
+                        <div class="grid-container">
+                            <div class="card diamond">
+                                <div class="diamond-icon" data-tooltip="The GOAT of this category"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2L2 9.5l10 12.5L22 9.5 12 2z"/></svg></div>
+                                <h3>Cineby</h3>
+                                <p>A clean and modern streaming site for movies and TV shows.</p>
+                                <div class="card-buttons">
+                                    <a href="https://www.cineby.app/" class="btn-link btn-diamond" target="_blank">Visit Site</a>
+                                </div>
+                            </div>
+                            <div class="card diamond">
+                                <div class="diamond-icon" data-tooltip="The GOAT of this category"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2L2 9.5l10 12.5L22 9.5 12 2z"/></svg></div>
+                                <h3>Bitcine</h3>
+                                <p>A sister site to Cineby, offering a similar high-quality streaming experience.</p>
+                                <div class="card-buttons">
+                                    <a href="https://www.bitcine.app/" class="btn-link btn-diamond" target="_blank">Visit Site</a>
+                                </div>
+                            </div>
+                            <div class="card diamond">
+                                <div class="diamond-icon" data-tooltip="The GOAT of this category"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2L2 9.5l10 12.5L22 9.5 12 2z"/></svg></div>
+                                <h3>Fmovies</h3>
+                                <p>A long-standing and popular site with a massive library of content.</p>
+                                <div class="card-buttons"><a href="https://www.fmovies.gd/home" class="btn-link btn-diamond" target="_blank">Visit Site</a></div>
+                            </div>
+                            <div class="card recommended">
+                                <div class="recommended-star" data-tooltip="Most trusted by the community"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg></div>
+                                <h3>Xprime</h3>
+                                <p>A streaming site known for its clean interface and good video quality.</p>
+                                <div class="card-buttons"><a href="https://xprime.tv/" class="btn-link btn-primary-rec" target="_blank">Visit Site</a></div>
+                            </div>
+                            <div class="card recommended">
+                                <div class="recommended-star" data-tooltip="Most trusted by the community"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg></div>
+                                <h3>P-stream</h3>
+                                <p>A reliable streaming source with a wide variety of movies and shows.</p>
+                                <div class="card-buttons"><a href="https://pstream.mov/" class="btn-link btn-primary-rec" target="_blank">Visit Site</a></div>
+                            </div>
+                             <div class="card recommended">
+                                <div class="recommended-star" data-tooltip="Most trusted by the community"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg></div>
+                                <h3>VeloraTV</h3>
+                                <p>A streaming site focusing on a high-quality user experience.</p>
+                                <div class="card-buttons"><a href="https://veloratv.ru/" class="btn-link btn-primary-rec" target="_blank">Visit Site</a></div>
+                            </div>
+                             <div class="card recommended">
+                                <div class="recommended-star" data-tooltip="Most trusted by the community"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg></div>
+                                <h3>SpenFlix</h3>
+                                <p>A community-driven streaming project with a clean design.</p>
+                                <div class="card-buttons"><a href="https://watch.spencerdevs.xyz/" class="btn-link btn-primary-rec" target="_blank">Visit Site</a></div>
+                            </div>
+                             <div class="card recommended">
+                                <div class="recommended-star" data-tooltip="Most trusted by the community"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg></div>
+                                <h3>Flixer</h3>
+                                <p>A source for streaming the latest movies and TV series.</p>
+                                <div class="card-buttons"><a href="https://flixer.sh/" class="btn-link btn-primary-rec" target="_blank">Visit Site</a></div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-              </article>
             </div>
-          </div>
 
-          <div id="streaming-sites" class="subpanel" role="tabpanel">
-            <div class="grid">
-              <article class="card diamond">
-                <span class="badge badge-goat">GOAT</span>
-                <h3>Cineby</h3>
-                <p>Clean and modern streaming site for movies and TV shows.</p>
-                <div class="card-actions"><a href="https://www.cineby.app/" class="btn btn-goat" target="_blank" rel="noopener">Visit Site</a></div>
-              </article>
-
-              <article class="card diamond">
-                <span class="badge badge-goat">GOAT</span>
-                <h3>Bitcine</h3>
-                <p>Sister site to Cineby with a similar experience.</p>
-                <div class="card-actions"><a href="https://www.bitcine.app/" class="btn btn-goat" target="_blank" rel="noopener">Visit Site</a></div>
-              </article>
-
-              <article class="card diamond">
-                <span class="badge badge-goat">GOAT</span>
-                <h3>Fmovies</h3>
-                <p>Long-standing site with a massive library.</p>
-                <div class="card-actions"><a href="https://www.fmovies.gd/home" class="btn btn-goat" target="_blank" rel="noopener">Visit Site</a></div>
-              </article>
-
-              <article class="card recommended">
-                <span class="badge badge-rec">Recommended</span>
-                <h3>Xprime</h3>
-                <p>Clean interface and good video quality.</p>
-                <div class="card-actions"><a href="https://xprime.tv/" class="btn btn-primary" target="_blank" rel="noopener">Visit Site</a></div>
-              </article>
-
-              <article class="card recommended">
-                <span class="badge badge-rec">Recommended</span>
-                <h3>P-stream</h3>
-                <p>Reliable source with wide variety.</p>
-                <div class="card-actions"><a href="https://pstream.mov/" class="btn btn-primary" target="_blank" rel="noopener">Visit Site</a></div>
-              </article>
-
-              <article class="card recommended">
-                <span class="badge badge-rec">Recommended</span>
-                <h3>VeloraTV</h3>
-                <p>Focus on a high-quality experience.</p>
-                <div class="card-actions"><a href="https://veloratv.ru/" class="btn btn-primary" target="_blank" rel="noopener">Visit Site</a></div>
-              </article>
-
-              <article class="card recommended">
-                <span class="badge badge-rec">Recommended</span>
-                <h3>SpenFlix</h3>
-                <p>Community-driven streaming project.</p>
-                <div class="card-actions"><a href="https://watch.spencerdevs.xyz/" class="btn btn-primary" target="_blank" rel="noopener">Visit Site</a></div>
-              </article>
-
-              <article class="card recommended">
-                <span class="badge badge-rec">Recommended</span>
-                <h3>Flixer</h3>
-                <p>Latest movies and TV series.</p>
-                <div class="card-actions"><a href="https://flixer.sh/" class="btn btn-primary" target="_blank" rel="noopener">Visit Site</a></div>
-              </article>
-            </div>
-          </div>
         </div>
-      </section>
-
-      <footer class="app-footer" role="contentinfo">
-        <p>© 2025 Your Megathread. All rights reserved.</p>
-      </footer>
     </main>
-  </div>
 
-  <!-- Modal -->
-  <div id="tutorial-modal" class="modal" aria-hidden="true" aria-labelledby="tutorial-title" role="dialog">
-    <div class="modal-backdrop" data-close></div>
-    <div class="modal-content" role="document">
-      <button id="modal-close" class="btn btn-icon close" aria-label="Close tutorial" data-close>✕</button>
-      <h2 id="tutorial-title" class="modal-title">Tutorial</h2>
-      <div id="tutorial-content" class="modal-body"></div>
+    <footer>
+        <p>&copy; 2025 Your Megathread. All rights reserved.</p>
+    </footer>
+
+    <!-- MODAL POPUP STRUCTURE (Initially hidden) -->
+    <div id="tutorial-modal" class="modal-overlay">
+        <div class="modal-content">
+            <button id="modal-close" class="modal-close">&times;</button>
+            <h2 id="tutorial-title">Tutorial Title</h2>
+            <div id="tutorial-content" class="tutorial-body"></div>
+        </div>
     </div>
-  </div>
 
-  <script>
-    // --- Global filter (client-side fuzzy-ish search by card title) ---
-    const searchInput = document.getElementById('quick-search');
-    searchInput?.addEventListener('input', () => {
-      const q = searchInput.value.trim().toLowerCase();
-      document.querySelectorAll('.card').forEach(card => {
-        const title = card.querySelector('h3')?.textContent.toLowerCase() || '';
-        card.style.display = title.includes(q) ? '' : 'none';
-      });
-    });
+    <script>
+    // --- SCRIPT FOR TABS AND MODAL ---
+    document.addEventListener('DOMContentLoaded', () => {
+        // --- MAIN TAB LOGIC ---
+        const mainTabsNav = document.querySelector('.tabs-nav');
+        mainTabsNav.addEventListener('click', (e) => {
+            const clickedButton = e.target.closest('.tab-button');
+            if (!clickedButton) return;
 
-    // --- Main Tabs (sidebar) ---
-    const mainTabs = document.querySelectorAll('.sidebar .tab-button');
-    const panels = document.querySelectorAll('.content .panel');
-    mainTabs.forEach(btn => {
-      btn.addEventListener('click', () => {
-        mainTabs.forEach(b => {
-          b.classList.remove('active');
-          b.setAttribute('aria-selected', 'false');
+            // Update button active states
+            mainTabsNav.querySelectorAll('.tab-button').forEach(button => button.classList.remove('active'));
+            clickedButton.classList.add('active');
+
+            // Update content panel active states
+            const tabId = clickedButton.dataset.tab;
+            document.querySelectorAll('.tab-content').forEach(content => {
+                content.classList.toggle('active', content.id === tabId);
+            });
         });
-        btn.classList.add('active');
-        btn.setAttribute('aria-selected', 'true');
 
-        const id = btn.dataset.tab;
-        panels.forEach(p => p.classList.toggle('active', p.id === id));
-      });
-    });
+        // --- EMULATION SUB-TAB LOGIC ---
+        const subTabsNav = document.querySelector('#emulation .sub-tabs-nav');
+        subTabsNav.addEventListener('click', (e) => {
+            const clickedButton = e.target.closest('.sub-tab-button');
+            if (!clickedButton) return;
 
-    // --- Subtabs (per section) ---
-    document.querySelectorAll('.panel').forEach(section => {
-      const subtabs = section.querySelectorAll('.subtabs .subtab');
-      const subpanels = section.querySelectorAll('.subpanels .subpanel');
-      subtabs.forEach(sub => {
-        sub.addEventListener('click', () => {
-          subtabs.forEach(s => {
-            s.classList.remove('active');
-            s.setAttribute('aria-selected', 'false');
-          });
-          sub.classList.add('active');
-          sub.setAttribute('aria-selected', 'true');
+             // Update button active states
+            subTabsNav.querySelectorAll('.sub-tab-button').forEach(button => button.classList.remove('active'));
+            clickedButton.classList.add('active');
 
-          const subId = sub.dataset.subtab;
-          subpanels.forEach(sp => sp.classList.toggle('active', sp.id === subId));
+            // Update content panel active states
+            const subTabId = clickedButton.dataset.subtab;
+            document.querySelectorAll('#emulation .sub-tab-content').forEach(content => {
+                content.classList.toggle('active', content.id === subTabId);
+            });
         });
-      });
+
+        // --- GAMING SUB-TAB LOGIC ---
+        const gamingSubTabsNav = document.querySelector('#gaming .sub-tabs-nav');
+        if (gamingSubTabsNav) {
+            gamingSubTabsNav.addEventListener('click', (e) => {
+                const clickedButton = e.target.closest('.sub-tab-button');
+                if (!clickedButton) return;
+
+                gamingSubTabsNav.querySelectorAll('.sub-tab-button').forEach(button => button.classList.remove('active'));
+                clickedButton.classList.add('active');
+
+                const subTabId = clickedButton.dataset.subtab;
+                document.querySelectorAll('#gaming .sub-tab-content').forEach(content => {
+                    content.classList.toggle('active', content.id === subTabId);
+                });
+            });
+        }
+        
+        // --- MOVIES/TV SUB-TAB LOGIC ---
+        const moviesSubTabsNav = document.querySelector('#movies-tv .sub-tabs-nav');
+        if (moviesSubTabsNav) {
+            moviesSubTabsNav.addEventListener('click', (e) => {
+                const clickedButton = e.target.closest('.sub-tab-button');
+                if (!clickedButton) return;
+
+                moviesSubTabsNav.querySelectorAll('.sub-tab-button').forEach(button => button.classList.remove('active'));
+                clickedButton.classList.add('active');
+
+                const subTabId = clickedButton.dataset.subtab;
+                document.querySelectorAll('#movies-tv .sub-tab-content').forEach(content => {
+                    content.classList.toggle('active', content.id === subTabId);
+                });
+            });
+        }
+
+        // --- MODAL LOGIC ---
+        const modalOverlay = document.getElementById('tutorial-modal');
+        const modalTitle = document.getElementById('tutorial-title');
+        const modalContent = document.getElementById('tutorial-content');
+        const closeModalButton = document.getElementById('modal-close');
+        
+        const openModal = (topic) => {
+            const content = getTutorialContent(topic);
+            if (content) {
+                modalTitle.textContent = content.title;
+                modalContent.innerHTML = content.body;
+            } else {
+                modalTitle.textContent = 'Tutorial Not Found';
+                modalContent.innerHTML = '<p>Sorry, we could not find a tutorial for this topic.</p>';
+            }
+            modalOverlay.classList.add('visible');
+            document.body.style.overflow = 'hidden';
+        };
+
+        const closeModal = () => {
+            modalOverlay.classList.remove('visible');
+            document.body.style.overflow = '';
+        };
+
+        const getTutorialContent = (topic) => {
+            switch (topic) {
+                case 'duckduckgo':
+                    return {
+                        title: 'How to Set DuckDuckGo as Your Default Search Engine',
+                        body: `
+                            <h3>Google Chrome</h3>
+                            <ol>
+                                <li>Go to Settings > Search Engine.</li>
+                                <li>Find "Search engine used in the address bar" and select "DuckDuckGo".</li>
+                            </ol>
+                            <h3>Mozilla Firefox</h3>
+                            <ol>
+                                <li>Go to Settings > Search.</li>
+                                <li>Under "Default Search Engine," choose "DuckDuckGo".</li>
+                            </ol>
+                        `
+                    };
+                default: return null;
+            }
+        };
+        
+        document.body.addEventListener('click', (event) => {
+            if (event.target.matches('.tutorial-button')) {
+                openModal(event.target.getAttribute('data-topic'));
+            }
+        });
+
+        closeModalButton.addEventListener('click', closeModal);
+        modalOverlay.addEventListener('click', (e) => { if (e.target === modalOverlay) closeModal(); });
+        document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeModal(); });
     });
+    </script>
 
-    // --- MODAL ---
-    const modal = document.getElementById('tutorial-modal');
-    const modalTitle = document.getElementById('tutorial-title');
-    const modalBody = document.getElementById('tutorial-content');
-
-    const openModal = (topic) => {
-      const content = getTutorialContent(topic);
-      modalTitle.textContent = content?.title ?? 'Tutorial Not Found';
-      modalBody.innerHTML = content?.body ?? '<p>Sorry, we could not find a tutorial for this topic.</p>';
-      modal.setAttribute('aria-hidden', 'false');
-      document.documentElement.classList.add('no-scroll');
-    };
-
-    const closeModal = () => {
-      modal.setAttribute('aria-hidden', 'true');
-      document.documentElement.classList.remove('no-scroll');
-    };
-
-    document.body.addEventListener('click', (e) => {
-      const t = e.target;
-      if (t.matches('.tutorial-button')) openModal(t.getAttribute('data-topic'));
-      if (t.matches('[data-close]')) closeModal();
-    });
-    modal.addEventListener('click', (e) => {
-      if (e.target.classList.contains('modal-backdrop')) closeModal();
-    });
-    document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeModal(); });
-
-    function getTutorialContent(topic) {
-      switch (topic) {
-        case 'duckduckgo':
-          return {
-            title: 'How to Set DuckDuckGo as Your Default Search Engine',
-            body: `
-              <div class="tutorial-body">
-                <h3>Google Chrome</h3>
-                <ol>
-                  <li>Go to Settings &gt; Search Engine.</li>
-                  <li>Select \"DuckDuckGo\" as your default.</li>
-                </ol>
-                <h3>Mozilla Firefox</h3>
-                <ol>
-                  <li>Go to Settings &gt; Search.</li>
-                  <li>Choose \"DuckDuckGo\" under Default Search Engine.</li>
-                </ol>
-              </div>
-            `
-          };
-        default:
-          return null;
-      }
-    }
-  </script>
 </body>
 </html>
+
