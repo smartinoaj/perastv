@@ -106,6 +106,7 @@ header p { font-size: 1.125rem; color: var(--text-secondary); max-width: 600px; 
     color: #ffffff;
     box-shadow: 0 4px 14px -4px var(--accent-color);
 }
+/* Diamond style for sub-tab button */
 .sub-tab-button-diamond.active {
     background-color: var(--goat-color);
     border-color: var(--goat-color);
@@ -123,29 +124,80 @@ header p { font-size: 1.125rem; color: var(--text-secondary); max-width: 600px; 
 }
 
 /* --- FIXED: Stremio Subcategory state (not always aqua) --- */
+/* Inactive looks like the other pills; aqua only on hover/active */
 #movies-tv .sub-tabs-nav .sub-tab-button[data-subtab="stremio"] {
-  background-color: transparent;
+  background-color: transparent; /* default inactive */
   color: var(--text-secondary);
   border: 1px solid transparent;
   box-shadow: none;
   animation: none;
 }
 #movies-tv .sub-tabs-nav .sub-tab-button[data-subtab="stremio"]:hover {
-  background-color: var(--goat-color);
+  background-color: var(--goat-color); /* Slight aqua on hover */
   color: #0f172a;
   box-shadow: 0 0 18px rgba(34, 211, 238, 0.55);
 }
 #movies-tv .sub-tabs-nav .sub-tab-button[data-subtab="stremio"].active {
-  background-color: var(--goat-color);
+  background-color: var(--goat-color); /* Aqua only when active */
   color: #0f172a;
   border-color: var(--goat-color);
   box-shadow: 0 0 30px rgba(34, 211, 238, 0.9);
+  animation: aquaPulse 2.4s ease-in-out infinite;
 }
 
-/* --- Stremio Card Accents (optional) --- */
-#movies-tv #stremio .card { border-color: rgba(34, 211, 238, 0.5); transition: all 0.3s ease; }
-#movies-tv #stremio .card:hover { border-color: var(--goat-color); box-shadow: 0 0 25px rgba(34, 211, 238, 0.5); transform: translateY(-6px); }
-#movies-tv #stremio .card .btn-link:hover { border-color: var(--goat-color); box-shadow: 0 0 20px rgba(34, 211, 238, 0.65); }
+@keyframes aquaPulse {
+  0%   { box-shadow: 0 0 16px rgba(34, 211, 238, 0.45); }
+  50%  { box-shadow: 0 0 28px rgba(34, 211, 238, 0.95); }
+  100% { box-shadow: 0 0 16px rgba(34, 211, 238, 0.45); }
+}
+
+/* Respect reduced motion preferences */
+@media (prefers-reduced-motion: reduce) {
+  #movies-tv .sub-tabs-nav .sub-tab-button[data-subtab="stremio"].active { animation: none; }
+}
+
+/* --- Aqua Glow for Stremio Cards --- */
+#movies-tv #stremio .card {
+  border-color: rgba(34, 211, 238, 0.5);
+  transition: all 0.3s ease;
+}
+#movies-tv #stremio .card:hover {
+  border-color: var(--goat-color);
+  box-shadow: 0 0 25px rgba(34, 211, 238, 0.5);
+  transform: translateY(-6px);
+}
+
+/* --- Aqua Hover Glow for Buttons inside Stremio Cards --- */
+#movies-tv #stremio .card .btn-link {
+  position: relative;
+  overflow: visible;
+}
+#movies-tv #stremio .card .btn-link:hover {
+  border-color: var(--goat-color);
+  box-shadow: 0 0 20px rgba(34, 211, 238, 0.65);
+}
+
+/* Keep original colors, add glow on hover */
+#movies-tv #stremio .card .btn-primary:hover {
+  background-color: var(--accent-hover);
+  box-shadow: 0 0 22px rgba(34, 211, 238, 0.75);
+  border-color: var(--goat-color);
+}
+#movies-tv #stremio .card .btn-secondary:hover {
+  background-color: var(--bg-tertiary);
+  color: var(--text-primary);
+  border-color: var(--goat-color);
+  box-shadow: 0 0 18px rgba(34, 211, 238, 0.6);
+}
+#movies-tv #stremio .card .btn-diamond {
+  /* Already aqua; just add glow */
+  box-shadow: 0 0 12px rgba(34, 211, 238, 0.35);
+}
+#movies-tv #stremio .card .btn-diamond:hover {
+  background-color: #15b8d1;
+  border-color: #15b8d1;
+  box-shadow: 0 0 24px rgba(34, 211, 238, 0.85);
+}
 
 /* --- Grid & Card Styles --- */
 .grid-container {
@@ -176,20 +228,88 @@ header p { font-size: 1.125rem; color: var(--text-secondary); max-width: 600px; 
 }
 .card p { color: var(--text-secondary); flex-grow: 1; margin-bottom: 1.5rem; }
 
-/* --- Recommended & GOAT --- */
+/* --- Recommended Item Styles --- */
 .card.recommended { border-color: var(--recommended-color); box-shadow: 0 0 20px rgba(251, 191, 36, 0.1); }
 .card.recommended:hover { border-color: var(--recommended-color); }
-.recommended-star { position: absolute; top: 1rem; right: 1rem; width: 24px; height: 24px; color: var(--recommended-color); cursor: pointer; z-index: 5; }
+
+.recommended-star {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    width: 24px;
+    height: 24px;
+    color: var(--recommended-color);
+    cursor: pointer;
+    z-index: 5;
+}
 .card.recommended h3, .card.diamond h3 { padding-right: 2rem; }
-.card.diamond { border-color: var(--goat-color); box-shadow: 0 0 30px hsla(188, 85%, 53%, 0.55); }
-.card.diamond:hover { border-color: var(--goat-color); }
-.diamond-icon { position: absolute; top: 1rem; right: 1rem; width: 24px; height: 24px; color: var(--goat-color); cursor: pointer; z-index: 5; }
+
+/* --- Tooltip for Icons --- */
+.recommended-star::after, .diamond-icon::after, .info-icon::after {
+    content: attr(data-tooltip);
+    position: absolute;
+    right: 140%; 
+    top: 50%;
+    transform: translateY(-50%);
+    background-color: var(--bg-tertiary);
+    color: var(--text-primary);
+    padding: 0.5rem 0.75rem;
+    border-radius: 6px;
+    font-size: 0.85rem;
+    font-weight: 500;
+    white-space: nowrap;
+    z-index: 10;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.2s ease, visibility 0.2s ease;
+    pointer-events: none;
+}
+.info-icon::after {
+    left: 120%;
+    right: auto;
+}
+
+.recommended-star:hover::after, .diamond-icon:hover::after, .info-icon:hover::after {
+    opacity: 1;
+    visibility: visible;
+}
+
+/* --- Diamond (GOAT) Item Styles --- */
+.card.diamond {
+    border-color: var(--goat-color);
+    box-shadow: 0 0 30px hsla(188, 85%, 53%, 0.55);
+}
+.card.diamond:hover {
+    border-color: var(--goat-color);
+}
+.diamond-icon {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    width: 24px;
+    height: 24px;
+    color: var(--goat-color);
+    cursor: pointer;
+    z-index: 5;
+}
 
 /* --- Info Icon --- */
-.info-icon { display: inline-flex; align-items: center; width: 16px; height: 16px; color: var(--text-secondary); cursor: help; position: relative; }
-.info-icon svg { width: 100%; height: 100%; }
+.info-icon {
+    display: inline-flex;
+    align-items: center;
+    width: 16px;
+    height: 16px;
+    color: var(--text-secondary);
+    cursor: help;
+    position: relative;
+}
+.info-icon svg {
+    width: 100%;
+    height: 100%;
+}
 
-/* --- Buttons --- */
+
+/* --- Button Styles --- */
 .card-buttons { display: flex; flex-wrap: wrap; gap: 0.75rem; margin-top: auto; }
 .btn-link {
     display: inline-block;
@@ -205,16 +325,31 @@ header p { font-size: 1.125rem; color: var(--text-secondary); max-width: 600px; 
     font-size: 0.9rem;
 }
 .btn-link:active { transform: scale(0.98); }
+
+/* Primary button (Orange) */
 .btn-primary { background-color: var(--accent-color); color: #ffffff; border-color: var(--accent-color); }
 .btn-primary:hover { background-color: var(--accent-hover); border-color: var(--accent-hover); }
+
+/* Primary button for Recommended cards (Golden) */
 .btn-primary-rec { background-color: var(--recommended-color); color: var(--bg-primary); border-color: var(--recommended-color); }
 .btn-primary-rec:hover { background-color: #F59E0B; border-color: #F59E0B; }
-.btn-diamond { background-color: var(--goat-color); color: var(--bg-primary); border-color: var(--goat-color); }
-.btn-diamond:hover { background-color: #15b8d1; border-color: #15b8d1; }
+
+/* Primary button for Diamond cards (Aqua) */
+.btn-diamond {
+    background-color: var(--goat-color);
+    color: var(--bg-primary);
+    border-color: var(--goat-color);
+}
+.btn-diamond:hover {
+    background-color: #15b8d1; /* A slightly darker aqua */
+    border-color: #15b8d1;
+}
+
+/* Secondary button (Outline) */
 .btn-secondary { background-color: transparent; color: var(--text-secondary); border-color: var(--border-color); }
 .btn-secondary:hover { background-color: var(--bg-tertiary); color: var(--text-primary); border-color: var(--bg-tertiary); }
 
-/* --- Footer & Modal --- */
+/* --- Footer & Modal & Placeholders --- */
 footer { text-align: center; padding: 3rem 1rem; margin-top: 3rem; border-top: 1px solid var(--border-color); color: var(--text-secondary); font-size: 0.9rem; }
 .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(17, 24, 39, 0.8); backdrop-filter: blur(5px); display: flex; justify-content: center; align-items: center; z-index: 1000; padding: 1rem; visibility: hidden; opacity: 0; transition: all 0.3s ease; }
 .modal-overlay.visible { visibility: visible; opacity: 1; }
@@ -222,79 +357,21 @@ footer { text-align: center; padding: 3rem 1rem; margin-top: 3rem; border-top: 1
 .modal-overlay.visible .modal-content { transform: scale(1); }
 .modal-close { position: absolute; top: 1rem; right: 1.5rem; background: none; border: none; color: var(--text-secondary); font-size: 2rem; line-height: 1; cursor: pointer; transition: all 0.2s ease; }
 .modal-close:hover { color: var(--text-primary); transform: rotate(90deg); }
+.tutorial-body h2 { font-size: 1.75rem; margin-bottom: 1.5rem; color: var(--text-primary); }
+.tutorial-body h3 { font-size: 1.25rem; margin-top: 2rem; margin-bottom: 1rem; color: var(--accent-color); }
+.tutorial-body p, .tutorial-body ol { line-height: 1.8; color: var(--text-secondary); font-size: 1rem; }
+.tutorial-body ol { padding-left: 25px; }
+.tutorial-body ol li { margin-bottom: 0.75rem; }
+.placeholder-text { color: var(--text-secondary); text-align: center; padding: 4rem 1rem; font-style: italic; }
 
 /* --- Responsive Adjustments --- */
 @media (max-width: 768px) {
     .tabs-nav { gap: 0.5rem; padding: 1rem; flex-wrap: wrap; }
     .tab-button { padding: 0.5rem 1rem; font-size: 0.9rem; }
     header h1 { font-size: 2rem; }
-    .sub-tabs-nav { flex-wrap: wrap; border-radius: 12px; padding: 0.75rem; }
-}
-
-/* ================================================== */
-/* ===============  LANDING PAGE STYLES  ============ */
-/* ================================================== */
-
-.landing-body{background: radial-gradient(900px 240px at 70% -100px, rgba(249,115,22,.18), rgba(0,0,0,0)) , var(--bg-primary);}
-
-/* Top bar */
-.landing-header{position:sticky; top:0; z-index:40; backdrop-filter: blur(6px) saturate(130%); background:rgba(17,24,39,.75); border-bottom:1px solid var(--border-color);}
-.landing-header__inner{max-width:1200px; margin:0 auto; padding:12px 20px; display:flex; align-items:center; justify-content:space-between; gap:14px;}
-.brand-link{display:flex; align-items:center; gap:10px; text-decoration:none; color:var(--text-primary); font-weight:700}
-.brand-dot{width:16px; height:16px; border-radius:50%; background:linear-gradient(180deg, var(--accent-color), var(--accent-hover)); box-shadow:0 0 12px rgba(249,115,22,.6)}
-.brand-text{opacity:.95}
-.landing-actions{display:flex; align-items:center; gap:14px; flex-wrap:wrap}
-.header-links{display:flex; align-items:center; gap:10px}
-.header-link{color:var(--text-secondary); text-decoration:none; font-weight:600; padding:8px 10px; border-radius:10px}
-.header-link:hover{background:var(--bg-tertiary); color:var(--text-primary)}
-.header-dropdown{position:relative}
-.header-link--dropdown{background:transparent; border:0; color:var(--text-secondary); font-weight:700; cursor:pointer; padding:8px 10px; border-radius:10px}
-.header-link--dropdown:hover{background:var(--bg-tertiary); color:var(--text-primary)}
-.dropdown-menu{position:absolute; top:42px; right:0; min-width:180px; background:var(--bg-secondary); border:1px solid var(--border-color); border-radius:12px; padding:8px; display:none; box-shadow:0 20px 40px -20px rgba(0,0,0,.6)}
-.dropdown-menu.open{display:block}
-.dropdown-item{display:block; padding:10px 12px; border-radius:8px; color:var(--text-primary); text-decoration:none}
-.dropdown-item:hover{background:var(--bg-tertiary)}
-
-/* Top search pill */
-.search-pill{display:flex; align-items:center; gap:8px; background:var(--bg-secondary); border:1px solid var(--border-color); border-radius:12px; padding:6px 10px}
-.search-icon{width:18px; opacity:.8}
-.search-input{background:transparent; border:0; outline:none; color:var(--text-primary); width:180px}
-.kbd{background:#111827; color:#cbd5e1; border:1px solid #2b3547; padding:2px 6px; border-radius:6px; margin-left:4px; font-size:11px}
-
-/* Hero */
-.landing-main{max-width:1200px; margin:0 auto; padding:36px 20px 22px}
-.hero{display:grid; grid-template-columns:1.2fr .8fr; gap:28px; align-items:center;}
-.update-pill{display:inline-block; background:#111827; border:1px solid #2b3547; color:#f9fafb; padding:6px 10px; border-radius:999px; font-weight:700; margin-bottom:12px}
-.hero__title{font-size:56px; line-height:1.05; font-weight:800; margin:0 0 12px}
-.hero__title--accent{color:var(--accent-color)}
-.hero__subtitle{color:var(--text-secondary); font-size:18px; margin-bottom:18px}
-.hero__cta{display:flex; gap:12px; align-items:center}
-.btn{display:inline-flex; align-items:center; justify-content:center; padding:11px 16px; border-radius:12px; font-weight:800; border:1px solid transparent; text-decoration:none; cursor:pointer; transition:transform .12s ease, filter .12s ease, background .18s ease}
-.btn-primary{background:linear-gradient(180deg, var(--accent-color), var(--accent-hover)); color:#0b0f19}
-.btn-primary:hover{filter:brightness(.98)}
-.btn-ghost{background:transparent; border-color:var(--border-color); color:var(--text-secondary)}
-.btn-ghost:hover{background:var(--bg-tertiary); color:var(--text-primary)}
-
-.playlogo{position:relative; width:min(360px, 60vw); aspect-ratio:1/1; margin-inline:auto}
-.playlogo__svg{position:relative; width:100%; height:auto; border-radius:50%; border:1px solid rgba(255,255,255,.06); background:rgba(0,0,0,.1)}
-.glow{position:absolute; inset:auto; top:50%; left:50%; width:360px; height:360px; transform:translate(-50%,-50%); pointer-events:none; background:radial-gradient(closest-side, rgba(249,115,22,.7), rgba(249,115,22,.1), transparent 70%); filter:blur(8px); mix-blend:screen}
-
-/* Category grid */
-.landing-section{padding-top:10px}
-.section-lead{text-align:center; color:var(--text-secondary); margin-bottom:16px}
-.category-grid{display:grid; grid-template-columns:repeat(auto-fill, minmax(260px, 1fr)); gap:16px}
-.cat-card{background:var(--bg-secondary); border:1px solid var(--border-color); border-radius:16px; padding:18px; display:flex; flex-direction:column; gap:10px; box-shadow:0 14px 30px -20px rgba(0,0,0,.6); transition:transform .16s ease, box-shadow .16s ease, border-color .16s ease}
-.cat-card:hover{transform:translateY(-3px); border-color:var(--accent-color); box-shadow:0 22px 46px -26px rgba(0,0,0,.75)}
-.cat-icon{width:38px; height:38px; display:grid; place-items:center; border-radius:10px; background:linear-gradient(180deg, rgba(249,115,22,.15), rgba(249,115,22,.05)); border:1px solid #2b3547; font-size:18px}
-.cat-title{font-size:18px; margin:2px 0 0}
-.cat-desc{color:var(--text-secondary); margin:0 0 6px}
-.cat-card .btn-ghost{align-self:flex-start}
-
-/* Footer */
-.landing-footer{max-width:1200px; margin:0 auto; padding:32px 20px; color:var(--text-secondary); text-align:center; border-top:1px solid var(--border-color); margin-top:24px}
-
-/* Responsive */
-@media (max-width: 980px){
-  .hero{grid-template-columns:1fr}
-  .playlogo{order:-1}
+    .sub-tabs-nav {
+        flex-wrap: wrap;
+        border-radius: 12px;
+        padding: 0.75rem;
+    }
 }
