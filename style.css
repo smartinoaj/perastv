@@ -127,6 +127,35 @@ body {
     display: none !important;
 }
 
+/* New styles for search dropdown */
+#search-results-container .card {
+    transform: scale(0.95);
+    transform-origin: top left;
+    margin-bottom: -1rem; /* Adjust for scale */
+    transition: none;
+    box-shadow: none;
+    pointer-events: all; 
+}
+
+#search-results-container .card:hover {
+    transform: scale(0.95);
+    border-color: #334155; 
+}
+
+.search-result-item {
+    transition: background-color 0.2s ease-in-out;
+}
+
+.search-result-item:hover {
+    background-color: #1e293b; /* slate-800 */
+}
+
+#search-results-container .card.tag-goat,
+#search-results-container .card.tag-goat:hover {
+    animation: none !important;
+    border-color: #06b6d4;
+}
+
 
 @keyframes fadeIn {
     from { opacity: 0; transform: translateY(10px); }

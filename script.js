@@ -103,15 +103,29 @@ document.addEventListener('DOMContentLoaded', () => {
             return;
         }
 
-        const matchedCards = allCardsData.filter(card => card.title.toLowerCase().includes(query));
+        const matchedCards = allCardsData.filter(card => 
+            card.title.toLowerCase().includes(query) || 
+            card.element.querySelector('p').textContent.toLowerCase().includes(query)
+        );
 
         if (matchedCards.length > 0) {
             matchedCards.forEach(cardData => {
-                const resultItem = document.createElement('a');
-                resultItem.href = '#';
-                resultItem.className = 'search-result-item block px-4 py-3 text-sm text-slate-300 hover:bg-slate-700';
-                resultItem.innerHTML = `<span class="font-semibold text-white">${cardData.title}</span> <span class="text-xs text-slate-400">in ${cardData.mainTab}</span>`;
+                const resultItem = document.createElement('div');
+                resultItem.className = 'search-result-item p-2 cursor-pointer';
+                
+                const clonedCard = cardData.element.cloneNode(true);
+                
+                clonedCard.classList.add('is-visible');
+                clonedCard.style.transform = '';
+                clonedCard.style.opacity = '1';
+                clonedCard.style.animation = 'none';
+
+                resultItem.appendChild(clonedCard);
+                
                 resultItem.addEventListener('click', (e) => {
+                    if (e.target.closest('a, button')) {
+                        return;
+                    }
                     e.preventDefault();
                     navigateToCard(cardData);
                     filterInput.value = '';
@@ -133,7 +147,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const managePageView = () => {
         const params = new URLSearchParams(window.location.search);
         const tabFromUrl = params.get('tab');
-        if (tabFromUrl && document.querySelector(`.tabs-nav .tab-button[data-tab="${tabFromUrl}"]`)) {
+        if (tabFromUrl && document.querySelector(`.tabs-nav .tab-button[data-tab="${targetTabId}"]`)) {
             homepageContent.classList.add('hidden');
             megathreadContent.classList.remove('hidden');
             searchBarContainer.classList.remove('hidden');
