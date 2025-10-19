@@ -58,16 +58,40 @@ body {
     height: 100%;
 }
 
+/* --- Enhanced Button & Tab Hover Animations --- */
+.card a, 
+.card button,
+.sub-tabs-nav .sub-tab-button {
+    transition: all 0.2s ease-in-out;
+    transform: translateY(0);
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+}
+
+.card a:hover, 
+.card button:hover,
+.sub-tabs-nav .sub-tab-button:not(.active):hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px -5px rgba(0, 0, 0, 0.4);
+}
+
+/* Specific hover state for non-active sub-tabs to work with the transform */
+.sub-tabs-nav .sub-tab-button:not(.active):hover {
+    background-color: #475569; /* slate-600 */
+    color: #ffffff;
+}
 
 /* Tab styles */
 .tabs-nav .tab-button {
     border-color: transparent;
     color: #94a3b8; /* slate-400 */
     transition: all 0.2s ease-in-out;
+    transform: translateY(0); /* Add for smooth transition */
 }
 .tabs-nav .tab-button:hover {
-    color: #ffffff;
+    color: #e2e8f0; /* slate-200 */
     border-color: #475569; /* slate-600 */
+    transform: translateY(-2px); /* Add subtle lift */
 }
 .tabs-nav .tab-button.active {
     color: #a78bfa; /* violet-400 */
@@ -122,3 +146,4 @@ body {
     --tw-prose-headings: #ffffff;
     --tw-prose-bold: #ffffff;
 }
+
