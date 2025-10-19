@@ -25,13 +25,27 @@ body {
     box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.3), 0 8px 10px -6px rgba(0, 0, 0, 0.3);
 }
 
+.card-highlight {
+    box-shadow: 0 0 20px 5px rgba(167, 139, 250, 0.6); /* violet-400 glow */
+    border-color: #a78bfa; /* violet-400 */
+    transform: scale(1.03) !important;
+}
+
+
 .tag-recommended {
     border-color: #f59e0b; /* amber-500 */
 }
 
 .tag-goat {
     border-color: #06b6d4; /* cyan-500 */
+    box-shadow: 0 0 12px rgba(6, 182, 212, 0.3);
+    animation: pulse-glow-weak 4s infinite alternate;
 }
+
+.tag-goat:hover {
+    animation: pulse-glow-strong 2s infinite alternate;
+}
+
 
 /* Homepage Category Card Styles */
 .category-card {
@@ -53,46 +67,21 @@ body {
 .category-card-content {
     display: flex;
     flex-direction: column;
-    align-items: flex-start; /* Changed from center to flex-start */
-    text-align: left; /* Changed from center to left */
+    align-items: flex-start;
+    text-align: left;
     height: 100%;
 }
 
-/* --- Enhanced Button & Tab Hover Animations --- */
-.card a, 
-.card button,
-.sub-tabs-nav .sub-tab-button {
-    /* Defining individual properties for transition */
-    transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out, background-color 0.2s ease-in-out, color 0.2s ease-in-out;
-    transform: translateY(0);
-    -webkit-backface-visibility: hidden;
-    backface-visibility: hidden;
-}
-
-.card a:hover, 
-.card button:hover,
-.sub-tabs-nav .sub-tab-button:not(.active):hover {
-    transform: translateY(-3px) scale(1.03); /* Added scale for more 'pop' */
-    box-shadow: 0 8px 20px -5px rgba(0, 0, 0, 0.4);
-}
-
-/* Specific hover state for non-active sub-tabs to work with the transform */
-.sub-tabs-nav .sub-tab-button:not(.active):not(.tag-goat):hover {
-    background-color: #475569; /* slate-600 */
-    color: #ffffff;
-}
 
 /* Tab styles */
 .tabs-nav .tab-button {
     border-color: transparent;
     color: #94a3b8; /* slate-400 */
     transition: all 0.2s ease-in-out;
-    transform: translateY(0); /* Add for smooth transition */
 }
 .tabs-nav .tab-button:hover {
-    color: #e2e8f0; /* slate-200 */
+    color: #ffffff;
     border-color: #475569; /* slate-600 */
-    transform: translateY(-2px); /* Add subtle lift */
 }
 .tabs-nav .tab-button.active {
     color: #a78bfa; /* violet-400 */
@@ -100,10 +89,29 @@ body {
 }
 
 /* Sub-tab active state */
-.sub-tabs-nav .sub-tab-button.active:not(.tag-goat) {
+.sub-tabs-nav .sub-tab-button {
+    transition: all 0.2s ease-in-out;
+}
+.sub-tabs-nav .sub-tab-button:hover {
+    background-color: #334155;
+    color: #ffffff;
+}
+.sub-tabs-nav .sub-tab-button.active {
     background-color: #8b5cf6; /* violet-500 */
     color: #ffffff;
 }
+.sub-tabs-nav .sub-tab-button.tag-goat {
+     border: 2px solid #06b6d4;
+     color: #06b6d4;
+     background-color: transparent;
+}
+.sub-tabs-nav .sub-tab-button.tag-goat.active,
+.sub-tabs-nav .sub-tab-button.tag-goat:hover {
+    background-color: #06b6d4;
+    color: #0B1120;
+    animation: pulse-glow-strong 2s infinite alternate;
+}
+
 
 .tab-content, .sub-tab-content {
     display: none;
@@ -114,44 +122,61 @@ body {
     animation: fadeIn 0.5s ease-in-out;
 }
 
-/* --- GOAT Sub-tab styling --- */
-@keyframes pulse-glow-cyan {
-    0%, 100% {
-        box-shadow: 0 0 5px #06b6d4, 0 0 10px #06b6d4;
-    }
-    50% {
-        box-shadow: 0 0 10px #06b6d4, 0 0 20px #06b6d4;
-    }
-}
-
-.sub-tabs-nav .sub-tab-button.tag-goat {
-    border: 2px solid #06b6d4; /* cyan-500 */
-    color: #06b6d4;
-    background-color: transparent;
-    font-weight: 600; /* Bolder font */
-}
-
-.sub-tabs-nav .sub-tab-button.tag-goat.active,
-.sub-tabs-nav .sub-tab-button.tag-goat:hover {
-    background-color: #06b6d4; /* cyan-500 */
-    color: #0B1120; /* Dark bg color for text */
-    border-color: #06b6d4;
-    animation: pulse-glow-cyan 1.5s infinite ease-in-out;
-}
-
-/* --- GOAT Card Styling --- */
-.card.tag-goat,
-#stremio .card {
-    border-color: #06b6d4; /* cyan-500 */
-    box-shadow: 0 0 8px rgba(6, 182, 212, 0.4);
-}
-
-.card.tag-goat:hover,
-#stremio .card:hover {
-    animation: pulse-glow-cyan 1.5s infinite ease-in-out;
-    transform: translateY(-6px) scale(1.02); /* Ensure hover transform still works */
-}
-
-
 /* Utility class provided by Tailwind, but good to have a fallback */
+.hidden {
+    display: none !important;
+}
+
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes pulse-glow-weak {
+    from { box-shadow: 0 0 8px rgba(6, 182, 212, 0.2); }
+    to { box-shadow: 0 0 16px rgba(6, 182, 212, 0.5); }
+}
+
+@keyframes pulse-glow-strong {
+    from { box-shadow: 0 0 12px rgba(6, 182, 212, 0.5); }
+    to { box-shadow: 0 0 24px rgba(6, 182, 212, 0.8); }
+}
+
+
+/* Modal animation */
+.modal-overlay {
+    background-color: rgba(11, 17, 32, 0.8);
+    backdrop-filter: blur(8px);
+    transition: opacity 0.3s ease-in-out;
+}
+.modal-content {
+    transition: transform 0.3s ease-in-out, opacity 0.3s ease-in-out;
+    opacity: 0;
+    transform: scale(0.95) translateY(10px);
+}
+.modal-overlay:not(.hidden) .modal-content {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+}
+
+/* For Tailwind Prose styles */
+.prose {
+    --tw-prose-body: #d1d5db;
+    --tw-prose-headings: #ffffff;
+    --tw-prose-bold: #ffffff;
+}
+
+.stremio-button {
+    border-color: #06b6d4; /* cyan-500 */
+    color: #06b6d4;
+    box-shadow: 0 0 12px rgba(6, 182, 212, 0.3);
+    animation: pulse-glow-weak 4s infinite alternate;
+}
+
+.stremio-button:hover {
+    background-color: #06b6d4;
+    color: #0B1120;
+    animation: pulse-glow-strong 2s infinite alternate;
+}
 

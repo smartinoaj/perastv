@@ -5,6 +5,9 @@ document.addEventListener('DOMContentLoaded', () => {
     const searchBarContainer = document.getElementById('search-bar-container');
     const tabsNavContainer = document.getElementById('tabs-nav-container');
     const filterInput = document.getElementById('global-filter');
+    const searchResultsContainer = document.getElementById('search-results-container');
+    
+    let allCardsData = [];
 
     // --- REVEAL ON SCROLL ---
     let observer;
@@ -12,7 +15,6 @@ document.addEventListener('DOMContentLoaded', () => {
         observer = new IntersectionObserver((entries) => {
             entries.forEach((entry) => {
                 if (entry.isIntersecting) {
-                    // Slight delay for a staggered effect
                     const delay = (Array.from(entry.target.parentNode.children).indexOf(entry.target) % 4) * 100;
                     setTimeout(() => {
                         entry.target.classList.add('is-visible');
@@ -24,17 +26,113 @@ document.addEventListener('DOMContentLoaded', () => {
     };
     const observeVisibleCards = () => {
         const cards = document.querySelectorAll('.card:not(.is-visible)');
-        cards.forEach(card => {
-            if (observer) observer.observe(card);
-        });
+        cards.forEach(card => { if (observer) observer.observe(card); });
     };
     setupObserver();
 
-    // --- PAGE VIEW LOGIC ---
+    // --- DATA CACHING ---
+    const cacheAllCards = () => {
+        allCardsData = []; // Reset before caching
+        document.querySelectorAll('#megathread-content .card').forEach((card, index) => {
+            const titleElement = card.querySelector('h3');
+            if (titleElement) {
+                const title = titleElement.textContent.trim();
+                const mainTabContent = card.closest('.tab-content');
+                const subTabContent = card.closest('.sub-tab-content');
+                
+                card.dataset.cardId = `card-${index}`;
+
+                allCardsData.push({
+                    id: `card-${index}`,
+                    title: title,
+                    mainTab: mainTabContent ? mainTabContent.id : null,
+                    subTab: subTabContent ? subTabContent.id : null,
+                    element: card
+                });
+            }
+        });
+    };
+
+    // --- NAVIGATION LOGIC ---
+    const activateTab = (targetTabId, callback) => {
+        if (!targetTabId) return;
+        document.querySelectorAll('.tabs-nav .tab-button').forEach(btn => btn.classList.remove('active'));
+        document.querySelectorAll('.tab-content').forEach(content => content.classList.remove('active'));
+        const tabButton = document.querySelector(`.tabs-nav .tab-button[data-tab="${targetTabId}"]`);
+        if (tabButton) tabButton.classList.add('active');
+        const contentPanel = document.getElementById(targetTabId);
+        if (contentPanel) contentPanel.classList.add('active');
+        if (callback) callback();
+    };
+
+    const activateSubTab = (subTabId) => {
+        if (!subTabId) return;
+        const subTabContent = document.getElementById(subTabId);
+        if (!subTabContent) return;
+        const parentPanel = subTabContent.closest('.tab-content');
+        if (!parentPanel) return;
+        const subNav = parentPanel.querySelector('.sub-tabs-nav');
+        if (!subNav) return;
+        subNav.querySelectorAll('.sub-tab-button').forEach(btn => btn.classList.toggle('active', btn.dataset.subtab === subTabId));
+        parentPanel.querySelectorAll('.sub-tab-content').forEach(content => content.classList.toggle('active', content.id === subTabId));
+    };
+
+    const navigateToCard = (cardData) => {
+        activateTab(cardData.mainTab, () => {
+            if (cardData.subTab) {
+                activateSubTab(cardData.subTab);
+            }
+            // Ensure all cards are visible before scrolling
+            document.querySelectorAll('#megathread-content .card').forEach(c => c.style.display = 'flex');
+
+            setTimeout(() => {
+                cardData.element.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                cardData.element.classList.add('card-highlight');
+                setTimeout(() => cardData.element.classList.remove('card-highlight'), 2000);
+            }, 100); // Small delay to allow tab switching CSS to apply
+        });
+    };
+
+    // --- SEARCH LOGIC ---
+    const updateSearchResults = () => {
+        const query = filterInput.value.trim().toLowerCase();
+        searchResultsContainer.innerHTML = '';
+
+        if (query.length < 2) {
+            searchResultsContainer.classList.add('hidden');
+            return;
+        }
+
+        const matchedCards = allCardsData.filter(card => card.title.toLowerCase().includes(query));
+
+        if (matchedCards.length > 0) {
+            matchedCards.forEach(cardData => {
+                const resultItem = document.createElement('a');
+                resultItem.href = '#';
+                resultItem.className = 'search-result-item block px-4 py-3 text-sm text-slate-300 hover:bg-slate-700';
+                resultItem.innerHTML = `<span class="font-semibold text-white">${cardData.title}</span> <span class="text-xs text-slate-400">in ${cardData.mainTab}</span>`;
+                resultItem.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    navigateToCard(cardData);
+                    filterInput.value = '';
+                    searchResultsContainer.classList.add('hidden');
+                });
+                searchResultsContainer.appendChild(resultItem);
+            });
+            searchResultsContainer.classList.remove('hidden');
+        } else {
+            const noResultsItem = document.createElement('div');
+            noResultsItem.className = 'px-4 py-3 text-sm text-slate-400';
+            noResultsItem.textContent = 'No results found.';
+            searchResultsContainer.appendChild(noResultsItem);
+            searchResultsContainer.classList.remove('hidden');
+        }
+    };
+    
+    // --- PAGE VIEW AND EVENT LISTENERS SETUP ---
     const managePageView = () => {
         const params = new URLSearchParams(window.location.search);
         const tabFromUrl = params.get('tab');
-
         if (tabFromUrl && document.querySelector(`.tabs-nav .tab-button[data-tab="${tabFromUrl}"]`)) {
             homepageContent.classList.add('hidden');
             megathreadContent.classList.remove('hidden');
@@ -46,79 +144,10 @@ document.addEventListener('DOMContentLoaded', () => {
             megathreadContent.classList.add('hidden');
             searchBarContainer.classList.add('hidden');
             tabsNavContainer.classList.add('hidden');
-            observeVisibleCards(); // Observe homepage cards
         }
-    };
-    
-    const activateTab = (targetTabId) => {
-        if (!targetTabId) return;
-        document.querySelectorAll('.tabs-nav .tab-button').forEach(btn => btn.classList.remove('active'));
-        document.querySelectorAll('.tab-content').forEach(content => content.classList.remove('active'));
-        
-        const tabButton = document.querySelector(`.tabs-nav .tab-button[data-tab="${targetTabId}"]`);
-        if (tabButton) tabButton.classList.add('active');
-        
-        const contentPanel = document.getElementById(targetTabId);
-        if (contentPanel) contentPanel.classList.add('active');
-        
         observeVisibleCards();
     };
 
-    // --- GLOBAL FILTER ---
-    const runFilter = () => {
-        if (!filterInput) return;
-        const query = filterInput.value.trim().toLowerCase();
-
-        // Remove all existing search count badges first
-        document.querySelectorAll('.search-match-count').forEach(badge => badge.remove());
-
-        // If the query is empty, restore all cards to visible and exit
-        if (query === '') {
-            document.querySelectorAll('#megathread-content .card').forEach(card => {
-                card.style.display = 'flex';
-            });
-            return;
-        }
-
-        // Filter all cards on the entire site
-        const allCards = document.querySelectorAll('#megathread-content .card');
-        allCards.forEach(card => {
-            const isVisible = card.innerText.toLowerCase().includes(query);
-            card.style.display = isVisible ? 'flex' : 'none';
-        });
-
-        // Add count badges to main tabs that have results
-        document.querySelectorAll('.tabs-nav .tab-button').forEach(button => {
-            const tabId = button.dataset.tab;
-            const contentPanel = document.getElementById(tabId);
-            if (contentPanel) {
-                const matchCount = contentPanel.querySelectorAll('.card[style*="display: flex"]').length;
-                if (matchCount > 0) {
-                    const badge = document.createElement('span');
-                    badge.className = 'search-match-count ml-2 bg-violet-500 text-white text-xs font-semibold px-2 py-0.5 rounded-full';
-                    badge.textContent = matchCount;
-                    button.appendChild(badge);
-                }
-            }
-        });
-
-        // Add count badges to sub-tabs that have results
-        document.querySelectorAll('.sub-tabs-nav .sub-tab-button').forEach(button => {
-            const subTabId = button.dataset.subtab;
-            const contentPanel = document.getElementById(subTabId);
-            if (contentPanel) {
-                const matchCount = contentPanel.querySelectorAll('.card[style*="display: flex"]').length;
-                if (matchCount > 0) {
-                    const badge = document.createElement('span');
-                    badge.className = 'search-match-count ml-1 bg-slate-600 text-white text-xs font-semibold px-1.5 py-0.5 rounded-full';
-                    badge.textContent = matchCount;
-                    button.appendChild(badge);
-                }
-            }
-        });
-    };
-
-    // --- EVENT LISTENERS ---
     const handleTabSwitching = (navSelector) => {
         const nav = document.querySelector(navSelector);
         if (!nav) return;
@@ -126,8 +155,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const button = e.target.closest('.tab-button');
             if (!button || button.classList.contains('active')) return;
             e.preventDefault();
-            activateTab(button.dataset.tab);
-            runFilter(); // Re-apply filter to show/hide content correctly on the new tab
+            activateTab(button.dataset.tab, observeVisibleCards);
         });
     };
     
@@ -140,46 +168,33 @@ document.addEventListener('DOMContentLoaded', () => {
              const button = e.target.closest('.sub-tab-button');
              if (!button || button.classList.contains('active')) return;
              e.preventDefault();
-             const subTabId = button.dataset.subtab;
-             subNav.querySelectorAll('.sub-tab-button').forEach(btn => btn.classList.toggle('active', btn.dataset.subtab === subTabId));
-             panel.querySelectorAll('.sub-tab-content').forEach(content => content.classList.toggle('active', content.id === subTabId));
-             runFilter(); // Re-apply filter for consistency
+             activateSubTab(button.dataset.subtab);
              observeVisibleCards();
          });
     };
 
     if (filterInput) {
-        filterInput.addEventListener('input', runFilter);
+        filterInput.addEventListener('input', updateSearchResults);
+        filterInput.addEventListener('focus', updateSearchResults);
         window.addEventListener('keydown', (e) => {
             if ((e.ctrlKey || e.metaKey) && (e.key.toLowerCase() === 'k' || e.key === '/')) {
                 e.preventDefault(); 
                 filterInput.focus();
             }
         });
-    }
-
-    // --- MODAL LOGIC (Placeholder based on original structure) ---
-    const modalOverlay = document.getElementById('tutorial-modal');
-    if(modalOverlay) {
-        // This logic is simplified. Assumes there's a click listener on the document
-        // or that it will be handled appropriately.
-        document.body.addEventListener('click', function(e) {
-            if (e.target.closest('.tutorial-button')) {
-                // Tutorial button was clicked, logic to open modal would go here.
-                // e.g., openModalFor(e.target.dataset.topic);
-                console.log('Tutorial button clicked for:', e.target.dataset.topic);
-            }
-            if (e.target.id === 'modal-close' || e.target === modalOverlay) {
-                 // Logic to close modal would go here.
-                 // modalOverlay.classList.add('hidden');
+        document.addEventListener('click', (e) => {
+            if (!searchBarContainer.contains(e.target)) {
+                searchResultsContainer.classList.add('hidden');
             }
         });
     }
-    
+
     // --- INITIALIZATION ---
+    cacheAllCards();
     handleTabSwitching('header .tabs-nav');
     handleSubTabSwitching('#emulation');
     handleSubTabSwitching('#gaming');
     handleSubTabSwitching('#movies-tv');
     managePageView();
 });
+
