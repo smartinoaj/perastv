@@ -21,6 +21,8 @@ document.addEventListener('DOMContentLoaded', () => {
     };
 
     const observeVisibleCards = () => {
+        // Only run this on the megathread page
+        if (!window.location.pathname.includes('megathread.html')) return;
         const cards = document.querySelectorAll('.card:not(.is-visible)');
         cards.forEach(card => {
             if (observer) {
@@ -52,7 +54,11 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
             }
         }
+        // After potentially switching tabs, observe cards
+        observeVisibleCards();
     };
+    
+    // Call this function on page load
     activateTabFromURL();
 
 
@@ -127,6 +133,7 @@ document.addEventListener('DOMContentLoaded', () => {
     };
 
     const closeModal = () => {
+        if(!modalOverlay) return;
         modalOverlay.classList.add('hidden');
         document.body.style.overflow = '';
     };
@@ -168,9 +175,17 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    closeModalButton.addEventListener('click', closeModal);
-    modalOverlay.addEventListener('click', (e) => { if (e.target === modalOverlay) closeModal(); });
-    document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && !modalOverlay.classList.contains('hidden')) closeModal(); });
+    if (closeModalButton) {
+        closeModalButton.addEventListener('click', closeModal);
+    }
+    if (modalOverlay) {
+        modalOverlay.addEventListener('click', (e) => { if (e.target === modalOverlay) closeModal(); });
+    }
+    document.addEventListener('keydown', (e) => { 
+        if (modalOverlay && e.key === 'Escape' && !modalOverlay.classList.contains('hidden')) {
+            closeModal(); 
+        }
+    });
 
 
     // --- GLOBAL FILTER ---
@@ -200,6 +215,8 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    observeVisibleCards();
+    // Initial card observation on megathread page if no tab is specified
+    if (window.location.pathname.includes('megathread.html') && !window.location.search) {
+        observeVisibleCards();
+    }
 });
-

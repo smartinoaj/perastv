@@ -33,6 +33,32 @@ body {
     border-color: #06b6d4; /* cyan-500 */
 }
 
+/* Homepage Category Card Styles */
+.category-card {
+    background-color: #161e31;
+    border-radius: 1rem;
+    padding: 2rem;
+    border: 1px solid #334155;
+    transition: all 0.3s ease-in-out;
+    display: block;
+    height: 100%;
+}
+
+.category-card:hover {
+    transform: translateY(-8px);
+    border-color: #8b5cf6; /* violet-500 */
+    box-shadow: 0 20px 30px -10px rgba(0, 0, 0, 0.4);
+}
+
+.category-card-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    height: 100%;
+}
+
+
 /* Tab styles */
 .tabs-nav .tab-button {
     border-color: transparent;
@@ -90,4 +116,3 @@ body {
     --tw-prose-headings: #ffffff;
     --tw-prose-bold: #ffffff;
 }
-
