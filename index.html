@@ -27,13 +27,17 @@
                 </div>
                 <!-- Search bar, will be shown/hidden by JS -->
                 <div id="search-bar-container" class="flex-1 flex justify-center px-2 lg:ml-6 lg:justify-end">
-                     <div class="max-w-lg w-full lg:max-w-xs">
+                     <div class="relative max-w-lg w-full lg:max-w-xs">
                         <label for="global-filter" class="sr-only">Search</label>
                         <div class="relative">
                             <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                                 <svg class="h-5 w-5 text-slate-400" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clip-rule="evenodd" /></svg>
                             </div>
-                            <input id="global-filter" name="global-filter" class="block w-full pl-10 pr-3 py-2 border border-transparent rounded-full bg-slate-800 text-white placeholder-slate-400 focus:outline-none focus:bg-white focus:text-slate-900 focus:placeholder-slate-500 focus:ring-0 sm:text-sm" placeholder="Search (Ctrl+K)" type="search">
+                            <input id="global-filter" name="global-filter" class="block w-full pl-10 pr-3 py-2 border border-transparent rounded-full bg-slate-800 text-white placeholder-slate-400 focus:outline-none focus:bg-white focus:text-slate-900 focus:placeholder-slate-500 focus:ring-0 sm:text-sm" placeholder="Search (Ctrl+K)" type="search" autocomplete="off">
+                        </div>
+                        <!-- Search Results Dropdown -->
+                        <div id="search-results-container" class="absolute top-full mt-2 w-full rounded-md shadow-lg bg-slate-800 border border-slate-700 hidden z-50 max-h-80 overflow-y-auto">
+                            <!-- Search results will be populated here by JS -->
                         </div>
                     </div>
                 </div>
