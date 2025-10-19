@@ -78,6 +78,13 @@ document.addEventListener('DOMContentLoaded', () => {
     };
 
     const navigateToCard = (cardData) => {
+        // Switch to megathread view if on homepage
+        if (!homepageContent.classList.contains('hidden')) {
+            homepageContent.classList.add('hidden');
+            megathreadContent.classList.remove('hidden');
+            tabsNavContainer.classList.remove('hidden');
+        }
+
         activateTab(cardData.mainTab, () => {
             if (cardData.subTab) {
                 activateSubTab(cardData.subTab);
@@ -124,6 +131,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 
                 resultItem.addEventListener('click', (e) => {
                     if (e.target.closest('a, button')) {
+                        // Allow button/link clicks inside the card preview
                         return;
                     }
                     e.preventDefault();
@@ -147,16 +155,18 @@ document.addEventListener('DOMContentLoaded', () => {
     const managePageView = () => {
         const params = new URLSearchParams(window.location.search);
         const tabFromUrl = params.get('tab');
-        if (tabFromUrl && document.querySelector(`.tabs-nav .tab-button[data-tab="${targetTabId}"]`)) {
+
+        // Always show the search bar
+        searchBarContainer.classList.remove('hidden');
+
+        if (tabFromUrl && document.querySelector(`.tabs-nav .tab-button[data-tab="${tabFromUrl}"]`)) {
             homepageContent.classList.add('hidden');
             megathreadContent.classList.remove('hidden');
-            searchBarContainer.classList.remove('hidden');
             tabsNavContainer.classList.remove('hidden');
             activateTab(tabFromUrl);
         } else {
             homepageContent.classList.remove('hidden');
             megathreadContent.classList.add('hidden');
-            searchBarContainer.classList.add('hidden');
             tabsNavContainer.classList.add('hidden');
         }
         observeVisibleCards();
