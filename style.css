@@ -139,13 +139,13 @@ body {
     animation: pulse-glow-cyan 1.5s infinite ease-in-out;
 }
 
-/* --- Stremio Card Styling --- */
-#stremio .card {
+/* --- GOAT Card Styling --- */
+.card.tag-goat {
     border-color: #06b6d4; /* cyan-500 */
     box-shadow: 0 0 8px rgba(6, 182, 212, 0.4);
 }
 
-#stremio .card:hover {
+.card.tag-goat:hover {
     animation: pulse-glow-cyan 1.5s infinite ease-in-out;
     transform: translateY(-6px) scale(1.02); /* Ensure hover transform still works */
 }
