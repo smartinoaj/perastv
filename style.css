@@ -89,6 +89,12 @@ body {
     animation: fadeIn 0.5s ease-in-out;
 }
 
+/* Utility class provided by Tailwind, but good to have a fallback */
+.hidden {
+    display: none !important;
+}
+
+
 @keyframes fadeIn {
     from { opacity: 0; transform: translateY(10px); }
     to { opacity: 1; transform: translateY(0); }
@@ -116,3 +122,4 @@ body {
     --tw-prose-headings: #ffffff;
     --tw-prose-bold: #ffffff;
 }
+
