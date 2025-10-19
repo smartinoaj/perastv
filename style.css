@@ -62,7 +62,8 @@ body {
 .card a, 
 .card button,
 .sub-tabs-nav .sub-tab-button {
-    transition: all 0.2s ease-in-out;
+    /* Defining individual properties for transition */
+    transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out, background-color 0.2s ease-in-out, color 0.2s ease-in-out;
     transform: translateY(0);
     -webkit-backface-visibility: hidden;
     backface-visibility: hidden;
@@ -71,12 +72,12 @@ body {
 .card a:hover, 
 .card button:hover,
 .sub-tabs-nav .sub-tab-button:not(.active):hover {
-    transform: translateY(-3px);
+    transform: translateY(-3px) scale(1.03); /* Added scale for more 'pop' */
     box-shadow: 0 8px 20px -5px rgba(0, 0, 0, 0.4);
 }
 
 /* Specific hover state for non-active sub-tabs to work with the transform */
-.sub-tabs-nav .sub-tab-button:not(.active):hover {
+.sub-tabs-nav .sub-tab-button:not(.active):not(.tag-goat):hover {
     background-color: #475569; /* slate-600 */
     color: #ffffff;
 }
@@ -99,7 +100,7 @@ body {
 }
 
 /* Sub-tab active state */
-.sub-tabs-nav .sub-tab-button.active {
+.sub-tabs-nav .sub-tab-button.active:not(.tag-goat) {
     background-color: #8b5cf6; /* violet-500 */
     color: #ffffff;
 }
@@ -112,6 +113,32 @@ body {
     display: block;
     animation: fadeIn 0.5s ease-in-out;
 }
+
+/* --- GOAT Sub-tab styling --- */
+@keyframes pulse-glow-cyan {
+    0%, 100% {
+        box-shadow: 0 0 5px #06b6d4, 0 0 10px #06b6d4;
+    }
+    50% {
+        box-shadow: 0 0 10px #06b6d4, 0 0 20px #06b6d4;
+    }
+}
+
+.sub-tabs-nav .sub-tab-button.tag-goat {
+    border: 2px solid #06b6d4; /* cyan-500 */
+    color: #06b6d4;
+    background-color: transparent;
+    font-weight: 600; /* Bolder font */
+}
+
+.sub-tabs-nav .sub-tab-button.tag-goat.active,
+.sub-tabs-nav .sub-tab-button.tag-goat:hover {
+    background-color: #06b6d4; /* cyan-500 */
+    color: #0B1120; /* Dark bg color for text */
+    border-color: #06b6d4;
+    animation: pulse-glow-cyan 1.5s infinite ease-in-out;
+}
+
 
 /* Utility class provided by Tailwind, but good to have a fallback */
 .hidden {
