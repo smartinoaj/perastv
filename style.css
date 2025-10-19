@@ -106,7 +106,7 @@ header p { font-size: 1.125rem; color: var(--text-secondary); max-width: 600px; 
     color: #ffffff;
     box-shadow: 0 4px 14px -4px var(--accent-color);
 }
-/* NEW: Diamond style for sub-tab button */
+/* Diamond style for sub-tab button */
 .sub-tab-button-diamond.active {
     background-color: var(--goat-color);
     border-color: var(--goat-color);
@@ -162,6 +162,38 @@ header p { font-size: 1.125rem; color: var(--text-secondary); max-width: 600px; 
   border-color: var(--goat-color);
   box-shadow: 0 0 25px rgba(34, 211, 238, 0.5);
   transform: translateY(-6px);
+}
+
+/* --- Aqua Hover Glow for Buttons inside Stremio Cards --- */
+#movies-tv #stremio .card .btn-link {
+  position: relative;
+  overflow: visible;
+}
+#movies-tv #stremio .card .btn-link:hover {
+  border-color: var(--goat-color);
+  box-shadow: 0 0 20px rgba(34, 211, 238, 0.65);
+}
+
+/* Keep original colors, add glow on hover */
+#movies-tv #stremio .card .btn-primary:hover {
+  background-color: var(--accent-hover);
+  box-shadow: 0 0 22px rgba(34, 211, 238, 0.75);
+  border-color: var(--goat-color);
+}
+#movies-tv #stremio .card .btn-secondary:hover {
+  background-color: var(--bg-tertiary);
+  color: var(--text-primary);
+  border-color: var(--goat-color);
+  box-shadow: 0 0 18px rgba(34, 211, 238, 0.6);
+}
+#movies-tv #stremio .card .btn-diamond {
+  /* Already aqua; just add glow */
+  box-shadow: 0 0 12px rgba(34, 211, 238, 0.35);
+}
+#movies-tv #stremio .card .btn-diamond:hover {
+  background-color: #15b8d1;
+  border-color: #15b8d1;
+  box-shadow: 0 0 24px rgba(34, 211, 238, 0.85);
 }
 
 /* --- Grid & Card Styles --- */
