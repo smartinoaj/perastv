@@ -577,6 +577,146 @@
         }
 
     </script>
+<!-- 📌 Drop‑in Global Search: paste this just before </body> -->
+<style id="global-search-style">
+  #search-results-panel { display:none; }
+  #search-results-panel.active { display:block; animation: fadeIn .25s ease; }
+  #search-results-panel .results-wrap { max-width: 1200px; margin: 0 auto; padding: 18px 20px 48px; }
+  #search-results-panel h2 { margin: 0 0 12px; font-size: 1.25rem; letter-spacing: .01em; }
+  #search-results-panel .results-grid { display:grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 16px; }
+  #search-results-panel .result { background: var(--panel, #111827); border: 1px solid var(--line, rgba(148,163,184,.14)); border-radius: 16px; padding:16px; display:flex; flex-direction:column; gap:10px; }
+  #search-results-panel .result .meta { color: var(--muted, #93a4bf); font-size:.9rem; }
+  #search-results-panel .actions { display:flex; flex-wrap:wrap; gap:8px; }
+  #search-results-panel .btn { appearance: none; border: 1px solid var(--line, rgba(148,163,184,.14)); background: var(--elev-1, #0b132b); color: var(--text, #e6edf7); padding:10px 12px; border-radius:10px; font-weight:700; cursor:pointer; text-decoration:none; display:inline-flex; align-items:center; gap:8px; }
+  #search-results-panel mark { background: rgba(124,92,255,.28); color: inherit; padding: 0 .15em; border-radius: 4px; }
+</style>
+
+<section id="search-results-panel" class="panel" role="region" aria-live="polite">
+  <div class="results-wrap">
+    <h2 id="search-results-heading">Search Results</h2>
+    <div id="search-results" class="results-grid" aria-describedby="search-results-heading"></div>
+  </div>
+</section>
+
+<script>
+(function(){
+  const $ = (s, el=document) => el.querySelector(s);
+  const $$ = (s, el=document) => Array.from(el.querySelectorAll(s));
+
+  // Use your existing global filter input if present; otherwise bail.
+  const input = document.getElementById('global-filter');
+  if (!input) return;
+
+  const resultsPanel = document.getElementById('search-results-panel');
+  const resultsGrid  = document.getElementById('search-results');
+
+  // Helper: activate primary tab (and optional subtab) by panel element
+  function activateForCard(card){
+    const mainPanel = card.closest('section.panel[id^="tab-"]');
+    if (!mainPanel) return;
+    const mainId = mainPanel.id.replace('tab-','');
+    const tabBtn = document.querySelector(`.tabs-nav [data-tab="${mainId}"]`);
+    if (tabBtn) tabBtn.click();
+
+    // Subtab: find the nearest subpanel wrapper with id starting with sub-
+    const subPanel = card.closest('div.panel[id^="sub-"]');
+    if (subPanel) {
+      const subId = subPanel.id.replace('sub-','');
+      const subBtn = mainPanel.querySelector(`.subtabs [data-subtab="${subId}"]`);
+      if (subBtn) subBtn.click();
+    }
+  }
+
+  // Helper: build a result card
+  function buildResult(card, q){
+    const titleEl = card.querySelector('h3');
+    const descEl = card.querySelector('p');
+    const firstLink = card.querySelector('.actions a');
+    const title = titleEl ? titleEl.textContent.trim() : 'Untitled';
+    const desc  = descEl ? descEl.textContent.trim() : '';
+
+    // Figure out category label from containing panels
+    const catPanel = card.closest('section.panel[id^="tab-"]');
+    const cat = catPanel ? catPanel.id.replace('tab-','').replace('-', ' / ') : 'Site';
+    const subPanel = card.closest('div.panel[id^="sub-"]');
+    const sub = subPanel ? subPanel.id.replace('sub-','').replace('-', ' / ') : '';
+    const where = sub ? `${cat} — ${sub}` : cat;
+
+    // Highlight hits
+    const hi = (text) => {
+      if (!q) return text;
+      try {
+        const re = new RegExp(`(${q.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')})`, 'ig');
+        return text.replace(re, '<mark>$1</mark>');
+      } catch { return text; }
+    };
+
+    const div = document.createElement('article');
+    div.className = 'result';
+    div.innerHTML = `
+      <h3 class="title">${hi(title)}</h3>
+      ${desc ? `<p class="meta">${hi(desc)}</p>` : ''}
+      <p class="meta">Found in: <strong>${where}</strong></p>
+      <div class="actions">
+        ${firstLink ? `<a class="btn" href="${firstLink.getAttribute('href')}" target="_blank" rel="noopener">Open Link</a>` : ''}
+        <button class="btn reveal">Reveal in page</button>
+      </div>
+    `;
+    div.querySelector('.reveal').addEventListener('click', () => {
+      activateForCard(card);
+      card.scrollIntoView({behavior:'smooth', block:'center'});
+      card.classList.add('search-pulse');
+      setTimeout(() => card.classList.remove('search-pulse'), 1200);
+    });
+    return div;
+  }
+
+  // Pulse effect on reveal (inline style so it works without extra CSS file)
+  const pulseStyle = document.createElement('style');
+  pulseStyle.textContent = `.search-pulse{ box-shadow: 0 0 0 0 rgba(124,92,255,.55); animation: pulseGlow .9s ease 2; }
+  @keyframes pulseGlow{ 0%{ box-shadow:0 0 0 0 rgba(124,92,255,.55);} 70%{ box-shadow:0 0 0 16px rgba(124,92,255,0);} 100%{ box-shadow:0 0 0 0 rgba(124,92,255,0);} }`;
+  document.head.appendChild(pulseStyle);
+
+  function setResultsVisible(v){
+    resultsPanel.classList.toggle('active', v);
+    // Hide other content panels when searching; restore when empty
+    $$('.container > section.panel').forEach(p => {
+      if (p.id === 'search-results-panel') return;
+      p.style.display = v ? 'none' : '';
+    });
+  }
+
+  function runGlobalSearch(){
+    const q = input.value.trim().toLowerCase();
+    if (!q) {
+      setResultsVisible(false);
+      resultsGrid.innerHTML = '';
+      return;
+    }
+
+    const allCards = $$('.card'); // search EVERYTHING
+    const matches = allCards.filter(card => card.innerText.toLowerCase().includes(q));
+
+    // Render
+    resultsGrid.innerHTML = '';
+    if (matches.length === 0) {
+      resultsGrid.innerHTML = '<p class="meta">No results found.</p>';
+    } else {
+      const frag = document.createDocumentFragment();
+      matches.forEach(card => frag.appendChild(buildResult(card, q)));
+      resultsGrid.appendChild(frag);
+    }
+
+    setResultsVisible(true);
+  }
+
+  input.addEventListener('input', runGlobalSearch);
+  window.addEventListener('keydown', (e) => {
+    if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'k') { e.preventDefault(); input.focus(); }
+    if (e.key === 'Escape' && resultsPanel.classList.contains('active')) { input.value = ''; runGlobalSearch(); }
+  });
+})();
+</script>
 
 </body>
 </html>
