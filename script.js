@@ -1,29 +1,64 @@
 document.addEventListener('DOMContentLoaded', () => {
+    // --- REVEAL ON SCROLL ---
+    const cards = document.querySelectorAll('.card');
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach((entry, index) => {
+            if (entry.isIntersecting) {
+                // Add a staggered delay for a nice effect
+                setTimeout(() => {
+                    entry.target.classList.add('is-visible');
+                }, index * 50); // 50ms delay between each card
+                observer.unobserve(entry.target);
+            }
+        });
+    }, {
+        threshold: 0.1 // Trigger when 10% of the card is visible
+    });
+
+    cards.forEach(card => {
+        observer.observe(card);
+    });
+
+    // Function to re-observe cards when tabs change
+    const observeVisibleCards = () => {
+        const visibleCards = document.querySelectorAll('.tab-content.active .card, .sub-tab-content.active .card');
+        visibleCards.forEach(card => {
+            // Reset animation for re-triggered observation if needed
+            if (!card.classList.contains('is-visible')) {
+                 observer.observe(card);
+            }
+        });
+    };
+
     const handleTabSwitching = (navSelector) => {
-        const nav = document.querySelector(navSelector);
-        if (!nav) return;
+        const navs = document.querySelectorAll(navSelector);
+        if (navs.length === 0) return;
 
-        nav.addEventListener('click', (e) => {
-            const button = e.target.closest('.tab-button');
-            if (!button) return;
-            e.preventDefault();
-            
-            const tabId = button.dataset.tab;
-            
-            // Update all navs of the same type
-            document.querySelectorAll(navSelector).forEach(n => {
-                n.querySelectorAll('.tab-button').forEach(btn => {
-                    btn.classList.toggle('active', btn.dataset.tab === tabId);
-                     btn.classList.toggle('bg-slate-800', btn.dataset.tab === tabId);
-                     btn.classList.toggle('text-white', btn.dataset.tab === tabId);
+        navs.forEach(nav => {
+            nav.addEventListener('click', (e) => {
+                const button = e.target.closest('.tab-button');
+                if (!button) return;
+                e.preventDefault();
+                
+                const tabId = button.dataset.tab;
+                
+                // Update all navs of the same type
+                document.querySelectorAll(navSelector).forEach(n => {
+                    n.querySelectorAll('.tab-button').forEach(btn => {
+                        const isActive = btn.dataset.tab === tabId;
+                        btn.classList.toggle('active', isActive);
+                        btn.classList.toggle('bg-slate-800', isActive);
+                        btn.classList.toggle('text-white', isActive);
+                    });
                 });
-            });
+    
+                document.querySelectorAll('.tab-content').forEach(content => {
+                    content.classList.toggle('active', content.id === tabId);
+                });
 
-            document.querySelectorAll('.tab-content').forEach(content => {
-                content.classList.toggle('active', content.id === tabId);
+                runFilter();
+                observeVisibleCards(); // Re-run observer for new cards
             });
-             // After tab switch, re-run filter
-            runFilter();
         });
     };
     
@@ -41,22 +76,24 @@ document.addEventListener('DOMContentLoaded', () => {
              const subTabId = button.dataset.subtab;
 
              subNav.querySelectorAll('.sub-tab-button').forEach(btn => {
-                 btn.classList.toggle('active', btn.dataset.subtab === subTabId);
-                 btn.classList.toggle('bg-sky-500', btn.dataset.subtab === subTabId);
-                 btn.classList.toggle('text-white', btn.dataset.subtab === subTabId);
+                 const isActive = btn.dataset.subtab === subTabId;
+                 btn.classList.toggle('active', isActive);
+                 btn.classList.toggle('bg-sky-500', isActive);
+                 btn.classList.toggle('text-white', isActive);
              });
              
              panel.querySelectorAll('.sub-tab-content').forEach(content => {
                  content.classList.toggle('active', content.id === subTabId);
              });
-              // After sub-tab switch, re-run filter
+
              runFilter();
+             observeVisibleCards(); // Re-run observer for new cards
          });
     };
 
     // Main tabs for both desktop and mobile
-    handleTabSwitching('body > div > aside > nav');
-    handleTabSwitching('body > nav');
+    handleTabSwitching('aside.sidebar .tabs-nav');
+    handleTabSwitching('nav.lg\\:hidden .tabs-nav');
     
     // Sub tabs for each main category
     handleSubTabSwitching('#emulation');
@@ -71,13 +108,8 @@ document.addEventListener('DOMContentLoaded', () => {
     
     const openModal = (topic) => {
         const content = getTutorialContent(topic);
-        if (content) {
-            modalTitle.textContent = content.title;
-            modalContent.innerHTML = content.body;
-        } else {
-            modalTitle.textContent = 'Tutorial Not Found';
-            modalContent.innerHTML = '<p>Sorry, we could not find a tutorial for this topic.</p>';
-        }
+        modalTitle.textContent = content ? content.title : 'Tutorial Not Found';
+        modalContent.innerHTML = content ? content.body : '<p>Sorry, we could not find a tutorial for this topic.</p>';
         modalOverlay.classList.remove('hidden');
         document.body.style.overflow = 'hidden';
     };
@@ -118,19 +150,20 @@ document.addEventListener('DOMContentLoaded', () => {
     };
     
     document.body.addEventListener('click', (event) => {
-        if (event.target.matches('.tutorial-button')) {
-            openModal(event.target.getAttribute('data-topic'));
+        if (event.target.closest('.tutorial-button')) {
+            openModal(event.target.closest('.tutorial-button').dataset.topic);
         }
     });
 
     closeModalButton.addEventListener('click', closeModal);
     modalOverlay.addEventListener('click', (e) => { if (e.target === modalOverlay) closeModal(); });
-    document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeModal(); });
+    document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && !modalOverlay.classList.contains('hidden')) closeModal(); });
 
 
     // --- GLOBAL FILTER ---
     const filterInput = document.getElementById('global-filter');
     const runFilter = () => {
+        if (!filterInput) return;
         const query = filterInput.value.trim().toLowerCase();
         const activePanel = document.querySelector('.tab-content.active');
         if (!activePanel) return;
@@ -140,7 +173,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const cards = activeSubPanel.querySelectorAll('.card');
         cards.forEach(card => {
             const text = card.innerText.toLowerCase();
-            card.style.display = text.includes(query) ? '' : 'none';
+            card.style.display = text.includes(query) ? '' : 'flex'; // Use flex for consistency with HTML
         });
     };
     
@@ -153,4 +186,8 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
     }
+
+    // Initial check for visible cards on page load
+    observeVisibleCards();
 });
+

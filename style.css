@@ -1,43 +1,82 @@
 body {
     font-family: 'Inter', sans-serif;
     background-color: #0f172a; /* slate-900 */
+    /* Added a subtle gradient for depth */
+    background-image: radial-gradient(circle at top left, hsl(222, 47%, 16%), #0f172a);
     color: #f8fafc; /* slate-50 */
 }
+
 .sidebar {
     scrollbar-width: none; /* Firefox */
 }
+
 .sidebar::-webkit-scrollbar {
     display: none; /* Safari and Chrome */
 }
+
+/* Card styles with reveal animation */
 .card {
     background-color: #1e293b; /* slate-800 */
     border: 1px solid #334155; /* slate-700 */
-    transition: all 0.2s ease-in-out;
+    transition: all 0.3s ease-in-out;
+    /* Styles for scroll animation */
+    opacity: 0;
+    transform: translateY(20px);
 }
+
+.card.is-visible {
+    opacity: 1;
+    transform: translateY(0px);
+}
+
 .card:hover {
-    transform: translateY(-4px);
+    transform: translateY(-6px) scale(1.02);
     border-color: #38bdf8; /* sky-400 */
+    box-shadow: 0 10px 20px rgba(0,0,0,0.2);
 }
+
 .tag-recommended {
     border-color: #facc15; /* yellow-400 */
     box-shadow: 0 0 15px rgba(250, 204, 21, 0.1);
 }
+
 .tag-goat {
     border-color: #22d3ee; /* cyan-400 */
     box-shadow: 0 0 20px rgba(34, 211, 238, 0.15);
 }
+
 .tab-content, .sub-tab-content {
     display: none;
 }
+
 .tab-content.active, .sub-tab-content.active {
     display: block;
     animation: fadeIn 0.5s ease-in-out;
 }
+
 @keyframes fadeIn {
     from { opacity: 0; transform: translateY(10px); }
     to { opacity: 1; transform: translateY(0); }
 }
+
+/* Modal animation */
 .modal-overlay {
     background-color: rgba(15, 23, 42, 0.8);
     backdrop-filter: blur(8px);
+    transition: opacity 0.3s ease-in-out;
 }
+.modal-content {
+    transition: transform 0.3s ease-in-out;
+}
+.modal-overlay.hidden .modal-content {
+    transform: scale(0.95);
+}
+
+/* Active tab glow effect */
+.tab-button.active {
+    box-shadow: 0 0 15px rgba(56, 189, 248, 0.3);
+}
+.sub-tab-button.active {
+    box-shadow: 0 0 15px rgba(56, 189, 248, 0.4);
+}
+
