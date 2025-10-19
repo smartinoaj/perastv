@@ -36,29 +36,45 @@ document.addEventListener('DOMContentLoaded', () => {
     // --- HANDLE TAB FROM URL on megathread.html ---
     const activateTabFromURL = () => {
         if (!window.location.pathname.includes('megathread.html')) return;
-        
-        const params = new URLSearchParams(window.location.search);
-        const tab = params.get('tab');
-        if (tab) {
-            const tabButton = document.querySelector(`.tabs-nav .tab-button[data-tab="${tab}"]`);
-            if (tabButton) {
-                // Deactivate any currently active tabs first
-                document.querySelectorAll('.tabs-nav .tab-button.active').forEach(b => b.classList.remove('active'));
-                document.querySelectorAll('.tab-content.active').forEach(c => c.classList.remove('active'));
 
-                // Activate the correct one
-                tabButton.classList.add('active');
-                const contentPanel = document.getElementById(tab);
-                if(contentPanel) {
-                    contentPanel.classList.add('active');
-                }
+        const params = new URLSearchParams(window.location.search);
+        const tabFromUrl = params.get('tab');
+        let targetTabId = null;
+
+        // Check if the tab from the URL corresponds to a real button
+        if (tabFromUrl && document.querySelector(`.tabs-nav .tab-button[data-tab="${tabFromUrl}"]`)) {
+            targetTabId = tabFromUrl;
+        } else {
+            // Otherwise, fall back to the first tab as the default
+            const firstTab = document.querySelector('.tabs-nav .tab-button');
+            if (firstTab) {
+                targetTabId = firstTab.dataset.tab;
             }
         }
-        // After potentially switching tabs, observe cards
+
+        if (targetTabId) {
+            // Deactivate all tabs and content panels to ensure a clean slate
+            document.querySelectorAll('.tabs-nav .tab-button').forEach(btn => btn.classList.remove('active'));
+            document.querySelectorAll('.tab-content').forEach(content => content.classList.remove('active'));
+
+            // Activate the correct tab button
+            const tabButton = document.querySelector(`.tabs-nav .tab-button[data-tab="${targetTabId}"]`);
+            if (tabButton) {
+                tabButton.classList.add('active');
+            }
+            
+            // Activate the correct content panel
+            const contentPanel = document.getElementById(targetTabId);
+            if (contentPanel) {
+                contentPanel.classList.add('active');
+            }
+        }
+        
+        // After setting the correct tab, observe its cards for the reveal animation
         observeVisibleCards();
     };
     
-    // Call this function on page load
+    // Call this function on page load to set the initial tab state
     activateTabFromURL();
 
 
@@ -214,9 +230,5 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
     }
-
-    // Initial card observation on megathread page if no tab is specified
-    if (window.location.pathname.includes('megathread.html') && !window.location.search) {
-        observeVisibleCards();
-    }
 });
+
