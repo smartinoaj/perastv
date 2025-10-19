@@ -375,3 +375,24 @@ footer { text-align: center; padding: 3rem 1rem; margin-top: 3rem; border-top: 1
         padding: 0.75rem;
     }
 }
+
+
+/* === Utility bar and search (modern) === */
+header .utility-bar {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1rem 1rem;
+  display: flex;
+  justify-content: flex-end;
+}
+.search { position: relative; min-width: 260px; }
+.search input {
+  width: 100%;
+  padding: 0.75rem 2.25rem 0.75rem 0.9rem;
+  border-radius: 999px;
+  border: 1px solid var(--border-color);
+  background: linear-gradient(180deg, var(--bg-secondary), var(--bg-tertiary));
+  color: var(--text-primary);
+  font-weight: 600;
+}
+.search svg { position: absolute; right: 10px; top: 50%; transform: translateY(-50%); opacity: .8; }
