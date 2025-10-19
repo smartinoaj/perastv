@@ -3,116 +3,58 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>The Ultimate Megathread</title>
+    <title>My Personal Website</title>
     <link rel="stylesheet" href="style.css">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 </head>
 <body>
     <header>
-        <h1>Peras TV</h1>
-        <p>Your go-to source for live streams and sports schedules.</p>
+        <div class="header-container">
+            <h1>My Website</h1>
+            <div class="search-container">
+                <input type="text" placeholder="Search...">
+                <button>Search</button>
+            </div>
+        </div>
+        <nav>
+            <ul>
+                <li><a href="#">Home</a></li>
+                <li><a href="#">About</a></li>
+                <li><a href="#">Contact</a></li>
+            </ul>
+        </nav>
     </header>
 
-    <main class="container">
-
-        <div class="tabs-nav">
-            <button class="tab-button active" data-tab="channels">
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M21,3H3A1,1,0,0,0,2,4V17a1,1,0,0,0,1,1H9v2H7a1,1,0,0,0,0,2H17a1,1,0,0,0,0-2H15V18h6a1,1,0,0,0,1-1V4A1,1,0,0,0,21,3Zm-1,13H4V5H20Z"/></svg>
-                Channels
-            </button>
-            <button class="tab-button" data-tab="schedule">
-                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M19 4h-2V3a1 1 0 0 0-2 0v1H9V3a1 1 0 0 0-2 0v1H5a3 3 0 0 0-3 3v12a3 3 0 0 0 3 3h14a3 3 0 0 0 3-3V7a3 3 0 0 0-3-3zm1 15a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V9h16zm0-12H4V7a1 1 0 0 1 1-1h2v1a1 1 0 0 0 2 0V6h6v1a1 1 0 0 0 2 0V6h2a1 1 0 0 1 1 1z"/></svg>
-                Schedule
-            </button>
-            <button class="tab-button" data-tab="standings">
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l-5.5 2.5v5l5 2.5 5.5-2.5v-5L12 2zm-4 4.5L12 9l4-2.5L12 4 8 6.5zM2 13.13l10 5.02 10-5.02L12 21 2 13.13z"/></svg>
-                Standings
-            </button>
-        </div>
-
-        <div class="tabs-content">
-
-            <div id="channels" class="tab-content active">
-                <div class="grid-container" id="channel-list">
-                    </div>
+    <main>
+        <div class="card-container">
+            <div class="card">
+                <h3>Adblocking / Privacy</h3>
+                <p>Learn how to block ads, trackers and other nasty things.</p>
             </div>
-
-            <div id="schedule" class="tab-content">
-                <div id="schedule-container">
-                    </div>
+            <div class="card">
+                <h3>Artificial Intelligence</h3>
+                <p>Explore the world of AI and machine learning.</p>
             </div>
-
-            <div id="standings" class="tab-content">
-                <div id="standings-container">
-                    </div>
+            <div class="card">
+                <h3>Streaming</h3>
+                <p>Stream, download, torrent and binge all your favourite movies and shows!</p>
             </div>
-
+            <div class="card">
+                <h3>Listening</h3>
+                <p>Stream, download and torrent songs, podcasts and more!</p>
+            </div>
+            <div class="card">
+                <h3>Gaming</h3>
+                <p>Download and play all your favourite games or emulate some old but gold ones!</p>
+            </div>
+            <div class="card">
+                <h3>Reading</h3>
+                <p>Whether you're a bookworm, otaku or comic book fan, you'll be able to find your favourite pieces of literature here!</p>
+            </div>
         </div>
     </main>
 
     <footer>
-        <p>&copy; 2025 Peras TV. All rights reserved.</p>
+        <p>&copy; 2025 My Personal Website</p>
     </footer>
-
-    <script>
-    document.addEventListener('DOMContentLoaded', () => {
-        // --- TAB LOGIC ---
-        const tabsNav = document.querySelector('.tabs-nav');
-        tabsNav.addEventListener('click', (e) => {
-            const clickedButton = e.target.closest('.tab-button');
-            if (!clickedButton) return;
-
-            tabsNav.querySelectorAll('.tab-button').forEach(button => button.classList.remove('active'));
-            clickedButton.classList.add('active');
-
-            const tabId = clickedButton.dataset.tab;
-            document.querySelectorAll('.tab-content').forEach(content => {
-                content.classList.toggle('active', content.id === tabId);
-            });
-        });
-
-        // --- CHANNEL LOADING ---
-        const channels = [
-            {"name": "SPORTTV 1", "logo": "img/channels/sporttv1.png", "stream_url": "player.html?channel=sporttv1"},
-            // ... Add all your other channels here in the same format
-        ];
-
-        const channelList = document.getElementById('channel-list');
-        channels.forEach(channel => {
-            const card = document.createElement('div');
-            card.className = 'card';
-            card.innerHTML = `
-                <img src="${channel.logo}" alt="${channel.name}" class="channel-logo">
-                <h3>${channel.name}</h3>
-                <div class="card-buttons">
-                    <a href="${channel.stream_url}" class="btn-link btn-primary" target="_blank">Watch</a>
-                </div>
-            `;
-            channelList.appendChild(card);
-        });
-
-
-        // --- SCHEDULE LOADING ---
-        fetch('guide.xml')
-            .then(response => response.text())
-            .then(data => {
-                // Your existing schedule parsing logic can go here
-                // For demonstration, I'll add a placeholder
-                document.getElementById('schedule-container').innerHTML = `<p class="placeholder-text">Schedule loading... or logic to parse guide.xml</p>`;
-            });
-
-
-        // --- STANDINGS LOADING ---
-        fetch('standings.json')
-            .then(response => response.json())
-            .then(data => {
-                // Your existing standings logic can go here
-                // For demonstration, I'll add a placeholder
-                document.getElementById('standings-container').innerHTML = `<p class="placeholder-text">Standings loading... or logic to parse standings.json</p>`;
-            });
-
-    });
-    </script>
-
 </body>
 </html>

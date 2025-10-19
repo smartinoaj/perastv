@@ -1,142 +1,86 @@
-/* --- HALLOWEEN THEME REFRESH --- */
-
-/* --- Color Palette & Root Variables --- */
-:root {
-    --bg-primary: #111827;      /* Dark Blue-Gray Background */
-    --bg-secondary: #1F2937;    /* Lighter Blue-Gray for Cards/Headers */
-    --bg-tertiary: #374151;     /* Hover color */
-    --accent-color: #F97316;     /* Halloween Orange Accent */
-    --accent-hover: #EA580C;     /* Darker Orange on hover */
-    --text-primary: #F9FAFB;     /* Off-white for primary text */
-    --text-secondary: #9CA3AF;  /* Lighter gray for secondary text */
-    --border-color: #374151;    /* Subtle border color */
-    --recommended-color: #FBBF24; /* Amber/Gold for recommended */
-    --goat-color: #22d3ee;       /* Aqua for GOAT status */
-    --font-sans: 'Inter', sans-serif;
-}
-
-/* --- Basic Reset & Body Styling --- */
-* { margin: 0; padding: 0; box-sizing: border-box; }
 body {
-    font-family: var(--font-sans);
-    background-color: var(--bg-primary);
-    color: var(--text-primary);
-    line-height: 1.6;
+    font-family: sans-serif;
+    margin: 0;
+    background-color: #f0f2f5;
+    color: #333;
 }
-.container { max-width: 1200px; margin: 0 auto; padding: 20px; }
 
-/* --- Header --- */
 header {
-    text-align: center;
-    padding: 2.5rem 1rem;
-    border-bottom: 1px solid var(--border-color);
+    background-color: #fff;
+    padding: 1rem;
+    border-bottom: 1px solid #ddd;
 }
-header h1 {
-    font-size: 2.25rem;
-    font-weight: 700;
-    margin-bottom: 0.75rem;
-    color: var(--text-primary);
-}
-header p { font-size: 1.125rem; color: var(--text-secondary); max-width: 600px; margin: 0 auto; }
 
-/* --- Main Tab Navigation --- */
-.tabs-nav {
+.header-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.search-container {
+    display: flex;
+}
+
+.search-container input {
+    border: 1px solid #ccc;
+    padding: 0.5rem;
+    border-radius: 5px 0 0 5px;
+}
+
+.search-container button {
+    border: 1px solid #ccc;
+    background-color: #eee;
+    padding: 0.5rem 1rem;
+    border-left: 0;
+    border-radius: 0 5px 5px 0;
+    cursor: pointer;
+}
+
+nav ul {
+    list-style: none;
+    padding: 0;
     display: flex;
     justify-content: center;
     gap: 1rem;
-    margin-top: -1px;
-    padding: 1.5rem 0;
-    border-bottom: 1px solid var(--border-color);
-    background-color: var(--bg-primary);
-}
-.tab-button {
-    background: transparent;
-    border: none;
-    color: var(--text-secondary);
-    padding: 0.75rem 1.5rem;
-    font-size: 1rem;
-    font-weight: 600;
-    border-radius: 999px;
-    cursor: pointer;
-    transition: background-color 0.2s ease, color 0.2s ease;
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-}
-.tab-button svg { width: 1.25em; height: 1.25em; }
-.tab-button:hover { background-color: var(--bg-tertiary); color: var(--text-primary); }
-.tab-button.active { background-color: var(--accent-color); color: #ffffff; }
-
-/* --- Main Tab Content Panels --- */
-.tabs-content { padding-top: 3rem; }
-.tab-content { display: none; animation: fadeIn 0.5s ease; }
-.tab-content.active { display: block; }
-
-@keyframes fadeIn {
-    from { opacity: 0; transform: translateY(10px); }
-    to { opacity: 1; transform: translateY(0); }
+    margin-top: 1rem;
 }
 
-/* --- Grid & Card Styles --- */
-.grid-container {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); /* Adjusted for channel logos */
-    gap: 1.5rem;
-}
-.card {
-    background-color: var(--bg-secondary);
-    border: 1px solid var(--border-color);
-    border-radius: 12px;
-    padding: 1.5rem;
-    display: flex;
-    flex-direction: column;
-    align-items: center; /* Center channel content */
-    transition: all 0.2s ease;
-    text-align: center;
-}
-.card:hover { transform: translateY(-4px); border-color: var(--accent-color); box-shadow: 0 10px 25px -5px rgba(0,0,0,0.2); }
-.card h3 {
-    font-size: 1rem;
-    font-weight: 600;
-    margin-top: 1rem; /* Space between logo and name */
-    margin-bottom: 1rem;
-    color: var(--text-primary);
-}
-
-.channel-logo {
-    width: 100%;
-    max-width: 120px; /* Adjust as needed */
-    height: auto;
-    margin-bottom: 1rem;
-}
-
-
-/* --- Button Styles --- */
-.card-buttons { display: flex; flex-wrap: wrap; gap: 0.75rem; margin-top: auto; }
-.btn-link {
-    display: inline-block;
-    padding: 0.625rem 1.25rem;
-    text-align: center;
+nav a {
     text-decoration: none;
-    border-radius: 8px;
-    font-weight: 600;
-    transition: all 0.2s ease;
-    border: 1px solid transparent;
-    cursor: pointer;
-    font-family: inherit;
-    font-size: 0.9rem;
+    color: #333;
+    font-weight: bold;
 }
-.btn-link:active { transform: scale(0.98); }
-.btn-primary { background-color: var(--accent-color); color: #ffffff; border-color: var(--accent-color); }
-.btn-primary:hover { background-color: var(--accent-hover); border-color: var(--accent-hover); }
 
-/* --- Footer & Placeholders --- */
-footer { text-align: center; padding: 3rem 1rem; margin-top: 3rem; border-top: 1px solid var(--border-color); color: var(--text-secondary); font-size: 0.9rem; }
-.placeholder-text { color: var(--text-secondary); text-align: center; padding: 4rem 1rem; font-style: italic; }
+main {
+    padding: 2rem;
+    max-width: 1200px;
+    margin: 0 auto;
+}
 
-/* --- Responsive Adjustments --- */
-@media (max-width: 768px) {
-    .tabs-nav { gap: 0.5rem; padding: 1rem; flex-wrap: wrap; }
-    .tab-button { padding: 0.5rem 1rem; font-size: 0.9rem; }
-    header h1 { font-size: 2rem; }
+.card-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 1rem;
+}
+
+.card {
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    padding: 1.5rem;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.card h3 {
+    margin-top: 0;
+}
+
+footer {
+    text-align: center;
+    padding: 1rem;
+    background-color: #fff;
+    border-top: 1px solid #ddd;
+    margin-top: 2rem;
 }
