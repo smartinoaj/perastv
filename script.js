@@ -7,7 +7,7 @@ document.addEventListener('DOMContentLoaded', () => {
             entries.forEach((entry) => {
                 if (entry.isIntersecting) {
                     // Staggering delay based on position for a wave effect
-                    const delay = (entry.target.offsetTop % window.innerHeight) / 3;
+                    const delay = (entry.target.offsetTop % window.innerHeight) / 4;
                     setTimeout(() => {
                         entry.target.classList.add('is-visible');
                     }, delay);
@@ -23,11 +23,37 @@ document.addEventListener('DOMContentLoaded', () => {
     const observeVisibleCards = () => {
         const cards = document.querySelectorAll('.card:not(.is-visible)');
         cards.forEach(card => {
-            observer.observe(card);
+            if (observer) {
+                observer.observe(card);
+            }
         });
     };
     
     setupObserver();
+
+    // --- HANDLE TAB FROM URL on megathread.html ---
+    const activateTabFromURL = () => {
+        if (!window.location.pathname.includes('megathread.html')) return;
+        
+        const params = new URLSearchParams(window.location.search);
+        const tab = params.get('tab');
+        if (tab) {
+            const tabButton = document.querySelector(`.tabs-nav .tab-button[data-tab="${tab}"]`);
+            if (tabButton) {
+                // Deactivate any currently active tabs first
+                document.querySelectorAll('.tabs-nav .tab-button.active').forEach(b => b.classList.remove('active'));
+                document.querySelectorAll('.tab-content.active').forEach(c => c.classList.remove('active'));
+
+                // Activate the correct one
+                tabButton.classList.add('active');
+                const contentPanel = document.getElementById(tab);
+                if(contentPanel) {
+                    contentPanel.classList.add('active');
+                }
+            }
+        }
+    };
+    activateTabFromURL();
 
 
     const handleTabSwitching = (navSelector) => {
@@ -158,11 +184,9 @@ document.addEventListener('DOMContentLoaded', () => {
         const activeSubPanel = activePanel.querySelector('.sub-tab-content.active') || activePanel;
 
         const cards = activeSubPanel.querySelectorAll('.card');
-        let visibleCount = 0;
         cards.forEach(card => {
             const isVisible = card.innerText.toLowerCase().includes(query);
             card.style.display = isVisible ? 'flex' : 'none';
-            if (isVisible) visibleCount++;
         });
     };
     
