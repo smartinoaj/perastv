@@ -1,4 +1,22 @@
 document.addEventListener('DOMContentLoaded', () => {
+    // --- GUIDE DATA ---
+    // To add your own images, replace the placeholder URLs below with the paths to your image files.
+    // For example, if you have an 'images' folder, a path would look like: 'images/pcsx2-step-1.jpg'
+    const guides = {
+        pcsx2: {
+            title: "PCSX2 Setup Guide",
+            images: [
+                'img/guides/pcsx2_display.png',
+                'img/guides/pcsx2_rendering.png'
+            ]
+        }
+        // You can add more guides here by following the same format, e.g.:
+        // another_guide: { title: "Another Guide", images: ['path/to/image1.jpg', 'path/to/image2.jpg'] }
+    };
+    let currentGuide = null;
+    let currentImageIndex = 0;
+
+
     // --- DOM ELEMENTS ---
     const homepageContent = document.getElementById('homepage-content');
     const megathreadContent = document.getElementById('megathread-content');
@@ -6,6 +24,13 @@ document.addEventListener('DOMContentLoaded', () => {
     const tabsNavContainer = document.getElementById('tabs-nav-container');
     const filterInput = document.getElementById('global-filter');
     const searchResultsContainer = document.getElementById('search-results-container');
+    const imageGuideModal = document.getElementById('image-guide-modal');
+    const imageGuideTitle = document.getElementById('image-guide-title');
+    const guideImage = document.getElementById('guide-image');
+    const guidePrevBtn = document.getElementById('guide-prev');
+    const guideNextBtn = document.getElementById('guide-next');
+    const imageGuideCloseBtn = document.getElementById('image-guide-close');
+    const imageGuideCounter = document.getElementById('image-guide-counter');
     
     let allCardsData = [];
 
@@ -99,6 +124,46 @@ document.addEventListener('DOMContentLoaded', () => {
             }, 100); // Small delay to allow tab switching CSS to apply
         });
     };
+    
+    // --- IMAGE GUIDE LOGIC ---
+    const showImage = (index) => {
+        if (!currentGuide) return;
+        guideImage.src = currentGuide.images[index];
+        imageGuideCounter.textContent = `${index + 1} / ${currentGuide.images.length}`;
+    };
+
+    const openImageGuide = (guideId) => {
+        const guideData = guides[guideId];
+        if (!guideData) return;
+
+        currentGuide = guideData;
+        currentImageIndex = 0;
+        
+        imageGuideTitle.textContent = currentGuide.title;
+        showImage(currentImageIndex);
+
+        imageGuideModal.classList.remove('hidden');
+        imageGuideModal.classList.add('flex');
+    };
+
+    const closeImageGuide = () => {
+        imageGuideModal.classList.add('hidden');
+        imageGuideModal.classList.remove('flex');
+        currentGuide = null;
+    };
+    
+    const nextImage = () => {
+        if (!currentGuide) return;
+        currentImageIndex = (currentImageIndex + 1) % currentGuide.images.length;
+        showImage(currentImageIndex);
+    };
+
+    const prevImage = () => {
+         if (!currentGuide) return;
+        currentImageIndex = (currentImageIndex - 1 + currentGuide.images.length) % currentGuide.images.length;
+        showImage(currentImageIndex);
+    };
+
 
     // --- SEARCH LOGIC ---
     const updateSearchResults = () => {
@@ -197,10 +262,11 @@ document.addEventListener('DOMContentLoaded', () => {
          });
     };
     
-    const setupToolsDropdowns = () => {
+    const setupInteractionListeners = () => {
         document.body.addEventListener('click', (e) => {
             const dropdownButton = e.target.closest('.tools-dropdown-button');
             const closeButton = e.target.closest('.close-tools-button');
+            const guideButton = e.target.closest('.guide-button');
 
             if (closeButton) {
                 closeButton.closest('.card').classList.remove('tools-active');
@@ -216,6 +282,12 @@ document.addEventListener('DOMContentLoaded', () => {
                     }
                 });
                 card.classList.toggle('tools-active');
+                return;
+            }
+
+            if (guideButton) {
+                const guideId = guideButton.dataset.guideId;
+                if(guideId) openImageGuide(guideId);
                 return;
             }
 
@@ -250,7 +322,19 @@ document.addEventListener('DOMContentLoaded', () => {
     handleSubTabSwitching('#emulation');
     handleSubTabSwitching('#gaming');
     handleSubTabSwitching('#movies-tv');
-    setupToolsDropdowns();
+    setupInteractionListeners();
     managePageView();
+    
+    // Guide Modal Listeners
+    imageGuideCloseBtn.addEventListener('click', closeImageGuide);
+    guideNextBtn.addEventListener('click', nextImage);
+    guidePrevBtn.addEventListener('click', prevImage);
+    imageGuideModal.addEventListener('click', (e) => {
+        if(e.target === imageGuideModal) {
+            closeImageGuide();
+        }
+    });
+
 });
+
 

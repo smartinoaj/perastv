@@ -212,12 +212,13 @@ body {
     backdrop-filter: blur(8px);
     transition: opacity 0.3s ease-in-out;
 }
-.modal-content {
+.modal-content, #image-guide-content {
     transition: transform 0.3s ease-in-out, opacity 0.3s ease-in-out;
     opacity: 0;
     transform: scale(0.95) translateY(10px);
 }
-.modal-overlay:not(.hidden) .modal-content {
+.modal-overlay:not(.hidden) .modal-content,
+.modal-overlay:not(.hidden) #image-guide-content {
     opacity: 1;
     transform: scale(1) translateY(0);
 }
