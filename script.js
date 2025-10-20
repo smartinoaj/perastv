@@ -17,6 +17,13 @@ document.addEventListener('DOMContentLoaded', () => {
                 'img/guides/dolphin_enhancements.png',
                 'img/guides/dolphin_advanced.png'
             ]
+        },
+        ppsspp: {
+            title: "PPSSPP Settings Guide",
+            images: [
+                'img/guides/ppsspp_rendering.png',
+                'img/guides/ppsspp_texture.png'
+            ]
         }
         // You can add more guides here by following the same format, e.g.:
         // another_guide: { title: "Another Guide", images: ['path/to/image1.jpg', 'path/to/image2.jpg'] }
@@ -344,6 +351,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
 });
+
 
 
 
