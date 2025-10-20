@@ -53,9 +53,12 @@ body {
     width: 200%;
     height: 200%;
     background: conic-gradient(
-        #06b6d4, /* Aqua */
-        #34f58b, /* Green */
-        #06b6d4  /* Aqua again to complete the loop */
+        #06b6d4,       /* Aqua */
+        #20dcc3,       /* Lighter Aqua-Green */
+        #34f58b,       /* Peak Green */
+        #20dcc3,       /* Lighter Aqua-Green */
+        #06b6d4,       /* Aqua */
+        #06b6d4        /* Aqua to ensure it's the dominant color */
     );
     animation: rotate 6s linear infinite;
 }
