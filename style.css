@@ -36,8 +36,8 @@ body {
     border-color: #f59e0b; /* amber-500 */
 }
 
-/* New GOAT animation styles */
-.tag-goat {
+/* New GOAT animation styles for cards */
+.card.tag-goat {
     position: relative;
     overflow: hidden; /* Hide the overflowing parts of the animation */
     border-color: transparent; /* Base border is transparent to let animation show */
@@ -45,7 +45,7 @@ body {
 }
 
 /* The animated gradient overlay */
-.tag-goat::before {
+.card.tag-goat::before {
     content: '';
     position: absolute;
     left: -50%;
@@ -63,12 +63,12 @@ body {
     animation: rotate 6s linear infinite;
 }
 
-.tag-goat:hover::before {
+.card.tag-goat:hover::before {
     animation-duration: 3s;
 }
 
 /* The inner mask to create the border effect */
-.tag-goat::after {
+.card.tag-goat::after {
     content: '';
     position: absolute;
     inset: 2px; /* Controls the border width */
@@ -78,7 +78,7 @@ body {
 }
 
 /* Ensure card content is on top of everything */
-.tag-goat > * {
+.card.tag-goat > * {
     position: relative;
     z-index: 2;
 }
