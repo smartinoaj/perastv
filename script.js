@@ -9,6 +9,14 @@ document.addEventListener('DOMContentLoaded', () => {
                 'img/guides/pcsx2_display.png',
                 'img/guides/pcsx2_rendering.png'
             ]
+        },
+        dolphin: {
+            title: "Dolphin Setup Guide",
+            images: [
+                'img/guides/dolphin_general.png',
+                'img/guides/dolphin_enhancements.png',
+                'img/guides/dolphin_advanced.png'
+            ]
         }
         // You can add more guides here by following the same format, e.g.:
         // another_guide: { title: "Another Guide", images: ['path/to/image1.jpg', 'path/to/image2.jpg'] }
@@ -336,5 +344,6 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
 });
+
 
 
