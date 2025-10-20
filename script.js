@@ -130,8 +130,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 resultItem.appendChild(clonedCard);
                 
                 resultItem.addEventListener('click', (e) => {
-                    if (e.target.closest('a, .tools-dropdown-button')) {
-                        // Allow button/link clicks inside the card preview
+                    // Prevent navigation if a button or link inside the card was clicked
+                    if (e.target.closest('a, button')) {
                         return;
                     }
                     e.preventDefault();
@@ -200,24 +200,30 @@ document.addEventListener('DOMContentLoaded', () => {
     const setupToolsDropdowns = () => {
         document.body.addEventListener('click', (e) => {
             const dropdownButton = e.target.closest('.tools-dropdown-button');
-            
-            // Close all other dropdowns not related to the current click
-            document.querySelectorAll('.tools-dropdown-content.active').forEach(dropdown => {
-                if (!dropdown.closest('.tools-dropdown-container').contains(dropdownButton)) {
-                    dropdown.classList.remove('active');
-                    dropdown.closest('.tools-dropdown-container').querySelector('.tools-dropdown-button svg').style.transform = 'rotate(0deg)';
-                }
-            });
+            const closeButton = e.target.closest('.close-tools-button');
+
+            if (closeButton) {
+                closeButton.closest('.card').classList.remove('tools-active');
+                return;
+            }
 
             if (dropdownButton) {
-                const dropdownContainer = dropdownButton.closest('.tools-dropdown-container');
-                const dropdownContent = dropdownContainer.querySelector('.tools-dropdown-content');
-                const dropdownIcon = dropdownButton.querySelector('svg');
-                
-                if (dropdownContent) {
-                    const isActive = dropdownContent.classList.toggle('active');
-                    dropdownIcon.style.transform = isActive ? 'rotate(180deg)' : 'rotate(0deg)';
-                }
+                const card = dropdownButton.closest('.card');
+                // Close any other active cards before opening a new one
+                document.querySelectorAll('.card.tools-active').forEach(activeCard => {
+                    if (activeCard !== card) {
+                        activeCard.classList.remove('tools-active');
+                    }
+                });
+                card.classList.toggle('tools-active');
+                return;
+            }
+
+            // If clicking outside an active card (and not on a tools button), close it
+            if (!e.target.closest('.card.tools-active')) {
+                 document.querySelectorAll('.card.tools-active').forEach(activeCard => {
+                    activeCard.classList.remove('tools-active');
+                });
             }
         });
     };

@@ -156,29 +156,36 @@ body {
     border-color: #06b6d4;
 }
 
-/* Tools Dropdown */
-.tools-dropdown-container .tools-dropdown-content {
-    visibility: hidden;
+/* Tools Dropdown Full Card Overlay */
+.card .tools-dropdown-content {
+    position: absolute;
+    inset: 0;
+    background-color: #161e31; /* Same as card background */
+    padding: 1.5rem; /* p-6 */
     opacity: 0;
-    transform: translateY(10px);
-    transition: all 0.2s ease-in-out;
+    pointer-events: none;
+    transition: opacity 0.3s ease-in-out;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem; /* space-y-3 */
+    justify-content: center;
+    align-items: center;
+    z-index: 10;
 }
 
-.tools-dropdown-container .tools-dropdown-button:focus + .tools-dropdown-content,
-.tools-dropdown-container:hover .tools-dropdown-content,
-.tools-dropdown-content.active {
-    visibility: visible;
+.card .card-main-content {
+    transition: opacity 0.3s ease-in-out;
+}
+
+/* State when tools are active */
+.card.tools-active .card-main-content {
+    opacity: 0;
+    pointer-events: none;
+}
+
+.card.tools-active .tools-dropdown-content {
     opacity: 1;
-    transform: translateY(0);
-}
-
-.tools-dropdown-button svg {
-    transition: transform 0.2s ease-in-out;
-}
-
-.tools-dropdown-container:hover .tools-dropdown-button svg,
-.tools-dropdown-content.active + .tools-dropdown-button svg {
-    transform: rotate(180deg);
+    pointer-events: auto;
 }
 
 
