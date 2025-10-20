@@ -130,7 +130,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 resultItem.appendChild(clonedCard);
                 
                 resultItem.addEventListener('click', (e) => {
-                    if (e.target.closest('a, button')) {
+                    if (e.target.closest('a, .tools-dropdown-button')) {
                         // Allow button/link clicks inside the card preview
                         return;
                     }
@@ -196,6 +196,31 @@ document.addEventListener('DOMContentLoaded', () => {
              observeVisibleCards();
          });
     };
+    
+    const setupToolsDropdowns = () => {
+        document.body.addEventListener('click', (e) => {
+            const dropdownButton = e.target.closest('.tools-dropdown-button');
+            
+            // Close all other dropdowns not related to the current click
+            document.querySelectorAll('.tools-dropdown-content.active').forEach(dropdown => {
+                if (!dropdown.closest('.tools-dropdown-container').contains(dropdownButton)) {
+                    dropdown.classList.remove('active');
+                    dropdown.closest('.tools-dropdown-container').querySelector('.tools-dropdown-button svg').style.transform = 'rotate(0deg)';
+                }
+            });
+
+            if (dropdownButton) {
+                const dropdownContainer = dropdownButton.closest('.tools-dropdown-container');
+                const dropdownContent = dropdownContainer.querySelector('.tools-dropdown-content');
+                const dropdownIcon = dropdownButton.querySelector('svg');
+                
+                if (dropdownContent) {
+                    const isActive = dropdownContent.classList.toggle('active');
+                    dropdownIcon.style.transform = isActive ? 'rotate(180deg)' : 'rotate(0deg)';
+                }
+            }
+        });
+    };
 
     if (filterInput) {
         filterInput.addEventListener('input', updateSearchResults);
@@ -219,6 +244,7 @@ document.addEventListener('DOMContentLoaded', () => {
     handleSubTabSwitching('#emulation');
     handleSubTabSwitching('#gaming');
     handleSubTabSwitching('#movies-tv');
+    setupToolsDropdowns();
     managePageView();
 });
 
