@@ -36,14 +36,48 @@ body {
     border-color: #f59e0b; /* amber-500 */
 }
 
+/* New GOAT animation styles */
 .tag-goat {
-    border-color: #06b6d4; /* cyan-500 */
-    box-shadow: 0 0 12px rgba(6, 182, 212, 0.3);
-    animation: pulse-glow-weak 4s infinite alternate;
+    position: relative;
+    overflow: hidden; /* Hide the overflowing parts of the animation */
+    border-color: #06b6d4;
 }
 
-.tag-goat:hover {
-    animation: pulse-glow-strong 2s infinite alternate;
+.tag-goat::before {
+    content: '';
+    position: absolute;
+    left: -50%;
+    top: -50%;
+    width: 200%;
+    height: 200%;
+    background-repeat: no-repeat;
+    background-size: 50% 50%, 50% 50%;
+    background-position: 0 0, 100% 0, 100% 100%, 0 100%;
+    background-image: linear-gradient(#06b6d4, #06b6d4), linear-gradient(#161e31, #161e31), linear-gradient(#06b6d4, #06b6d4), linear-gradient(#161e31, #161e31);
+    animation: rotate 4s linear infinite;
+    z-index: 0;
+}
+
+.tag-goat:hover::before {
+    animation-duration: 2s;
+}
+
+.tag-goat > * {
+    position: relative;
+    z-index: 1;
+}
+
+/* Mask to create the border effect */
+.tag-goat::after {
+    content: '';
+    position: absolute;
+    z-index: 0;
+    left: 2px;
+    top: 2px;
+    width: calc(100% - 4px);
+    height: calc(100% - 4px);
+    background: #161e31; /* Card background color */
+    border-radius: inherit;
 }
 
 
@@ -203,6 +237,12 @@ body {
 @keyframes pulse-glow-strong {
     from { box-shadow: 0 0 12px rgba(6, 182, 212, 0.5); }
     to { box-shadow: 0 0 24px rgba(6, 182, 212, 0.8); }
+}
+
+@keyframes rotate {
+    100% {
+        transform: rotate(1turn);
+    }
 }
 
 

@@ -4,14 +4,14 @@ document.addEventListener('DOMContentLoaded', () => {
     // For example, if you have an 'images' folder, a path would look like: 'images/pcsx2-step-1.jpg'
     const guides = {
         pcsx2: {
-            title: "PCSX2 Graphics Guide",
+            title: "PCSX2 Graphic Settings",
             images: [
                 'img/guides/pcsx2_display.png',
                 'img/guides/pcsx2_rendering.png'
             ]
         },
         dolphin: {
-            title: "Dolphin Graphics Guide",
+            title: "Dolphin Graphic Settings",
             images: [
                 'img/guides/dolphin_general.png',
                 'img/guides/dolphin_enhancements.png',
@@ -19,7 +19,7 @@ document.addEventListener('DOMContentLoaded', () => {
             ]
         },
         ppsspp: {
-            title: "PPSSPP Graphics Guide",
+            title: "PPSSPP Graphic Settings",
             images: [
                 'img/guides/ppsspp_rendering.png',
                 'img/guides/ppsspp_texture.png'
