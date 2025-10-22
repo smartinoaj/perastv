@@ -425,22 +425,49 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
+    // --- SETTINGS DROPDOWN ---
+    const settingsDropdownBtn = document.getElementById('settings-dropdown-btn');
+    const settingsDropdown = document.getElementById('settings-dropdown');
+    
+    settingsDropdownBtn?.addEventListener('click', (e) => {
+        e.stopPropagation();
+        settingsDropdown.classList.toggle('hidden');
+    });
+    
+    // Close dropdown when clicking outside
+    document.addEventListener('click', (e) => {
+        if (!settingsDropdown?.contains(e.target) && !settingsDropdownBtn?.contains(e.target)) {
+            settingsDropdown?.classList.add('hidden');
+        }
+    });
+
     // --- THEME TOGGLE ---
     const themeToggle = document.getElementById('theme-toggle');
     const themeIconDark = document.getElementById('theme-icon-dark');
     const themeIconLight = document.getElementById('theme-icon-light');
+    const themeText = document.getElementById('theme-text');
     const htmlElement = document.documentElement;
     
     // Check for saved theme preference or default to 'dark'
     const currentTheme = localStorage.getItem('theme') || 'dark';
     htmlElement.setAttribute('data-theme', currentTheme);
     
-    // Update icon based on current theme
-    if (currentTheme === 'light') {
-        themeIconDark.classList.remove('hidden');
-        themeIconLight.classList.add('hidden');
-        document.body.classList.add('light-mode');
+    // Update icon and text based on current theme
+    function updateThemeUI(theme) {
+        if (theme === 'light') {
+            themeIconDark.classList.remove('hidden');
+            themeIconLight.classList.add('hidden');
+            themeText.textContent = 'Light Mode';
+            document.body.classList.add('light-mode');
+        } else {
+            themeIconDark.classList.add('hidden');
+            themeIconLight.classList.remove('hidden');
+            themeText.textContent = 'Dark Mode';
+            document.body.classList.remove('light-mode');
+        }
     }
+    
+    updateThemeUI(currentTheme);
     
     themeToggle.addEventListener('click', () => {
         const theme = htmlElement.getAttribute('data-theme');
@@ -448,17 +475,76 @@ document.addEventListener('DOMContentLoaded', () => {
         
         htmlElement.setAttribute('data-theme', newTheme);
         localStorage.setItem('theme', newTheme);
+        updateThemeUI(newTheme);
+    });
+
+    // --- IMPORT/EXPORT FAVORITES ---
+    const importBtnDropdown = document.getElementById('import-btn-dropdown');
+    const exportBtnDropdown = document.getElementById('export-btn-dropdown');
+    
+    // Create hidden file input for import
+    const fileInput = document.createElement('input');
+    fileInput.type = 'file';
+    fileInput.accept = '.json';
+    fileInput.style.display = 'none';
+    document.body.appendChild(fileInput);
+    
+    importBtnDropdown?.addEventListener('click', () => {
+        fileInput.click();
+        settingsDropdown?.classList.add('hidden');
+    });
+    
+    fileInput.addEventListener('change', (e) => {
+        const file = e.target.files[0];
+        if (!file) return;
         
-        // Toggle icons
-        if (newTheme === 'light') {
-            themeIconDark.classList.remove('hidden');
-            themeIconLight.classList.add('hidden');
-            document.body.classList.add('light-mode');
-        } else {
-            themeIconDark.classList.add('hidden');
-            themeIconLight.classList.remove('hidden');
-            document.body.classList.remove('light-mode');
+        const reader = new FileReader();
+        reader.onload = (event) => {
+            try {
+                const importedFavorites = JSON.parse(event.target.result);
+                
+                if (!Array.isArray(importedFavorites)) {
+                    alert('Invalid favorites file format!');
+                    return;
+                }
+                
+                // Merge with existing favorites (avoid duplicates)
+                importedFavorites.forEach(url => {
+                    if (!favorites.includes(url)) {
+                        favorites.push(url);
+                    }
+                });
+                
+                localStorage.setItem('favorites', JSON.stringify(favorites));
+                
+                // Refresh the page to show updated favorites
+                alert(`Successfully imported ${importedFavorites.length} favorites!`);
+                location.reload();
+            } catch (error) {
+                alert('Error reading favorites file. Please make sure it\'s a valid JSON file.');
+            }
+        };
+        
+        reader.readAsText(file);
+        fileInput.value = ''; // Reset input
+    });
+    
+    exportBtnDropdown?.addEventListener('click', () => {
+        if (favorites.length === 0) {
+            alert('No favorites to export!');
+            return;
         }
+        
+        const data = JSON.stringify(favorites, null, 2);
+        const blob = new Blob([data], { type: 'application/json' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = 'megathread-favorites.json';
+        a.click();
+        URL.revokeObjectURL(url);
+        
+        settingsDropdown?.classList.add('hidden');
     });
 
     // --- BACK TO TOP BUTTON ---
@@ -661,6 +747,53 @@ document.addEventListener('DOMContentLoaded', () => {
     // --- FAVORITES/BOOKMARKS SYSTEM ---
     const favorites = JSON.parse(localStorage.getItem('favorites') || '[]');
     
+    // --- POPULATE FAVORITES TAB ---
+    function populateFavoritesTab() {
+        const favoritesGrid = document.getElementById('favorites-grid');
+        const noFavoritesMessage = document.getElementById('no-favorites-message');
+        
+        if (!favoritesGrid) return;
+        
+        // Clear existing content
+        favoritesGrid.innerHTML = '';
+        
+        if (favorites.length === 0) {
+            favoritesGrid.classList.add('hidden');
+            if (noFavoritesMessage) noFavoritesMessage.classList.remove('hidden');
+            return;
+        }
+        
+        favoritesGrid.classList.remove('hidden');
+        if (noFavoritesMessage) noFavoritesMessage.classList.add('hidden');
+        
+        // Find all favorited cards and clone them
+        favorites.forEach(url => {
+            const allCards = document.querySelectorAll('.card');
+            allCards.forEach(card => {
+                const link = card.querySelector('a[href^="http"]');
+                if (!link) return;
+                
+                const cardUrl = link.getAttribute('href');
+                if (cardUrl === url) {
+                    // Clone the card
+                    const clonedCard = card.cloneNode(true);
+                    clonedCard.classList.add('is-visible');
+                    clonedCard.style.opacity = '1';
+                    clonedCard.style.transform = '';
+                    favoritesGrid.appendChild(clonedCard);
+                }
+            });
+        });
+        
+        // Re-apply enhancements to cloned cards
+        setTimeout(() => {
+            addFavicons();
+            addCopyLinkButtons();
+            addRecentlyAddedBadges();
+            addFavoriteButtons();
+        }, 100);
+    }
+    
     function addFavoriteButtons() {
         const cards = document.querySelectorAll('.card');
         cards.forEach(card => {
@@ -804,6 +937,9 @@ document.addEventListener('DOMContentLoaded', () => {
             
             // Reorder cards after favoriting/unfavoriting
             reorderCardsByFavorites();
+            
+            // Refresh favorites tab
+            populateFavoritesTab();
         }
     });
 
@@ -927,96 +1063,6 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // --- EXPORT FAVORITES ---
-    function addExportButton() {
-        const searchContainer = document.getElementById('search-bar-container');
-        if (!searchContainer || document.getElementById('export-btn')) return;
-        
-        const exportBtn = document.createElement('button');
-        exportBtn.id = 'export-btn';
-        exportBtn.className = 'px-4 py-2 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300 font-semibold transition-colors flex items-center gap-2';
-        exportBtn.title = 'Export favorites';
-        exportBtn.innerHTML = '<svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" /></svg>';
-        
-        searchContainer.appendChild(exportBtn);
-        
-        exportBtn.addEventListener('click', () => {
-            if (favorites.length === 0) {
-                alert('No favorites to export!');
-                return;
-            }
-            
-            const data = JSON.stringify(favorites, null, 2);
-            const blob = new Blob([data], { type: 'application/json' });
-            const url = URL.createObjectURL(blob);
-            const a = document.createElement('a');
-            a.href = url;
-            a.download = 'megathread-favorites.json';
-            a.click();
-            URL.revokeObjectURL(url);
-        });
-    }
-
-    // --- IMPORT FAVORITES ---
-    function addImportButton() {
-        const searchContainer = document.getElementById('search-bar-container');
-        if (!searchContainer || document.getElementById('import-btn')) return;
-        
-        const importBtn = document.createElement('button');
-        importBtn.id = 'import-btn';
-        importBtn.className = 'px-4 py-2 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300 font-semibold transition-colors flex items-center gap-2';
-        importBtn.title = 'Import favorites';
-        importBtn.innerHTML = '<svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12" /></svg>';
-        
-        searchContainer.appendChild(importBtn);
-        
-        // Create hidden file input
-        const fileInput = document.createElement('input');
-        fileInput.type = 'file';
-        fileInput.accept = '.json';
-        fileInput.style.display = 'none';
-        document.body.appendChild(fileInput);
-        
-        importBtn.addEventListener('click', () => {
-            fileInput.click();
-        });
-        
-        fileInput.addEventListener('change', (e) => {
-            const file = e.target.files[0];
-            if (!file) return;
-            
-            const reader = new FileReader();
-            reader.onload = (event) => {
-                try {
-                    const importedFavorites = JSON.parse(event.target.result);
-                    
-                    if (!Array.isArray(importedFavorites)) {
-                        alert('Invalid favorites file format!');
-                        return;
-                    }
-                    
-                    // Merge with existing favorites (avoid duplicates)
-                    importedFavorites.forEach(url => {
-                        if (!favorites.includes(url)) {
-                            favorites.push(url);
-                        }
-                    });
-                    
-                    localStorage.setItem('favorites', JSON.stringify(favorites));
-                    
-                    // Refresh the page to show updated favorites
-                    alert(`Successfully imported ${importedFavorites.length} favorites!`);
-                    location.reload();
-                } catch (error) {
-                    alert('Error reading favorites file. Please make sure it\'s a valid JSON file.');
-                }
-            };
-            
-            reader.readAsText(file);
-            fileInput.value = ''; // Reset input
-        });
-    }
-
     // Initialize all enhancements
     setTimeout(() => {
         saveOriginalPositions(); // Save original card positions first
@@ -1025,12 +1071,11 @@ document.addEventListener('DOMContentLoaded', () => {
         addRecentlyAddedBadges();
         addFavoriteButtons();
         reorderCardsByFavorites(); // Apply favorite ordering on load
+        populateFavoritesTab(); // Populate favorites tab
         updateResourceCounters();
         addSearchFilters();
         updateStatsBanner();
         addRandomButton();
-        addImportButton();
-        addExportButton();
     }, 500);
 
     // Re-apply enhancements when switching tabs
