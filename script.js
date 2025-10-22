@@ -425,6 +425,468 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
+    // --- THEME TOGGLE ---
+    const themeToggle = document.getElementById('theme-toggle');
+    const themeIconDark = document.getElementById('theme-icon-dark');
+    const themeIconLight = document.getElementById('theme-icon-light');
+    const htmlElement = document.documentElement;
+    
+    // Check for saved theme preference or default to 'dark'
+    const currentTheme = localStorage.getItem('theme') || 'dark';
+    htmlElement.setAttribute('data-theme', currentTheme);
+    
+    // Update icon based on current theme
+    if (currentTheme === 'light') {
+        themeIconDark.classList.remove('hidden');
+        themeIconLight.classList.add('hidden');
+        document.body.classList.add('light-mode');
+    }
+    
+    themeToggle.addEventListener('click', () => {
+        const theme = htmlElement.getAttribute('data-theme');
+        const newTheme = theme === 'dark' ? 'light' : 'dark';
+        
+        htmlElement.setAttribute('data-theme', newTheme);
+        localStorage.setItem('theme', newTheme);
+        
+        // Toggle icons
+        if (newTheme === 'light') {
+            themeIconDark.classList.remove('hidden');
+            themeIconLight.classList.add('hidden');
+            document.body.classList.add('light-mode');
+        } else {
+            themeIconDark.classList.add('hidden');
+            themeIconLight.classList.remove('hidden');
+            document.body.classList.remove('light-mode');
+        }
+    });
+
+    // --- BACK TO TOP BUTTON ---
+    const backToTopButton = document.getElementById('back-to-top');
+    
+    window.addEventListener('scroll', () => {
+        if (window.pageYOffset > 300) {
+            backToTopButton.classList.remove('opacity-0', 'pointer-events-none');
+            backToTopButton.classList.add('opacity-100');
+        } else {
+            backToTopButton.classList.add('opacity-0', 'pointer-events-none');
+            backToTopButton.classList.remove('opacity-100');
+        }
+    });
+    
+    backToTopButton.addEventListener('click', () => {
+        window.scrollTo({
+            top: 0,
+            behavior: 'smooth'
+        });
+    });
+
+    // --- COPY LINK FUNCTIONALITY ---
+    document.addEventListener('click', (e) => {
+        if (e.target.closest('.copy-link-btn')) {
+            e.preventDefault();
+            e.stopPropagation();
+            
+            const btn = e.target.closest('.copy-link-btn');
+            const url = btn.getAttribute('data-url');
+            
+            navigator.clipboard.writeText(url).then(() => {
+                const originalText = btn.innerHTML;
+                btn.innerHTML = '<svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" /></svg>';
+                btn.classList.remove('bg-slate-700/50');
+                btn.classList.add('bg-green-600');
+                
+                setTimeout(() => {
+                    btn.innerHTML = originalText;
+                    btn.classList.remove('bg-green-600');
+                    btn.classList.add('bg-slate-700/50');
+                }, 2000);
+            });
+        }
+    });
+
+    // --- KEYBOARD SHORTCUTS ---
+    document.addEventListener('keydown', (e) => {
+        // Ctrl+K or Cmd+K to focus search
+        if ((e.ctrlKey || e.metaKey) && e.key === 'k') {
+            e.preventDefault();
+            document.getElementById('global-filter').focus();
+        }
+        
+        // Escape to clear search
+        if (e.key === 'Escape') {
+            const searchInput = document.getElementById('global-filter');
+            if (searchInput === document.activeElement) {
+                searchInput.value = '';
+                searchInput.blur();
+                document.getElementById('search-results-container').classList.add('hidden');
+            }
+        }
+    });
+
+    // --- ADD FAVICONS TO CARD TITLES ---
+    function addFavicons() {
+        const cards = document.querySelectorAll('.card');
+        cards.forEach(card => {
+            // Skip if already has favicon
+            if (card.querySelector('.card-favicon')) return;
+            
+            const link = card.querySelector('a[href^="http"]');
+            if (!link) return;
+            
+            const url = link.getAttribute('href');
+            const titleElement = card.querySelector('h3');
+            if (!titleElement) return;
+            
+            // Extract domain from URL
+            let domain;
+            try {
+                const urlObj = new URL(url);
+                domain = urlObj.hostname;
+            } catch (e) {
+                return;
+            }
+            
+            // Create favicon image
+            const favicon = document.createElement('img');
+            favicon.className = 'card-favicon inline-block mr-2 flex-shrink-0';
+            favicon.style.width = '20px';
+            favicon.style.height = '20px';
+            favicon.style.objectFit = 'contain';
+            
+            // Use Google's favicon service as fallback
+            favicon.src = `https://www.google.com/s2/favicons?domain=${domain}&sz=32`;
+            
+            // Handle error by using a default icon
+            favicon.onerror = () => {
+                favicon.src = 'data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="rgb(148, 163, 184)" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg>';
+            };
+            
+            // Make title flex if not already
+            if (!titleElement.style.display || titleElement.style.display !== 'flex') {
+                titleElement.style.display = 'flex';
+                titleElement.style.alignItems = 'center';
+            }
+            
+            // Insert favicon at the beginning
+            titleElement.insertBefore(favicon, titleElement.firstChild);
+        });
+    }
+
+    // --- AUTO-ADD COPY LINK BUTTONS TO ALL CARDS ---
+    function addCopyLinkButtons() {
+        const cards = document.querySelectorAll('.card');
+        cards.forEach(card => {
+            // Skip if already has copy button
+            if (card.querySelector('.copy-link-btn')) return;
+            
+            const link = card.querySelector('a[href^="http"]');
+            if (!link) return;
+            
+            const url = link.getAttribute('href');
+            
+            // Create copy button
+            const copyBtn = document.createElement('button');
+            copyBtn.className = 'copy-link-btn ml-auto p-2 rounded-lg bg-slate-700/50 hover:bg-slate-600 transition-all border border-slate-600 inline-flex items-center justify-center';
+            copyBtn.setAttribute('data-url', url);
+            copyBtn.title = 'Copy link';
+            copyBtn.innerHTML = '<svg class="h-4 w-4 text-slate-300" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" /></svg>';
+            
+            // Make the link a flex container and add the copy button inside
+            link.style.display = 'flex';
+            link.style.alignItems = 'center';
+            link.style.justifyContent = 'space-between';
+            link.style.gap = '0.5rem';
+            
+            // Wrap the existing text in a span
+            const linkText = link.textContent;
+            link.textContent = '';
+            const textSpan = document.createElement('span');
+            textSpan.textContent = linkText;
+            link.appendChild(textSpan);
+            link.appendChild(copyBtn);
+            
+            card.classList.add('group');
+        });
+    }
+
+    // --- ADD RECENTLY ADDED BADGES ---
+    function addRecentlyAddedBadges() {
+        // Define recently added resources (add URLs of new resources here)
+        const recentlyAdded = [
+            'auth.ente.io',
+            'mpv.io',
+            'flingtrainer.com',
+            'playnite.link',
+            'opensubtitles.com',
+            'iptv-org',
+            'handbrake.fr',
+            'bcuninstaller.com',
+            'code.visualstudio.com',
+            'mega.nz',
+            'proton.me/drive'
+        ];
+        
+        const cards = document.querySelectorAll('.card');
+        cards.forEach(card => {
+            const link = card.querySelector('a[href^="http"]');
+            if (!link) return;
+            
+            const url = link.getAttribute('href');
+            const isRecent = recentlyAdded.some(recent => url.includes(recent));
+            
+            if (isRecent && !card.querySelector('.recently-added-badge')) {
+                // Find the title container
+                const titleContainer = card.querySelector('.flex.items-start.justify-between');
+                if (!titleContainer) return;
+                
+                const badge = document.createElement('div');
+                badge.className = 'recently-added-badge ml-2 px-2 py-1 rounded-full bg-green-500/20 border border-green-500 text-green-400 text-xs font-bold';
+                badge.textContent = 'NEW';
+                
+                // Insert after the title (before the tag)
+                const title = titleContainer.querySelector('h3');
+                if (title) {
+                    title.style.display = 'flex';
+                    title.style.alignItems = 'center';
+                    title.appendChild(badge);
+                }
+            }
+        });
+    }
+
+    // --- FAVORITES/BOOKMARKS SYSTEM ---
+    const favorites = JSON.parse(localStorage.getItem('favorites') || '[]');
+    
+    function addFavoriteButtons() {
+        const cards = document.querySelectorAll('.card');
+        cards.forEach(card => {
+            if (card.querySelector('.favorite-btn')) return;
+            
+            const link = card.querySelector('a[href^="http"]');
+            if (!link) return;
+            
+            const url = link.getAttribute('href');
+            const titleElement = card.querySelector('h3');
+            if (!titleElement) return;
+            
+            const title = titleElement.textContent || 'Resource';
+            const isFavorite = favorites.includes(url);
+            
+            const favBtn = document.createElement('button');
+            favBtn.className = `favorite-btn ml-2 p-1 rounded transition-all ${isFavorite ? 'text-red-500' : 'text-slate-400 hover:text-red-400'}`;
+            favBtn.setAttribute('data-url', url);
+            favBtn.setAttribute('data-title', title);
+            favBtn.title = isFavorite ? 'Remove from favorites' : 'Add to favorites';
+            favBtn.innerHTML = isFavorite ? 
+                '<svg class="h-4 w-4" fill="currentColor" viewBox="0 0 20 20"><path d="M3.172 5.172a4 4 0 015.656 0L10 6.343l1.172-1.171a4 4 0 115.656 5.656L10 17.657l-6.828-6.829a4 4 0 010-5.656z" /></svg>' :
+                '<svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" /></svg>';
+            
+            // Make title flex and add button
+            titleElement.style.display = 'flex';
+            titleElement.style.alignItems = 'center';
+            titleElement.appendChild(favBtn);
+        });
+    }
+    
+    document.addEventListener('click', (e) => {
+        if (e.target.closest('.favorite-btn')) {
+            const btn = e.target.closest('.favorite-btn');
+            const url = btn.getAttribute('data-url');
+            const title = btn.getAttribute('data-title');
+            
+            const index = favorites.indexOf(url);
+            if (index > -1) {
+                favorites.splice(index, 1);
+                btn.innerHTML = '<svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" /></svg>';
+                btn.className = 'favorite-btn ml-2 p-1 rounded transition-all text-slate-400 hover:text-red-400';
+                btn.title = 'Add to favorites';
+            } else {
+                favorites.push(url);
+                btn.innerHTML = '<svg class="h-4 w-4" fill="currentColor" viewBox="0 0 20 20"><path d="M3.172 5.172a4 4 0 015.656 0L10 6.343l1.172-1.171a4 4 0 115.656 5.656L10 17.657l-6.828-6.829a4 4 0 010-5.656z" /></svg>';
+                btn.className = 'favorite-btn ml-2 p-1 rounded transition-all text-red-500';
+                btn.title = 'Remove from favorites';
+            }
+            
+            localStorage.setItem('favorites', JSON.stringify(favorites));
+        }
+    });
+
+    // --- RESOURCE COUNTER ---
+    function updateResourceCounters() {
+        const categories = document.querySelectorAll('.category-card');
+        categories.forEach(categoryCard => {
+            const href = categoryCard.getAttribute('href');
+            if (!href) return;
+            
+            const tabName = href.replace('?tab=', '');
+            const tabContent = document.getElementById(tabName);
+            if (!tabContent) return;
+            
+            const resourceCount = tabContent.querySelectorAll('.card').length;
+            
+            // Add counter badge if not exists
+            if (!categoryCard.querySelector('.resource-counter')) {
+                const counter = document.createElement('div');
+                counter.className = 'resource-counter absolute top-4 right-4 px-3 py-1 rounded-full bg-violet-500/20 border border-violet-500 text-violet-400 text-sm font-bold';
+                counter.textContent = `${resourceCount} resources`;
+                categoryCard.style.position = 'relative';
+                categoryCard.appendChild(counter);
+            }
+        });
+    }
+
+    // --- ADVANCED SEARCH FILTERS ---
+    function addSearchFilters() {
+        const searchContainer = document.getElementById('search-bar-container');
+        if (!searchContainer || document.getElementById('search-filters')) return;
+        
+        const filtersHTML = `
+            <div id="search-filters" class="flex items-center gap-2">
+                <select id="tag-filter" class="px-3 py-2 rounded-lg bg-slate-800 text-slate-300 text-sm border border-slate-700 focus:outline-none focus:border-violet-500">
+                    <option value="all">All Tags</option>
+                    <option value="goat">GOAT Only</option>
+                    <option value="recommended">Recommended Only</option>
+                </select>
+            </div>
+        `;
+        
+        const searchDiv = searchContainer.querySelector('.relative.max-w-lg');
+        if (searchDiv) {
+            searchDiv.insertAdjacentHTML('afterend', filtersHTML);
+            
+            // Add filter functionality
+            document.getElementById('tag-filter')?.addEventListener('change', applyFilters);
+        }
+    }
+    
+    function applyFilters() {
+        const tagFilter = document.getElementById('tag-filter')?.value || 'all';
+        
+        const activeTab = document.querySelector('.tab-content.active');
+        if (!activeTab) return;
+        
+        const cards = Array.from(activeTab.querySelectorAll('.card'));
+        if (cards.length === 0) return;
+        
+        // Filter by tag
+        cards.forEach(card => {
+            if (tagFilter === 'all') {
+                card.style.display = '';
+            } else if (tagFilter === 'goat') {
+                card.style.display = card.classList.contains('tag-goat') ? '' : 'none';
+            } else if (tagFilter === 'recommended') {
+                card.style.display = card.classList.contains('tag-recommended') ? '' : 'none';
+            }
+        });
+    }
+
+    // --- UPDATE STATS BANNER ---
+    function updateStatsBanner() {
+        const allCards = document.querySelectorAll('.card');
+        const goatCards = document.querySelectorAll('.card.tag-goat');
+        const recentCards = document.querySelectorAll('.recently-added-badge');
+        
+        const totalResourcesEl = document.getElementById('total-resources');
+        const goatResourcesEl = document.getElementById('goat-resources');
+        const newResourcesEl = document.getElementById('new-resources');
+        
+        if (totalResourcesEl) totalResourcesEl.textContent = allCards.length;
+        if (goatResourcesEl) goatResourcesEl.textContent = goatCards.length;
+        if (newResourcesEl) newResourcesEl.textContent = recentCards.length;
+    }
+
+    // --- RANDOM RESOURCE BUTTON ---
+    function addRandomButton() {
+        const searchContainer = document.getElementById('search-bar-container');
+        if (!searchContainer || document.getElementById('random-btn')) return;
+        
+        const randomBtn = document.createElement('button');
+        randomBtn.id = 'random-btn';
+        randomBtn.className = 'px-4 py-2 rounded-lg bg-violet-600 hover:bg-violet-700 text-white font-semibold transition-colors flex items-center gap-2';
+        randomBtn.title = 'Random resource';
+        randomBtn.innerHTML = '<svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" /></svg> Random';
+        
+        searchContainer.appendChild(randomBtn);
+        
+        randomBtn.addEventListener('click', () => {
+            // Get random card from cached data
+            if (allCardsData.length === 0) {
+                cacheAllCards();
+            }
+            
+            if (allCardsData.length === 0) return;
+            
+            const randomCardData = allCardsData[Math.floor(Math.random() * allCardsData.length)];
+            
+            // Use navigateToCard function which handles everything
+            navigateToCard(randomCardData);
+            
+            // Add enhanced highlight effect
+            setTimeout(() => {
+                randomCardData.element.style.transform = 'scale(1.05)';
+                setTimeout(() => {
+                    randomCardData.element.style.transform = '';
+                }, 3000);
+            }, 100);
+        });
+    }
+
+    // --- EXPORT FAVORITES ---
+    function addExportButton() {
+        const searchContainer = document.getElementById('search-bar-container');
+        if (!searchContainer || document.getElementById('export-btn')) return;
+        
+        const exportBtn = document.createElement('button');
+        exportBtn.id = 'export-btn';
+        exportBtn.className = 'px-4 py-2 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300 font-semibold transition-colors flex items-center gap-2';
+        exportBtn.title = 'Export favorites';
+        exportBtn.innerHTML = '<svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" /></svg>';
+        
+        searchContainer.appendChild(exportBtn);
+        
+        exportBtn.addEventListener('click', () => {
+            if (favorites.length === 0) {
+                alert('No favorites to export!');
+                return;
+            }
+            
+            const data = JSON.stringify(favorites, null, 2);
+            const blob = new Blob([data], { type: 'application/json' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'megathread-favorites.json';
+            a.click();
+            URL.revokeObjectURL(url);
+        });
+    }
+
+    // Initialize all enhancements
+    setTimeout(() => {
+        addFavicons();
+        addCopyLinkButtons();
+        addRecentlyAddedBadges();
+        addFavoriteButtons();
+        updateResourceCounters();
+        addSearchFilters();
+        updateStatsBanner();
+        addRandomButton();
+        addExportButton();
+    }, 500);
+
+    // Re-apply enhancements when switching tabs
+    document.querySelectorAll('.tab-button').forEach(btn => {
+        btn.addEventListener('click', () => {
+            setTimeout(() => {
+                addFavicons();
+                addCopyLinkButtons();
+                addRecentlyAddedBadges();
+                addFavoriteButtons();
+            }, 100);
+        });
+    });
+
 });
 
 

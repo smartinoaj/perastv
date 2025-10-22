@@ -26,9 +26,18 @@ body {
 }
 
 .card-highlight {
-    box-shadow: 0 0 20px 5px rgba(167, 139, 250, 0.6); /* violet-400 glow */
-    border-color: #a78bfa; /* violet-400 */
-    transform: scale(1.03) !important;
+    box-shadow: 0 0 30px 8px rgba(167, 139, 250, 0.8), 0 0 60px 15px rgba(139, 92, 246, 0.4) !important;
+    border-color: #a78bfa !important;
+    animation: pulse-highlight 1.5s ease-in-out infinite !important;
+}
+
+@keyframes pulse-highlight {
+    0%, 100% { 
+        box-shadow: 0 0 30px 8px rgba(167, 139, 250, 0.8), 0 0 60px 15px rgba(139, 92, 246, 0.4);
+    }
+    50% { 
+        box-shadow: 0 0 40px 12px rgba(167, 139, 250, 1), 0 0 80px 20px rgba(139, 92, 246, 0.6);
+    }
 }
 
 
@@ -290,5 +299,249 @@ body {
     background-color: #06b6d4;
     color: #0B1120;
     animation: pulse-glow-strong 2s infinite alternate;
+}
+
+/* ===== LIGHT MODE STYLES ===== */
+[data-theme="light"] body {
+    background-color: #f1f5f9; /* slate-100 */
+    background-image: radial-gradient(circle at top, #e2e8f0, #f1f5f9);
+    color: #0f172a; /* slate-900 */
+}
+
+[data-theme="light"] header {
+    background-color: rgba(255, 255, 255, 0.9) !important;
+    border-bottom-color: #e2e8f0 !important;
+}
+
+[data-theme="light"] .card {
+    background-color: #ffffff;
+    border-color: #cbd5e1; /* slate-300 */
+    color: #0f172a;
+}
+
+[data-theme="light"] .card:hover {
+    border-color: #8b5cf6;
+    box-shadow: 0 10px 25px -5px rgba(139, 92, 246, 0.2), 0 8px 10px -6px rgba(139, 92, 246, 0.1);
+}
+
+[data-theme="light"] .card.tag-goat::after {
+    background: #ffffff;
+}
+
+[data-theme="light"] .category-card {
+    background-color: #ffffff;
+    border-color: #cbd5e1;
+}
+
+[data-theme="light"] .tabs-nav {
+    background-color: rgba(255, 255, 255, 0.9) !important;
+    border-top-color: #e2e8f0 !important;
+}
+
+[data-theme="light"] .tabs-nav .tab-button {
+    color: #64748b; /* slate-500 */
+}
+
+[data-theme="light"] .tabs-nav .tab-button:hover {
+    color: #0f172a;
+    border-color: #94a3b8;
+}
+
+[data-theme="light"] .tabs-nav .tab-button.active {
+    color: #8b5cf6;
+    border-color: #8b5cf6;
+}
+
+[data-theme="light"] .sub-tabs-nav {
+    background-color: #f8fafc !important;
+}
+
+[data-theme="light"] .sub-tabs-nav .sub-tab-button {
+    color: #64748b;
+}
+
+[data-theme="light"] .sub-tabs-nav .sub-tab-button:hover {
+    background-color: #e2e8f0;
+    color: #0f172a;
+}
+
+[data-theme="light"] .sub-tabs-nav .sub-tab-button.active {
+    background-color: #8b5cf6;
+    color: #ffffff;
+}
+
+[data-theme="light"] h1, 
+[data-theme="light"] h2, 
+[data-theme="light"] h3, 
+[data-theme="light"] h4 {
+    color: #0f172a !important;
+}
+
+[data-theme="light"] p {
+    color: #475569 !important;
+}
+
+[data-theme="light"] .text-slate-400 {
+    color: #64748b !important;
+}
+
+[data-theme="light"] .text-slate-300 {
+    color: #475569 !important;
+}
+
+[data-theme="light"] .text-white {
+    color: #0f172a !important;
+}
+
+[data-theme="light"] .bg-slate-800 {
+    background-color: #f8fafc !important;
+    border-color: #e2e8f0 !important;
+}
+
+[data-theme="light"] .bg-slate-900 {
+    background-color: #ffffff !important;
+}
+
+[data-theme="light"] .border-slate-700 {
+    border-color: #cbd5e1 !important;
+}
+
+[data-theme="light"] .border-slate-800 {
+    border-color: #e2e8f0 !important;
+}
+
+[data-theme="light"] input {
+    background-color: #f8fafc !important;
+    color: #0f172a !important;
+    border-color: #cbd5e1 !important;
+}
+
+[data-theme="light"] input::placeholder {
+    color: #94a3b8 !important;
+}
+
+[data-theme="light"] input:focus {
+    background-color: #ffffff !important;
+    color: #0f172a !important;
+}
+
+[data-theme="light"] #search-results-container {
+    background-color: #ffffff !important;
+    border-color: #cbd5e1 !important;
+}
+
+[data-theme="light"] .search-result-item:hover {
+    background-color: #f8fafc !important;
+}
+
+[data-theme="light"] footer {
+    border-top-color: #e2e8f0 !important;
+}
+
+[data-theme="light"] .text-slate-500 {
+    color: #64748b !important;
+}
+
+[data-theme="light"] .modal-overlay {
+    background-color: rgba(241, 245, 249, 0.9);
+}
+
+[data-theme="light"] .modal-content {
+    background-color: #ffffff !important;
+    border-color: #cbd5e1 !important;
+}
+
+[data-theme="light"] #theme-toggle {
+    background-color: #f8fafc !important;
+}
+
+[data-theme="light"] #theme-toggle:hover {
+    background-color: #e2e8f0 !important;
+}
+
+[data-theme="light"] .card .tools-dropdown-content {
+    background-color: #ffffff;
+}
+
+/* ===== NEW FEATURE STYLES ===== */
+
+/* Copy Link Button */
+.copy-link-btn {
+    backdrop-filter: blur(10px);
+    flex-shrink: 0;
+    z-index: 10;
+}
+
+.copy-link-btn:hover {
+    transform: scale(1.1);
+    background-color: rgba(71, 85, 105, 0.8) !important;
+}
+
+/* Recently Added Badge */
+.recently-added-badge {
+    animation: pulse-badge 2s infinite;
+    box-shadow: 0 0 10px rgba(34, 197, 94, 0.3);
+    flex-shrink: 0;
+}
+
+@keyframes pulse-badge {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.8; transform: scale(1.05); }
+}
+
+/* Favorite Button */
+.favorite-btn {
+    flex-shrink: 0;
+    cursor: pointer;
+}
+
+.favorite-btn:hover {
+    transform: scale(1.15);
+}
+
+/* Card Favicon */
+.card-favicon {
+    border-radius: 4px;
+    background: rgba(255, 255, 255, 0.05);
+    padding: 2px;
+}
+
+[data-theme="light"] .card-favicon {
+    background: rgba(0, 0, 0, 0.05);
+}
+
+/* Resource Counter */
+.resource-counter {
+    animation: slideInRight 0.5s ease-out;
+}
+
+@keyframes slideInRight {
+    from { opacity: 0; transform: translateX(20px); }
+    to { opacity: 1; transform: translateX(0); }
+}
+
+/* Search Filters */
+#search-filters select {
+    cursor: pointer;
+}
+
+#search-filters select:hover {
+    border-color: #8b5cf6;
+}
+
+[data-theme="light"] #search-filters select {
+    background-color: #f8fafc !important;
+    color: #0f172a !important;
+    border-color: #cbd5e1 !important;
+}
+
+[data-theme="light"] .copy-link-btn,
+[data-theme="light"] .favorite-btn {
+    background-color: rgba(248, 250, 252, 0.9);
+}
+
+[data-theme="light"] .copy-link-btn:hover,
+[data-theme="light"] .favorite-btn:hover {
+    background-color: rgba(226, 232, 240, 1);
 }
 
