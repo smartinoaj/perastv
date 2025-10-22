@@ -1289,8 +1289,20 @@ document.addEventListener('DOMContentLoaded', () => {
                 showCard = hasRABadge !== null;
             }
             
-            // Show or hide card
-            card.style.display = showCard ? '' : 'none';
+            // Show or hide card with smooth animation
+            if (!showCard) {
+                card.style.opacity = '0';
+                card.style.transform = 'scale(0.95)';
+                setTimeout(() => {
+                    card.style.display = 'none';
+                }, 300);
+            } else {
+                card.style.display = '';
+                setTimeout(() => {
+                    card.style.opacity = '1';
+                    card.style.transform = 'scale(1)';
+                }, 10);
+            }
         });
     }
 
@@ -1314,6 +1326,75 @@ document.addEventListener('DOMContentLoaded', () => {
             filterEmulators();
         });
     }
+
+    // --- PWA SERVICE WORKER REGISTRATION ---
+    if ('serviceWorker' in navigator) {
+        window.addEventListener('load', () => {
+            navigator.serviceWorker.register('/sw.js')
+                .then((registration) => {
+                    console.log('ServiceWorker registration successful');
+                })
+                .catch((err) => {
+                    console.log('ServiceWorker registration failed: ', err);
+                });
+        });
+    }
+
+    // --- LAZY LOADING IMAGES ---
+    const lazyImages = document.querySelectorAll('img[loading="lazy"]');
+    
+    if ('IntersectionObserver' in window) {
+        const imageObserver = new IntersectionObserver((entries, observer) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const img = entry.target;
+                    img.addEventListener('load', () => {
+                        img.classList.add('loaded');
+                    });
+                    if (img.complete) {
+                        img.classList.add('loaded');
+                    }
+                    observer.unobserve(img);
+                }
+            });
+        });
+
+        lazyImages.forEach(img => imageObserver.observe(img));
+    } else {
+        // Fallback for browsers without IntersectionObserver
+        lazyImages.forEach(img => {
+            img.addEventListener('load', () => {
+                img.classList.add('loaded');
+            });
+            if (img.complete) {
+                img.classList.add('loaded');
+            }
+        });
+    }
+
+    // --- DYNAMIC STATS CALCULATION ---
+    function updateStats() {
+        const emulatorsGrid = document.getElementById('emulators-grid');
+        if (!emulatorsGrid) return;
+
+        const allCards = emulatorsGrid.querySelectorAll('.card');
+        const raCards = emulatorsGrid.querySelectorAll('.card .retroachievements-badge');
+        
+        // Update total emulators
+        const totalEmulatorsEl = document.getElementById('total-emulators');
+        if (totalEmulatorsEl) {
+            totalEmulatorsEl.textContent = allCards.length;
+        }
+        
+        // Update RA compatible count
+        const raCompatibleEl = document.getElementById('ra-compatible');
+        if (raCompatibleEl) {
+            raCompatibleEl.textContent = raCards.length;
+        }
+    }
+
+    // Update stats on page load
+    updateStats();
 
 });
 

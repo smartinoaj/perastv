@@ -5,11 +5,21 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>The Ultimate Megathread</title>
     <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' fill='%231e293b'/%3E%3Cpath d='M30 25 L30 75 L70 50 Z' fill='%23a78bfa' stroke='%23a78bfa' stroke-width='2' stroke-linejoin='round'/%3E%3Cpath d='M65 45 L75 50 L65 55' fill='none' stroke='%23a78bfa' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E">
+    
+    <!-- PWA Support -->
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#a78bfa">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="Megathread">
+    
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
 </head>
 <body class="antialiased">
+    <!-- Skip to content link for accessibility -->
+    <a href="#main-content" class="skip-link">Skip to main content</a>
     <!-- Header -->
     <header class="sticky top-0 z-40 w-full border-b border-slate-800 bg-slate-900/80 backdrop-blur-lg">
         <div class="max-w-screen-2xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -217,7 +227,7 @@
         </div>
 
         <!-- Megathread Content -->
-        <div id="megathread-content">
+        <div id="megathread-content" id="main-content" role="main" aria-label="Main content">
             <div class="tabs-content">
                 <!-- Favorites Panel -->
                 <div id="favorites" class="tab-content active">
@@ -870,11 +880,30 @@
                         </div>
                         <!-- Emulators -->
                         <div id="emulators" class="sub-tab-content">
+                            <!-- Stats Dashboard -->
+                            <div class="mb-8 grid grid-cols-2 md:grid-cols-4 gap-4">
+                                <div class="stats-card rounded-xl p-4 text-center">
+                                    <div class="stats-number" id="total-emulators">30</div>
+                                    <div class="text-sm text-slate-400 mt-1">Total Emulators</div>
+                                </div>
+                                <div class="stats-card rounded-xl p-4 text-center">
+                                    <div class="stats-number" id="ra-compatible">24</div>
+                                    <div class="text-sm text-slate-400 mt-1">RA Compatible</div>
+                                </div>
+                                <div class="stats-card rounded-xl p-4 text-center">
+                                    <div class="stats-number" id="systems-covered">45+</div>
+                                    <div class="text-sm text-slate-400 mt-1">Systems Covered</div>
+                                </div>
+                                <div class="stats-card rounded-xl p-4 text-center">
+                                    <div class="stats-number" id="platforms-supported">5</div>
+                                    <div class="text-sm text-slate-400 mt-1">Platforms</div>
+                                </div>
+                            </div>
                             <!-- Sorting Filters -->
-                            <div class="mb-6 flex flex-wrap gap-4 items-center">
+                            <div class="mb-6 flex flex-wrap gap-4 items-center" role="search" aria-label="Emulator filters">
                                 <div class="flex items-center gap-2">
                                     <label for="system-filter" class="text-sm font-semibold text-slate-300">Filter by System:</label>
-                                    <select id="system-filter" class="bg-slate-700 text-slate-300 px-4 py-2 rounded-lg border border-slate-600 focus:border-violet-500 focus:outline-none">
+                                    <select id="system-filter" class="bg-slate-700 text-slate-300 px-4 py-2 rounded-lg border border-slate-600 focus:border-violet-500 focus:outline-none" aria-label="Filter emulators by gaming system">
                                         <option value="all">All Systems</option>
                                         <option value="ps1">PS1</option>
                                         <option value="ps2">PS2</option>
@@ -898,7 +927,7 @@
                                 </div>
                                 <div class="flex items-center gap-2">
                                     <label for="platform-filter" class="text-sm font-semibold text-slate-300">Filter by Platform:</label>
-                                    <select id="platform-filter" class="bg-slate-700 text-slate-300 px-4 py-2 rounded-lg border border-slate-600 focus:border-violet-500 focus:outline-none">
+                                    <select id="platform-filter" class="bg-slate-700 text-slate-300 px-4 py-2 rounded-lg border border-slate-600 focus:border-violet-500 focus:outline-none" aria-label="Filter emulators by operating system platform">
                                         <option value="all">All Platforms</option>
                                         <option value="windows">Windows</option>
                                         <option value="macos">macOS</option>
@@ -910,11 +939,11 @@
                                 <div class="flex items-center gap-2" title="Filter to show only RetroAchievements compatible emulators">
                                     <img src="img/retroachievementslogo.png" alt="RetroAchievements" class="h-6 w-6">
                                     <label class="relative inline-flex items-center cursor-pointer">
-                                        <input type="checkbox" id="ra-filter" class="sr-only peer">
+                                        <input type="checkbox" id="ra-filter" class="sr-only peer" aria-label="Toggle RetroAchievements compatible emulators only">
                                         <div class="w-11 h-6 bg-slate-600 peer-focus:outline-none peer-focus:ring-2 peer-focus:ring-violet-500 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-violet-500"></div>
                                     </label>
                                 </div>
-                                <button id="reset-filters" class="px-4 py-2 bg-slate-600 text-slate-300 rounded-lg hover:bg-slate-500 transition-colors">Reset Filters</button>
+                                <button id="reset-filters" class="px-4 py-2 bg-slate-600 text-slate-300 rounded-lg hover:bg-slate-500 transition-colors" aria-label="Reset all emulator filters">Reset Filters</button>
                             </div>
                             <div id="emulators-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
                                <div class="card rounded-xl p-6 flex flex-col tag-recommended relative overflow-hidden">
@@ -1132,9 +1161,12 @@
                                        </div>
                                    </div>
                                </div>
-                               <div class="card rounded-xl p-6 flex flex-col relative overflow-hidden">
+                               <div class="card rounded-xl p-6 flex flex-col tag-recommended relative overflow-hidden">
                                    <div class="card-main-content flex flex-col h-full">
-                                       <div class="mb-3"><h3 class="text-lg font-semibold text-white">Xenia</h3></div>
+                                       <div class="flex items-start justify-between mb-3">
+                                           <h3 class="text-lg font-semibold text-white">Xenia</h3>
+                                           <div class="text-xs font-bold uppercase text-amber-400 tracking-wider">Recommended</div>
+                                       </div>
                                        <div class="mb-3">
                                            <p class="text-xs text-slate-500 mb-2">Supports 1 system</p>
                                            <div class="flex flex-wrap gap-2"><span class="px-2 py-1 bg-slate-700 text-slate-300 rounded text-xs">Xbox 360</span></div>
@@ -1146,12 +1178,15 @@
                                                <span class="px-2 py-1 bg-slate-700 text-slate-300 rounded text-xs">Linux</span>
                                            </div>
                                        </div>
-                                       <div class="mt-auto"><a href="https://xenia.jp/" target="_blank" class="block text-center px-4 py-2 rounded-lg font-semibold transition-colors border-2 border-violet-500 text-violet-400 hover:bg-violet-500 hover:text-white">Visit Site</a></div>
+                                       <div class="mt-auto"><a href="https://xenia.jp/" target="_blank" class="block text-center px-4 py-2 rounded-lg font-semibold transition-colors border-2 border-amber-400 text-amber-400 hover:bg-amber-400 hover:text-slate-900">Visit Site</a></div>
                                    </div>
                                </div>
-                               <div class="card rounded-xl p-6 flex flex-col relative overflow-hidden">
+                               <div class="card rounded-xl p-6 flex flex-col tag-recommended relative overflow-hidden">
                                    <div class="card-main-content flex flex-col h-full">
-                                       <div class="mb-3"><h3 class="text-lg font-semibold text-white">Citron</h3></div>
+                                       <div class="flex items-start justify-between mb-3">
+                                           <h3 class="text-lg font-semibold text-white">Citron</h3>
+                                           <div class="text-xs font-bold uppercase text-amber-400 tracking-wider">Recommended</div>
+                                       </div>
                                        <div class="mb-3">
                                            <p class="text-xs text-slate-500 mb-2">Supports 2 systems</p>
                                            <div class="flex flex-wrap gap-2">
@@ -1167,7 +1202,7 @@
                                                <span class="px-2 py-1 bg-slate-700 text-slate-300 rounded text-xs">Android</span>
                                            </div>
                                        </div>
-                                       <div class="mt-auto"><a href="https://citron-emu.com/" target="_blank" class="block text-center px-4 py-2 rounded-lg font-semibold transition-colors border-2 border-violet-500 text-violet-400 hover:bg-violet-500 hover:text-white">Visit Site</a></div>
+                                       <div class="mt-auto"><a href="https://citron-emu.com/" target="_blank" class="block text-center px-4 py-2 rounded-lg font-semibold transition-colors border-2 border-amber-400 text-amber-400 hover:bg-amber-400 hover:text-slate-900">Visit Site</a></div>
                                    </div>
                                </div>
                                <div class="card rounded-xl p-6 flex flex-col relative overflow-hidden">
@@ -1282,34 +1317,6 @@
                                            </div>
                                        </div>
                                        <div class="mt-auto"><a href="https://vita3k.org/" target="_blank" class="block text-center px-4 py-2 rounded-lg font-semibold transition-colors border-2 border-violet-500 text-violet-400 hover:bg-violet-500 hover:text-white">Visit Site</a></div>
-                                   </div>
-                               </div>
-                               <div class="card rounded-xl p-6 flex flex-col relative overflow-hidden">
-                                   <div class="card-main-content flex flex-col h-full">
-                                       <div class="mb-3"><h3 class="text-lg font-semibold text-white">Playnite</h3></div>
-                                       <div class="mb-3">
-                                           <p class="text-xs text-slate-500 mb-2">Game Library Manager</p>
-                                           <div class="flex flex-wrap gap-2"><span class="px-2 py-1 bg-slate-700 text-slate-300 rounded text-xs">Frontend</span></div>
-                                       </div>
-                                       <div class="mb-4 flex-grow">
-                                           <p class="text-xs text-slate-500 mb-2">Available on</p>
-                                           <div class="flex flex-wrap gap-2"><span class="px-2 py-1 bg-slate-700 text-slate-300 rounded text-xs">Windows</span></div>
-                                       </div>
-                                       <div class="mt-auto"><a href="https://playnite.link/" target="_blank" class="block text-center px-4 py-2 rounded-lg font-semibold transition-colors border-2 border-violet-500 text-violet-400 hover:bg-violet-500 hover:text-white">Visit Site</a></div>
-                                   </div>
-                               </div>
-                               <div class="card rounded-xl p-6 flex flex-col relative overflow-hidden">
-                                   <div class="card-main-content flex flex-col h-full">
-                                       <div class="mb-3"><h3 class="text-lg font-semibold text-white">LaunchBox</h3></div>
-                                       <div class="mb-3">
-                                           <p class="text-xs text-slate-500 mb-2">Game Library Manager</p>
-                                           <div class="flex flex-wrap gap-2"><span class="px-2 py-1 bg-slate-700 text-slate-300 rounded text-xs">Frontend</span></div>
-                                       </div>
-                                       <div class="mb-4 flex-grow">
-                                           <p class="text-xs text-slate-500 mb-2">Available on</p>
-                                           <div class="flex flex-wrap gap-2"><span class="px-2 py-1 bg-slate-700 text-slate-300 rounded text-xs">Windows</span></div>
-                                       </div>
-                                       <div class="mt-auto"><a href="https://www.launchbox-app.com/" target="_blank" class="block text-center px-4 py-2 rounded-lg font-semibold transition-colors border-2 border-violet-500 text-violet-400 hover:bg-violet-500 hover:text-white">Visit Site</a></div>
                                    </div>
                                </div>
                                <div class="card rounded-xl p-6 flex flex-col relative overflow-hidden">
@@ -1762,6 +1769,19 @@
                                         <p class="text-slate-400 mt-2 flex-grow">Linux gaming platform with install scripts for thousands of games. Manages Wine, emulators, and native games.</p>
                                         <div class="mt-6">
                                             <a href="https://lutris.net/" target="_blank" class="block text-center px-4 py-2 rounded-lg font-semibold transition-colors border-2 border-amber-400 text-amber-400 hover:bg-amber-400 hover:text-slate-900">Visit Site</a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- LaunchBox Card -->
+                                <div class="card rounded-xl p-6 flex flex-col tag-recommended relative overflow-hidden">
+                                    <div class="card-main-content flex flex-col h-full">
+                                        <div class="flex items-start justify-between">
+                                            <h3 class="text-lg font-semibold text-white">LaunchBox</h3>
+                                            <div class="text-xs font-bold uppercase text-amber-400 tracking-wider">Recommended</div>
+                                        </div>
+                                        <p class="text-slate-400 mt-2 flex-grow">Premium game launcher and emulation frontend with beautiful Big Box mode. Extensive metadata scraping and customizable themes for your entire collection.</p>
+                                        <div class="mt-6">
+                                            <a href="https://www.launchbox-app.com/" target="_blank" class="block text-center px-4 py-2 rounded-lg font-semibold transition-colors border-2 border-amber-400 text-amber-400 hover:bg-amber-400 hover:text-slate-900">Visit Site</a>
                                         </div>
                                     </div>
                                 </div>
