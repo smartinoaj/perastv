@@ -870,61 +870,726 @@
                         </div>
                         <!-- Emulators -->
                         <div id="emulators" class="sub-tab-content">
-                            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-                               <div class="card rounded-xl p-6 flex flex-col tag-recommended relative overflow-hidden"> <div class="card-main-content flex flex-col h-full"> <div class="flex items-start justify-between"><h3 class="text-lg font-semibold text-white flex items-center">PCSX2<span class="retroachievements-badge"><img src="img/retroachievementslogo.png" alt="RA" title="Compatible with RetroAchievements.org"></span></h3><div class="text-xs font-bold uppercase text-amber-400 tracking-wider">Recommended</div></div><p class="text-slate-400 mt-2 flex-grow">The leading open-source emulator for PlayStation 2.</p> <div class="mt-6 flex flex-col gap-3"><a href="https://pcsx2.net/" target="_blank" class="w-full text-center px-4 py-2 rounded-lg font-semibold transition-colors border-2 border-amber-400 text-amber-400 hover:bg-amber-400 hover:text-slate-900">Visit Site</a><button class="tools-dropdown-button w-full text-center px-4 py-2 rounded-lg font-semibold transition-colors border-2 border-slate-600 text-slate-300 hover:bg-slate-600 hover:text-white flex items-center justify-center gap-2" title="Click to Expand">Tools <svg class="h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg></button></div> </div> <div class="tools-dropdown-content absolute inset-0"><button class="close-tools-button absolute top-4 right-4 text-slate-400 hover:text-white transition-colors text-3xl font-bold">&times;</button><h4 class="text-lg font-bold mb-4 text-center">PCSX2 Tools</h4><div class="flex flex-col gap-3 w-full"><a href="https://archive.org/download/ps2-bios-megadump/PS2_BIOS.zip" target="_blank" class="w-full relative flex items-center justify-between px-4 py-2 rounded-lg font-semibold transition-colors border-2 border-slate-600 text-slate-300 hover:bg-slate-600 hover:text-white bios-download-btn"><span class="bios-text flex-1 text-center">Bios</span><svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 flex-shrink-0" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M3 17a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm3.293-7.707a1 1 0 011.414 0L9 10.586V3a1 1 0 112 0v7.586l1.293-1.293a1 1 0 111.414 1.414l-3 3a1 1 0 01-1.414 0l-3-3a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg></a><button data-guide-id="pcsx2" class="guide-button w-full text-center px-4 py-2 rounded-lg font-semibold transition-colors border-2 border-slate-600 text-slate-300 hover:bg-slate-600 hover:text-white">Settings</button></div></div> </div>
-                               <div class="card rounded-xl p-6 flex flex-col tag-recommended relative overflow-hidden">
-                                <div class="card-main-content flex flex-col h-full">
-                                    <div class="flex items-start justify-between">
-                                        <h3 class="text-lg font-semibold text-white flex items-center">Dolphin<span class="retroachievements-badge"><img src="img/retroachievementslogo.png" alt="RA" title="Compatible with RetroAchievements.org"></span></h3>
-                                        <div class="text-xs font-bold uppercase text-amber-400 tracking-wider">Recommended</div>
-                                    </div>
-                                    <p class="text-slate-400 mt-2 flex-grow">The definitive emulator for GameCube and Wii games.</p>
-                                    <div class="mt-6 flex flex-col gap-3">
-                                        <a href="https://dolphin-emu.org/" target="_blank" class="w-full text-center px-4 py-2 rounded-lg font-semibold transition-colors border-2 border-amber-400 text-amber-400 hover:bg-amber-400 hover:text-slate-900">Visit Site</a>
-                                        <button data-guide-id="dolphin" class="guide-button w-full text-center px-4 py-2 rounded-lg font-semibold transition-colors border-2 border-slate-600 text-slate-300 hover:bg-slate-600 hover:text-white">Settings</button>
-                                    </div>
+                            <!-- Sorting Filters -->
+                            <div class="mb-6 flex flex-wrap gap-4 items-center">
+                                <div class="flex items-center gap-2">
+                                    <label for="system-filter" class="text-sm font-semibold text-slate-300">Filter by System:</label>
+                                    <select id="system-filter" class="bg-slate-700 text-slate-300 px-4 py-2 rounded-lg border border-slate-600 focus:border-violet-500 focus:outline-none">
+                                        <option value="all">All Systems</option>
+                                        <option value="ps1">PS1</option>
+                                        <option value="ps2">PS2</option>
+                                        <option value="ps3">PS3</option>
+                                        <option value="psp">PSP</option>
+                                        <option value="gamecube">GameCube</option>
+                                        <option value="wii">Wii</option>
+                                        <option value="switch">Switch</option>
+                                        <option value="wiiu">Wii U</option>
+                                        <option value="xbox360">Xbox 360</option>
+                                        <option value="n64">N64</option>
+                                        <option value="nes">NES</option>
+                                        <option value="snes">SNES</option>
+                                        <option value="gb">Game Boy</option>
+                                        <option value="gba">GBA</option>
+                                        <option value="ds">DS</option>
+                                        <option value="3ds">3DS</option>
+                                        <option value="genesis">Genesis</option>
+                                        <option value="dreamcast">Dreamcast</option>
+                                    </select>
                                 </div>
-                               </div>
+                                <div class="flex items-center gap-2">
+                                    <label for="platform-filter" class="text-sm font-semibold text-slate-300">Filter by Platform:</label>
+                                    <select id="platform-filter" class="bg-slate-700 text-slate-300 px-4 py-2 rounded-lg border border-slate-600 focus:border-violet-500 focus:outline-none">
+                                        <option value="all">All Platforms</option>
+                                        <option value="windows">Windows</option>
+                                        <option value="macos">macOS</option>
+                                        <option value="linux">Linux</option>
+                                        <option value="android">Android</option>
+                                        <option value="ios">iOS</option>
+                                    </select>
+                                </div>
+                                <div class="flex items-center gap-2" title="Filter to show only RetroAchievements compatible emulators">
+                                    <img src="img/retroachievementslogo.png" alt="RetroAchievements" class="h-6 w-6">
+                                    <label class="relative inline-flex items-center cursor-pointer">
+                                        <input type="checkbox" id="ra-filter" class="sr-only peer">
+                                        <div class="w-11 h-6 bg-slate-600 peer-focus:outline-none peer-focus:ring-2 peer-focus:ring-violet-500 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-violet-500"></div>
+                                    </label>
+                                </div>
+                                <button id="reset-filters" class="px-4 py-2 bg-slate-600 text-slate-300 rounded-lg hover:bg-slate-500 transition-colors">Reset Filters</button>
+                            </div>
+                            <div id="emulators-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
                                <div class="card rounded-xl p-6 flex flex-col tag-recommended relative overflow-hidden">
                                    <div class="card-main-content flex flex-col h-full">
-                                       <div class="flex items-start justify-between">
-                                           <h3 class="text-lg font-semibold text-white flex items-center">PPSSPP<span class="retroachievements-badge"><img src="img/retroachievementslogo.png" alt="RA" title="Compatible with RetroAchievements.org"></span></h3>
+                                       <div class="flex items-start justify-between mb-3">
+                                           <h3 class="text-lg font-semibold text-white flex items-center">
+                                               PCSX2
+                                               <span class="retroachievements-badge"><img src="img/retroachievementslogo.png" alt="RA" title="Compatible with RetroAchievements.org"></span>
+                                           </h3>
                                            <div class="text-xs font-bold uppercase text-amber-400 tracking-wider">Recommended</div>
                                        </div>
-                                       <p class="text-slate-400 mt-2 flex-grow">The leading open-source PlayStation Portable (PSP) emulator.</p>
-                                       <div class="mt-6 flex flex-col gap-3">
-                                           <a href="https://www.ppsspp.org/" target="_blank" class="w-full text-center px-4 py-2 rounded-lg font-semibold transition-colors border-2 border-amber-400 text-amber-400 hover:bg-amber-400 hover:text-slate-900">Visit Site</a>
-                                           <button data-guide-id="ppsspp" class="guide-button w-full text-center px-4 py-2 rounded-lg font-semibold transition-colors border-2 border-slate-600 text-slate-300 hover:bg-slate-600 hover:text-white">Settings</button>
+                                       
+                                       <div class="mb-3">
+                                           <p class="text-xs text-slate-500 mb-2">Supports 1 system</p>
+                                           <div class="flex flex-wrap gap-2">
+                                               <span class="px-2 py-1 bg-slate-700 text-slate-300 rounded text-xs">PS2</span>
+                                           </div>
+                                       </div>
+                                       
+                                       <div class="mb-4 flex-grow">
+                                           <p class="text-xs text-slate-500 mb-2">Available on</p>
+                                           <div class="flex flex-wrap gap-2">
+                                               <span class="px-2 py-1 bg-slate-700 text-slate-300 rounded text-xs">Windows</span>
+                                               <span class="px-2 py-1 bg-slate-700 text-slate-300 rounded text-xs">macOS</span>
+                                               <span class="px-2 py-1 bg-slate-700 text-slate-300 rounded text-xs">Linux</span>
+                                           </div>
+                                       </div>
+                                       
+                                       <div class="mt-auto">
+                                           <a href="https://pcsx2.net/" target="_blank" class="block text-center px-4 py-2 rounded-lg font-semibold transition-colors border-2 border-amber-400 text-amber-400 hover:bg-amber-400 hover:text-slate-900 mb-2">Visit Site</a>
                                        </div>
                                    </div>
                                </div>
-                               <div class="card rounded-xl p-6 flex flex-col tag-recommended relative overflow-hidden"> <div class="card-main-content flex flex-col h-full"> <div class="flex items-start justify-between"><h3 class="text-lg font-semibold text-white flex items-center">DuckStation<span class="retroachievements-badge"><img src="img/retroachievementslogo.png" alt="RA" title="Compatible with RetroAchievements.org"></span></h3><div class="text-xs font-bold uppercase text-amber-400 tracking-wider">Recommended</div></div><p class="text-slate-400 mt-2 flex-grow">An accuracy-focused PlayStation 1 (PSX) emulator.</p> <div class="mt-6 flex flex-col gap-3"><a href="https://www.duckstation.org/" target="_blank" class="w-full text-center px-4 py-2 rounded-lg font-semibold transition-colors border-2 border-amber-400 text-amber-400 hover:bg-amber-400 hover:text-slate-900">Visit Site</a><a href="https://download2444.mediafire.com/ywkyh8el8pugTi8r338-l68atpFIrQyhWep8fLYTVUI9AmkQVnnm-mv7XiwKY-zXzw8AdOwR8hUIf92FRN9v9WZYhIiSZyr4WLl4qilCjnDOSydb9FCQT5UhxHfRKw97TozAUPwZiJ0LIAHDqCruiXaJgFVrLkor5Evadgj0w8dgXe0/s11dvh2snfrmy29/PS1_BIOS.zip" target="_blank" class="bios-download-btn w-full px-4 py-2 rounded-lg font-semibold transition-colors border-2 border-slate-600 text-slate-300 hover:bg-slate-600 hover:text-white flex items-center justify-center gap-3" title="Download"><span class="bios-text">Bios</span><svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M3 17a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm3.293-7.707a1 1 0 011.414 0L9 10.586V3a1 1 0 112 0v7.586l1.293-1.293a1 1 0 111.414 1.414l-3 3a1 1 0 01-1.414 0l-3-3a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg></a></div> </div> </div>
-                               <div class="card rounded-xl p-6 flex flex-col tag-recommended relative overflow-hidden"> <div class="card-main-content flex flex-col h-full"> <div class="flex items-start justify-between"><h3 class="text-lg font-semibold text-white flex items-center">RetroArch<span class="retroachievements-badge"><img src="img/retroachievementslogo.png" alt="RA" title="Compatible with RetroAchievements.org"></span></h3><div class="text-xs font-bold uppercase text-amber-400 tracking-wider">Recommended</div></div><p class="text-slate-400 mt-2 flex-grow">A popular, cross-platform frontend for emulators and game engines.</p> <div class="mt-6"><a href="https://www.retroarch.com/" target="_blank" class="block text-center px-4 py-2 rounded-lg font-semibold transition-colors border-2 border-amber-400 text-amber-400 hover:bg-amber-400 hover:text-slate-900">Visit Site</a></div> </div> </div>
-                               <div class="card rounded-xl p-6 flex flex-col tag-recommended relative overflow-hidden"> <div class="card-main-content flex flex-col h-full"> <div class="flex items-start justify-between"><h3 class="text-lg font-semibold text-white">RPCS3</h3><div class="text-xs font-bold uppercase text-amber-400 tracking-wider">Recommended</div></div><p class="text-slate-400 mt-2 flex-grow">An impressive open-source PlayStation 3 emulator.</p> <div class="mt-6 flex flex-col gap-3"><a href="https://rpcs3.net/" target="_blank" class="w-full text-center px-4 py-2 rounded-lg font-semibold transition-colors border-2 border-amber-400 text-amber-400 hover:bg-amber-400 hover:text-slate-900">Visit Site</a><a href="http://dus01.ps3.update.playstation.net/update/ps3/image/us/2025_0305_c179ad173bbc08b55431d30947725a4b/PS3UPDAT.PUP" target="_blank" class="bios-download-btn w-full px-4 py-2 rounded-lg font-semibold transition-colors border-2 border-slate-600 text-slate-300 hover:bg-slate-600 hover:text-white flex items-center justify-center gap-3" title="Download"><span class="bios-text">Bios</span><svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M3 17a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm3.293-7.707a1 1 0 011.414 0L9 10.586V3a1 1 0 112 0v7.586l1.293-1.293a1 1 0 111.414 1.414l-3 3a1 1 0 01-1.414 0l-3-3a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg></a></div> </div> </div>
-                               <div class="card rounded-xl p-6 flex flex-col relative overflow-hidden"><div class="card-main-content flex flex-col h-full"><h3 class="text-lg font-semibold text-white">Xenia</h3><p class="text-slate-400 mt-2 flex-grow">An experimental open-source emulator for the Xbox 30.</p><div class="mt-6"><a href="https://xenia.jp/" target="_blank" class="block text-center px-4 py-2 rounded-lg font-semibold transition-colors border-2 border-violet-500 text-violet-400 hover:bg-violet-500 hover:text-white">Visit Site</a></div></div></div>
-                               <div class="card rounded-xl p-6 flex flex-col relative overflow-hidden"><div class="card-main-content flex flex-col h-full"><h3 class="text-lg font-semibold text-white">Citron</h3><p class="text-slate-400 mt-2 flex-grow">A modern emulator for Nintendo 3DS and Switch.</p><div class="mt-6"><a href="https://citron-emu.com/" target="_blank" class="block text-center px-4 py-2 rounded-lg font-semibold transition-colors border-2 border-violet-500 text-violet-400 hover:bg-violet-500 hover:text-white">Visit Site</a></div></div></div>
-                               <div class="card rounded-xl p-6 flex flex-col relative overflow-hidden"><div class="card-main-content flex flex-col h-full"><h3 class="text-lg font-semibold text-white">Cemu</h3><p class="text-slate-400 mt-2 flex-grow">A highly effective closed-source emulator for the Nintendo Wii U.</p><div class="mt-6"><a href="https://cemu.info/" target="_blank" class="block text-center px-4 py-2 rounded-lg font-semibold transition-colors border-2 border-violet-500 text-violet-400 hover:bg-violet-500 hover:text-white">Visit Site</a></div></div></div>
-                               <div class="card rounded-xl p-6 flex flex-col relative overflow-hidden"><div class="card-main-content flex flex-col h-full"><h3 class="text-lg font-semibold text-white">Mesen</h3><p class="text-slate-400 mt-2 flex-grow">A high-accuracy open-source emulator for the NES, Famicom, and Famicom Disk System.</p><div class="mt-6"><a href="https://www.mesen.ca/" target="_blank" class="block text-center px-4 py-2 rounded-lg font-semibold transition-colors border-2 border-violet-500 text-violet-400 hover:bg-violet-500 hover:text-white">Visit Site</a></div></div></div>
-                               <div class="card rounded-xl p-6 flex flex-col relative overflow-hidden"><div class="card-main-content flex flex-col h-full"><h3 class="text-lg font-semibold text-white">Snes9x</h3><p class="text-slate-400 mt-2 flex-grow">A portable, freeware Super Nintendo Entertainment System (SNES) emulator.</p><div class="mt-6"><a href="https://www.snes9x.com/" target="_blank" class="block text-center px-4 py-2 rounded-lg font-semibold transition-colors border-2 border-violet-500 text-violet-400 hover:bg-violet-500 hover:text-white">Visit Site</a></div></div></div>
-                               <div class="card rounded-xl p-6 flex flex-col relative overflow-hidden"><div class="card-main-content flex flex-col h-full"><h3 class="text-lg font-semibold text-white">mGBA</h3><p class="text-slate-400 mt-2 flex-grow">A fast, accurate, and feature-rich open-source emulator for Game Boy Advance.</p><div class="mt-6"><a href="https://mgba.io/" target="_blank" class="block text-center px-4 py-2 rounded-lg font-semibold transition-colors border-2 border-violet-500 text-violet-400 hover:bg-violet-500 hover:text-white">Visit Site</a></div></div></div>
-                               <div class="card rounded-xl p-6 flex flex-col relative overflow-hidden"><div class="card-main-content flex flex-col h-full"><h3 class="text-lg font-semibold text-white">melonDS</h3><p class="text-slate-400 mt-2 flex-grow">An open-source Nintendo DS emulator focused on accuracy and performance.</p><div class="mt-6"><a href="http://melonds.kuribo64.net/" target="_blank" class="block text-center px-4 py-2 rounded-lg font-semibold transition-colors border-2 border-violet-500 text-violet-400 hover:bg-violet-500 hover:text-white">Visit Site</a></div></div></div>
-                               <div class="card rounded-xl p-6 flex flex-col relative overflow-hidden"><div class="card-main-content flex flex-col h-full"><h3 class="text-lg font-semibold text-white">Vita3K</h3><p class="text-slate-400 mt-2 flex-grow">The world's first experimental open-source PlayStation Vita emulator.</p><div class="mt-6"><a href="https://vita3k.org/" target="_blank" class="block text-center px-4 py-2 rounded-lg font-semibold transition-colors border-2 border-violet-500 text-violet-400 hover:bg-violet-500 hover:text-white">Visit Site</a></div></div></div>
-                               <div class="card rounded-xl p-6 flex flex-col relative overflow-hidden"><div class="card-main-content flex flex-col h-full"><h3 class="text-lg font-semibold text-white">Playnite</h3><p class="text-slate-400 mt-2 flex-grow">An open-source video game library manager and unified interface for all your games.</p><div class="mt-6"><a href="https://playnite.link/" target="_blank" class="block text-center px-4 py-2 rounded-lg font-semibold transition-colors border-2 border-violet-500 text-violet-400 hover:bg-violet-500 hover:text-white">Visit Site</a></div></div></div>
-                               <div class="card rounded-xl p-6 flex flex-col relative overflow-hidden"><div class="card-main-content flex flex-col h-full"><h3 class="text-lg font-semibold text-white">LaunchBox</h3><p class="text-slate-400 mt-2 flex-grow">An attractive frontend for DOSBox, modern PC games, and emulation.</p><div class="mt-6"><a href="https://www.launchbox-app.com/" target="_blank" class="block text-center px-4 py-2 rounded-lg font-semibold transition-colors border-2 border-violet-500 text-violet-400 hover:bg-violet-500 hover:text-white">Visit Site</a></div></div></div>
-                               <div class="card rounded-xl p-6 flex flex-col relative overflow-hidden"><div class="card-main-content flex flex-col h-full"><h3 class="text-lg font-semibold text-white flex items-center">BizHawk<span class="retroachievements-badge"><img src="img/retroachievementslogo.png" alt="RA" title="Compatible with RetroAchievements.org"></span></h3><p class="text-slate-400 mt-2 flex-grow">Multi-system emulator designed for tool-assisted speedruns (TAS) with RetroAchievements support.</p><div class="mt-6"><a href="https://tasvideos.org/Bizhawk" target="_blank" class="block text-center px-4 py-2 rounded-lg font-semibold transition-colors border-2 border-violet-500 text-violet-400 hover:bg-violet-500 hover:text-white">Visit Site</a></div></div></div>
-                               <div class="card rounded-xl p-6 flex flex-col relative overflow-hidden"><div class="card-main-content flex flex-col h-full"><h3 class="text-lg font-semibold text-white flex items-center">Flycast<span class="retroachievements-badge"><img src="img/retroachievementslogo.png" alt="RA" title="Compatible with RetroAchievements.org"></span></h3><p class="text-slate-400 mt-2 flex-grow">Multi-platform Sega Dreamcast, Naomi, and Atomiswave emulator with RetroAchievements support.</p><div class="mt-6"><a href="https://github.com/flyinghead/flycast/releases" target="_blank" class="block text-center px-4 py-2 rounded-lg font-semibold transition-colors border-2 border-violet-500 text-violet-400 hover:bg-violet-500 hover:text-white">Visit Site</a></div></div></div>
-                               <div class="card rounded-xl p-6 flex flex-col relative overflow-hidden"><div class="card-main-content flex flex-col h-full"><h3 class="text-lg font-semibold text-white flex items-center">RALibRetro<span class="retroachievements-badge"><img src="img/retroachievementslogo.png" alt="RA" title="Compatible with RetroAchievements.org"></span></h3><p class="text-slate-400 mt-2 flex-grow">RetroAchievements-enabled libretro frontend for Windows.</p><div class="mt-6"><a href="https://github.com/RetroAchievements/RALibretro/releases/tag/1.8.1" target="_blank" class="block text-center px-4 py-2 rounded-lg font-semibold transition-colors border-2 border-violet-500 text-violet-400 hover:bg-violet-500 hover:text-white">Visit Site</a></div></div></div>
-                               <div class="card rounded-xl p-6 flex flex-col relative overflow-hidden"><div class="card-main-content flex flex-col h-full"><h3 class="text-lg font-semibold text-white flex items-center">RASnes9x<span class="retroachievements-badge"><img src="img/retroachievementslogo.png" alt="RA" title="Compatible with RetroAchievements.org"></span></h3><p class="text-slate-400 mt-2 flex-grow">SNES emulator with built-in RetroAchievements support.</p><div class="mt-6"><a href="https://github.com/RetroAchievements/RASnes9x" target="_blank" class="block text-center px-4 py-2 rounded-lg font-semibold transition-colors border-2 border-violet-500 text-violet-400 hover:bg-violet-500 hover:text-white">Visit Site</a></div></div></div>
-                               <div class="card rounded-xl p-6 flex flex-col relative overflow-hidden"><div class="card-main-content flex flex-col h-full"><h3 class="text-lg font-semibold text-white flex items-center">RAVBA<span class="retroachievements-badge"><img src="img/retroachievementslogo.png" alt="RA" title="Compatible with RetroAchievements.org"></span></h3><p class="text-slate-400 mt-2 flex-grow">Game Boy Advance emulator with RetroAchievements integration.</p><div class="mt-6"><a href="https://github.com/RetroAchievements/RAVBA" target="_blank" class="block text-center px-4 py-2 rounded-lg font-semibold transition-colors border-2 border-violet-500 text-violet-400 hover:bg-violet-500 hover:text-white">Visit Site</a></div></div></div>
-                               <div class="card rounded-xl p-6 flex flex-col relative overflow-hidden"><div class="card-main-content flex flex-col h-full"><h3 class="text-lg font-semibold text-white flex items-center">RAP64<span class="retroachievements-badge"><img src="img/retroachievementslogo.png" alt="RA" title="Compatible with RetroAchievements.org"></span></h3><p class="text-slate-400 mt-2 flex-grow">Nintendo 64 emulator with RetroAchievements support.</p><div class="mt-6"><a href="https://github.com/RetroAchievements/RAProject64" target="_blank" class="block text-center px-4 py-2 rounded-lg font-semibold transition-colors border-2 border-violet-500 text-violet-400 hover:bg-violet-500 hover:text-white">Visit Site</a></div></div></div>
-                               <div class="card rounded-xl p-6 flex flex-col relative overflow-hidden"><div class="card-main-content flex flex-col h-full"><h3 class="text-lg font-semibold text-white flex items-center">RANes<span class="retroachievements-badge"><img src="img/retroachievementslogo.png" alt="RA" title="Compatible with RetroAchievements.org"></span></h3><p class="text-slate-400 mt-2 flex-grow">NES emulator with built-in RetroAchievements functionality.</p><div class="mt-6"><a href="https://github.com/RetroAchievements/RANes" target="_blank" class="block text-center px-4 py-2 rounded-lg font-semibold transition-colors border-2 border-violet-500 text-violet-400 hover:bg-violet-500 hover:text-white">Visit Site</a></div></div></div>
-                               <div class="card rounded-xl p-6 flex flex-col relative overflow-hidden"><div class="card-main-content flex flex-col h-full"><h3 class="text-lg font-semibold text-white flex items-center">SkyEmu<span class="retroachievements-badge"><img src="img/retroachievementslogo.png" alt="RA" title="Compatible with RetroAchievements.org"></span></h3><p class="text-slate-400 mt-2 flex-grow">Low-level Game Boy, Game Boy Color, and Game Boy Advance emulator with RetroAchievements.</p><div class="mt-6"><a href="https://github.com/firelight-emulator/firelight/releases/tag/v0.12.2" target="_blank" class="block text-center px-4 py-2 rounded-lg font-semibold transition-colors border-2 border-violet-500 text-violet-400 hover:bg-violet-500 hover:text-white">Visit Site</a></div></div></div>
-                               <div class="card rounded-xl p-6 flex flex-col relative overflow-hidden"><div class="card-main-content flex flex-col h-full"><h3 class="text-lg font-semibold text-white flex items-center">RAppleWin<span class="retroachievements-badge"><img src="img/retroachievementslogo.png" alt="RA" title="Compatible with RetroAchievements.org"></span></h3><p class="text-slate-400 mt-2 flex-grow">Apple II emulator with RetroAchievements support.</p><div class="mt-6"><a href="https://github.com/RetroAchievements/AppleWin" target="_blank" class="block text-center px-4 py-2 rounded-lg font-semibold transition-colors border-2 border-violet-500 text-violet-400 hover:bg-violet-500 hover:text-white">Visit Site</a></div></div></div>
-                               <div class="card rounded-xl p-6 flex flex-col relative overflow-hidden"><div class="card-main-content flex flex-col h-full"><h3 class="text-lg font-semibold text-white flex items-center">Luna's Project64<span class="retroachievements-badge"><img src="img/retroachievementslogo.png" alt="RA" title="Compatible with RetroAchievements.org"></span></h3><p class="text-slate-400 mt-2 flex-grow">Modified Project64 with RetroAchievements integration.</p><div class="mt-6"><a href="https://github.com/Luna-Project64/Luna-Project64" target="_blank" class="block text-center px-4 py-2 rounded-lg font-semibold transition-colors border-2 border-violet-500 text-violet-400 hover:bg-violet-500 hover:text-white">Visit Site</a></div></div></div>
-                               <div class="card rounded-xl p-6 flex flex-col relative overflow-hidden"><div class="card-main-content flex flex-col h-full"><h3 class="text-lg font-semibold text-white flex items-center">Firelight<span class="retroachievements-badge"><img src="img/retroachievementslogo.png" alt="RA" title="Compatible with RetroAchievements.org"></span></h3><p class="text-slate-400 mt-2 flex-grow">Multi-system emulator with RetroAchievements support.</p><div class="mt-6"><a href="https://github.com/firelight-emulator/firelight" target="_blank" class="block text-center px-4 py-2 rounded-lg font-semibold transition-colors border-2 border-violet-500 text-violet-400 hover:bg-violet-500 hover:text-white">Visit Site</a></div></div></div>
-                               <div class="card rounded-xl p-6 flex flex-col relative overflow-hidden"><div class="card-main-content flex flex-col h-full"><h3 class="text-lg font-semibold text-white flex items-center">RAQUASI88<span class="retroachievements-badge"><img src="img/retroachievementslogo.png" alt="RA" title="Compatible with RetroAchievements.org"></span></h3><p class="text-slate-400 mt-2 flex-grow">NEC PC-8801 emulator with RetroAchievements integration.</p><div class="mt-6"><a href="https://github.com/RetroAchievements/quasi88" target="_blank" class="block text-center px-4 py-2 rounded-lg font-semibold transition-colors border-2 border-violet-500 text-violet-400 hover:bg-violet-500 hover:text-white">Visit Site</a></div></div></div>
-                               <div class="card rounded-xl p-6 flex flex-col relative overflow-hidden"><div class="card-main-content flex flex-col h-full"><h3 class="text-lg font-semibold text-white flex items-center">WinArcadia<span class="retroachievements-badge"><img src="img/retroachievementslogo.png" alt="RA" title="Compatible with RetroAchievements.org"></span></h3><p class="text-slate-400 mt-2 flex-grow">Emerson Arcadia 2001 and other vintage console emulator with RetroAchievements.</p><div class="mt-6"><a href="https://amigan.1emu.net/releases/" target="_blank" class="block text-center px-4 py-2 rounded-lg font-semibold transition-colors border-2 border-violet-500 text-violet-400 hover:bg-violet-500 hover:text-white">Visit Site</a></div></div></div>
-                               <div class="card rounded-xl p-6 flex flex-col relative overflow-hidden"><div class="card-main-content flex flex-col h-full"><h3 class="text-lg font-semibold text-white flex items-center">RAMeka<span class="retroachievements-badge"><img src="img/retroachievementslogo.png" alt="RA" title="Compatible with RetroAchievements.org"></span></h3><p class="text-slate-400 mt-2 flex-grow">Sega Master System and Game Gear emulator with RetroAchievements support.</p><div class="mt-6"><a href="https://github.com/RetroAchievements/RAMeka" target="_blank" class="block text-center px-4 py-2 rounded-lg font-semibold transition-colors border-2 border-violet-500 text-violet-400 hover:bg-violet-500 hover:text-white">Visit Site</a></div></div></div>
+                               <div class="card rounded-xl p-6 flex flex-col tag-recommended relative overflow-hidden">
+                                   <div class="card-main-content flex flex-col h-full">
+                                       <div class="flex items-start justify-between mb-3">
+                                           <h3 class="text-lg font-semibold text-white flex items-center">
+                                               Dolphin
+                                               <span class="retroachievements-badge"><img src="img/retroachievementslogo.png" alt="RA" title="Compatible with RetroAchievements.org"></span>
+                                           </h3>
+                                           <div class="text-xs font-bold uppercase text-amber-400 tracking-wider">Recommended</div>
+                                       </div>
+                                       <div class="mb-3">
+                                           <p class="text-xs text-slate-500 mb-2">Supports 2 systems</p>
+                                           <div class="flex flex-wrap gap-2">
+                                               <span class="px-2 py-1 bg-slate-700 text-slate-300 rounded text-xs">GameCube</span>
+                                               <span class="px-2 py-1 bg-slate-700 text-slate-300 rounded text-xs">Wii</span>
+                                           </div>
+                                       </div>
+                                       <div class="mb-4 flex-grow">
+                                           <p class="text-xs text-slate-500 mb-2">Available on</p>
+                                           <div class="flex flex-wrap gap-2">
+                                               <span class="px-2 py-1 bg-slate-700 text-slate-300 rounded text-xs">Windows</span>
+                                               <span class="px-2 py-1 bg-slate-700 text-slate-300 rounded text-xs">macOS</span>
+                                               <span class="px-2 py-1 bg-slate-700 text-slate-300 rounded text-xs">Linux</span>
+                                               <span class="px-2 py-1 bg-slate-700 text-slate-300 rounded text-xs">Android</span>
+                                           </div>
+                                       </div>
+                                       <div class="mt-auto">
+                                           <a href="https://dolphin-emu.org/" target="_blank" class="block text-center px-4 py-2 rounded-lg font-semibold transition-colors border-2 border-amber-400 text-amber-400 hover:bg-amber-400 hover:text-slate-900">Visit Site</a>
+                                       </div>
+                                   </div>
+                               </div>
+                               <div class="card rounded-xl p-6 flex flex-col tag-recommended relative overflow-hidden">
+                                   <div class="card-main-content flex flex-col h-full">
+                                       <div class="flex items-start justify-between mb-3">
+                                           <h3 class="text-lg font-semibold text-white flex items-center">
+                                               PPSSPP
+                                               <span class="retroachievements-badge"><img src="img/retroachievementslogo.png" alt="RA" title="Compatible with RetroAchievements.org"></span>
+                                           </h3>
+                                           <div class="text-xs font-bold uppercase text-amber-400 tracking-wider">Recommended</div>
+                                       </div>
+                                       <div class="mb-3">
+                                           <p class="text-xs text-slate-500 mb-2">Supports 1 system</p>
+                                           <div class="flex flex-wrap gap-2">
+                                               <span class="px-2 py-1 bg-slate-700 text-slate-300 rounded text-xs">PSP</span>
+                                           </div>
+                                       </div>
+                                       <div class="mb-4 flex-grow">
+                                           <p class="text-xs text-slate-500 mb-2">Available on</p>
+                                           <div class="flex flex-wrap gap-2">
+                                               <span class="px-2 py-1 bg-slate-700 text-slate-300 rounded text-xs">Windows</span>
+                                               <span class="px-2 py-1 bg-slate-700 text-slate-300 rounded text-xs">macOS</span>
+                                               <span class="px-2 py-1 bg-slate-700 text-slate-300 rounded text-xs">Linux</span>
+                                               <span class="px-2 py-1 bg-slate-700 text-slate-300 rounded text-xs">Android</span>
+                                               <span class="px-2 py-1 bg-slate-700 text-slate-300 rounded text-xs">iOS</span>
+                                           </div>
+                                       </div>
+                                       <div class="mt-auto">
+                                           <a href="https://www.ppsspp.org/" target="_blank" class="block text-center px-4 py-2 rounded-lg font-semibold transition-colors border-2 border-amber-400 text-amber-400 hover:bg-amber-400 hover:text-slate-900">Visit Site</a>
+                                       </div>
+                                   </div>
+                               </div>
+                               <div class="card rounded-xl p-6 flex flex-col tag-recommended relative overflow-hidden">
+                                   <div class="card-main-content flex flex-col h-full">
+                                       <div class="flex items-start justify-between mb-3">
+                                           <h3 class="text-lg font-semibold text-white flex items-center">
+                                               DuckStation
+                                               <span class="retroachievements-badge"><img src="img/retroachievementslogo.png" alt="RA" title="Compatible with RetroAchievements.org"></span>
+                                           </h3>
+                                           <div class="text-xs font-bold uppercase text-amber-400 tracking-wider">Recommended</div>
+                                       </div>
+                                       <div class="mb-3">
+                                           <p class="text-xs text-slate-500 mb-2">Supports 1 system</p>
+                                           <div class="flex flex-wrap gap-2">
+                                               <span class="px-2 py-1 bg-slate-700 text-slate-300 rounded text-xs">PS1</span>
+                                           </div>
+                                       </div>
+                                       <div class="mb-4 flex-grow">
+                                           <p class="text-xs text-slate-500 mb-2">Available on</p>
+                                           <div class="flex flex-wrap gap-2">
+                                               <span class="px-2 py-1 bg-slate-700 text-slate-300 rounded text-xs">Windows</span>
+                                               <span class="px-2 py-1 bg-slate-700 text-slate-300 rounded text-xs">macOS</span>
+                                               <span class="px-2 py-1 bg-slate-700 text-slate-300 rounded text-xs">Linux</span>
+                                               <span class="px-2 py-1 bg-slate-700 text-slate-300 rounded text-xs">Android</span>
+                                           </div>
+                                       </div>
+                                       <div class="mt-auto">
+                                           <a href="https://www.duckstation.org/" target="_blank" class="block text-center px-4 py-2 rounded-lg font-semibold transition-colors border-2 border-amber-400 text-amber-400 hover:bg-amber-400 hover:text-slate-900">Visit Site</a>
+                                       </div>
+                                   </div>
+                               </div>
+                               <div class="card rounded-xl p-6 flex flex-col tag-recommended relative overflow-hidden">
+                                   <div class="card-main-content flex flex-col h-full">
+                                       <div class="flex items-start justify-between mb-3">
+                                           <h3 class="text-lg font-semibold text-white flex items-center">
+                                               RetroArch
+                                               <span class="retroachievements-badge"><img src="img/retroachievementslogo.png" alt="RA" title="Compatible with RetroAchievements.org"></span>
+                                           </h3>
+                                           <div class="text-xs font-bold uppercase text-amber-400 tracking-wider">Recommended</div>
+                                       </div>
+                                       <div class="mb-3">
+                                           <p class="text-xs text-slate-500 mb-2">Supports 45+ systems</p>
+                                           <div class="flex flex-wrap gap-2 systems-list">
+                                               <span class="px-2 py-1 bg-slate-700 text-slate-300 rounded text-xs">NES</span>
+                                               <span class="px-2 py-1 bg-slate-700 text-slate-300 rounded text-xs">SNES</span>
+                                               <span class="px-2 py-1 bg-slate-700 text-slate-300 rounded text-xs">GB</span>
+                                               <span class="px-2 py-1 bg-slate-700 text-slate-300 rounded text-xs">GBA</span>
+                                               <span class="px-2 py-1 bg-slate-700 text-slate-300 rounded text-xs">PS1</span>
+                                               <span class="px-2 py-1 bg-slate-700 text-slate-300 rounded text-xs hidden-system">N64</span>
+                                               <span class="px-2 py-1 bg-slate-700 text-slate-300 rounded text-xs hidden-system">Genesis</span>
+                                               <span class="px-2 py-1 bg-slate-700 text-slate-300 rounded text-xs hidden-system">PS2</span>
+                                               <span class="px-2 py-1 bg-slate-700 text-slate-300 rounded text-xs hidden-system">PSP</span>
+                                               <span class="px-2 py-1 bg-slate-700 text-slate-300 rounded text-xs hidden-system">DS</span>
+                                               <span class="px-2 py-1 bg-slate-700 text-slate-300 rounded text-xs hidden-system">3DS</span>
+                                               <span class="px-2 py-1 bg-slate-700 text-slate-300 rounded text-xs hidden-system">Wii</span>
+                                               <span class="px-2 py-1 bg-slate-700 text-slate-300 rounded text-xs hidden-system">GameCube</span>
+                                               <span class="px-2 py-1 bg-slate-700 text-slate-300 rounded text-xs hidden-system">Dreamcast</span>
+                                               <span class="px-2 py-1 bg-slate-700 text-slate-300 rounded text-xs hidden-system">Saturn</span>
+                                               <span class="px-2 py-1 bg-slate-700 text-slate-300 rounded text-xs hidden-system">GBC</span>
+                                               <span class="px-2 py-1 bg-slate-700 text-slate-300 rounded text-xs hidden-system">SMS</span>
+                                               <span class="px-2 py-1 bg-slate-700 text-slate-300 rounded text-xs hidden-system">Game Gear</span>
+                                               <span class="px-2 py-1 bg-slate-700 text-slate-300 rounded text-xs hidden-system">PCE</span>
+                                               <span class="px-2 py-1 bg-slate-700 text-slate-300 rounded text-xs hidden-system">Atari 2600</span>
+                                               <span class="px-2 py-1 bg-slate-700 text-slate-300 rounded text-xs hidden-system">Atari 7800</span>
+                                               <span class="px-2 py-1 bg-slate-700 text-slate-300 rounded text-xs hidden-system">Lynx</span>
+                                               <span class="px-2 py-1 bg-slate-700 text-slate-300 rounded text-xs hidden-system">Neo Geo</span>
+                                               <span class="px-2 py-1 bg-slate-700 text-slate-300 rounded text-xs hidden-system">Neo Geo Pocket</span>
+                                               <span class="px-2 py-1 bg-slate-700 text-slate-300 rounded text-xs hidden-system">WonderSwan</span>
+                                               <span class="px-2 py-1 bg-slate-700 text-slate-300 rounded text-xs hidden-system">Virtual Boy</span>
+                                               <span class="px-2 py-1 bg-slate-700 text-slate-300 rounded text-xs hidden-system">Arcade</span>
+                                               <span class="px-2 py-1 bg-slate-700 text-slate-300 rounded text-xs hidden-system">MSX</span>
+                                               <span class="px-2 py-1 bg-slate-700 text-slate-300 rounded text-xs hidden-system">Vectrex</span>
+                                               <span class="px-2 py-1 bg-slate-700 text-slate-300 rounded text-xs hidden-system">Odyssey 2</span>
+                                               <span class="px-2 py-1 bg-slate-700 text-slate-300 rounded text-xs hidden-system">ColecoVision</span>
+                                               <span class="px-2 py-1 bg-slate-700 text-slate-300 rounded text-xs hidden-system">Intellivision</span>
+                                               <span class="px-2 py-1 bg-slate-700 text-slate-300 rounded text-xs hidden-system">PC-98</span>
+                                               <span class="px-2 py-1 bg-slate-700 text-slate-300 rounded text-xs hidden-system">DOS</span>
+                                               <span class="px-2 py-1 bg-slate-700 text-slate-300 rounded text-xs hidden-system">Commodore 64</span>
+                                               <span class="px-2 py-1 bg-slate-700 text-slate-300 rounded text-xs hidden-system">Amiga</span>
+                                               <span class="px-2 py-1 bg-slate-700 text-slate-300 rounded text-xs hidden-system">ZX Spectrum</span>
+                                               <span class="px-2 py-1 bg-slate-700 text-slate-300 rounded text-xs hidden-system">Amstrad CPC</span>
+                                               <span class="px-2 py-1 bg-slate-700 text-slate-300 rounded text-xs hidden-system">Apple II</span>
+                                               <span class="px-2 py-1 bg-slate-700 text-slate-300 rounded text-xs hidden-system">Atari ST</span>
+                                               <button class="show-more-systems px-2 py-1 bg-slate-600 text-slate-300 rounded text-xs hover:bg-slate-500 transition-colors">+40 more</button>
+                                           </div>
+                                       </div>
+                                       <div class="mb-4 flex-grow">
+                                           <p class="text-xs text-slate-500 mb-2">Available on</p>
+                                           <div class="flex flex-wrap gap-2">
+                                               <span class="px-2 py-1 bg-slate-700 text-slate-300 rounded text-xs">Windows</span>
+                                               <span class="px-2 py-1 bg-slate-700 text-slate-300 rounded text-xs">macOS</span>
+                                               <span class="px-2 py-1 bg-slate-700 text-slate-300 rounded text-xs">Linux</span>
+                                               <span class="px-2 py-1 bg-slate-700 text-slate-300 rounded text-xs">Android</span>
+                                               <span class="px-2 py-1 bg-slate-700 text-slate-300 rounded text-xs">iOS</span>
+                                           </div>
+                                       </div>
+                                       <div class="mt-auto">
+                                           <a href="https://www.retroarch.com/" target="_blank" class="block text-center px-4 py-2 rounded-lg font-semibold transition-colors border-2 border-amber-400 text-amber-400 hover:bg-amber-400 hover:text-slate-900">Visit Site</a>
+                                       </div>
+                                   </div>
+                               </div>
+                               <div class="card rounded-xl p-6 flex flex-col tag-recommended relative overflow-hidden">
+                                   <div class="card-main-content flex flex-col h-full">
+                                       <div class="flex items-start justify-between mb-3">
+                                           <h3 class="text-lg font-semibold text-white">RPCS3</h3>
+                                           <div class="text-xs font-bold uppercase text-amber-400 tracking-wider">Recommended</div>
+                                       </div>
+                                       <div class="mb-3">
+                                           <p class="text-xs text-slate-500 mb-2">Supports 1 system</p>
+                                           <div class="flex flex-wrap gap-2">
+                                               <span class="px-2 py-1 bg-slate-700 text-slate-300 rounded text-xs">PS3</span>
+                                           </div>
+                                       </div>
+                                       <div class="mb-4 flex-grow">
+                                           <p class="text-xs text-slate-500 mb-2">Available on</p>
+                                           <div class="flex flex-wrap gap-2">
+                                               <span class="px-2 py-1 bg-slate-700 text-slate-300 rounded text-xs">Windows</span>
+                                               <span class="px-2 py-1 bg-slate-700 text-slate-300 rounded text-xs">macOS</span>
+                                               <span class="px-2 py-1 bg-slate-700 text-slate-300 rounded text-xs">Linux</span>
+                                           </div>
+                                       </div>
+                                       <div class="mt-auto">
+                                           <a href="https://rpcs3.net/" target="_blank" class="block text-center px-4 py-2 rounded-lg font-semibold transition-colors border-2 border-amber-400 text-amber-400 hover:bg-amber-400 hover:text-slate-900">Visit Site</a>
+                                       </div>
+                                   </div>
+                               </div>
+                               <div class="card rounded-xl p-6 flex flex-col relative overflow-hidden">
+                                   <div class="card-main-content flex flex-col h-full">
+                                       <div class="mb-3"><h3 class="text-lg font-semibold text-white">Xenia</h3></div>
+                                       <div class="mb-3">
+                                           <p class="text-xs text-slate-500 mb-2">Supports 1 system</p>
+                                           <div class="flex flex-wrap gap-2"><span class="px-2 py-1 bg-slate-700 text-slate-300 rounded text-xs">Xbox 360</span></div>
+                                       </div>
+                                       <div class="mb-4 flex-grow">
+                                           <p class="text-xs text-slate-500 mb-2">Available on</p>
+                                           <div class="flex flex-wrap gap-2">
+                                               <span class="px-2 py-1 bg-slate-700 text-slate-300 rounded text-xs">Windows</span>
+                                               <span class="px-2 py-1 bg-slate-700 text-slate-300 rounded text-xs">Linux</span>
+                                           </div>
+                                       </div>
+                                       <div class="mt-auto"><a href="https://xenia.jp/" target="_blank" class="block text-center px-4 py-2 rounded-lg font-semibold transition-colors border-2 border-violet-500 text-violet-400 hover:bg-violet-500 hover:text-white">Visit Site</a></div>
+                                   </div>
+                               </div>
+                               <div class="card rounded-xl p-6 flex flex-col relative overflow-hidden">
+                                   <div class="card-main-content flex flex-col h-full">
+                                       <div class="mb-3"><h3 class="text-lg font-semibold text-white">Citron</h3></div>
+                                       <div class="mb-3">
+                                           <p class="text-xs text-slate-500 mb-2">Supports 2 systems</p>
+                                           <div class="flex flex-wrap gap-2">
+                                               <span class="px-2 py-1 bg-slate-700 text-slate-300 rounded text-xs">3DS</span>
+                                               <span class="px-2 py-1 bg-slate-700 text-slate-300 rounded text-xs">Switch</span>
+                                           </div>
+                                       </div>
+                                       <div class="mb-4 flex-grow">
+                                           <p class="text-xs text-slate-500 mb-2">Available on</p>
+                                           <div class="flex flex-wrap gap-2">
+                                               <span class="px-2 py-1 bg-slate-700 text-slate-300 rounded text-xs">Windows</span>
+                                               <span class="px-2 py-1 bg-slate-700 text-slate-300 rounded text-xs">Linux</span>
+                                               <span class="px-2 py-1 bg-slate-700 text-slate-300 rounded text-xs">Android</span>
+                                           </div>
+                                       </div>
+                                       <div class="mt-auto"><a href="https://citron-emu.com/" target="_blank" class="block text-center px-4 py-2 rounded-lg font-semibold transition-colors border-2 border-violet-500 text-violet-400 hover:bg-violet-500 hover:text-white">Visit Site</a></div>
+                                   </div>
+                               </div>
+                               <div class="card rounded-xl p-6 flex flex-col relative overflow-hidden">
+                                   <div class="card-main-content flex flex-col h-full">
+                                       <div class="mb-3"><h3 class="text-lg font-semibold text-white">Cemu</h3></div>
+                                       <div class="mb-3">
+                                           <p class="text-xs text-slate-500 mb-2">Supports 1 system</p>
+                                           <div class="flex flex-wrap gap-2"><span class="px-2 py-1 bg-slate-700 text-slate-300 rounded text-xs">Wii U</span></div>
+                                       </div>
+                                       <div class="mb-4 flex-grow">
+                                           <p class="text-xs text-slate-500 mb-2">Available on</p>
+                                           <div class="flex flex-wrap gap-2">
+                                               <span class="px-2 py-1 bg-slate-700 text-slate-300 rounded text-xs">Windows</span>
+                                               <span class="px-2 py-1 bg-slate-700 text-slate-300 rounded text-xs">Linux</span>
+                                           </div>
+                                       </div>
+                                       <div class="mt-auto"><a href="https://cemu.info/" target="_blank" class="block text-center px-4 py-2 rounded-lg font-semibold transition-colors border-2 border-violet-500 text-violet-400 hover:bg-violet-500 hover:text-white">Visit Site</a></div>
+                                   </div>
+                               </div>
+                               <div class="card rounded-xl p-6 flex flex-col relative overflow-hidden">
+                                   <div class="card-main-content flex flex-col h-full">
+                                       <div class="mb-3"><h3 class="text-lg font-semibold text-white">Mesen</h3></div>
+                                       <div class="mb-3">
+                                           <p class="text-xs text-slate-500 mb-2">Supports 3 systems</p>
+                                           <div class="flex flex-wrap gap-2">
+                                               <span class="px-2 py-1 bg-slate-700 text-slate-300 rounded text-xs">NES</span>
+                                               <span class="px-2 py-1 bg-slate-700 text-slate-300 rounded text-xs">Famicom</span>
+                                               <span class="px-2 py-1 bg-slate-700 text-slate-300 rounded text-xs">FDS</span>
+                                           </div>
+                                       </div>
+                                       <div class="mb-4 flex-grow">
+                                           <p class="text-xs text-slate-500 mb-2">Available on</p>
+                                           <div class="flex flex-wrap gap-2">
+                                               <span class="px-2 py-1 bg-slate-700 text-slate-300 rounded text-xs">Windows</span>
+                                               <span class="px-2 py-1 bg-slate-700 text-slate-300 rounded text-xs">macOS</span>
+                                               <span class="px-2 py-1 bg-slate-700 text-slate-300 rounded text-xs">Linux</span>
+                                           </div>
+                                       </div>
+                                       <div class="mt-auto"><a href="https://www.mesen.ca/" target="_blank" class="block text-center px-4 py-2 rounded-lg font-semibold transition-colors border-2 border-violet-500 text-violet-400 hover:bg-violet-500 hover:text-white">Visit Site</a></div>
+                                   </div>
+                               </div>
+                               <div class="card rounded-xl p-6 flex flex-col relative overflow-hidden">
+                                   <div class="card-main-content flex flex-col h-full">
+                                       <div class="mb-3"><h3 class="text-lg font-semibold text-white">Snes9x</h3></div>
+                                       <div class="mb-3">
+                                           <p class="text-xs text-slate-500 mb-2">Supports 1 system</p>
+                                           <div class="flex flex-wrap gap-2"><span class="px-2 py-1 bg-slate-700 text-slate-300 rounded text-xs">SNES</span></div>
+                                       </div>
+                                       <div class="mb-4 flex-grow">
+                                           <p class="text-xs text-slate-500 mb-2">Available on</p>
+                                           <div class="flex flex-wrap gap-2">
+                                               <span class="px-2 py-1 bg-slate-700 text-slate-300 rounded text-xs">Windows</span>
+                                               <span class="px-2 py-1 bg-slate-700 text-slate-300 rounded text-xs">macOS</span>
+                                               <span class="px-2 py-1 bg-slate-700 text-slate-300 rounded text-xs">Linux</span>
+                                           </div>
+                                       </div>
+                                       <div class="mt-auto"><a href="https://www.snes9x.com/" target="_blank" class="block text-center px-4 py-2 rounded-lg font-semibold transition-colors border-2 border-violet-500 text-violet-400 hover:bg-violet-500 hover:text-white">Visit Site</a></div>
+                                   </div>
+                               </div>
+                               <div class="card rounded-xl p-6 flex flex-col relative overflow-hidden">
+                                   <div class="card-main-content flex flex-col h-full">
+                                       <div class="mb-3"><h3 class="text-lg font-semibold text-white">mGBA</h3></div>
+                                       <div class="mb-3">
+                                           <p class="text-xs text-slate-500 mb-2">Supports 2 systems</p>
+                                           <div class="flex flex-wrap gap-2">
+                                               <span class="px-2 py-1 bg-slate-700 text-slate-300 rounded text-xs">GBA</span>
+                                               <span class="px-2 py-1 bg-slate-700 text-slate-300 rounded text-xs">GB</span>
+                                           </div>
+                                       </div>
+                                       <div class="mb-4 flex-grow">
+                                           <p class="text-xs text-slate-500 mb-2">Available on</p>
+                                           <div class="flex flex-wrap gap-2">
+                                               <span class="px-2 py-1 bg-slate-700 text-slate-300 rounded text-xs">Windows</span>
+                                               <span class="px-2 py-1 bg-slate-700 text-slate-300 rounded text-xs">macOS</span>
+                                               <span class="px-2 py-1 bg-slate-700 text-slate-300 rounded text-xs">Linux</span>
+                                           </div>
+                                       </div>
+                                       <div class="mt-auto"><a href="https://mgba.io/" target="_blank" class="block text-center px-4 py-2 rounded-lg font-semibold transition-colors border-2 border-violet-500 text-violet-400 hover:bg-violet-500 hover:text-white">Visit Site</a></div>
+                                   </div>
+                               </div>
+                               <div class="card rounded-xl p-6 flex flex-col relative overflow-hidden">
+                                   <div class="card-main-content flex flex-col h-full">
+                                       <div class="mb-3"><h3 class="text-lg font-semibold text-white">melonDS</h3></div>
+                                       <div class="mb-3">
+                                           <p class="text-xs text-slate-500 mb-2">Supports 1 system</p>
+                                           <div class="flex flex-wrap gap-2"><span class="px-2 py-1 bg-slate-700 text-slate-300 rounded text-xs">DS</span></div>
+                                       </div>
+                                       <div class="mb-4 flex-grow">
+                                           <p class="text-xs text-slate-500 mb-2">Available on</p>
+                                           <div class="flex flex-wrap gap-2">
+                                               <span class="px-2 py-1 bg-slate-700 text-slate-300 rounded text-xs">Windows</span>
+                                               <span class="px-2 py-1 bg-slate-700 text-slate-300 rounded text-xs">macOS</span>
+                                               <span class="px-2 py-1 bg-slate-700 text-slate-300 rounded text-xs">Linux</span>
+                                           </div>
+                                       </div>
+                                       <div class="mt-auto"><a href="http://melonds.kuribo64.net/" target="_blank" class="block text-center px-4 py-2 rounded-lg font-semibold transition-colors border-2 border-violet-500 text-violet-400 hover:bg-violet-500 hover:text-white">Visit Site</a></div>
+                                   </div>
+                               </div>
+                               <div class="card rounded-xl p-6 flex flex-col relative overflow-hidden">
+                                   <div class="card-main-content flex flex-col h-full">
+                                       <div class="mb-3"><h3 class="text-lg font-semibold text-white">Vita3K</h3></div>
+                                       <div class="mb-3">
+                                           <p class="text-xs text-slate-500 mb-2">Supports 1 system</p>
+                                           <div class="flex flex-wrap gap-2"><span class="px-2 py-1 bg-slate-700 text-slate-300 rounded text-xs">PS Vita</span></div>
+                                       </div>
+                                       <div class="mb-4 flex-grow">
+                                           <p class="text-xs text-slate-500 mb-2">Available on</p>
+                                           <div class="flex flex-wrap gap-2">
+                                               <span class="px-2 py-1 bg-slate-700 text-slate-300 rounded text-xs">Windows</span>
+                                               <span class="px-2 py-1 bg-slate-700 text-slate-300 rounded text-xs">macOS</span>
+                                               <span class="px-2 py-1 bg-slate-700 text-slate-300 rounded text-xs">Linux</span>
+                                           </div>
+                                       </div>
+                                       <div class="mt-auto"><a href="https://vita3k.org/" target="_blank" class="block text-center px-4 py-2 rounded-lg font-semibold transition-colors border-2 border-violet-500 text-violet-400 hover:bg-violet-500 hover:text-white">Visit Site</a></div>
+                                   </div>
+                               </div>
+                               <div class="card rounded-xl p-6 flex flex-col relative overflow-hidden">
+                                   <div class="card-main-content flex flex-col h-full">
+                                       <div class="mb-3"><h3 class="text-lg font-semibold text-white">Playnite</h3></div>
+                                       <div class="mb-3">
+                                           <p class="text-xs text-slate-500 mb-2">Game Library Manager</p>
+                                           <div class="flex flex-wrap gap-2"><span class="px-2 py-1 bg-slate-700 text-slate-300 rounded text-xs">Frontend</span></div>
+                                       </div>
+                                       <div class="mb-4 flex-grow">
+                                           <p class="text-xs text-slate-500 mb-2">Available on</p>
+                                           <div class="flex flex-wrap gap-2"><span class="px-2 py-1 bg-slate-700 text-slate-300 rounded text-xs">Windows</span></div>
+                                       </div>
+                                       <div class="mt-auto"><a href="https://playnite.link/" target="_blank" class="block text-center px-4 py-2 rounded-lg font-semibold transition-colors border-2 border-violet-500 text-violet-400 hover:bg-violet-500 hover:text-white">Visit Site</a></div>
+                                   </div>
+                               </div>
+                               <div class="card rounded-xl p-6 flex flex-col relative overflow-hidden">
+                                   <div class="card-main-content flex flex-col h-full">
+                                       <div class="mb-3"><h3 class="text-lg font-semibold text-white">LaunchBox</h3></div>
+                                       <div class="mb-3">
+                                           <p class="text-xs text-slate-500 mb-2">Game Library Manager</p>
+                                           <div class="flex flex-wrap gap-2"><span class="px-2 py-1 bg-slate-700 text-slate-300 rounded text-xs">Frontend</span></div>
+                                       </div>
+                                       <div class="mb-4 flex-grow">
+                                           <p class="text-xs text-slate-500 mb-2">Available on</p>
+                                           <div class="flex flex-wrap gap-2"><span class="px-2 py-1 bg-slate-700 text-slate-300 rounded text-xs">Windows</span></div>
+                                       </div>
+                                       <div class="mt-auto"><a href="https://www.launchbox-app.com/" target="_blank" class="block text-center px-4 py-2 rounded-lg font-semibold transition-colors border-2 border-violet-500 text-violet-400 hover:bg-violet-500 hover:text-white">Visit Site</a></div>
+                                   </div>
+                               </div>
+                               <div class="card rounded-xl p-6 flex flex-col relative overflow-hidden">
+                                   <div class="card-main-content flex flex-col h-full">
+                                       <div class="mb-3"><h3 class="text-lg font-semibold text-white flex items-center">BizHawk<span class="retroachievements-badge"><img src="img/retroachievementslogo.png" alt="RA" title="Compatible with RetroAchievements.org"></span></h3></div>
+                                       <div class="mb-3">
+                                           <p class="text-xs text-slate-500 mb-2">Supports 15+ systems</p>
+                                           <div class="flex flex-wrap gap-2 systems-list">
+                                               <span class="px-2 py-1 bg-slate-700 text-slate-300 rounded text-xs">NES</span>
+                                               <span class="px-2 py-1 bg-slate-700 text-slate-300 rounded text-xs">SNES</span>
+                                               <span class="px-2 py-1 bg-slate-700 text-slate-300 rounded text-xs">GB</span>
+                                               <span class="px-2 py-1 bg-slate-700 text-slate-300 rounded text-xs">GBA</span>
+                                               <span class="px-2 py-1 bg-slate-700 text-slate-300 rounded text-xs">N64</span>
+                                               <span class="px-2 py-1 bg-slate-700 text-slate-300 rounded text-xs hidden-system">Genesis</span>
+                                               <span class="px-2 py-1 bg-slate-700 text-slate-300 rounded text-xs hidden-system">SMS</span>
+                                               <span class="px-2 py-1 bg-slate-700 text-slate-300 rounded text-xs hidden-system">PS1</span>
+                                               <span class="px-2 py-1 bg-slate-700 text-slate-300 rounded text-xs hidden-system">PCE</span>
+                                               <span class="px-2 py-1 bg-slate-700 text-slate-300 rounded text-xs hidden-system">Atari 2600</span>
+                                               <span class="px-2 py-1 bg-slate-700 text-slate-300 rounded text-xs hidden-system">Atari 7800</span>
+                                               <span class="px-2 py-1 bg-slate-700 text-slate-300 rounded text-xs hidden-system">GBC</span>
+                                               <span class="px-2 py-1 bg-slate-700 text-slate-300 rounded text-xs hidden-system">Lynx</span>
+                                               <span class="px-2 py-1 bg-slate-700 text-slate-300 rounded text-xs hidden-system">WonderSwan</span>
+                                               <span class="px-2 py-1 bg-slate-700 text-slate-300 rounded text-xs hidden-system">Virtual Boy</span>
+                                               <button class="show-more-systems px-2 py-1 bg-slate-600 text-slate-300 rounded text-xs hover:bg-slate-500 transition-colors">+10 more</button>
+                                           </div>
+                                       </div>
+                                       <div class="mb-4 flex-grow">
+                                           <p class="text-xs text-slate-500 mb-2">Available on</p>
+                                           <div class="flex flex-wrap gap-2"><span class="px-2 py-1 bg-slate-700 text-slate-300 rounded text-xs">Windows</span></div>
+                                       </div>
+                                       <div class="mt-auto"><a href="https://tasvideos.org/Bizhawk" target="_blank" class="block text-center px-4 py-2 rounded-lg font-semibold transition-colors border-2 border-violet-500 text-violet-400 hover:bg-violet-500 hover:text-white">Visit Site</a></div>
+                                   </div>
+                               </div>
+                               <div class="card rounded-xl p-6 flex flex-col relative overflow-hidden">
+                                   <div class="card-main-content flex flex-col h-full">
+                                       <div class="mb-3"><h3 class="text-lg font-semibold text-white flex items-center">Flycast<span class="retroachievements-badge"><img src="img/retroachievementslogo.png" alt="RA" title="Compatible with RetroAchievements.org"></span></h3></div>
+                                       <div class="mb-3">
+                                           <p class="text-xs text-slate-500 mb-2">Supports 3 systems</p>
+                                           <div class="flex flex-wrap gap-2">
+                                               <span class="px-2 py-1 bg-slate-700 text-slate-300 rounded text-xs">Dreamcast</span>
+                                               <span class="px-2 py-1 bg-slate-700 text-slate-300 rounded text-xs">Naomi</span>
+                                               <span class="px-2 py-1 bg-slate-700 text-slate-300 rounded text-xs">Atomiswave</span>
+                                           </div>
+                                       </div>
+                                       <div class="mb-4 flex-grow">
+                                           <p class="text-xs text-slate-500 mb-2">Available on</p>
+                                           <div class="flex flex-wrap gap-2">
+                                               <span class="px-2 py-1 bg-slate-700 text-slate-300 rounded text-xs">Windows</span>
+                                               <span class="px-2 py-1 bg-slate-700 text-slate-300 rounded text-xs">macOS</span>
+                                               <span class="px-2 py-1 bg-slate-700 text-slate-300 rounded text-xs">Linux</span>
+                                               <span class="px-2 py-1 bg-slate-700 text-slate-300 rounded text-xs">Android</span>
+                                           </div>
+                                       </div>
+                                       <div class="mt-auto"><a href="https://github.com/flyinghead/flycast/releases" target="_blank" class="block text-center px-4 py-2 rounded-lg font-semibold transition-colors border-2 border-violet-500 text-violet-400 hover:bg-violet-500 hover:text-white">Visit Site</a></div>
+                                   </div>
+                               </div>
+                               <div class="card rounded-xl p-6 flex flex-col relative overflow-hidden">
+                                   <div class="card-main-content flex flex-col h-full">
+                                       <div class="mb-3"><h3 class="text-lg font-semibold text-white flex items-center">RALibRetro<span class="retroachievements-badge"><img src="img/retroachievementslogo.png" alt="RA" title="Compatible with RetroAchievements.org"></span></h3></div>
+                                       <div class="mb-3">
+                                           <p class="text-xs text-slate-500 mb-2">Supports 40+ systems</p>
+                                           <div class="flex flex-wrap gap-2 systems-list">
+                                               <span class="px-2 py-1 bg-slate-700 text-slate-300 rounded text-xs">NES</span>
+                                               <span class="px-2 py-1 bg-slate-700 text-slate-300 rounded text-xs">SNES</span>
+                                               <span class="px-2 py-1 bg-slate-700 text-slate-300 rounded text-xs">GB</span>
+                                               <span class="px-2 py-1 bg-slate-700 text-slate-300 rounded text-xs">GBA</span>
+                                               <span class="px-2 py-1 bg-slate-700 text-slate-300 rounded text-xs">Genesis</span>
+                                               <span class="px-2 py-1 bg-slate-700 text-slate-300 rounded text-xs hidden-system">N64</span>
+                                               <span class="px-2 py-1 bg-slate-700 text-slate-300 rounded text-xs hidden-system">PS1</span>
+                                               <span class="px-2 py-1 bg-slate-700 text-slate-300 rounded text-xs hidden-system">PS2</span>
+                                               <span class="px-2 py-1 bg-slate-700 text-slate-300 rounded text-xs hidden-system">PSP</span>
+                                               <span class="px-2 py-1 bg-slate-700 text-slate-300 rounded text-xs hidden-system">GBC</span>
+                                               <span class="px-2 py-1 bg-slate-700 text-slate-300 rounded text-xs hidden-system">DS</span>
+                                               <span class="px-2 py-1 bg-slate-700 text-slate-300 rounded text-xs hidden-system">3DS</span>
+                                               <span class="px-2 py-1 bg-slate-700 text-slate-300 rounded text-xs hidden-system">Wii</span>
+                                               <span class="px-2 py-1 bg-slate-700 text-slate-300 rounded text-xs hidden-system">GameCube</span>
+                                               <span class="px-2 py-1 bg-slate-700 text-slate-300 rounded text-xs hidden-system">Dreamcast</span>
+                                               <span class="px-2 py-1 bg-slate-700 text-slate-300 rounded text-xs hidden-system">Saturn</span>
+                                               <span class="px-2 py-1 bg-slate-700 text-slate-300 rounded text-xs hidden-system">SMS</span>
+                                               <span class="px-2 py-1 bg-slate-700 text-slate-300 rounded text-xs hidden-system">Game Gear</span>
+                                               <span class="px-2 py-1 bg-slate-700 text-slate-300 rounded text-xs hidden-system">PCE</span>
+                                               <span class="px-2 py-1 bg-slate-700 text-slate-300 rounded text-xs hidden-system">Atari 2600</span>
+                                               <span class="px-2 py-1 bg-slate-700 text-slate-300 rounded text-xs hidden-system">Atari 7800</span>
+                                               <span class="px-2 py-1 bg-slate-700 text-slate-300 rounded text-xs hidden-system">Lynx</span>
+                                               <span class="px-2 py-1 bg-slate-700 text-slate-300 rounded text-xs hidden-system">Neo Geo</span>
+                                               <span class="px-2 py-1 bg-slate-700 text-slate-300 rounded text-xs hidden-system">Neo Geo Pocket</span>
+                                               <span class="px-2 py-1 bg-slate-700 text-slate-300 rounded text-xs hidden-system">WonderSwan</span>
+                                               <span class="px-2 py-1 bg-slate-700 text-slate-300 rounded text-xs hidden-system">Virtual Boy</span>
+                                               <span class="px-2 py-1 bg-slate-700 text-slate-300 rounded text-xs hidden-system">Arcade</span>
+                                               <span class="px-2 py-1 bg-slate-700 text-slate-300 rounded text-xs hidden-system">MSX</span>
+                                               <span class="px-2 py-1 bg-slate-700 text-slate-300 rounded text-xs hidden-system">Vectrex</span>
+                                               <span class="px-2 py-1 bg-slate-700 text-slate-300 rounded text-xs hidden-system">Odyssey 2</span>
+                                               <span class="px-2 py-1 bg-slate-700 text-slate-300 rounded text-xs hidden-system">ColecoVision</span>
+                                               <span class="px-2 py-1 bg-slate-700 text-slate-300 rounded text-xs hidden-system">Intellivision</span>
+                                               <span class="px-2 py-1 bg-slate-700 text-slate-300 rounded text-xs hidden-system">PC-98</span>
+                                               <span class="px-2 py-1 bg-slate-700 text-slate-300 rounded text-xs hidden-system">DOS</span>
+                                               <span class="px-2 py-1 bg-slate-700 text-slate-300 rounded text-xs hidden-system">Commodore 64</span>
+                                               <button class="show-more-systems px-2 py-1 bg-slate-600 text-slate-300 rounded text-xs hover:bg-slate-500 transition-colors">+35 more</button>
+                                           </div>
+                                       </div>
+                                       <div class="mb-4 flex-grow">
+                                           <p class="text-xs text-slate-500 mb-2">Available on</p>
+                                           <div class="flex flex-wrap gap-2"><span class="px-2 py-1 bg-slate-700 text-slate-300 rounded text-xs">Windows</span></div>
+                                       </div>
+                                       <div class="mt-auto"><a href="https://github.com/RetroAchievements/RALibretro/releases/tag/1.8.1" target="_blank" class="block text-center px-4 py-2 rounded-lg font-semibold transition-colors border-2 border-violet-500 text-violet-400 hover:bg-violet-500 hover:text-white">Visit Site</a></div>
+                                   </div>
+                               </div>
+                               <div class="card rounded-xl p-6 flex flex-col relative overflow-hidden">
+                                   <div class="card-main-content flex flex-col h-full">
+                                       <div class="mb-3"><h3 class="text-lg font-semibold text-white flex items-center">RASnes9x<span class="retroachievements-badge"><img src="img/retroachievementslogo.png" alt="RA" title="Compatible with RetroAchievements.org"></span></h3></div>
+                                       <div class="mb-3">
+                                           <p class="text-xs text-slate-500 mb-2">Supports 1 system</p>
+                                           <div class="flex flex-wrap gap-2"><span class="px-2 py-1 bg-slate-700 text-slate-300 rounded text-xs">SNES</span></div>
+                                       </div>
+                                       <div class="mb-4 flex-grow">
+                                           <p class="text-xs text-slate-500 mb-2">Available on</p>
+                                           <div class="flex flex-wrap gap-2"><span class="px-2 py-1 bg-slate-700 text-slate-300 rounded text-xs">Windows</span></div>
+                                       </div>
+                                       <div class="mt-auto"><a href="https://github.com/RetroAchievements/RASnes9x" target="_blank" class="block text-center px-4 py-2 rounded-lg font-semibold transition-colors border-2 border-violet-500 text-violet-400 hover:bg-violet-500 hover:text-white">Visit Site</a></div>
+                                   </div>
+                               </div>
+                               <div class="card rounded-xl p-6 flex flex-col relative overflow-hidden">
+                                   <div class="card-main-content flex flex-col h-full">
+                                       <div class="mb-3"><h3 class="text-lg font-semibold text-white flex items-center">RAVBA<span class="retroachievements-badge"><img src="img/retroachievementslogo.png" alt="RA" title="Compatible with RetroAchievements.org"></span></h3></div>
+                                       <div class="mb-3">
+                                           <p class="text-xs text-slate-500 mb-2">Supports 1 system</p>
+                                           <div class="flex flex-wrap gap-2"><span class="px-2 py-1 bg-slate-700 text-slate-300 rounded text-xs">GBA</span></div>
+                                       </div>
+                                       <div class="mb-4 flex-grow">
+                                           <p class="text-xs text-slate-500 mb-2">Available on</p>
+                                           <div class="flex flex-wrap gap-2"><span class="px-2 py-1 bg-slate-700 text-slate-300 rounded text-xs">Windows</span></div>
+                                       </div>
+                                       <div class="mt-auto"><a href="https://github.com/RetroAchievements/RAVBA" target="_blank" class="block text-center px-4 py-2 rounded-lg font-semibold transition-colors border-2 border-violet-500 text-violet-400 hover:bg-violet-500 hover:text-white">Visit Site</a></div>
+                                   </div>
+                               </div>
+                               <div class="card rounded-xl p-6 flex flex-col relative overflow-hidden">
+                                   <div class="card-main-content flex flex-col h-full">
+                                       <div class="mb-3"><h3 class="text-lg font-semibold text-white flex items-center">RAP64<span class="retroachievements-badge"><img src="img/retroachievementslogo.png" alt="RA" title="Compatible with RetroAchievements.org"></span></h3></div>
+                                       <div class="mb-3">
+                                           <p class="text-xs text-slate-500 mb-2">Supports 1 system</p>
+                                           <div class="flex flex-wrap gap-2"><span class="px-2 py-1 bg-slate-700 text-slate-300 rounded text-xs">N64</span></div>
+                                       </div>
+                                       <div class="mb-4 flex-grow">
+                                           <p class="text-xs text-slate-500 mb-2">Available on</p>
+                                           <div class="flex flex-wrap gap-2"><span class="px-2 py-1 bg-slate-700 text-slate-300 rounded text-xs">Windows</span></div>
+                                       </div>
+                                       <div class="mt-auto"><a href="https://github.com/RetroAchievements/RAProject64" target="_blank" class="block text-center px-4 py-2 rounded-lg font-semibold transition-colors border-2 border-violet-500 text-violet-400 hover:bg-violet-500 hover:text-white">Visit Site</a></div>
+                                   </div>
+                               </div>
+                               <div class="card rounded-xl p-6 flex flex-col relative overflow-hidden">
+                                   <div class="card-main-content flex flex-col h-full">
+                                       <div class="mb-3"><h3 class="text-lg font-semibold text-white flex items-center">RANes<span class="retroachievements-badge"><img src="img/retroachievementslogo.png" alt="RA" title="Compatible with RetroAchievements.org"></span></h3></div>
+                                       <div class="mb-3">
+                                           <p class="text-xs text-slate-500 mb-2">Supports 1 system</p>
+                                           <div class="flex flex-wrap gap-2"><span class="px-2 py-1 bg-slate-700 text-slate-300 rounded text-xs">NES</span></div>
+                                       </div>
+                                       <div class="mb-4 flex-grow">
+                                           <p class="text-xs text-slate-500 mb-2">Available on</p>
+                                           <div class="flex flex-wrap gap-2"><span class="px-2 py-1 bg-slate-700 text-slate-300 rounded text-xs">Windows</span></div>
+                                       </div>
+                                       <div class="mt-auto"><a href="https://github.com/RetroAchievements/RANes" target="_blank" class="block text-center px-4 py-2 rounded-lg font-semibold transition-colors border-2 border-violet-500 text-violet-400 hover:bg-violet-500 hover:text-white">Visit Site</a></div>
+                                   </div>
+                               </div>
+                               <div class="card rounded-xl p-6 flex flex-col relative overflow-hidden">
+                                   <div class="card-main-content flex flex-col h-full">
+                                       <div class="mb-3"><h3 class="text-lg font-semibold text-white flex items-center">SkyEmu<span class="retroachievements-badge"><img src="img/retroachievementslogo.png" alt="RA" title="Compatible with RetroAchievements.org"></span></h3></div>
+                                       <div class="mb-3">
+                                           <p class="text-xs text-slate-500 mb-2">Supports 3 systems</p>
+                                           <div class="flex flex-wrap gap-2">
+                                               <span class="px-2 py-1 bg-slate-700 text-slate-300 rounded text-xs">GB</span>
+                                               <span class="px-2 py-1 bg-slate-700 text-slate-300 rounded text-xs">GBC</span>
+                                               <span class="px-2 py-1 bg-slate-700 text-slate-300 rounded text-xs">GBA</span>
+                                           </div>
+                                       </div>
+                                       <div class="mb-4 flex-grow">
+                                           <p class="text-xs text-slate-500 mb-2">Available on</p>
+                                           <div class="flex flex-wrap gap-2">
+                                               <span class="px-2 py-1 bg-slate-700 text-slate-300 rounded text-xs">Windows</span>
+                                               <span class="px-2 py-1 bg-slate-700 text-slate-300 rounded text-xs">macOS</span>
+                                               <span class="px-2 py-1 bg-slate-700 text-slate-300 rounded text-xs">Linux</span>
+                                           </div>
+                                       </div>
+                                       <div class="mt-auto"><a href="https://github.com/firelight-emulator/firelight/releases/tag/v0.12.2" target="_blank" class="block text-center px-4 py-2 rounded-lg font-semibold transition-colors border-2 border-violet-500 text-violet-400 hover:bg-violet-500 hover:text-white">Visit Site</a></div>
+                                   </div>
+                               </div>
+                               <div class="card rounded-xl p-6 flex flex-col relative overflow-hidden">
+                                   <div class="card-main-content flex flex-col h-full">
+                                       <div class="mb-3"><h3 class="text-lg font-semibold text-white flex items-center">RAppleWin<span class="retroachievements-badge"><img src="img/retroachievementslogo.png" alt="RA" title="Compatible with RetroAchievements.org"></span></h3></div>
+                                       <div class="mb-3">
+                                           <p class="text-xs text-slate-500 mb-2">Supports 1 system</p>
+                                           <div class="flex flex-wrap gap-2"><span class="px-2 py-1 bg-slate-700 text-slate-300 rounded text-xs">Apple II</span></div>
+                                       </div>
+                                       <div class="mb-4 flex-grow">
+                                           <p class="text-xs text-slate-500 mb-2">Available on</p>
+                                           <div class="flex flex-wrap gap-2"><span class="px-2 py-1 bg-slate-700 text-slate-300 rounded text-xs">Windows</span></div>
+                                       </div>
+                                       <div class="mt-auto"><a href="https://github.com/RetroAchievements/AppleWin" target="_blank" class="block text-center px-4 py-2 rounded-lg font-semibold transition-colors border-2 border-violet-500 text-violet-400 hover:bg-violet-500 hover:text-white">Visit Site</a></div>
+                                   </div>
+                               </div>
+                               <div class="card rounded-xl p-6 flex flex-col relative overflow-hidden">
+                                   <div class="card-main-content flex flex-col h-full">
+                                       <div class="mb-3"><h3 class="text-lg font-semibold text-white flex items-center">Luna's Project64<span class="retroachievements-badge"><img src="img/retroachievementslogo.png" alt="RA" title="Compatible with RetroAchievements.org"></span></h3></div>
+                                       <div class="mb-3">
+                                           <p class="text-xs text-slate-500 mb-2">Supports 1 system</p>
+                                           <div class="flex flex-wrap gap-2"><span class="px-2 py-1 bg-slate-700 text-slate-300 rounded text-xs">N64</span></div>
+                                       </div>
+                                       <div class="mb-4 flex-grow">
+                                           <p class="text-xs text-slate-500 mb-2">Available on</p>
+                                           <div class="flex flex-wrap gap-2"><span class="px-2 py-1 bg-slate-700 text-slate-300 rounded text-xs">Windows</span></div>
+                                       </div>
+                                       <div class="mt-auto"><a href="https://github.com/Luna-Project64/Luna-Project64" target="_blank" class="block text-center px-4 py-2 rounded-lg font-semibold transition-colors border-2 border-violet-500 text-violet-400 hover:bg-violet-500 hover:text-white">Visit Site</a></div>
+                                   </div>
+                               </div>
+                               <div class="card rounded-xl p-6 flex flex-col relative overflow-hidden">
+                                   <div class="card-main-content flex flex-col h-full">
+                                       <div class="mb-3"><h3 class="text-lg font-semibold text-white flex items-center">Firelight<span class="retroachievements-badge"><img src="img/retroachievementslogo.png" alt="RA" title="Compatible with RetroAchievements.org"></span></h3></div>
+                                       <div class="mb-3">
+                                           <p class="text-xs text-slate-500 mb-2">Supports 3 systems</p>
+                                           <div class="flex flex-wrap gap-2">
+                                               <span class="px-2 py-1 bg-slate-700 text-slate-300 rounded text-xs">GB</span>
+                                               <span class="px-2 py-1 bg-slate-700 text-slate-300 rounded text-xs">GBC</span>
+                                               <span class="px-2 py-1 bg-slate-700 text-slate-300 rounded text-xs">GBA</span>
+                                           </div>
+                                       </div>
+                                       <div class="mb-4 flex-grow">
+                                           <p class="text-xs text-slate-500 mb-2">Available on</p>
+                                           <div class="flex flex-wrap gap-2">
+                                               <span class="px-2 py-1 bg-slate-700 text-slate-300 rounded text-xs">Windows</span>
+                                               <span class="px-2 py-1 bg-slate-700 text-slate-300 rounded text-xs">macOS</span>
+                                               <span class="px-2 py-1 bg-slate-700 text-slate-300 rounded text-xs">Linux</span>
+                                           </div>
+                                       </div>
+                                       <div class="mt-auto"><a href="https://github.com/firelight-emulator/firelight" target="_blank" class="block text-center px-4 py-2 rounded-lg font-semibold transition-colors border-2 border-violet-500 text-violet-400 hover:bg-violet-500 hover:text-white">Visit Site</a></div>
+                                   </div>
+                               </div>
+                               <div class="card rounded-xl p-6 flex flex-col relative overflow-hidden">
+                                   <div class="card-main-content flex flex-col h-full">
+                                       <div class="mb-3"><h3 class="text-lg font-semibold text-white flex items-center">RAQUASI88<span class="retroachievements-badge"><img src="img/retroachievementslogo.png" alt="RA" title="Compatible with RetroAchievements.org"></span></h3></div>
+                                       <div class="mb-3">
+                                           <p class="text-xs text-slate-500 mb-2">Supports 1 system</p>
+                                           <div class="flex flex-wrap gap-2"><span class="px-2 py-1 bg-slate-700 text-slate-300 rounded text-xs">PC-8801</span></div>
+                                       </div>
+                                       <div class="mb-4 flex-grow">
+                                           <p class="text-xs text-slate-500 mb-2">Available on</p>
+                                           <div class="flex flex-wrap gap-2"><span class="px-2 py-1 bg-slate-700 text-slate-300 rounded text-xs">Windows</span></div>
+                                       </div>
+                                       <div class="mt-auto"><a href="https://github.com/RetroAchievements/quasi88" target="_blank" class="block text-center px-4 py-2 rounded-lg font-semibold transition-colors border-2 border-violet-500 text-violet-400 hover:bg-violet-500 hover:text-white">Visit Site</a></div>
+                                   </div>
+                               </div>
+                               <div class="card rounded-xl p-6 flex flex-col relative overflow-hidden">
+                                   <div class="card-main-content flex flex-col h-full">
+                                       <div class="mb-3"><h3 class="text-lg font-semibold text-white flex items-center">WinArcadia<span class="retroachievements-badge"><img src="img/retroachievementslogo.png" alt="RA" title="Compatible with RetroAchievements.org"></span></h3></div>
+                                       <div class="mb-3">
+                                           <p class="text-xs text-slate-500 mb-2">Supports 5+ systems</p>
+                                           <div class="flex flex-wrap gap-2"><span class="px-2 py-1 bg-slate-700 text-slate-300 rounded text-xs">Arcadia 2001</span></div>
+                                       </div>
+                                       <div class="mb-4 flex-grow">
+                                           <p class="text-xs text-slate-500 mb-2">Available on</p>
+                                           <div class="flex flex-wrap gap-2"><span class="px-2 py-1 bg-slate-700 text-slate-300 rounded text-xs">Windows</span></div>
+                                       </div>
+                                       <div class="mt-auto"><a href="https://amigan.1emu.net/releases/" target="_blank" class="block text-center px-4 py-2 rounded-lg font-semibold transition-colors border-2 border-violet-500 text-violet-400 hover:bg-violet-500 hover:text-white">Visit Site</a></div>
+                                   </div>
+                               </div>
+                               <div class="card rounded-xl p-6 flex flex-col relative overflow-hidden">
+                                   <div class="card-main-content flex flex-col h-full">
+                                       <div class="mb-3"><h3 class="text-lg font-semibold text-white flex items-center">RAMeka<span class="retroachievements-badge"><img src="img/retroachievementslogo.png" alt="RA" title="Compatible with RetroAchievements.org"></span></h3></div>
+                                       <div class="mb-3">
+                                           <p class="text-xs text-slate-500 mb-2">Supports 2 systems</p>
+                                           <div class="flex flex-wrap gap-2">
+                                               <span class="px-2 py-1 bg-slate-700 text-slate-300 rounded text-xs">SMS</span>
+                                               <span class="px-2 py-1 bg-slate-700 text-slate-300 rounded text-xs">Game Gear</span>
+                                           </div>
+                                       </div>
+                                       <div class="mb-4 flex-grow">
+                                           <p class="text-xs text-slate-500 mb-2">Available on</p>
+                                           <div class="flex flex-wrap gap-2"><span class="px-2 py-1 bg-slate-700 text-slate-300 rounded text-xs">Windows</span></div>
+                                       </div>
+                                       <div class="mt-auto"><a href="https://github.com/RetroAchievements/RAMeka" target="_blank" class="block text-center px-4 py-2 rounded-lg font-semibold transition-colors border-2 border-violet-500 text-violet-400 hover:bg-violet-500 hover:text-white">Visit Site</a></div>
+                                   </div>
+                               </div>
                             </div>
                         </div>
                         <!-- Compatibility -->

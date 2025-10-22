@@ -1174,6 +1174,147 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
+    // --- SHOW MORE SYSTEMS FUNCTIONALITY ---
+    document.addEventListener('click', (e) => {
+        if (e.target.classList.contains('show-more-systems')) {
+            const systemsList = e.target.closest('.systems-list');
+            const isExpanded = systemsList.classList.contains('expanded');
+            
+            if (isExpanded) {
+                // Collapsing - get the count from data attribute or calculate it
+                const hiddenCount = systemsList.querySelectorAll('.hidden-system').length;
+                systemsList.classList.remove('expanded');
+                e.target.textContent = '+' + hiddenCount + ' more';
+            } else {
+                // Expanding - save the original count and show all
+                systemsList.classList.add('expanded');
+                e.target.textContent = 'Show less';
+            }
+        }
+    });
+
+    // --- EMULATOR FILTERING FUNCTIONALITY ---
+    const systemFilter = document.getElementById('system-filter');
+    const platformFilter = document.getElementById('platform-filter');
+    const raFilter = document.getElementById('ra-filter');
+    const resetFiltersBtn = document.getElementById('reset-filters');
+    const emulatorsGrid = document.getElementById('emulators-grid');
+
+    function filterEmulators() {
+        const selectedSystem = systemFilter?.value.toLowerCase();
+        const selectedPlatform = platformFilter?.value.toLowerCase();
+        const raOnly = raFilter?.checked;
+        
+        if (!emulatorsGrid) return;
+        
+        const cards = emulatorsGrid.querySelectorAll('.card');
+        
+        cards.forEach(card => {
+            let showCard = true;
+            
+            // Check system filter
+            if (selectedSystem && selectedSystem !== 'all') {
+                // Find all system spans - look in both .systems-list and regular .flex.flex-wrap divs
+                let systemSpans = card.querySelectorAll('.systems-list span:not(.show-more-systems)');
+                
+                // If no systems-list found, look for the systems in the first .flex.flex-wrap after "Supports X system"
+                if (systemSpans.length === 0) {
+                    const allDivs = card.querySelectorAll('.mb-3 .flex.flex-wrap');
+                    if (allDivs.length > 0) {
+                        systemSpans = allDivs[0].querySelectorAll('span');
+                    }
+                }
+                
+                const cardSystems = Array.from(systemSpans).map(span => span.textContent.toLowerCase().trim());
+                
+                // More flexible matching - check if the system name contains or equals the filter
+                showCard = cardSystems.some(sys => {
+                    // Exact match first
+                    if (sys === selectedSystem) return true;
+                    
+                    // Handle special cases with exact matching to avoid false positives
+                    if (selectedSystem === 'ps2' && sys === 'ps2') return true;
+                    if (selectedSystem === 'ps1' && sys === 'ps1') return true;
+                    if (selectedSystem === 'ps3' && sys === 'ps3') return true;
+                    if (selectedSystem === 'psp' && sys === 'psp') return true;
+                    
+                    // Wii vs Wii U - need exact match to avoid confusion
+                    if (selectedSystem === 'wii' && sys === 'wii') return true;
+                    if (selectedSystem === 'wiiu' && (sys === 'wii u' || sys === 'wiiu')) return true;
+                    
+                    // GameCube
+                    if (selectedSystem === 'gamecube' && (sys === 'gamecube' || sys === 'gc')) return true;
+                    
+                    // Handle "Game Boy" variants
+                    if (selectedSystem === 'gb' && (sys === 'gb' || sys === 'game boy')) return true;
+                    if (selectedSystem === 'gba' && (sys === 'gba' || sys === 'game boy advance')) return true;
+                    
+                    // N64
+                    if (selectedSystem === 'n64' && (sys === 'n64' || sys === 'nintendo 64')) return true;
+                    
+                    // DS variants
+                    if (selectedSystem === 'ds' && sys === 'ds') return true;
+                    if (selectedSystem === '3ds' && sys === '3ds') return true;
+                    
+                    // Genesis / Mega Drive
+                    if (selectedSystem === 'genesis' && (sys === 'genesis' || sys === 'mega drive')) return true;
+                    
+                    // Dreamcast
+                    if (selectedSystem === 'dreamcast' && sys === 'dreamcast') return true;
+                    
+                    // Switch
+                    if (selectedSystem === 'switch' && sys === 'switch') return true;
+                    
+                    // Xbox 360
+                    if (selectedSystem === 'xbox360' && (sys === 'xbox 360' || sys === 'xbox360')) return true;
+                    
+                    // NES/SNES
+                    if (selectedSystem === 'nes' && sys === 'nes') return true;
+                    if (selectedSystem === 'snes' && sys === 'snes') return true;
+                    
+                    return false;
+                });
+            }
+            
+            // Check platform filter
+            if (showCard && selectedPlatform && selectedPlatform !== 'all') {
+                const platformSpans = card.querySelectorAll('.mb-4 .flex.flex-wrap span');
+                const cardPlatforms = Array.from(platformSpans).map(span => span.textContent.toLowerCase().trim());
+                showCard = cardPlatforms.includes(selectedPlatform);
+            }
+            
+            // Check RetroAchievements filter
+            if (showCard && raOnly) {
+                const hasRABadge = card.querySelector('.retroachievements-badge');
+                showCard = hasRABadge !== null;
+            }
+            
+            // Show or hide card
+            card.style.display = showCard ? '' : 'none';
+        });
+    }
+
+    if (systemFilter) {
+        systemFilter.addEventListener('change', filterEmulators);
+    }
+    
+    if (platformFilter) {
+        platformFilter.addEventListener('change', filterEmulators);
+    }
+    
+    if (raFilter) {
+        raFilter.addEventListener('change', filterEmulators);
+    }
+    
+    if (resetFiltersBtn) {
+        resetFiltersBtn.addEventListener('click', () => {
+            if (systemFilter) systemFilter.value = 'all';
+            if (platformFilter) platformFilter.value = 'all';
+            if (raFilter) raFilter.checked = false;
+            filterEmulators();
+        });
+    }
+
 });
 
 

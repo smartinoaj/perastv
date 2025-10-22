@@ -790,3 +790,11 @@ a[href] span:first-child {
     background-color: rgba(226, 232, 240, 1);
 }
 
+/* Hidden Systems Toggle */
+.hidden-system {
+    display: none;
+}
+
+.systems-list.expanded .hidden-system {
+    display: inline-block;
+}
