@@ -102,6 +102,12 @@ document.addEventListener('DOMContentLoaded', () => {
         if (tabButton) tabButton.classList.add('active');
         const contentPanel = document.getElementById(targetTabId);
         if (contentPanel) contentPanel.classList.add('active');
+        
+        // Update URL with current tab
+        const url = new URL(window.location);
+        url.searchParams.set('tab', targetTabId);
+        window.history.pushState({}, '', url);
+        
         if (callback) callback();
     };
 
@@ -115,6 +121,11 @@ document.addEventListener('DOMContentLoaded', () => {
         if (!subNav) return;
         subNav.querySelectorAll('.sub-tab-button').forEach(btn => btn.classList.toggle('active', btn.dataset.subtab === subTabId));
         parentPanel.querySelectorAll('.sub-tab-content').forEach(content => content.classList.toggle('active', content.id === subTabId));
+        
+        // Update URL with current subtab
+        const url = new URL(window.location);
+        url.searchParams.set('subtab', subTabId);
+        window.history.pushState({}, '', url);
     };
 
     const navigateToCard = (cardData) => {
@@ -235,6 +246,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const managePageView = () => {
         const params = new URLSearchParams(window.location.search);
         const tabFromUrl = params.get('tab');
+        const subTabFromUrl = params.get('subtab');
 
         // Always show the search bar
         searchBarContainer.classList.remove('hidden');
@@ -243,7 +255,20 @@ document.addEventListener('DOMContentLoaded', () => {
             homepageContent.classList.add('hidden');
             megathreadContent.classList.remove('hidden');
             tabsNavContainer.classList.remove('hidden');
+            
+            // Temporarily prevent URL updates during initial load
+            const originalPushState = window.history.pushState;
+            window.history.pushState = () => {};
+            
             activateTab(tabFromUrl);
+            
+            // Restore subtab if specified in URL
+            if (subTabFromUrl && document.getElementById(subTabFromUrl)) {
+                activateSubTab(subTabFromUrl);
+            }
+            
+            // Restore pushState functionality
+            window.history.pushState = originalPushState;
         } else {
             homepageContent.classList.remove('hidden');
             megathreadContent.classList.add('hidden');
@@ -334,6 +359,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // --- INITIALIZATION ---
     cacheAllCards();
     handleTabSwitching('header .tabs-nav');
+    handleSubTabSwitching('#privacy');
     handleSubTabSwitching('#emulation');
     handleSubTabSwitching('#gaming');
     handleSubTabSwitching('#movies-tv');
@@ -347,6 +373,55 @@ document.addEventListener('DOMContentLoaded', () => {
     imageGuideModal.addEventListener('click', (e) => {
         if(e.target === imageGuideModal) {
             closeImageGuide();
+        }
+    });
+
+    // Copy Password Functionality
+    document.addEventListener('click', (e) => {
+        if (e.target.closest('.copy-password-btn')) {
+            const btn = e.target.closest('.copy-password-btn');
+            const password = btn.dataset.password;
+            
+            // Copy to clipboard
+            navigator.clipboard.writeText(password).then(() => {
+                // Store original content
+                const originalHTML = btn.innerHTML;
+                
+                // Show success feedback
+                btn.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>';
+                btn.classList.add('border-green-500', 'text-green-400');
+                btn.classList.remove('border-slate-600', 'text-slate-300');
+                
+                // Reset after 2 seconds
+                setTimeout(() => {
+                    btn.innerHTML = originalHTML;
+                    btn.classList.remove('border-green-500', 'text-green-400');
+                    btn.classList.add('border-slate-600', 'text-slate-300');
+                }, 2000);
+            }).catch(err => {
+                console.error('Failed to copy password:', err);
+            });
+        }
+    });
+
+    // Bios Download Button Hover Text Change
+    document.addEventListener('mouseover', (e) => {
+        if (e.target.closest('.bios-download-btn')) {
+            const btn = e.target.closest('.bios-download-btn');
+            const textSpan = btn.querySelector('.bios-text');
+            if (textSpan) {
+                textSpan.textContent = 'Download';
+            }
+        }
+    });
+
+    document.addEventListener('mouseout', (e) => {
+        if (e.target.closest('.bios-download-btn')) {
+            const btn = e.target.closest('.bios-download-btn');
+            const textSpan = btn.querySelector('.bios-text');
+            if (textSpan) {
+                textSpan.textContent = 'Bios';
+            }
         }
     });
 
