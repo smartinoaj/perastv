@@ -9,9 +9,10 @@ body {
 .card {
     background-color: #161e31; /* Slightly lighter slate */
     border: 1px solid #334155; /* slate-700 */
-    transition: all 0.3s ease-in-out;
+    transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
     opacity: 0;
     transform: translateY(20px);
+    position: relative;
 }
 
 .card.is-visible {
@@ -212,32 +213,201 @@ body {
 .card .tools-dropdown-content {
     position: absolute;
     inset: 0;
-    background-color: #161e31; /* Same as card background */
-    padding: 1.5rem; /* p-6 */
+    background: linear-gradient(135deg, rgba(22, 30, 49, 0.98) 0%, rgba(30, 41, 59, 0.98) 100%);
+    backdrop-filter: blur(10px);
+    padding: 1.5rem;
     opacity: 0;
     pointer-events: none;
-    transition: opacity 0.3s ease-in-out;
+    transform: scale(0.8) translateY(20px);
+    transition: all 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
     display: flex;
     flex-direction: column;
-    gap: 0.75rem; /* space-y-3 */
+    gap: 0.75rem;
     justify-content: center;
     align-items: center;
     z-index: 10;
+    border-radius: 0.75rem;
+    box-shadow: 0 0 0 1px rgba(148, 163, 184, 0.1), 0 20px 40px rgba(0, 0, 0, 0.3);
 }
 
 .card .card-main-content {
-    transition: opacity 0.3s ease-in-out;
+    transition: all 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
 /* State when tools are active */
 .card.tools-active .card-main-content {
     opacity: 0;
+    transform: scale(0.9) translateY(-10px);
     pointer-events: none;
 }
 
 .card.tools-active .tools-dropdown-content {
     opacity: 1;
+    transform: scale(1.02) translateY(0);
     pointer-events: auto;
+}
+
+.card.tools-active {
+    transform: scale(1.02);
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3), 0 0 0 3px rgba(139, 92, 246, 0.3);
+    z-index: 20;
+    border-color: #8b5cf6;
+    animation: pulse-border 2s ease-in-out infinite;
+}
+
+@keyframes pulse-border {
+    0%, 100% {
+        box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3), 0 0 0 3px rgba(139, 92, 246, 0.3);
+    }
+    50% {
+        box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3), 0 0 0 3px rgba(139, 92, 246, 0.6);
+    }
+}
+
+/* Animate dropdown items */
+.card.tools-active .tools-dropdown-content > * {
+    animation: slideInUp 0.3s cubic-bezier(0.34, 1.56, 0.64, 1) backwards;
+}
+
+.card.tools-active .tools-dropdown-content > *:nth-child(1) {
+    animation-delay: 0.08s;
+}
+
+.card.tools-active .tools-dropdown-content > *:nth-child(2) {
+    animation-delay: 0.12s;
+}
+
+.card.tools-active .tools-dropdown-content > *:nth-child(3) {
+    animation-delay: 0.16s;
+}
+
+.card.tools-active .tools-dropdown-content > *:nth-child(4) {
+    animation-delay: 0.2s;
+}
+
+.card.tools-active .tools-dropdown-content > *:nth-child(5) {
+    animation-delay: 0.24s;
+}
+
+@keyframes slideInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px) scale(0.9);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+/* Close button hover effect */
+.close-tools-button {
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.close-tools-button:hover {
+    transform: rotate(90deg) scale(1.1);
+}
+
+/* Tools button ripple effect */
+.tools-dropdown-button {
+    position: relative;
+    overflow: hidden;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+
+.tools-dropdown-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.tools-dropdown-button:active {
+    transform: translateY(0);
+}
+
+/* Position the dropdown arrow icon on the right */
+.tools-dropdown-button svg {
+    position: absolute;
+    right: 1rem;
+    pointer-events: none;
+}
+
+/* Custom Tooltip for Tools button - appears faster */
+.tools-dropdown-button::before {
+    content: "Click to Expand";
+    position: absolute;
+    bottom: calc(100% + 8px);
+    left: 50%;
+    transform: translateX(-50%) translateY(5px);
+    background: rgba(15, 23, 42, 0.95);
+    color: white;
+    padding: 6px 12px;
+    border-radius: 6px;
+    font-size: 0.75rem;
+    white-space: nowrap;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.15s ease-out, transform 0.15s ease-out;
+    transition-delay: 0.1s;
+    z-index: 100;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+.tools-dropdown-button::after {
+    content: "";
+    position: absolute;
+    bottom: calc(100% + 2px);
+    left: 50%;
+    transform: translateX(-50%) translateY(5px);
+    border: 6px solid transparent;
+    border-top-color: rgba(15, 23, 42, 0.95);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.15s ease-out, transform 0.15s ease-out;
+    transition-delay: 0.1s;
+    z-index: 100;
+}
+
+.tools-dropdown-button:hover::before,
+.tools-dropdown-button:hover::after {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+}
+
+.ripple-effect {
+    position: absolute;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.3);
+    transform: scale(0);
+    animation: ripple-animation 0.6s ease-out;
+    pointer-events: none;
+}
+
+@keyframes ripple-animation {
+    to {
+        transform: scale(2.5);
+        opacity: 0;
+    }
+}
+
+/* Dropdown content buttons */
+.tools-dropdown-content a,
+.tools-dropdown-content button {
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.tools-dropdown-content a:hover,
+.tools-dropdown-content button:hover {
+    transform: translateX(4px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+.tools-dropdown-content h4 {
+    text-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 }
 
 
@@ -460,7 +630,8 @@ body {
 }
 
 [data-theme="light"] .card .tools-dropdown-content {
-    background-color: #ffffff;
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.98) 0%, rgba(248, 250, 252, 0.98) 100%);
+    box-shadow: 0 0 0 1px rgba(15, 23, 42, 0.1);
 }
 
 /* ===== NEW FEATURE STYLES ===== */
@@ -470,6 +641,41 @@ body {
     backdrop-filter: blur(10px);
     flex-shrink: 0;
     z-index: 10;
+}
+
+/* Bios Download Button - Center text properly */
+.bios-download-btn {
+    position: relative;
+}
+
+.bios-download-btn .bios-text {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.bios-download-btn svg {
+    margin-left: auto;
+}
+
+/* Center all button text when copy link button is present */
+a[href] span:first-child {
+    flex: 1;
+    text-align: center;
+}
+
+/* Ensure Visit Site and other main buttons have centered text */
+.card a[target="_blank"]:not(.bios-download-btn) {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+}
+
+.card a[target="_blank"]:not(.bios-download-btn) span:first-child {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
 }
 
 .copy-link-btn:hover {
@@ -482,6 +688,71 @@ body {
     animation: pulse-badge 2s infinite;
     box-shadow: 0 0 10px rgba(34, 197, 94, 0.3);
     flex-shrink: 0;
+}
+
+/* RetroAchievements Badge */
+.retroachievements-badge {
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    margin-left: 0.5rem;
+    vertical-align: middle;
+    cursor: help;
+    transition: all 0.3s ease;
+    flex-shrink: 0;
+}
+
+.retroachievements-badge img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
+.retroachievements-badge:hover {
+    transform: scale(1.2);
+}
+
+/* RetroAchievements Tooltip */
+.retroachievements-badge::before {
+    content: "Compatible with RetroAchievements.org";
+    position: absolute;
+    bottom: calc(100% + 8px);
+    left: 50%;
+    transform: translateX(-50%) translateY(5px);
+    background: rgba(15, 23, 42, 0.95);
+    color: white;
+    padding: 6px 12px;
+    border-radius: 6px;
+    font-size: 0.75rem;
+    white-space: nowrap;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.15s ease-out, transform 0.15s ease-out;
+    transition-delay: 0.1s;
+    z-index: 100;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    font-weight: normal;
+}
+
+.retroachievements-badge::after {
+    content: "";
+    position: absolute;
+    bottom: calc(100% + 2px);
+    left: 50%;
+    transform: translateX(-50%) translateY(5px);
+    border: 6px solid transparent;
+    border-top-color: rgba(15, 23, 42, 0.95);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.15s ease-out, transform 0.15s ease-out;
+    transition-delay: 0.1s;
+    z-index: 100;
+}
+
+.retroachievements-badge:hover::before,
+.retroachievements-badge:hover::after {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
 }
 
 @keyframes pulse-badge {

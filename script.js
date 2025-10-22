@@ -5,30 +5,45 @@ document.addEventListener('DOMContentLoaded', () => {
     const guides = {
         pcsx2: {
             title: "PCSX2 Graphic Settings",
-            images: [
-                'img/guides/pcsx2_display.png',
-                'img/guides/pcsx2_rendering.png'
-            ]
+            categories: {
+                "High End PC": [
+                    'img/guides/pcsx2_display.png',
+                    'img/guides/pcsx2_rendering.png'
+                ],
+                "Low End PC": [
+                    // Add low-end PC images here
+                ]
+            }
         },
         dolphin: {
             title: "Dolphin Graphic Settings",
-            images: [
-                'img/guides/dolphin_general.png',
-                'img/guides/dolphin_enhancements.png',
-                'img/guides/dolphin_advanced.png'
-            ]
+            categories: {
+                "High End PC": [
+                    'img/guides/dolphin_general.png',
+                    'img/guides/dolphin_enhancements.png',
+                    'img/guides/dolphin_advanced.png'
+                ],
+                "Low End PC": [
+                    // Add low-end PC images here
+                ]
+            }
         },
         ppsspp: {
             title: "PPSSPP Graphic Settings",
-            images: [
-                'img/guides/ppsspp_rendering.png',
-                'img/guides/ppsspp_texture.png'
-            ]
+            categories: {
+                "High End PC": [
+                    'img/guides/ppsspp_rendering.png',
+                    'img/guides/ppsspp_texture.png'
+                ],
+                "Low End PC": [
+                    // Add low-end PC images here
+                ]
+            }
         }
-        // You can add more guides here by following the same format, e.g.:
-        // another_guide: { title: "Another Guide", images: ['path/to/image1.jpg', 'path/to/image2.jpg'] }
+        // You can add more guides here by following the same format
     };
     let currentGuide = null;
+    let currentCategory = null;
     let currentImageIndex = 0;
 
 
@@ -152,10 +167,35 @@ document.addEventListener('DOMContentLoaded', () => {
     };
     
     // --- IMAGE GUIDE LOGIC ---
+    const getCurrentImages = () => {
+        if (!currentGuide || !currentCategory) return [];
+        return currentGuide.categories[currentCategory] || [];
+    };
+
     const showImage = (index) => {
-        if (!currentGuide) return;
-        guideImage.src = currentGuide.images[index];
-        imageGuideCounter.textContent = `${index + 1} / ${currentGuide.images.length}`;
+        const images = getCurrentImages();
+        if (images.length === 0) return;
+        guideImage.src = images[index];
+        imageGuideCounter.textContent = `${index + 1} / ${images.length}`;
+    };
+
+    const switchCategory = (category) => {
+        currentCategory = category;
+        currentImageIndex = 0;
+        
+        // Update category button styles
+        const categoryButtons = document.querySelectorAll('.guide-category-btn');
+        categoryButtons.forEach(btn => {
+            if (btn.textContent === category) {
+                btn.classList.add('active', 'bg-violet-500', 'text-white');
+                btn.classList.remove('bg-slate-700', 'text-slate-300');
+            } else {
+                btn.classList.remove('active', 'bg-violet-500', 'text-white');
+                btn.classList.add('bg-slate-700', 'text-slate-300');
+            }
+        });
+        
+        showImage(currentImageIndex);
     };
 
     const openImageGuide = (guideId) => {
@@ -163,9 +203,34 @@ document.addEventListener('DOMContentLoaded', () => {
         if (!guideData) return;
 
         currentGuide = guideData;
+        currentCategory = "High End PC"; // Default to High End PC
         currentImageIndex = 0;
         
         imageGuideTitle.textContent = currentGuide.title;
+        
+        // Create category buttons
+        const categoryContainer = document.getElementById('guide-category-container');
+        categoryContainer.innerHTML = '';
+        
+        Object.keys(currentGuide.categories).forEach((category, index) => {
+            const images = currentGuide.categories[category];
+            // Only show category if it has images
+            if (images && images.length > 0) {
+                const btn = document.createElement('button');
+                btn.className = 'guide-category-btn px-4 py-2 rounded-lg font-semibold transition-colors';
+                btn.textContent = category;
+                
+                if (index === 0) {
+                    btn.classList.add('active', 'bg-violet-500', 'text-white');
+                } else {
+                    btn.classList.add('bg-slate-700', 'text-slate-300', 'hover:bg-slate-600');
+                }
+                
+                btn.addEventListener('click', () => switchCategory(category));
+                categoryContainer.appendChild(btn);
+            }
+        });
+        
         showImage(currentImageIndex);
 
         imageGuideModal.classList.remove('hidden');
@@ -176,17 +241,20 @@ document.addEventListener('DOMContentLoaded', () => {
         imageGuideModal.classList.add('hidden');
         imageGuideModal.classList.remove('flex');
         currentGuide = null;
+        currentCategory = null;
     };
     
     const nextImage = () => {
-        if (!currentGuide) return;
-        currentImageIndex = (currentImageIndex + 1) % currentGuide.images.length;
+        const images = getCurrentImages();
+        if (images.length === 0) return;
+        currentImageIndex = (currentImageIndex + 1) % images.length;
         showImage(currentImageIndex);
     };
 
     const prevImage = () => {
-         if (!currentGuide) return;
-        currentImageIndex = (currentImageIndex - 1 + currentGuide.images.length) % currentGuide.images.length;
+        const images = getCurrentImages();
+        if (images.length === 0) return;
+        currentImageIndex = (currentImageIndex - 1 + images.length) % images.length;
         showImage(currentImageIndex);
     };
 
@@ -321,6 +389,19 @@ document.addEventListener('DOMContentLoaded', () => {
                         activeCard.classList.remove('tools-active');
                     }
                 });
+                
+                // Add ripple effect
+                const ripple = document.createElement('span');
+                ripple.classList.add('ripple-effect');
+                const rect = dropdownButton.getBoundingClientRect();
+                const size = Math.max(rect.width, rect.height);
+                ripple.style.width = ripple.style.height = size + 'px';
+                ripple.style.left = e.clientX - rect.left - size / 2 + 'px';
+                ripple.style.top = e.clientY - rect.top - size / 2 + 'px';
+                dropdownButton.appendChild(ripple);
+                
+                setTimeout(() => ripple.remove(), 600);
+                
                 card.classList.toggle('tools-active');
                 return;
             }
@@ -670,6 +751,9 @@ document.addEventListener('DOMContentLoaded', () => {
             links.forEach(link => {
                 // Skip if this link already has a copy button
                 if (link.querySelector('.copy-link-btn')) return;
+                
+                // Skip if this is a bios download button
+                if (link.classList.contains('bios-download-btn')) return;
                 
                 const url = link.getAttribute('href');
                 
