@@ -65,6 +65,10 @@
                      <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 24 24" fill="currentColor"><path d="M21 3H3c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h5v2h8v-2h5c1.1 0 1.99-.9 1.99-2L23 5c0-1.1-.9-2-2-2zm0 14H3V5h18v12z"/></svg>
                     Movies / TV
                 </a>
+                <a href="#" class="tab-button whitespace-nowrap py-3 px-1 border-b-2 font-medium text-sm flex items-center gap-2" data-tab="tools">
+                     <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 24 24" fill="currentColor"><path d="M22.7 19l-9.1-9.1c.9-2.3.4-5-1.5-6.9-2-2-5-2.4-7.4-1.3L9 6 6 9 1.6 4.7C.4 7.1.9 10.1 2.9 12.1c1.9 1.9 4.6 2.4 6.9 1.5l9.1 9.1c.4.4 1 .4 1.4 0l2.3-2.3c.5-.4.5-1.1.1-1.4z"/></svg>
+                    Tools / Utilities
+                </a>
             </div>
         </nav>
     </header>
@@ -117,6 +121,15 @@
                         <p class="text-slate-400 mt-2">Your guide to the best streaming sites and media center setups.</p>
                     </div>
                 </a>
+                <a href="?tab=tools" class="category-card group">
+                    <div class="category-card-content">
+                        <div class="p-6 bg-slate-800 rounded-xl mb-4 inline-block">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-violet-400" viewBox="0 0 24 24" fill="currentColor"><path d="M22.7 19l-9.1-9.1c.9-2.3.4-5-1.5-6.9-2-2-5-2.4-7.4-1.3L9 6 6 9 1.6 4.7C.4 7.1.9 10.1 2.9 12.1c1.9 1.9 4.6 2.4 6.9 1.5l9.1 9.1c.4.4 1 .4 1.4 0l2.3-2.3c.5-.4.5-1.1.1-1.4z"/></svg>
+                        </div>
+                        <h3 class="text-2xl font-bold text-white">Tools / Utilities</h3>
+                        <p class="text-slate-400 mt-2">Essential software and utilities for productivity and system management.</p>
+                    </div>
+                </a>
             </div>
         </div>
 
@@ -128,6 +141,10 @@
                     <div class="sub-tabs-nav flex flex-wrap justify-center gap-2 mb-8 bg-slate-800 p-2 rounded-full">
                         <button class="sub-tab-button px-4 py-2 text-sm font-semibold rounded-full text-slate-300 transition-colors active" data-subtab="adblocking">Adblocking</button>
                         <button class="sub-tab-button px-4 py-2 text-sm font-semibold rounded-full text-slate-300 transition-colors" data-subtab="browsers">Browsers</button>
+                        <button class="sub-tab-button px-4 py-2 text-sm font-semibold rounded-full text-slate-300 transition-colors" data-subtab="vpn-security">VPN/Security</button>
+                        <button class="sub-tab-button px-4 py-2 text-sm font-semibold rounded-full text-slate-300 transition-colors" data-subtab="password-managers">Password Managers</button>
+                        <button class="sub-tab-button px-4 py-2 text-sm font-semibold rounded-full text-slate-300 transition-colors" data-subtab="email-providers">Email Providers</button>
+                        <button class="sub-tab-button px-4 py-2 text-sm font-semibold rounded-full text-slate-300 transition-colors" data-subtab="android-apps">Android Apps</button>
                         <button class="sub-tab-button px-4 py-2 text-sm font-semibold rounded-full text-slate-300 transition-colors" data-subtab="search-engines">Search Engines</button>
                     </div>
                     <div class="sub-tabs-content">
@@ -273,6 +290,221 @@
                                 </div>
                             </div>
                         </div>
+                        <!-- VPN/Security -->
+                        <div id="vpn-security" class="sub-tab-content">
+                            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+                                <!-- Mullvad VPN Card -->
+                                <div class="card rounded-xl p-6 flex flex-col tag-goat relative overflow-hidden">
+                                    <div class="card-main-content flex flex-col h-full">
+                                        <div class="flex items-start justify-between">
+                                            <h3 class="text-lg font-semibold text-white">Mullvad VPN</h3>
+                                            <div class="text-xs font-bold uppercase text-cyan-400 tracking-wider">GOAT</div>
+                                        </div>
+                                        <p class="text-slate-400 mt-2 flex-grow">Privacy-focused VPN with no logs, anonymous accounts, and strong encryption. No email required for signup.</p>
+                                        <div class="mt-6">
+                                            <a href="https://mullvad.net/" target="_blank" class="block text-center px-4 py-2 rounded-lg font-semibold transition-colors border-2 border-cyan-400 text-cyan-400 hover:bg-cyan-400 hover:text-slate-900">Visit Site</a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- ProtonVPN Card -->
+                                <div class="card rounded-xl p-6 flex flex-col tag-goat relative overflow-hidden">
+                                    <div class="card-main-content flex flex-col h-full">
+                                        <div class="flex items-start justify-between">
+                                            <h3 class="text-lg font-semibold text-white">ProtonVPN</h3>
+                                            <div class="text-xs font-bold uppercase text-cyan-400 tracking-wider">GOAT</div>
+                                        </div>
+                                        <p class="text-slate-400 mt-2 flex-grow">Swiss-based VPN with strong privacy laws, no-logs policy, and secure core architecture. Free tier available.</p>
+                                        <div class="mt-6">
+                                            <a href="https://protonvpn.com/" target="_blank" class="block text-center px-4 py-2 rounded-lg font-semibold transition-colors border-2 border-cyan-400 text-cyan-400 hover:bg-cyan-400 hover:text-slate-900">Visit Site</a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- IVPN Card -->
+                                <div class="card rounded-xl p-6 flex flex-col tag-recommended relative overflow-hidden">
+                                    <div class="card-main-content flex flex-col h-full">
+                                        <div class="flex items-start justify-between">
+                                            <h3 class="text-lg font-semibold text-white">IVPN</h3>
+                                            <div class="text-xs font-bold uppercase text-amber-400 tracking-wider">Recommended</div>
+                                        </div>
+                                        <p class="text-slate-400 mt-2 flex-grow">Privacy-focused VPN with anonymous accounts, no logs, and transparent security practices. Accepts cryptocurrency.</p>
+                                        <div class="mt-6">
+                                            <a href="https://www.ivpn.net/" target="_blank" class="block text-center px-4 py-2 rounded-lg font-semibold transition-colors border-2 border-amber-400 text-amber-400 hover:bg-amber-400 hover:text-slate-900">Visit Site</a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- Windscribe Card -->
+                                <div class="card rounded-xl p-6 flex flex-col tag-recommended relative overflow-hidden">
+                                    <div class="card-main-content flex flex-col h-full">
+                                        <div class="flex items-start justify-between">
+                                            <h3 class="text-lg font-semibold text-white">Windscribe</h3>
+                                            <div class="text-xs font-bold uppercase text-amber-400 tracking-wider">Recommended</div>
+                                        </div>
+                                        <p class="text-slate-400 mt-2 flex-grow">VPN with generous free tier (10GB/month), built-in ad blocker, and strong privacy features.</p>
+                                        <div class="mt-6">
+                                            <a href="https://windscribe.com/" target="_blank" class="block text-center px-4 py-2 rounded-lg font-semibold transition-colors border-2 border-amber-400 text-amber-400 hover:bg-amber-400 hover:text-slate-900">Visit Site</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Password Managers -->
+                        <div id="password-managers" class="sub-tab-content">
+                            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+                                <!-- Bitwarden Card -->
+                                <div class="card rounded-xl p-6 flex flex-col tag-goat relative overflow-hidden">
+                                    <div class="card-main-content flex flex-col h-full">
+                                        <div class="flex items-start justify-between">
+                                            <h3 class="text-lg font-semibold text-white">Bitwarden</h3>
+                                            <div class="text-xs font-bold uppercase text-cyan-400 tracking-wider">GOAT</div>
+                                        </div>
+                                        <p class="text-slate-400 mt-2 flex-grow">Open-source password manager with cloud sync, self-hosting option, and cross-platform support. Free tier is excellent.</p>
+                                        <div class="mt-6">
+                                            <a href="https://bitwarden.com/" target="_blank" class="block text-center px-4 py-2 rounded-lg font-semibold transition-colors border-2 border-cyan-400 text-cyan-400 hover:bg-cyan-400 hover:text-slate-900">Visit Site</a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- KeePassXC Card -->
+                                <div class="card rounded-xl p-6 flex flex-col tag-goat relative overflow-hidden">
+                                    <div class="card-main-content flex flex-col h-full">
+                                        <div class="flex items-start justify-between">
+                                            <h3 class="text-lg font-semibold text-white">KeePassXC</h3>
+                                            <div class="text-xs font-bold uppercase text-cyan-400 tracking-wider">GOAT</div>
+                                        </div>
+                                        <p class="text-slate-400 mt-2 flex-grow">Offline, local password manager with no cloud sync. Completely open-source and highly secure for maximum privacy.</p>
+                                        <div class="mt-6">
+                                            <a href="https://keepassxc.org/" target="_blank" class="block text-center px-4 py-2 rounded-lg font-semibold transition-colors border-2 border-cyan-400 text-cyan-400 hover:bg-cyan-400 hover:text-slate-900">Visit Site</a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- ProtonPass Card -->
+                                <div class="card rounded-xl p-6 flex flex-col tag-goat relative overflow-hidden">
+                                    <div class="card-main-content flex flex-col h-full">
+                                        <div class="flex items-start justify-between">
+                                            <h3 class="text-lg font-semibold text-white">ProtonPass</h3>
+                                            <div class="text-xs font-bold uppercase text-cyan-400 tracking-wider">GOAT</div>
+                                        </div>
+                                        <p class="text-slate-400 mt-2 flex-grow">End-to-end encrypted password manager from Proton with built-in 2FA, email aliases, and seamless integration with Proton ecosystem.</p>
+                                        <div class="mt-6">
+                                            <a href="https://proton.me/pass" target="_blank" class="block text-center px-4 py-2 rounded-lg font-semibold transition-colors border-2 border-cyan-400 text-cyan-400 hover:bg-cyan-400 hover:text-slate-900">Visit Site</a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- 1Password Card -->
+                                <div class="card rounded-xl p-6 flex flex-col tag-recommended relative overflow-hidden">
+                                    <div class="card-main-content flex flex-col h-full">
+                                        <div class="flex items-start justify-between">
+                                            <h3 class="text-lg font-semibold text-white">1Password</h3>
+                                            <div class="text-xs font-bold uppercase text-amber-400 tracking-wider">Recommended</div>
+                                        </div>
+                                        <p class="text-slate-400 mt-2 flex-grow">User-friendly password manager with excellent UI/UX, family sharing, and strong security. Premium service.</p>
+                                        <div class="mt-6">
+                                            <a href="https://1password.com/" target="_blank" class="block text-center px-4 py-2 rounded-lg font-semibold transition-colors border-2 border-amber-400 text-amber-400 hover:bg-amber-400 hover:text-slate-900">Visit Site</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Email Providers -->
+                        <div id="email-providers" class="sub-tab-content">
+                            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+                                <!-- ProtonMail Card -->
+                                <div class="card rounded-xl p-6 flex flex-col tag-goat relative overflow-hidden">
+                                    <div class="card-main-content flex flex-col h-full">
+                                        <div class="flex items-start justify-between">
+                                            <h3 class="text-lg font-semibold text-white">ProtonMail</h3>
+                                            <div class="text-xs font-bold uppercase text-cyan-400 tracking-wider">GOAT</div>
+                                        </div>
+                                        <p class="text-slate-400 mt-2 flex-grow">End-to-end encrypted email service based in Switzerland with strong privacy protections and zero-access encryption.</p>
+                                        <div class="mt-6">
+                                            <a href="https://proton.me/mail" target="_blank" class="block text-center px-4 py-2 rounded-lg font-semibold transition-colors border-2 border-cyan-400 text-cyan-400 hover:bg-cyan-400 hover:text-slate-900">Visit Site</a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- Tutanota Card -->
+                                <div class="card rounded-xl p-6 flex flex-col tag-goat relative overflow-hidden">
+                                    <div class="card-main-content flex flex-col h-full">
+                                        <div class="flex items-start justify-between">
+                                            <h3 class="text-lg font-semibold text-white">Tutanota</h3>
+                                            <div class="text-xs font-bold uppercase text-cyan-400 tracking-wider">GOAT</div>
+                                        </div>
+                                        <p class="text-slate-400 mt-2 flex-grow">Open-source encrypted email with automatic encryption, calendar, and contacts. Based in Germany with strong privacy laws.</p>
+                                        <div class="mt-6">
+                                            <a href="https://tutanota.com/" target="_blank" class="block text-center px-4 py-2 rounded-lg font-semibold transition-colors border-2 border-cyan-400 text-cyan-400 hover:bg-cyan-400 hover:text-slate-900">Visit Site</a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- Mailbox.org Card -->
+                                <div class="card rounded-xl p-6 flex flex-col tag-recommended relative overflow-hidden">
+                                    <div class="card-main-content flex flex-col h-full">
+                                        <div class="flex items-start justify-between">
+                                            <h3 class="text-lg font-semibold text-white">Mailbox.org</h3>
+                                            <div class="text-xs font-bold uppercase text-amber-400 tracking-wider">Recommended</div>
+                                        </div>
+                                        <p class="text-slate-400 mt-2 flex-grow">Privacy-focused email provider with calendar, cloud storage, and office suite. Eco-friendly and ad-free.</p>
+                                        <div class="mt-6">
+                                            <a href="https://mailbox.org/" target="_blank" class="block text-center px-4 py-2 rounded-lg font-semibold transition-colors border-2 border-amber-400 text-amber-400 hover:bg-amber-400 hover:text-slate-900">Visit Site</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Android Apps -->
+                        <div id="android-apps" class="sub-tab-content">
+                            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+                                <!-- F-Droid Card -->
+                                <div class="card rounded-xl p-6 flex flex-col tag-goat relative overflow-hidden">
+                                    <div class="card-main-content flex flex-col h-full">
+                                        <div class="flex items-start justify-between">
+                                            <h3 class="text-lg font-semibold text-white">F-Droid</h3>
+                                            <div class="text-xs font-bold uppercase text-cyan-400 tracking-wider">GOAT</div>
+                                        </div>
+                                        <p class="text-slate-400 mt-2 flex-grow">Free and open-source app store for Android with privacy-respecting apps. No tracking or ads.</p>
+                                        <div class="mt-6">
+                                            <a href="https://f-droid.org/" target="_blank" class="block text-center px-4 py-2 rounded-lg font-semibold transition-colors border-2 border-cyan-400 text-cyan-400 hover:bg-cyan-400 hover:text-slate-900">Visit Site</a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- Aurora Store Card -->
+                                <div class="card rounded-xl p-6 flex flex-col tag-goat relative overflow-hidden">
+                                    <div class="card-main-content flex flex-col h-full">
+                                        <div class="flex items-start justify-between">
+                                            <h3 class="text-lg font-semibold text-white">Aurora Store</h3>
+                                            <div class="text-xs font-bold uppercase text-cyan-400 tracking-wider">GOAT</div>
+                                        </div>
+                                        <p class="text-slate-400 mt-2 flex-grow">Anonymous Google Play Store client that lets you download apps without a Google account or tracking.</p>
+                                        <div class="mt-6">
+                                            <a href="https://auroraoss.com/" target="_blank" class="block text-center px-4 py-2 rounded-lg font-semibold transition-colors border-2 border-cyan-400 text-cyan-400 hover:bg-cyan-400 hover:text-slate-900">Visit Site</a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- NewPipe Card -->
+                                <div class="card rounded-xl p-6 flex flex-col tag-recommended relative overflow-hidden">
+                                    <div class="card-main-content flex flex-col h-full">
+                                        <div class="flex items-start justify-between">
+                                            <h3 class="text-lg font-semibold text-white">NewPipe</h3>
+                                            <div class="text-xs font-bold uppercase text-amber-400 tracking-wider">Recommended</div>
+                                        </div>
+                                        <p class="text-slate-400 mt-2 flex-grow">Lightweight YouTube client with no ads, background playback, and download support. No Google services required.</p>
+                                        <div class="mt-6">
+                                            <a href="https://newpipe.net/" target="_blank" class="block text-center px-4 py-2 rounded-lg font-semibold transition-colors border-2 border-amber-400 text-amber-400 hover:bg-amber-400 hover:text-slate-900">Visit Site</a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- ReVanced Manager Card -->
+                                <div class="card rounded-xl p-6 flex flex-col tag-recommended relative overflow-hidden">
+                                    <div class="card-main-content flex flex-col h-full">
+                                        <div class="flex items-start justify-between">
+                                            <h3 class="text-lg font-semibold text-white">ReVanced Manager</h3>
+                                            <div class="text-xs font-bold uppercase text-amber-400 tracking-wider">Recommended</div>
+                                        </div>
+                                        <p class="text-slate-400 mt-2 flex-grow">Patch Android apps to remove ads, unlock premium features, and enhance functionality. Successor to Vanced.</p>
+                                        <div class="mt-6">
+                                            <a href="https://revanced.app/" target="_blank" class="block text-center px-4 py-2 rounded-lg font-semibold transition-colors border-2 border-amber-400 text-amber-400 hover:bg-amber-400 hover:text-slate-900">Visit Site</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                         <!-- Search Engines -->
                         <div id="search-engines" class="sub-tab-content">
                             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
@@ -403,6 +635,8 @@
                      <div class="sub-tabs-nav flex flex-wrap justify-center gap-2 mb-8 bg-slate-800 p-2 rounded-full">
                         <button class="sub-tab-button px-4 py-2 text-sm font-semibold rounded-full text-slate-300 transition-colors active" data-subtab="direct-downloads">Direct Downloads</button>
                         <button class="sub-tab-button px-4 py-2 text-sm font-semibold rounded-full text-slate-300 transition-colors" data-subtab="repacks">Repacks</button>
+                        <button class="sub-tab-button px-4 py-2 text-sm font-semibold rounded-full text-slate-300 transition-colors" data-subtab="torrent-clients">Torrent Clients</button>
+                        <button class="sub-tab-button px-4 py-2 text-sm font-semibold rounded-full text-slate-300 transition-colors" data-subtab="download-managers">Download Managers</button>
                         <button class="sub-tab-button px-4 py-2 text-sm font-semibold rounded-full text-slate-300 transition-colors" data-subtab="forum-downloads">Forum Downloads</button>
                     </div>
                     <div class="sub-tabs-content">
@@ -424,6 +658,94 @@
                                 <div class="card rounded-xl p-6 flex flex-col relative overflow-hidden"><div class="card-main-content flex flex-col h-full"><h3 class="text-lg font-semibold text-white">DODI</h3><p class="text-slate-400 mt-2 flex-grow">Popular source for game repacks.</p><div class="mt-6"><a href="https://dodi-repacks.site/" target="_blank" class="block text-center px-4 py-2 rounded-lg font-semibold transition-colors border-2 border-violet-500 text-violet-400 hover:bg-violet-500 hover:text-white">Visit Site</a></div></div></div>
                              </div>
                          </div>
+                         <!-- Torrent Clients -->
+                         <div id="torrent-clients" class="sub-tab-content">
+                            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+                                <!-- qBittorrent Card -->
+                                <div class="card rounded-xl p-6 flex flex-col tag-goat relative overflow-hidden">
+                                    <div class="card-main-content flex flex-col h-full">
+                                        <div class="flex items-start justify-between">
+                                            <h3 class="text-lg font-semibold text-white">qBittorrent</h3>
+                                            <div class="text-xs font-bold uppercase text-cyan-400 tracking-wider">GOAT</div>
+                                        </div>
+                                        <p class="text-slate-400 mt-2 flex-grow">Free, open-source BitTorrent client with no ads, clean interface, and powerful features. Best alternative to uTorrent.</p>
+                                        <div class="mt-6">
+                                            <a href="https://www.qbittorrent.org/" target="_blank" class="block text-center px-4 py-2 rounded-lg font-semibold transition-colors border-2 border-cyan-400 text-cyan-400 hover:bg-cyan-400 hover:text-slate-900">Visit Site</a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- Transmission Card -->
+                                <div class="card rounded-xl p-6 flex flex-col tag-recommended relative overflow-hidden">
+                                    <div class="card-main-content flex flex-col h-full">
+                                        <div class="flex items-start justify-between">
+                                            <h3 class="text-lg font-semibold text-white">Transmission</h3>
+                                            <div class="text-xs font-bold uppercase text-amber-400 tracking-wider">Recommended</div>
+                                        </div>
+                                        <p class="text-slate-400 mt-2 flex-grow">Lightweight, fast torrent client with minimal resource usage. Simple and efficient for basic torrenting needs.</p>
+                                        <div class="mt-6">
+                                            <a href="https://transmissionbt.com/" target="_blank" class="block text-center px-4 py-2 rounded-lg font-semibold transition-colors border-2 border-amber-400 text-amber-400 hover:bg-amber-400 hover:text-slate-900">Visit Site</a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- Deluge Card -->
+                                <div class="card rounded-xl p-6 flex flex-col tag-recommended relative overflow-hidden">
+                                    <div class="card-main-content flex flex-col h-full">
+                                        <div class="flex items-start justify-between">
+                                            <h3 class="text-lg font-semibold text-white">Deluge</h3>
+                                            <div class="text-xs font-bold uppercase text-amber-400 tracking-wider">Recommended</div>
+                                        </div>
+                                        <p class="text-slate-400 mt-2 flex-grow">Cross-platform torrent client with plugin support and remote management capabilities. Great for power users.</p>
+                                        <div class="mt-6">
+                                            <a href="https://deluge-torrent.org/" target="_blank" class="block text-center px-4 py-2 rounded-lg font-semibold transition-colors border-2 border-amber-400 text-amber-400 hover:bg-amber-400 hover:text-slate-900">Visit Site</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                         </div>
+                         <!-- Download Managers -->
+                         <div id="download-managers" class="sub-tab-content">
+                            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+                                <!-- JDownloader 2 Card -->
+                                <div class="card rounded-xl p-6 flex flex-col tag-goat relative overflow-hidden">
+                                    <div class="card-main-content flex flex-col h-full">
+                                        <div class="flex items-start justify-between">
+                                            <h3 class="text-lg font-semibold text-white">JDownloader 2</h3>
+                                            <div class="text-xs font-bold uppercase text-cyan-400 tracking-wider">GOAT</div>
+                                        </div>
+                                        <p class="text-slate-400 mt-2 flex-grow">Powerful download manager with automatic link extraction, captcha solving, and support for hundreds of file hosts.</p>
+                                        <div class="mt-6">
+                                            <a href="https://jdownloader.org/jdownloader2" target="_blank" class="block text-center px-4 py-2 rounded-lg font-semibold transition-colors border-2 border-cyan-400 text-cyan-400 hover:bg-cyan-400 hover:text-slate-900">Visit Site</a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- Internet Download Manager Card -->
+                                <div class="card rounded-xl p-6 flex flex-col tag-recommended relative overflow-hidden">
+                                    <div class="card-main-content flex flex-col h-full">
+                                        <div class="flex items-start justify-between">
+                                            <h3 class="text-lg font-semibold text-white">Internet Download Manager</h3>
+                                            <div class="text-xs font-bold uppercase text-amber-400 tracking-wider">Recommended</div>
+                                        </div>
+                                        <p class="text-slate-400 mt-2 flex-grow">Premium download accelerator with up to 5x faster speeds, browser integration, and resume capability. Paid software.</p>
+                                        <div class="mt-6">
+                                            <a href="https://www.internetdownloadmanager.com/" target="_blank" class="block text-center px-4 py-2 rounded-lg font-semibold transition-colors border-2 border-amber-400 text-amber-400 hover:bg-amber-400 hover:text-slate-900">Visit Site</a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- Free Download Manager Card -->
+                                <div class="card rounded-xl p-6 flex flex-col tag-recommended relative overflow-hidden">
+                                    <div class="card-main-content flex flex-col h-full">
+                                        <div class="flex items-start justify-between">
+                                            <h3 class="text-lg font-semibold text-white">Free Download Manager</h3>
+                                            <div class="text-xs font-bold uppercase text-amber-400 tracking-wider">Recommended</div>
+                                        </div>
+                                        <p class="text-slate-400 mt-2 flex-grow">Free download accelerator with torrent support, browser integration, and multi-threaded downloading.</p>
+                                        <div class="mt-6">
+                                            <a href="https://www.freedownloadmanager.org/" target="_blank" class="block text-center px-4 py-2 rounded-lg font-semibold transition-colors border-2 border-amber-400 text-amber-400 hover:bg-amber-400 hover:text-slate-900">Visit Site</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                         </div>
                          <div id="forum-downloads" class="sub-tab-content">
                             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
                                 <div class="card rounded-xl p-6 flex flex-col tag-goat relative overflow-hidden"> <div class="card-main-content flex flex-col h-full"> <div class="flex items-start justify-between"><h3 class="text-lg font-semibold text-white flex items-center gap-2">CS.RIN.RU <span class="text-slate-400 text-xs">(Sign in)</span></h3><div class="text-xs font-bold uppercase text-cyan-400 tracking-wider">GOAT</div></div><p class="text-slate-400 mt-2 flex-grow">A major forum for game discussion & fixes.</p><div class="mt-6"><a href="https://cs.rin.ru/forum/" target="_blank" class="block text-center px-4 py-2 rounded-lg font-semibold transition-colors border-2 border-cyan-400 text-cyan-400 hover:bg-cyan-400 hover:text-slate-900">Visit Site</a></div> </div> </div>
@@ -438,6 +760,7 @@
                     <div class="sub-tabs-nav flex flex-wrap justify-center gap-2 mb-8 bg-slate-800 p-2 rounded-full">
                         <button class="sub-tab-button px-4 py-2 text-sm font-semibold rounded-full text-slate-300 transition-colors active tag-goat" data-subtab="stremio">Stremio</button>
                         <button class="sub-tab-button px-4 py-2 text-sm font-semibold rounded-full text-slate-300 transition-colors" data-subtab="streaming-sites">Streaming Sites</button>
+                        <button class="sub-tab-button px-4 py-2 text-sm font-semibold rounded-full text-slate-300 transition-colors" data-subtab="anime">Anime</button>
                     </div>
                     <div class="sub-tabs-content">
                          <div id="stremio" class="sub-tab-content active">
@@ -496,6 +819,159 @@
                                <div class="card rounded-xl p-6 flex flex-col tag-recommended relative overflow-hidden"><div class="card-main-content flex flex-col h-full"><div class="flex items-start justify-between"><h3 class="text-lg font-semibold text-white">Flixer</h3><div class="text-xs font-bold uppercase text-amber-400 tracking-wider">Recommended</div></div><p class="text-slate-400 mt-2 flex-grow">Source for the latest movies and TV series.</p><div class="mt-6"><a href="https://flixer.sh/" target="_blank" class="block text-center px-4 py-2 rounded-lg font-semibold transition-colors border-2 border-amber-400 text-amber-400 hover:bg-amber-400 hover:text-slate-900">Visit Site</a></div></div></div>
                             </div>
                          </div>
+                         <!-- Anime -->
+                         <div id="anime" class="sub-tab-content">
+                            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+                                <!-- Miruro Card -->
+                                <div class="card rounded-xl p-6 flex flex-col tag-goat relative overflow-hidden">
+                                    <div class="card-main-content flex flex-col h-full">
+                                        <div class="flex items-start justify-between">
+                                            <h3 class="text-lg font-semibold text-white">Miruro</h3>
+                                            <div class="text-xs font-bold uppercase text-cyan-400 tracking-wider">GOAT</div>
+                                        </div>
+                                        <p class="text-slate-400 mt-2 flex-grow">Modern anime streaming platform with sleek design, extensive library, and high-quality streams. Fast loading and minimal ads.</p>
+                                        <div class="mt-6">
+                                            <a href="https://www.miruro.com/" target="_blank" class="block text-center px-4 py-2 rounded-lg font-semibold transition-colors border-2 border-cyan-400 text-cyan-400 hover:bg-cyan-400 hover:text-slate-900">Visit Site</a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- HiAnime Card -->
+                                <div class="card rounded-xl p-6 flex flex-col tag-goat relative overflow-hidden">
+                                    <div class="card-main-content flex flex-col h-full">
+                                        <div class="flex items-start justify-between">
+                                            <h3 class="text-lg font-semibold text-white">HiAnime</h3>
+                                            <div class="text-xs font-bold uppercase text-cyan-400 tracking-wider">GOAT</div>
+                                        </div>
+                                        <p class="text-slate-400 mt-2 flex-grow">Clean interface with extensive anime collection, both subbed and dubbed. Excellent video quality and minimal ads.</p>
+                                        <div class="mt-6">
+                                            <a href="https://hianime.to/" target="_blank" class="block text-center px-4 py-2 rounded-lg font-semibold transition-colors border-2 border-cyan-400 text-cyan-400 hover:bg-cyan-400 hover:text-slate-900">Visit Site</a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- Animepahe Card -->
+                                <div class="card rounded-xl p-6 flex flex-col tag-recommended relative overflow-hidden">
+                                    <div class="card-main-content flex flex-col h-full">
+                                        <div class="flex items-start justify-between">
+                                            <h3 class="text-lg font-semibold text-white">Animepahe</h3>
+                                            <div class="text-xs font-bold uppercase text-amber-400 tracking-wider">Recommended</div>
+                                        </div>
+                                        <p class="text-slate-400 mt-2 flex-grow">Lightweight anime streaming with small file sizes and good quality. Great for users with limited bandwidth.</p>
+                                        <div class="mt-6">
+                                            <a href="https://animepahe.ru/" target="_blank" class="block text-center px-4 py-2 rounded-lg font-semibold transition-colors border-2 border-amber-400 text-amber-400 hover:bg-amber-400 hover:text-slate-900">Visit Site</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                         </div>
+                    </div>
+                </div>
+                <!-- Tools/Utilities Panel -->
+                <div id="tools" class="tab-content">
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+                        <!-- 7-Zip Card -->
+                        <div class="card rounded-xl p-6 flex flex-col tag-goat relative overflow-hidden">
+                            <div class="card-main-content flex flex-col h-full">
+                                <div class="flex items-start justify-between">
+                                    <h3 class="text-lg font-semibold text-white">7-Zip</h3>
+                                    <div class="text-xs font-bold uppercase text-cyan-400 tracking-wider">GOAT</div>
+                                </div>
+                                <p class="text-slate-400 mt-2 flex-grow">Free, open-source file archiver with high compression ratio. Supports multiple formats including ZIP, RAR, and 7z.</p>
+                                <div class="mt-6">
+                                    <a href="https://www.7-zip.org/" target="_blank" class="block text-center px-4 py-2 rounded-lg font-semibold transition-colors border-2 border-cyan-400 text-cyan-400 hover:bg-cyan-400 hover:text-slate-900">Visit Site</a>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Everything Card -->
+                        <div class="card rounded-xl p-6 flex flex-col tag-goat relative overflow-hidden">
+                            <div class="card-main-content flex flex-col h-full">
+                                <div class="flex items-start justify-between">
+                                    <h3 class="text-lg font-semibold text-white">Everything</h3>
+                                    <div class="text-xs font-bold uppercase text-cyan-400 tracking-wider">GOAT</div>
+                                </div>
+                                <p class="text-slate-400 mt-2 flex-grow">Lightning-fast file search tool for Windows. Instantly locate files and folders by name with real-time results.</p>
+                                <div class="mt-6">
+                                    <a href="https://www.voidtools.com/" target="_blank" class="block text-center px-4 py-2 rounded-lg font-semibold transition-colors border-2 border-cyan-400 text-cyan-400 hover:bg-cyan-400 hover:text-slate-900">Visit Site</a>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- ShareX Card -->
+                        <div class="card rounded-xl p-6 flex flex-col tag-goat relative overflow-hidden">
+                            <div class="card-main-content flex flex-col h-full">
+                                <div class="flex items-start justify-between">
+                                    <h3 class="text-lg font-semibold text-white">ShareX</h3>
+                                    <div class="text-xs font-bold uppercase text-cyan-400 tracking-wider">GOAT</div>
+                                </div>
+                                <p class="text-slate-400 mt-2 flex-grow">Powerful screenshot and screen recording tool with built-in image editor, OCR, and cloud upload support.</p>
+                                <div class="mt-6">
+                                    <a href="https://getsharex.com/" target="_blank" class="block text-center px-4 py-2 rounded-lg font-semibold transition-colors border-2 border-cyan-400 text-cyan-400 hover:bg-cyan-400 hover:text-slate-900">Visit Site</a>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Notepad++ Card -->
+                        <div class="card rounded-xl p-6 flex flex-col tag-recommended relative overflow-hidden">
+                            <div class="card-main-content flex flex-col h-full">
+                                <div class="flex items-start justify-between">
+                                    <h3 class="text-lg font-semibold text-white">Notepad++</h3>
+                                    <div class="text-xs font-bold uppercase text-amber-400 tracking-wider">Recommended</div>
+                                </div>
+                                <p class="text-slate-400 mt-2 flex-grow">Free source code editor with syntax highlighting for multiple programming languages. Lightweight and fast.</p>
+                                <div class="mt-6">
+                                    <a href="https://notepad-plus-plus.org/" target="_blank" class="block text-center px-4 py-2 rounded-lg font-semibold transition-colors border-2 border-amber-400 text-amber-400 hover:bg-amber-400 hover:text-slate-900">Visit Site</a>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- VLC Media Player Card -->
+                        <div class="card rounded-xl p-6 flex flex-col tag-goat relative overflow-hidden">
+                            <div class="card-main-content flex flex-col h-full">
+                                <div class="flex items-start justify-between">
+                                    <h3 class="text-lg font-semibold text-white">VLC Media Player</h3>
+                                    <div class="text-xs font-bold uppercase text-cyan-400 tracking-wider">GOAT</div>
+                                </div>
+                                <p class="text-slate-400 mt-2 flex-grow">Free, open-source media player that plays virtually any video or audio format. No codecs needed.</p>
+                                <div class="mt-6">
+                                    <a href="https://www.videolan.org/vlc/" target="_blank" class="block text-center px-4 py-2 rounded-lg font-semibold transition-colors border-2 border-cyan-400 text-cyan-400 hover:bg-cyan-400 hover:text-slate-900">Visit Site</a>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- OBS Studio Card -->
+                        <div class="card rounded-xl p-6 flex flex-col tag-goat relative overflow-hidden">
+                            <div class="card-main-content flex flex-col h-full">
+                                <div class="flex items-start justify-between">
+                                    <h3 class="text-lg font-semibold text-white">OBS Studio</h3>
+                                    <div class="text-xs font-bold uppercase text-cyan-400 tracking-wider">GOAT</div>
+                                </div>
+                                <p class="text-slate-400 mt-2 flex-grow">Professional-grade screen recording and live streaming software. Free, open-source, and highly customizable.</p>
+                                <div class="mt-6">
+                                    <a href="https://obsproject.com/" target="_blank" class="block text-center px-4 py-2 rounded-lg font-semibold transition-colors border-2 border-cyan-400 text-cyan-400 hover:bg-cyan-400 hover:text-slate-900">Visit Site</a>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Audacity Card -->
+                        <div class="card rounded-xl p-6 flex flex-col tag-recommended relative overflow-hidden">
+                            <div class="card-main-content flex flex-col h-full">
+                                <div class="flex items-start justify-between">
+                                    <h3 class="text-lg font-semibold text-white">Audacity</h3>
+                                    <div class="text-xs font-bold uppercase text-amber-400 tracking-wider">Recommended</div>
+                                </div>
+                                <p class="text-slate-400 mt-2 flex-grow">Free, open-source audio editor for recording, editing, and mixing audio files. Multi-track support.</p>
+                                <div class="mt-6">
+                                    <a href="https://www.audacityteam.org/" target="_blank" class="block text-center px-4 py-2 rounded-lg font-semibold transition-colors border-2 border-amber-400 text-amber-400 hover:bg-amber-400 hover:text-slate-900">Visit Site</a>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- WinDirStat Card -->
+                        <div class="card rounded-xl p-6 flex flex-col tag-recommended relative overflow-hidden">
+                            <div class="card-main-content flex flex-col h-full">
+                                <div class="flex items-start justify-between">
+                                    <h3 class="text-lg font-semibold text-white">WinDirStat</h3>
+                                    <div class="text-xs font-bold uppercase text-amber-400 tracking-wider">Recommended</div>
+                                </div>
+                                <p class="text-slate-400 mt-2 flex-grow">Disk usage analyzer that visualizes storage with a treemap. Find what's taking up space on your drive.</p>
+                                <div class="mt-6">
+                                    <a href="https://windirstat.net/" target="_blank" class="block text-center px-4 py-2 rounded-lg font-semibold transition-colors border-2 border-amber-400 text-amber-400 hover:bg-amber-400 hover:text-slate-900">Visit Site</a>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
