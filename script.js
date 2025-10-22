@@ -577,34 +577,37 @@ document.addEventListener('DOMContentLoaded', () => {
     function addCopyLinkButtons() {
         const cards = document.querySelectorAll('.card');
         cards.forEach(card => {
-            // Skip if already has copy button
-            if (card.querySelector('.copy-link-btn')) return;
+            // Get all links in the card (including multiple options)
+            const links = card.querySelectorAll('a[href^="http"]');
+            if (links.length === 0) return;
             
-            const link = card.querySelector('a[href^="http"]');
-            if (!link) return;
-            
-            const url = link.getAttribute('href');
-            
-            // Create copy button
-            const copyBtn = document.createElement('button');
-            copyBtn.className = 'copy-link-btn ml-auto p-2 rounded-lg bg-slate-700/50 hover:bg-slate-600 transition-all border border-slate-600 inline-flex items-center justify-center';
-            copyBtn.setAttribute('data-url', url);
-            copyBtn.title = 'Copy link';
-            copyBtn.innerHTML = '<svg class="h-4 w-4 text-slate-300" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" /></svg>';
-            
-            // Make the link a flex container and add the copy button inside
-            link.style.display = 'flex';
-            link.style.alignItems = 'center';
-            link.style.justifyContent = 'space-between';
-            link.style.gap = '0.5rem';
-            
-            // Wrap the existing text in a span
-            const linkText = link.textContent;
-            link.textContent = '';
-            const textSpan = document.createElement('span');
-            textSpan.textContent = linkText;
-            link.appendChild(textSpan);
-            link.appendChild(copyBtn);
+            links.forEach(link => {
+                // Skip if this link already has a copy button
+                if (link.querySelector('.copy-link-btn')) return;
+                
+                const url = link.getAttribute('href');
+                
+                // Create copy button
+                const copyBtn = document.createElement('button');
+                copyBtn.className = 'copy-link-btn ml-auto p-2 rounded-lg bg-slate-700/50 hover:bg-slate-600 transition-all border border-slate-600 inline-flex items-center justify-center flex-shrink-0';
+                copyBtn.setAttribute('data-url', url);
+                copyBtn.title = 'Copy link';
+                copyBtn.innerHTML = '<svg class="h-4 w-4 text-slate-300" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" /></svg>';
+                
+                // Make the link a flex container and add the copy button inside
+                link.style.display = 'flex';
+                link.style.alignItems = 'center';
+                link.style.justifyContent = 'space-between';
+                link.style.gap = '0.5rem';
+                
+                // Wrap the existing text in a span
+                const linkText = link.textContent;
+                link.textContent = '';
+                const textSpan = document.createElement('span');
+                textSpan.textContent = linkText;
+                link.appendChild(textSpan);
+                link.appendChild(copyBtn);
+            });
             
             card.classList.add('group');
         });
@@ -689,26 +692,118 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
     
+    // Store original card positions
+    const originalCardPositions = new Map();
+    
+    // --- SAVE ORIGINAL POSITIONS ---
+    function saveOriginalPositions() {
+        const subTabContents = document.querySelectorAll('.sub-tab-content');
+        
+        subTabContents.forEach(subTab => {
+            const cardsGrid = subTab.querySelector('.grid');
+            if (!cardsGrid) return;
+            
+            const cards = Array.from(cardsGrid.querySelectorAll('.card'));
+            cards.forEach((card, index) => {
+                const link = card.querySelector('a[href^="http"]');
+                if (!link) return;
+                
+                const url = link.getAttribute('href');
+                if (!originalCardPositions.has(url)) {
+                    originalCardPositions.set(url, {
+                        card: card,
+                        originalIndex: index,
+                        parentGrid: cardsGrid
+                    });
+                }
+            });
+        });
+    }
+    
+    // --- REORDER CARDS BY FAVORITES ---
+    function reorderCardsByFavorites() {
+        // Get all sub-tab contents
+        const subTabContents = document.querySelectorAll('.sub-tab-content');
+        
+        subTabContents.forEach(subTab => {
+            const cardsGrid = subTab.querySelector('.grid');
+            if (!cardsGrid) return;
+            
+            const cards = Array.from(cardsGrid.querySelectorAll('.card'));
+            if (cards.length === 0) return;
+            
+            // Separate favorited and non-favorited cards with their original positions
+            const favoritedCards = [];
+            const nonFavoritedCards = [];
+            
+            cards.forEach((card, currentIndex) => {
+                const link = card.querySelector('a[href^="http"]');
+                if (!link) return;
+                
+                const url = link.getAttribute('href');
+                const isFavorited = favorites.includes(url);
+                const originalPos = originalCardPositions.get(url);
+                
+                if (isFavorited) {
+                    // Add order based on position in favorites array
+                    const favoriteIndex = favorites.indexOf(url);
+                    favoritedCards.push({ card, favoriteIndex });
+                } else {
+                    nonFavoritedCards.push({ 
+                        card, 
+                        originalIndex: originalPos ? originalPos.originalIndex : currentIndex 
+                    });
+                }
+            });
+            
+            // Sort favorited cards by the order they were added to favorites
+            favoritedCards.sort((a, b) => a.favoriteIndex - b.favoriteIndex);
+            
+            // Sort non-favorited cards by their original position
+            nonFavoritedCards.sort((a, b) => a.originalIndex - b.originalIndex);
+            
+            // Clear the grid
+            cardsGrid.innerHTML = '';
+            
+            // Add favorited cards first (in order)
+            favoritedCards.forEach(item => {
+                item.card.classList.add('favorited-card');
+                cardsGrid.appendChild(item.card);
+            });
+            
+            // Then add non-favorited cards in their original order
+            nonFavoritedCards.forEach(item => {
+                cardsGrid.appendChild(item.card);
+            });
+        });
+    }
+    
     document.addEventListener('click', (e) => {
         if (e.target.closest('.favorite-btn')) {
             const btn = e.target.closest('.favorite-btn');
             const url = btn.getAttribute('data-url');
             const title = btn.getAttribute('data-title');
             
+            const card = btn.closest('.card');
             const index = favorites.indexOf(url);
             if (index > -1) {
                 favorites.splice(index, 1);
                 btn.innerHTML = '<svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" /></svg>';
                 btn.className = 'favorite-btn ml-2 p-1 rounded transition-all text-slate-400 hover:text-red-400';
                 btn.title = 'Add to favorites';
+                if (card) card.classList.remove('favorited-card');
             } else {
                 favorites.push(url);
                 btn.innerHTML = '<svg class="h-4 w-4" fill="currentColor" viewBox="0 0 20 20"><path d="M3.172 5.172a4 4 0 015.656 0L10 6.343l1.172-1.171a4 4 0 115.656 5.656L10 17.657l-6.828-6.829a4 4 0 010-5.656z" /></svg>';
                 btn.className = 'favorite-btn ml-2 p-1 rounded transition-all text-red-500';
                 btn.title = 'Remove from favorites';
+                if (card) card.classList.add('favorited-card');
             }
             
             localStorage.setItem('favorites', JSON.stringify(favorites));
+            
+            // Reorder cards after favoriting/unfavoriting
+            reorderCardsByFavorites();
         }
     });
 
@@ -862,16 +957,79 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
+    // --- IMPORT FAVORITES ---
+    function addImportButton() {
+        const searchContainer = document.getElementById('search-bar-container');
+        if (!searchContainer || document.getElementById('import-btn')) return;
+        
+        const importBtn = document.createElement('button');
+        importBtn.id = 'import-btn';
+        importBtn.className = 'px-4 py-2 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300 font-semibold transition-colors flex items-center gap-2';
+        importBtn.title = 'Import favorites';
+        importBtn.innerHTML = '<svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12" /></svg>';
+        
+        searchContainer.appendChild(importBtn);
+        
+        // Create hidden file input
+        const fileInput = document.createElement('input');
+        fileInput.type = 'file';
+        fileInput.accept = '.json';
+        fileInput.style.display = 'none';
+        document.body.appendChild(fileInput);
+        
+        importBtn.addEventListener('click', () => {
+            fileInput.click();
+        });
+        
+        fileInput.addEventListener('change', (e) => {
+            const file = e.target.files[0];
+            if (!file) return;
+            
+            const reader = new FileReader();
+            reader.onload = (event) => {
+                try {
+                    const importedFavorites = JSON.parse(event.target.result);
+                    
+                    if (!Array.isArray(importedFavorites)) {
+                        alert('Invalid favorites file format!');
+                        return;
+                    }
+                    
+                    // Merge with existing favorites (avoid duplicates)
+                    importedFavorites.forEach(url => {
+                        if (!favorites.includes(url)) {
+                            favorites.push(url);
+                        }
+                    });
+                    
+                    localStorage.setItem('favorites', JSON.stringify(favorites));
+                    
+                    // Refresh the page to show updated favorites
+                    alert(`Successfully imported ${importedFavorites.length} favorites!`);
+                    location.reload();
+                } catch (error) {
+                    alert('Error reading favorites file. Please make sure it\'s a valid JSON file.');
+                }
+            };
+            
+            reader.readAsText(file);
+            fileInput.value = ''; // Reset input
+        });
+    }
+
     // Initialize all enhancements
     setTimeout(() => {
+        saveOriginalPositions(); // Save original card positions first
         addFavicons();
         addCopyLinkButtons();
         addRecentlyAddedBadges();
         addFavoriteButtons();
+        reorderCardsByFavorites(); // Apply favorite ordering on load
         updateResourceCounters();
         addSearchFilters();
         updateStatsBanner();
         addRandomButton();
+        addImportButton();
         addExportButton();
     }, 500);
 

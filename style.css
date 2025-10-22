@@ -510,6 +510,21 @@ body {
     background: rgba(0, 0, 0, 0.05);
 }
 
+/* Favorited Card Styling */
+.favorited-card {
+    border-color: rgba(239, 68, 68, 0.3) !important;
+    box-shadow: 0 0 0 1px rgba(239, 68, 68, 0.1);
+}
+
+.favorited-card:hover {
+    border-color: rgba(239, 68, 68, 0.5) !important;
+}
+
+[data-theme="light"] .favorited-card {
+    border-color: rgba(239, 68, 68, 0.2) !important;
+    box-shadow: 0 0 0 1px rgba(239, 68, 68, 0.15);
+}
+
 /* Resource Counter */
 .resource-counter {
     animation: slideInRight 0.5s ease-out;
