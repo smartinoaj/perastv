@@ -69,6 +69,14 @@
                      <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 24 24" fill="currentColor"><path d="M22.7 19l-9.1-9.1c.9-2.3.4-5-1.5-6.9-2-2-5-2.4-7.4-1.3L9 6 6 9 1.6 4.7C.4 7.1.9 10.1 2.9 12.1c1.9 1.9 4.6 2.4 6.9 1.5l9.1 9.1c.4.4 1 .4 1.4 0l2.3-2.3c.5-.4.5-1.1.1-1.4z"/></svg>
                     Tools / Utilities
                 </a>
+                <a href="#" class="tab-button whitespace-nowrap py-3 px-1 border-b-2 font-medium text-sm flex items-center gap-2" data-tab="development">
+                     <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 24 24" fill="currentColor"><path d="M9.4 16.6L4.8 12l4.6-4.6L8 6l-6 6 6 6 1.4-1.4zm5.2 0l4.6-4.6-4.6-4.6L16 6l6 6-6 6-1.4-1.4z"/></svg>
+                    Development
+                </a>
+                <a href="#" class="tab-button whitespace-nowrap py-3 px-1 border-b-2 font-medium text-sm flex items-center gap-2" data-tab="cloud-storage">
+                     <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 24 24" fill="currentColor"><path d="M19.35 10.04C18.67 6.59 15.64 4 12 4 9.11 4 6.6 5.64 5.35 8.04 2.34 8.36 0 10.91 0 14c0 3.31 2.69 6 6 6h13c2.76 0 5-2.24 5-5 0-2.64-2.05-4.78-4.65-4.96z"/></svg>
+                    Cloud Storage
+                </a>
             </div>
         </nav>
     </header>
@@ -130,6 +138,24 @@
                         <p class="text-slate-400 mt-2">Essential software and utilities for productivity and system management.</p>
                     </div>
                 </a>
+                <a href="?tab=development" class="category-card group">
+                    <div class="category-card-content">
+                        <div class="p-6 bg-slate-800 rounded-xl mb-4 inline-block">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-violet-400" viewBox="0 0 24 24" fill="currentColor"><path d="M9.4 16.6L4.8 12l4.6-4.6L8 6l-6 6 6 6 1.4-1.4zm5.2 0l4.6-4.6-4.6-4.6L16 6l6 6-6 6-1.4-1.4z"/></svg>
+                        </div>
+                        <h3 class="text-2xl font-bold text-white">Development</h3>
+                        <p class="text-slate-400 mt-2">Code editors, version control, and essential developer tools.</p>
+                    </div>
+                </a>
+                <a href="?tab=cloud-storage" class="category-card group">
+                    <div class="category-card-content">
+                        <div class="p-6 bg-slate-800 rounded-xl mb-4 inline-block">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-violet-400" viewBox="0 0 24 24" fill="currentColor"><path d="M19.35 10.04C18.67 6.59 15.64 4 12 4 9.11 4 6.6 5.64 5.35 8.04 2.34 8.36 0 10.91 0 14c0 3.31 2.69 6 6 6h13c2.76 0 5-2.24 5-5 0-2.64-2.05-4.78-4.65-4.96z"/></svg>
+                        </div>
+                        <h3 class="text-2xl font-bold text-white">Cloud Storage</h3>
+                        <p class="text-slate-400 mt-2">Secure and private cloud storage solutions with generous free tiers.</p>
+                    </div>
+                </a>
             </div>
         </div>
 
@@ -140,12 +166,16 @@
                 <div id="privacy" class="tab-content">
                     <div class="sub-tabs-nav flex flex-wrap justify-center gap-2 mb-8 bg-slate-800 p-2 rounded-full">
                         <button class="sub-tab-button px-4 py-2 text-sm font-semibold rounded-full text-slate-300 transition-colors active" data-subtab="adblocking">Adblocking</button>
-                        <button class="sub-tab-button px-4 py-2 text-sm font-semibold rounded-full text-slate-300 transition-colors" data-subtab="browsers">Browsers</button>
                         <button class="sub-tab-button px-4 py-2 text-sm font-semibold rounded-full text-slate-300 transition-colors" data-subtab="vpn-security">VPN/Security</button>
+                        <button class="sub-tab-button px-4 py-2 text-sm font-semibold rounded-full text-slate-300 transition-colors" data-subtab="dns-providers">DNS Providers</button>
                         <button class="sub-tab-button px-4 py-2 text-sm font-semibold rounded-full text-slate-300 transition-colors" data-subtab="password-managers">Password Managers</button>
+                        <button class="sub-tab-button px-4 py-2 text-sm font-semibold rounded-full text-slate-300 transition-colors" data-subtab="2fa-apps">2FA Apps</button>
                         <button class="sub-tab-button px-4 py-2 text-sm font-semibold rounded-full text-slate-300 transition-colors" data-subtab="email-providers">Email Providers</button>
-                        <button class="sub-tab-button px-4 py-2 text-sm font-semibold rounded-full text-slate-300 transition-colors" data-subtab="android-apps">Android Apps</button>
+                        <button class="sub-tab-button px-4 py-2 text-sm font-semibold rounded-full text-slate-300 transition-colors" data-subtab="file-encryption">File Encryption</button>
+                        <button class="sub-tab-button px-4 py-2 text-sm font-semibold rounded-full text-slate-300 transition-colors" data-subtab="browsers">Browsers</button>
                         <button class="sub-tab-button px-4 py-2 text-sm font-semibold rounded-full text-slate-300 transition-colors" data-subtab="search-engines">Search Engines</button>
+                        <button class="sub-tab-button px-4 py-2 text-sm font-semibold rounded-full text-slate-300 transition-colors" data-subtab="messengers">Messengers</button>
+                        <button class="sub-tab-button px-4 py-2 text-sm font-semibold rounded-full text-slate-300 transition-colors" data-subtab="android-apps">Android Apps</button>
                     </div>
                     <div class="sub-tabs-content">
                         <!-- Adblocking -->
@@ -347,6 +377,120 @@
                                 </div>
                             </div>
                         </div>
+                        <!-- DNS Providers -->
+                        <div id="dns-providers" class="sub-tab-content">
+                            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+                                <!-- NextDNS Card -->
+                                <div class="card rounded-xl p-6 flex flex-col tag-goat relative overflow-hidden">
+                                    <div class="card-main-content flex flex-col h-full">
+                                        <div class="flex items-start justify-between">
+                                            <h3 class="text-lg font-semibold text-white">NextDNS</h3>
+                                            <div class="text-xs font-bold uppercase text-cyan-400 tracking-wider">GOAT</div>
+                                        </div>
+                                        <p class="text-slate-400 mt-2 flex-grow">Privacy-focused DNS with custom filtering, ad blocking, and detailed analytics. Free tier available with generous limits.</p>
+                                        <div class="mt-6">
+                                            <a href="https://nextdns.io/" target="_blank" class="block text-center px-4 py-2 rounded-lg font-semibold transition-colors border-2 border-cyan-400 text-cyan-400 hover:bg-cyan-400 hover:text-slate-900">Visit Site</a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- Quad9 Card -->
+                                <div class="card rounded-xl p-6 flex flex-col tag-goat relative overflow-hidden">
+                                    <div class="card-main-content flex flex-col h-full">
+                                        <div class="flex items-start justify-between">
+                                            <h3 class="text-lg font-semibold text-white">Quad9</h3>
+                                            <div class="text-xs font-bold uppercase text-cyan-400 tracking-wider">GOAT</div>
+                                        </div>
+                                        <p class="text-slate-400 mt-2 flex-grow">Security-focused DNS that blocks malicious domains. Free, fast, and privacy-respecting with no logging.</p>
+                                        <div class="mt-6">
+                                            <a href="https://quad9.net/" target="_blank" class="block text-center px-4 py-2 rounded-lg font-semibold transition-colors border-2 border-cyan-400 text-cyan-400 hover:bg-cyan-400 hover:text-slate-900">Visit Site</a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- AdGuard DNS Card -->
+                                <div class="card rounded-xl p-6 flex flex-col tag-recommended relative overflow-hidden">
+                                    <div class="card-main-content flex flex-col h-full">
+                                        <div class="flex items-start justify-between">
+                                            <h3 class="text-lg font-semibold text-white">AdGuard DNS</h3>
+                                            <div class="text-xs font-bold uppercase text-amber-400 tracking-wider">Recommended</div>
+                                        </div>
+                                        <p class="text-slate-400 mt-2 flex-grow">DNS service with built-in ad blocking and tracker protection. Multiple filtering modes available.</p>
+                                        <div class="mt-6">
+                                            <a href="https://adguard-dns.io/" target="_blank" class="block text-center px-4 py-2 rounded-lg font-semibold transition-colors border-2 border-amber-400 text-amber-400 hover:bg-amber-400 hover:text-slate-900">Visit Site</a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- Cloudflare DNS Card -->
+                                <div class="card rounded-xl p-6 flex flex-col tag-recommended relative overflow-hidden">
+                                    <div class="card-main-content flex flex-col h-full">
+                                        <div class="flex items-start justify-between">
+                                            <h3 class="text-lg font-semibold text-white">Cloudflare DNS</h3>
+                                            <div class="text-xs font-bold uppercase text-amber-400 tracking-wider">Recommended</div>
+                                        </div>
+                                        <p class="text-slate-400 mt-2 flex-grow">Fast and privacy-first DNS resolver (1.1.1.1). No logging, DNSSEC support, and excellent performance.</p>
+                                        <div class="mt-6">
+                                            <a href="https://1.1.1.1/" target="_blank" class="block text-center px-4 py-2 rounded-lg font-semibold transition-colors border-2 border-amber-400 text-amber-400 hover:bg-amber-400 hover:text-slate-900">Visit Site</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Messengers -->
+                        <div id="messengers" class="sub-tab-content">
+                            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+                                <!-- Signal Card -->
+                                <div class="card rounded-xl p-6 flex flex-col tag-goat relative overflow-hidden">
+                                    <div class="card-main-content flex flex-col h-full">
+                                        <div class="flex items-start justify-between">
+                                            <h3 class="text-lg font-semibold text-white">Signal</h3>
+                                            <div class="text-xs font-bold uppercase text-cyan-400 tracking-wider">GOAT</div>
+                                        </div>
+                                        <p class="text-slate-400 mt-2 flex-grow">End-to-end encrypted messenger with voice/video calls. Open-source, privacy-focused, and recommended by security experts.</p>
+                                        <div class="mt-6">
+                                            <a href="https://signal.org/" target="_blank" class="block text-center px-4 py-2 rounded-lg font-semibold transition-colors border-2 border-cyan-400 text-cyan-400 hover:bg-cyan-400 hover:text-slate-900">Visit Site</a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- Session Card -->
+                                <div class="card rounded-xl p-6 flex flex-col tag-goat relative overflow-hidden">
+                                    <div class="card-main-content flex flex-col h-full">
+                                        <div class="flex items-start justify-between">
+                                            <h3 class="text-lg font-semibold text-white">Session</h3>
+                                            <div class="text-xs font-bold uppercase text-cyan-400 tracking-wider">GOAT</div>
+                                        </div>
+                                        <p class="text-slate-400 mt-2 flex-grow">Anonymous messenger requiring no phone number or email. Decentralized, onion-routed, and fully private.</p>
+                                        <div class="mt-6">
+                                            <a href="https://getsession.org/" target="_blank" class="block text-center px-4 py-2 rounded-lg font-semibold transition-colors border-2 border-cyan-400 text-cyan-400 hover:bg-cyan-400 hover:text-slate-900">Visit Site</a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- Element/Matrix Card -->
+                                <div class="card rounded-xl p-6 flex flex-col tag-recommended relative overflow-hidden">
+                                    <div class="card-main-content flex flex-col h-full">
+                                        <div class="flex items-start justify-between">
+                                            <h3 class="text-lg font-semibold text-white">Element / Matrix</h3>
+                                            <div class="text-xs font-bold uppercase text-amber-400 tracking-wider">Recommended</div>
+                                        </div>
+                                        <p class="text-slate-400 mt-2 flex-grow">Decentralized messenger built on Matrix protocol. Self-hostable, E2E encrypted, and bridges to other platforms.</p>
+                                        <div class="mt-6">
+                                            <a href="https://element.io/" target="_blank" class="block text-center px-4 py-2 rounded-lg font-semibold transition-colors border-2 border-amber-400 text-amber-400 hover:bg-amber-400 hover:text-slate-900">Visit Site</a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- Briar Card -->
+                                <div class="card rounded-xl p-6 flex flex-col tag-recommended relative overflow-hidden">
+                                    <div class="card-main-content flex flex-col h-full">
+                                        <div class="flex items-start justify-between">
+                                            <h3 class="text-lg font-semibold text-white">Briar</h3>
+                                            <div class="text-xs font-bold uppercase text-amber-400 tracking-wider">Recommended</div>
+                                        </div>
+                                        <p class="text-slate-400 mt-2 flex-grow">Peer-to-peer encrypted messenger that works via Bluetooth, WiFi, or Tor. No central server, perfect for activists.</p>
+                                        <div class="mt-6">
+                                            <a href="https://briarproject.org/" target="_blank" class="block text-center px-4 py-2 rounded-lg font-semibold transition-colors border-2 border-amber-400 text-amber-400 hover:bg-amber-400 hover:text-slate-900">Visit Site</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                         <!-- Password Managers -->
                         <div id="password-managers" class="sub-tab-content">
                             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
@@ -399,6 +543,81 @@
                                         <p class="text-slate-400 mt-2 flex-grow">User-friendly password manager with excellent UI/UX, family sharing, and strong security. Premium service.</p>
                                         <div class="mt-6">
                                             <a href="https://1password.com/" target="_blank" class="block text-center px-4 py-2 rounded-lg font-semibold transition-colors border-2 border-amber-400 text-amber-400 hover:bg-amber-400 hover:text-slate-900">Visit Site</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- File Encryption -->
+                        <div id="file-encryption" class="sub-tab-content">
+                            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+                                <!-- VeraCrypt Card -->
+                                <div class="card rounded-xl p-6 flex flex-col tag-goat relative overflow-hidden">
+                                    <div class="card-main-content flex flex-col h-full">
+                                        <div class="flex items-start justify-between">
+                                            <h3 class="text-lg font-semibold text-white">VeraCrypt</h3>
+                                            <div class="text-xs font-bold uppercase text-cyan-400 tracking-wider">GOAT</div>
+                                        </div>
+                                        <p class="text-slate-400 mt-2 flex-grow">Open-source disk encryption software. Create encrypted containers or encrypt entire drives with strong security.</p>
+                                        <div class="mt-6">
+                                            <a href="https://www.veracrypt.fr/" target="_blank" class="block text-center px-4 py-2 rounded-lg font-semibold transition-colors border-2 border-cyan-400 text-cyan-400 hover:bg-cyan-400 hover:text-slate-900">Visit Site</a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- Cryptomator Card -->
+                                <div class="card rounded-xl p-6 flex flex-col tag-recommended relative overflow-hidden">
+                                    <div class="card-main-content flex flex-col h-full">
+                                        <div class="flex items-start justify-between">
+                                            <h3 class="text-lg font-semibold text-white">Cryptomator</h3>
+                                            <div class="text-xs font-bold uppercase text-amber-400 tracking-wider">Recommended</div>
+                                        </div>
+                                        <p class="text-slate-400 mt-2 flex-grow">Client-side encryption for cloud storage. Transparent encryption for Dropbox, Google Drive, and other cloud services.</p>
+                                        <div class="mt-6">
+                                            <a href="https://cryptomator.org/" target="_blank" class="block text-center px-4 py-2 rounded-lg font-semibold transition-colors border-2 border-amber-400 text-amber-400 hover:bg-amber-400 hover:text-slate-900">Visit Site</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- 2FA Apps -->
+                        <div id="2fa-apps" class="sub-tab-content">
+                            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+                                <!-- Ente Auth Card -->
+                                <div class="card rounded-xl p-6 flex flex-col tag-goat relative overflow-hidden">
+                                    <div class="card-main-content flex flex-col h-full">
+                                        <div class="flex items-start justify-between">
+                                            <h3 class="text-lg font-semibold text-white">Ente Auth</h3>
+                                            <div class="text-xs font-bold uppercase text-cyan-400 tracking-wider">GOAT</div>
+                                        </div>
+                                        <p class="text-slate-400 mt-2 flex-grow">End-to-end encrypted 2FA app with cloud sync. Open-source, cross-platform, and automatic encrypted backups.</p>
+                                        <div class="mt-6">
+                                            <a href="https://auth.ente.io/" target="_blank" class="block text-center px-4 py-2 rounded-lg font-semibold transition-colors border-2 border-cyan-400 text-cyan-400 hover:bg-cyan-400 hover:text-slate-900">Visit Site</a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- Aegis Card -->
+                                <div class="card rounded-xl p-6 flex flex-col tag-goat relative overflow-hidden">
+                                    <div class="card-main-content flex flex-col h-full">
+                                        <div class="flex items-start justify-between">
+                                            <h3 class="text-lg font-semibold text-white">Aegis Authenticator</h3>
+                                            <div class="text-xs font-bold uppercase text-cyan-400 tracking-wider">GOAT</div>
+                                        </div>
+                                        <p class="text-slate-400 mt-2 flex-grow">Open-source 2FA app for Android with encrypted backups. Supports TOTP and HOTP with biometric unlock.</p>
+                                        <div class="mt-6">
+                                            <a href="https://getaegis.app/" target="_blank" class="block text-center px-4 py-2 rounded-lg font-semibold transition-colors border-2 border-cyan-400 text-cyan-400 hover:bg-cyan-400 hover:text-slate-900">Visit Site</a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- Authy Card -->
+                                <div class="card rounded-xl p-6 flex flex-col tag-recommended relative overflow-hidden">
+                                    <div class="card-main-content flex flex-col h-full">
+                                        <div class="flex items-start justify-between">
+                                            <h3 class="text-lg font-semibold text-white">Authy</h3>
+                                            <div class="text-xs font-bold uppercase text-amber-400 tracking-wider">Recommended</div>
+                                        </div>
+                                        <p class="text-slate-400 mt-2 flex-grow">Multi-device 2FA app with cloud backup. Syncs across devices with encrypted storage and easy recovery.</p>
+                                        <div class="mt-6">
+                                            <a href="https://authy.com/" target="_blank" class="block text-center px-4 py-2 rounded-lg font-semibold transition-colors border-2 border-amber-400 text-amber-400 hover:bg-amber-400 hover:text-slate-900">Visit Site</a>
                                         </div>
                                     </div>
                                 </div>
@@ -557,6 +776,7 @@
                     <div class="sub-tabs-nav flex flex-wrap justify-center gap-2 mb-8 bg-slate-800 p-2 rounded-full">
                         <button class="sub-tab-button px-4 py-2 text-sm font-semibold rounded-full text-slate-300 transition-colors active" data-subtab="roms">ROM Sites</button>
                         <button class="sub-tab-button px-4 py-2 text-sm font-semibold rounded-full text-slate-300 transition-colors" data-subtab="emulators">Emulators</button>
+                        <button class="sub-tab-button px-4 py-2 text-sm font-semibold rounded-full text-slate-300 transition-colors" data-subtab="handheld-emulators">Handheld Emulators</button>
                         <button class="sub-tab-button px-4 py-2 text-sm font-semibold rounded-full text-slate-300 transition-colors" data-subtab="compatibility">Compatibility</button>
                     </div>
                     <div class="sub-tabs-content">
@@ -628,6 +848,50 @@
                                 <div class="card rounded-xl p-6 flex flex-col relative overflow-hidden"><div class="card-main-content flex flex-col h-full"><h3 class="text-lg font-semibold text-white">RPCS3 List</h3><p class="text-slate-400 mt-2 flex-grow">Official game compatibility list for the RPCS3 (PlayStation 3) emulator.</p><div class="mt-6"><a href="https://rpcs3.net/compatibility?p=2" target="_blank" class="block text-center px-4 py-2 rounded-lg font-semibold transition-colors border-2 border-violet-500 text-violet-400 hover:bg-violet-500 hover:text-white">View List</a></div></div></div>
                             </div>
                         </div>
+                        <!-- Handheld Emulators -->
+                        <div id="handheld-emulators" class="sub-tab-content">
+                            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+                                <!-- RetroArch Card -->
+                                <div class="card rounded-xl p-6 flex flex-col tag-goat relative overflow-hidden">
+                                    <div class="card-main-content flex flex-col h-full">
+                                        <div class="flex items-start justify-between">
+                                            <h3 class="text-lg font-semibold text-white">RetroArch</h3>
+                                            <div class="text-xs font-bold uppercase text-cyan-400 tracking-wider">GOAT</div>
+                                        </div>
+                                        <p class="text-slate-400 mt-2 flex-grow">All-in-one emulator frontend supporting dozens of systems. Cross-platform with advanced features like shaders and netplay.</p>
+                                        <div class="mt-6">
+                                            <a href="https://www.retroarch.com/" target="_blank" class="block text-center px-4 py-2 rounded-lg font-semibold transition-colors border-2 border-cyan-400 text-cyan-400 hover:bg-cyan-400 hover:text-slate-900">Visit Site</a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- EmuDeck Card -->
+                                <div class="card rounded-xl p-6 flex flex-col tag-goat relative overflow-hidden">
+                                    <div class="card-main-content flex flex-col h-full">
+                                        <div class="flex items-start justify-between">
+                                            <h3 class="text-lg font-semibold text-white">EmuDeck</h3>
+                                            <div class="text-xs font-bold uppercase text-cyan-400 tracking-wider">GOAT</div>
+                                        </div>
+                                        <p class="text-slate-400 mt-2 flex-grow">Complete emulation setup for Steam Deck. Automatically configures emulators, artwork, and controls for seamless gaming.</p>
+                                        <div class="mt-6">
+                                            <a href="https://www.emudeck.com/" target="_blank" class="block text-center px-4 py-2 rounded-lg font-semibold transition-colors border-2 border-cyan-400 text-cyan-400 hover:bg-cyan-400 hover:text-slate-900">Visit Site</a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- Batocera Card -->
+                                <div class="card rounded-xl p-6 flex flex-col tag-recommended relative overflow-hidden">
+                                    <div class="card-main-content flex flex-col h-full">
+                                        <div class="flex items-start justify-between">
+                                            <h3 class="text-lg font-semibold text-white">Batocera</h3>
+                                            <div class="text-xs font-bold uppercase text-amber-400 tracking-wider">Recommended</div>
+                                        </div>
+                                        <p class="text-slate-400 mt-2 flex-grow">Retro gaming operating system that boots directly into EmulationStation. Perfect for dedicated retro gaming setups.</p>
+                                        <div class="mt-6">
+                                            <a href="https://batocera.org/" target="_blank" class="block text-center px-4 py-2 rounded-lg font-semibold transition-colors border-2 border-amber-400 text-amber-400 hover:bg-amber-400 hover:text-slate-900">Visit Site</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
                 <!-- Gaming Panel -->
@@ -635,9 +899,13 @@
                      <div class="sub-tabs-nav flex flex-wrap justify-center gap-2 mb-8 bg-slate-800 p-2 rounded-full">
                         <button class="sub-tab-button px-4 py-2 text-sm font-semibold rounded-full text-slate-300 transition-colors active" data-subtab="direct-downloads">Direct Downloads</button>
                         <button class="sub-tab-button px-4 py-2 text-sm font-semibold rounded-full text-slate-300 transition-colors" data-subtab="repacks">Repacks</button>
+                        <button class="sub-tab-button px-4 py-2 text-sm font-semibold rounded-full text-slate-300 transition-colors" data-subtab="forum-downloads">Forum Downloads</button>
+                        <button class="sub-tab-button px-4 py-2 text-sm font-semibold rounded-full text-slate-300 transition-colors" data-subtab="game-launchers">Game Launchers</button>
                         <button class="sub-tab-button px-4 py-2 text-sm font-semibold rounded-full text-slate-300 transition-colors" data-subtab="torrent-clients">Torrent Clients</button>
                         <button class="sub-tab-button px-4 py-2 text-sm font-semibold rounded-full text-slate-300 transition-colors" data-subtab="download-managers">Download Managers</button>
-                        <button class="sub-tab-button px-4 py-2 text-sm font-semibold rounded-full text-slate-300 transition-colors" data-subtab="forum-downloads">Forum Downloads</button>
+                        <button class="sub-tab-button px-4 py-2 text-sm font-semibold rounded-full text-slate-300 transition-colors" data-subtab="mod-managers">Mod Managers</button>
+                        <button class="sub-tab-button px-4 py-2 text-sm font-semibold rounded-full text-slate-300 transition-colors" data-subtab="trainers-cheats">Trainers/Cheats</button>
+                        <button class="sub-tab-button px-4 py-2 text-sm font-semibold rounded-full text-slate-300 transition-colors" data-subtab="performance-tools">Performance Tools</button>
                     </div>
                     <div class="sub-tabs-content">
                          <div id="direct-downloads" class="sub-tab-content active">
@@ -657,6 +925,156 @@
                                 <div class="card rounded-xl p-6 flex flex-col tag-recommended relative overflow-hidden"> <div class="card-main-content flex flex-col h-full"> <div class="flex items-start justify-between"><h3 class="text-lg font-semibold text-white">KaOsKrew</h3><div class="text-xs font-bold uppercase text-amber-400 tracking-wider">Recommended</div></div><p class="text-slate-400 mt-2 flex-grow">Provides quality, tested game repacks.</p><div class="mt-6"><a href="https://kaoskrew.org" target="_blank" class="block text-center px-4 py-2 rounded-lg font-semibold transition-colors border-2 border-amber-400 text-amber-400 hover:bg-amber-400 hover:text-slate-900">Visit Site</a></div> </div> </div>
                                 <div class="card rounded-xl p-6 flex flex-col relative overflow-hidden"><div class="card-main-content flex flex-col h-full"><h3 class="text-lg font-semibold text-white">DODI</h3><p class="text-slate-400 mt-2 flex-grow">Popular source for game repacks.</p><div class="mt-6"><a href="https://dodi-repacks.site/" target="_blank" class="block text-center px-4 py-2 rounded-lg font-semibold transition-colors border-2 border-violet-500 text-violet-400 hover:bg-violet-500 hover:text-white">Visit Site</a></div></div></div>
                              </div>
+                         </div>
+                         <!-- Trainers/Cheats -->
+                         <div id="trainers-cheats" class="sub-tab-content">
+                            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+                                <!-- FLiNG Trainer Card -->
+                                <div class="card rounded-xl p-6 flex flex-col tag-goat relative overflow-hidden">
+                                    <div class="card-main-content flex flex-col h-full">
+                                        <div class="flex items-start justify-between">
+                                            <h3 class="text-lg font-semibold text-white">FLiNG Trainer</h3>
+                                            <div class="text-xs font-bold uppercase text-cyan-400 tracking-wider">GOAT</div>
+                                        </div>
+                                        <p class="text-slate-400 mt-2 flex-grow">Extensive collection of game trainers with frequent updates. Supports thousands of games with various cheats and mods.</p>
+                                        <div class="mt-6">
+                                            <a href="https://flingtrainer.com/" target="_blank" class="block text-center px-4 py-2 rounded-lg font-semibold transition-colors border-2 border-cyan-400 text-cyan-400 hover:bg-cyan-400 hover:text-slate-900">Visit Site</a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- WeMod Card -->
+                                <div class="card rounded-xl p-6 flex flex-col tag-recommended relative overflow-hidden">
+                                    <div class="card-main-content flex flex-col h-full">
+                                        <div class="flex items-start justify-between">
+                                            <h3 class="text-lg font-semibold text-white">WeMod</h3>
+                                            <div class="text-xs font-bold uppercase text-amber-400 tracking-wider">Recommended</div>
+                                        </div>
+                                        <p class="text-slate-400 mt-2 flex-grow">User-friendly trainer platform with thousands of games. Clean interface, automatic updates, and community-driven mods.</p>
+                                        <div class="mt-6">
+                                            <a href="https://www.wemod.com/" target="_blank" class="block text-center px-4 py-2 rounded-lg font-semibold transition-colors border-2 border-amber-400 text-amber-400 hover:bg-amber-400 hover:text-slate-900">Visit Site</a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- Cheat Happens Card -->
+                                <div class="card rounded-xl p-6 flex flex-col tag-recommended relative overflow-hidden">
+                                    <div class="card-main-content flex flex-col h-full">
+                                        <div class="flex items-start justify-between">
+                                            <h3 class="text-lg font-semibold text-white">Cheat Happens</h3>
+                                            <div class="text-xs font-bold uppercase text-amber-400 tracking-wider">Recommended</div>
+                                        </div>
+                                        <p class="text-slate-400 mt-2 flex-grow">Premium trainer service with professional quality trainers. Subscription-based with excellent support and reliability.</p>
+                                        <div class="mt-6">
+                                            <a href="https://www.cheathappens.com/" target="_blank" class="block text-center px-4 py-2 rounded-lg font-semibold transition-colors border-2 border-amber-400 text-amber-400 hover:bg-amber-400 hover:text-slate-900">Visit Site</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                         </div>
+                         <!-- Game Launchers -->
+                         <div id="game-launchers" class="sub-tab-content">
+                            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+                                <!-- Playnite Card -->
+                                <div class="card rounded-xl p-6 flex flex-col tag-goat relative overflow-hidden">
+                                    <div class="card-main-content flex flex-col h-full">
+                                        <div class="flex items-start justify-between">
+                                            <h3 class="text-lg font-semibold text-white">Playnite</h3>
+                                            <div class="text-xs font-bold uppercase text-cyan-400 tracking-wider">GOAT</div>
+                                        </div>
+                                        <p class="text-slate-400 mt-2 flex-grow">All-in-one game library manager supporting all major platforms. Open-source with extensive customization and themes.</p>
+                                        <div class="mt-6">
+                                            <a href="https://playnite.link/" target="_blank" class="block text-center px-4 py-2 rounded-lg font-semibold transition-colors border-2 border-cyan-400 text-cyan-400 hover:bg-cyan-400 hover:text-slate-900">Visit Site</a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- Heroic Games Launcher Card -->
+                                <div class="card rounded-xl p-6 flex flex-col tag-goat relative overflow-hidden">
+                                    <div class="card-main-content flex flex-col h-full">
+                                        <div class="flex items-start justify-between">
+                                            <h3 class="text-lg font-semibold text-white">Heroic Games Launcher</h3>
+                                            <div class="text-xs font-bold uppercase text-cyan-400 tracking-wider">GOAT</div>
+                                        </div>
+                                        <p class="text-slate-400 mt-2 flex-grow">Open-source launcher for Epic Games Store and GOG. Native Linux support with Wine/Proton integration.</p>
+                                        <div class="mt-6">
+                                            <a href="https://heroicgameslauncher.com/" target="_blank" class="block text-center px-4 py-2 rounded-lg font-semibold transition-colors border-2 border-cyan-400 text-cyan-400 hover:bg-cyan-400 hover:text-slate-900">Visit Site</a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- Lutris Card -->
+                                <div class="card rounded-xl p-6 flex flex-col tag-recommended relative overflow-hidden">
+                                    <div class="card-main-content flex flex-col h-full">
+                                        <div class="flex items-start justify-between">
+                                            <h3 class="text-lg font-semibold text-white">Lutris</h3>
+                                            <div class="text-xs font-bold uppercase text-amber-400 tracking-wider">Recommended</div>
+                                        </div>
+                                        <p class="text-slate-400 mt-2 flex-grow">Linux gaming platform with install scripts for thousands of games. Manages Wine, emulators, and native games.</p>
+                                        <div class="mt-6">
+                                            <a href="https://lutris.net/" target="_blank" class="block text-center px-4 py-2 rounded-lg font-semibold transition-colors border-2 border-amber-400 text-amber-400 hover:bg-amber-400 hover:text-slate-900">Visit Site</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                         </div>
+                         <!-- Mod Managers -->
+                         <div id="mod-managers" class="sub-tab-content">
+                            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+                                <!-- Vortex Card -->
+                                <div class="card rounded-xl p-6 flex flex-col tag-goat relative overflow-hidden">
+                                    <div class="card-main-content flex flex-col h-full">
+                                        <div class="flex items-start justify-between">
+                                            <h3 class="text-lg font-semibold text-white">Vortex</h3>
+                                            <div class="text-xs font-bold uppercase text-cyan-400 tracking-wider">GOAT</div>
+                                        </div>
+                                        <p class="text-slate-400 mt-2 flex-grow">Official Nexus Mods mod manager with one-click installs. Supports many games with automatic load order sorting.</p>
+                                        <div class="mt-6">
+                                            <a href="https://www.nexusmods.com/about/vortex/" target="_blank" class="block text-center px-4 py-2 rounded-lg font-semibold transition-colors border-2 border-cyan-400 text-cyan-400 hover:bg-cyan-400 hover:text-slate-900">Visit Site</a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- Mod Organizer 2 Card -->
+                                <div class="card rounded-xl p-6 flex flex-col tag-recommended relative overflow-hidden">
+                                    <div class="card-main-content flex flex-col h-full">
+                                        <div class="flex items-start justify-between">
+                                            <h3 class="text-lg font-semibold text-white">Mod Organizer 2</h3>
+                                            <div class="text-xs font-bold uppercase text-amber-400 tracking-wider">Recommended</div>
+                                        </div>
+                                        <p class="text-slate-400 mt-2 flex-grow">Advanced mod manager for Bethesda games. Virtual file system keeps game folder clean with powerful profile management.</p>
+                                        <div class="mt-6">
+                                            <a href="https://www.modorganizer.org/" target="_blank" class="block text-center px-4 py-2 rounded-lg font-semibold transition-colors border-2 border-amber-400 text-amber-400 hover:bg-amber-400 hover:text-slate-900">Visit Site</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                         </div>
+                         <!-- Performance Tools -->
+                         <div id="performance-tools" class="sub-tab-content">
+                            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+                                <!-- MSI Afterburner Card -->
+                                <div class="card rounded-xl p-6 flex flex-col tag-goat relative overflow-hidden">
+                                    <div class="card-main-content flex flex-col h-full">
+                                        <div class="flex items-start justify-between">
+                                            <h3 class="text-lg font-semibold text-white">MSI Afterburner</h3>
+                                            <div class="text-xs font-bold uppercase text-cyan-400 tracking-wider">GOAT</div>
+                                        </div>
+                                        <p class="text-slate-400 mt-2 flex-grow">GPU overclocking and monitoring tool with on-screen display. Works with all graphics cards, not just MSI.</p>
+                                        <div class="mt-6">
+                                            <a href="https://www.msi.com/Landing/afterburner" target="_blank" class="block text-center px-4 py-2 rounded-lg font-semibold transition-colors border-2 border-cyan-400 text-cyan-400 hover:bg-cyan-400 hover:text-slate-900">Visit Site</a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- RivaTuner Card -->
+                                <div class="card rounded-xl p-6 flex flex-col tag-recommended relative overflow-hidden">
+                                    <div class="card-main-content flex flex-col h-full">
+                                        <div class="flex items-start justify-between">
+                                            <h3 class="text-lg font-semibold text-white">RivaTuner Statistics Server</h3>
+                                            <div class="text-xs font-bold uppercase text-amber-400 tracking-wider">Recommended</div>
+                                        </div>
+                                        <p class="text-slate-400 mt-2 flex-grow">Advanced on-screen display and frame rate limiter. Often bundled with MSI Afterburner for detailed monitoring.</p>
+                                        <div class="mt-6">
+                                            <a href="https://www.guru3d.com/files-details/rtss-rivatuner-statistics-server-download.html" target="_blank" class="block text-center px-4 py-2 rounded-lg font-semibold transition-colors border-2 border-amber-400 text-amber-400 hover:bg-amber-400 hover:text-slate-900">Visit Site</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                          </div>
                          <!-- Torrent Clients -->
                          <div id="torrent-clients" class="sub-tab-content">
@@ -761,6 +1179,8 @@
                         <button class="sub-tab-button px-4 py-2 text-sm font-semibold rounded-full text-slate-300 transition-colors active tag-goat" data-subtab="stremio">Stremio</button>
                         <button class="sub-tab-button px-4 py-2 text-sm font-semibold rounded-full text-slate-300 transition-colors" data-subtab="streaming-sites">Streaming Sites</button>
                         <button class="sub-tab-button px-4 py-2 text-sm font-semibold rounded-full text-slate-300 transition-colors" data-subtab="anime">Anime</button>
+                        <button class="sub-tab-button px-4 py-2 text-sm font-semibold rounded-full text-slate-300 transition-colors" data-subtab="subtitles">Subtitles</button>
+                        <button class="sub-tab-button px-4 py-2 text-sm font-semibold rounded-full text-slate-300 transition-colors" data-subtab="iptv">IPTV/Live TV</button>
                     </div>
                     <div class="sub-tabs-content">
                          <div id="stremio" class="sub-tab-content active">
@@ -863,6 +1283,81 @@
                                 </div>
                             </div>
                          </div>
+                         <!-- Subtitles -->
+                         <div id="subtitles" class="sub-tab-content">
+                            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+                                <!-- OpenSubtitles Card -->
+                                <div class="card rounded-xl p-6 flex flex-col tag-goat relative overflow-hidden">
+                                    <div class="card-main-content flex flex-col h-full">
+                                        <div class="flex items-start justify-between">
+                                            <h3 class="text-lg font-semibold text-white">OpenSubtitles</h3>
+                                            <div class="text-xs font-bold uppercase text-cyan-400 tracking-wider">GOAT</div>
+                                        </div>
+                                        <p class="text-slate-400 mt-2 flex-grow">Largest subtitle database with millions of subtitles in multiple languages. Community-driven with active uploads.</p>
+                                        <div class="mt-6">
+                                            <a href="https://www.opensubtitles.com/" target="_blank" class="block text-center px-4 py-2 rounded-lg font-semibold transition-colors border-2 border-cyan-400 text-cyan-400 hover:bg-cyan-400 hover:text-slate-900">Visit Site</a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- Subscene Card -->
+                                <div class="card rounded-xl p-6 flex flex-col tag-goat relative overflow-hidden">
+                                    <div class="card-main-content flex flex-col h-full">
+                                        <div class="flex items-start justify-between">
+                                            <h3 class="text-lg font-semibold text-white">Subscene</h3>
+                                            <div class="text-xs font-bold uppercase text-cyan-400 tracking-wider">GOAT</div>
+                                        </div>
+                                        <p class="text-slate-400 mt-2 flex-grow">High-quality subtitle repository with excellent search and filtering. Clean interface and reliable downloads.</p>
+                                        <div class="mt-6">
+                                            <a href="https://subscene.com/" target="_blank" class="block text-center px-4 py-2 rounded-lg font-semibold transition-colors border-2 border-cyan-400 text-cyan-400 hover:bg-cyan-400 hover:text-slate-900">Visit Site</a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- YIFY Subtitles Card -->
+                                <div class="card rounded-xl p-6 flex flex-col tag-recommended relative overflow-hidden">
+                                    <div class="card-main-content flex flex-col h-full">
+                                        <div class="flex items-start justify-between">
+                                            <h3 class="text-lg font-semibold text-white">YIFY Subtitles</h3>
+                                            <div class="text-xs font-bold uppercase text-amber-400 tracking-wider">Recommended</div>
+                                        </div>
+                                        <p class="text-slate-400 mt-2 flex-grow">Specialized in movie subtitles with good sync quality. Popular for YIFY releases but works with any source.</p>
+                                        <div class="mt-6">
+                                            <a href="https://yifysubtitles.ch/" target="_blank" class="block text-center px-4 py-2 rounded-lg font-semibold transition-colors border-2 border-amber-400 text-amber-400 hover:bg-amber-400 hover:text-slate-900">Visit Site</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                         </div>
+                         <!-- IPTV/Live TV -->
+                         <div id="iptv" class="sub-tab-content">
+                            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+                                <!-- IPTV-Org Card -->
+                                <div class="card rounded-xl p-6 flex flex-col tag-goat relative overflow-hidden">
+                                    <div class="card-main-content flex flex-col h-full">
+                                        <div class="flex items-start justify-between">
+                                            <h3 class="text-lg font-semibold text-white">IPTV-Org</h3>
+                                            <div class="text-xs font-bold uppercase text-cyan-400 tracking-wider">GOAT</div>
+                                        </div>
+                                        <p class="text-slate-400 mt-2 flex-grow">Massive collection of free IPTV channels from around the world. Regularly updated with working streams.</p>
+                                        <div class="mt-6">
+                                            <a href="https://github.com/iptv-org/iptv" target="_blank" class="block text-center px-4 py-2 rounded-lg font-semibold transition-colors border-2 border-cyan-400 text-cyan-400 hover:bg-cyan-400 hover:text-slate-900">Visit Site</a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- Tivimate Card -->
+                                <div class="card rounded-xl p-6 flex flex-col tag-recommended relative overflow-hidden">
+                                    <div class="card-main-content flex flex-col h-full">
+                                        <div class="flex items-start justify-between">
+                                            <h3 class="text-lg font-semibold text-white">Tivimate</h3>
+                                            <div class="text-xs font-bold uppercase text-amber-400 tracking-wider">Recommended</div>
+                                        </div>
+                                        <p class="text-slate-400 mt-2 flex-grow">Premium IPTV player for Android with EPG support, recording, and multi-screen viewing. Clean TV-like interface.</p>
+                                        <div class="mt-6">
+                                            <a href="https://tivimate.com/" target="_blank" class="block text-center px-4 py-2 rounded-lg font-semibold transition-colors border-2 border-amber-400 text-amber-400 hover:bg-amber-400 hover:text-slate-900">Visit Site</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                         </div>
                     </div>
                 </div>
                 <!-- Tools/Utilities Panel -->
@@ -907,19 +1402,6 @@
                                 </div>
                             </div>
                         </div>
-                        <!-- Notepad++ Card -->
-                        <div class="card rounded-xl p-6 flex flex-col tag-recommended relative overflow-hidden">
-                            <div class="card-main-content flex flex-col h-full">
-                                <div class="flex items-start justify-between">
-                                    <h3 class="text-lg font-semibold text-white">Notepad++</h3>
-                                    <div class="text-xs font-bold uppercase text-amber-400 tracking-wider">Recommended</div>
-                                </div>
-                                <p class="text-slate-400 mt-2 flex-grow">Free source code editor with syntax highlighting for multiple programming languages. Lightweight and fast.</p>
-                                <div class="mt-6">
-                                    <a href="https://notepad-plus-plus.org/" target="_blank" class="block text-center px-4 py-2 rounded-lg font-semibold transition-colors border-2 border-amber-400 text-amber-400 hover:bg-amber-400 hover:text-slate-900">Visit Site</a>
-                                </div>
-                            </div>
-                        </div>
                         <!-- VLC Media Player Card -->
                         <div class="card rounded-xl p-6 flex flex-col tag-goat relative overflow-hidden">
                             <div class="card-main-content flex flex-col h-full">
@@ -933,6 +1415,19 @@
                                 </div>
                             </div>
                         </div>
+                        <!-- MPV Player Card -->
+                        <div class="card rounded-xl p-6 flex flex-col tag-goat relative overflow-hidden">
+                            <div class="card-main-content flex flex-col h-full">
+                                <div class="flex items-start justify-between">
+                                    <h3 class="text-lg font-semibold text-white">MPV Player</h3>
+                                    <div class="text-xs font-bold uppercase text-cyan-400 tracking-wider">GOAT</div>
+                                </div>
+                                <p class="text-slate-400 mt-2 flex-grow">Minimalist, keyboard-driven media player with excellent performance. Highly customizable with scripts and config files.</p>
+                                <div class="mt-6">
+                                    <a href="https://mpv.io/" target="_blank" class="block text-center px-4 py-2 rounded-lg font-semibold transition-colors border-2 border-cyan-400 text-cyan-400 hover:bg-cyan-400 hover:text-slate-900">Visit Site</a>
+                                </div>
+                            </div>
+                        </div>
                         <!-- OBS Studio Card -->
                         <div class="card rounded-xl p-6 flex flex-col tag-goat relative overflow-hidden">
                             <div class="card-main-content flex flex-col h-full">
@@ -943,6 +1438,45 @@
                                 <p class="text-slate-400 mt-2 flex-grow">Professional-grade screen recording and live streaming software. Free, open-source, and highly customizable.</p>
                                 <div class="mt-6">
                                     <a href="https://obsproject.com/" target="_blank" class="block text-center px-4 py-2 rounded-lg font-semibold transition-colors border-2 border-cyan-400 text-cyan-400 hover:bg-cyan-400 hover:text-slate-900">Visit Site</a>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- HandBrake Card -->
+                        <div class="card rounded-xl p-6 flex flex-col tag-goat relative overflow-hidden">
+                            <div class="card-main-content flex flex-col h-full">
+                                <div class="flex items-start justify-between">
+                                    <h3 class="text-lg font-semibold text-white">HandBrake</h3>
+                                    <div class="text-xs font-bold uppercase text-cyan-400 tracking-wider">GOAT</div>
+                                </div>
+                                <p class="text-slate-400 mt-2 flex-grow">Open-source video transcoder for converting video files. Supports numerous formats with presets for all devices.</p>
+                                <div class="mt-6">
+                                    <a href="https://handbrake.fr/" target="_blank" class="block text-center px-4 py-2 rounded-lg font-semibold transition-colors border-2 border-cyan-400 text-cyan-400 hover:bg-cyan-400 hover:text-slate-900">Visit Site</a>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Bulk Crap Uninstaller Card -->
+                        <div class="card rounded-xl p-6 flex flex-col tag-goat relative overflow-hidden">
+                            <div class="card-main-content flex flex-col h-full">
+                                <div class="flex items-start justify-between">
+                                    <h3 class="text-lg font-semibold text-white">Bulk Crap Uninstaller</h3>
+                                    <div class="text-xs font-bold uppercase text-cyan-400 tracking-wider">GOAT</div>
+                                </div>
+                                <p class="text-slate-400 mt-2 flex-grow">Advanced uninstaller that removes leftover files and registry entries. Batch uninstall and deep cleaning capabilities.</p>
+                                <div class="mt-6">
+                                    <a href="https://www.bcuninstaller.com/" target="_blank" class="block text-center px-4 py-2 rounded-lg font-semibold transition-colors border-2 border-cyan-400 text-cyan-400 hover:bg-cyan-400 hover:text-slate-900">Visit Site</a>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Notepad++ Card -->
+                        <div class="card rounded-xl p-6 flex flex-col tag-recommended relative overflow-hidden">
+                            <div class="card-main-content flex flex-col h-full">
+                                <div class="flex items-start justify-between">
+                                    <h3 class="text-lg font-semibold text-white">Notepad++</h3>
+                                    <div class="text-xs font-bold uppercase text-amber-400 tracking-wider">Recommended</div>
+                                </div>
+                                <p class="text-slate-400 mt-2 flex-grow">Free source code editor with syntax highlighting for multiple programming languages. Lightweight and fast.</p>
+                                <div class="mt-6">
+                                    <a href="https://notepad-plus-plus.org/" target="_blank" class="block text-center px-4 py-2 rounded-lg font-semibold transition-colors border-2 border-amber-400 text-amber-400 hover:bg-amber-400 hover:text-slate-900">Visit Site</a>
                                 </div>
                             </div>
                         </div>
@@ -969,6 +1503,198 @@
                                 <p class="text-slate-400 mt-2 flex-grow">Disk usage analyzer that visualizes storage with a treemap. Find what's taking up space on your drive.</p>
                                 <div class="mt-6">
                                     <a href="https://windirstat.net/" target="_blank" class="block text-center px-4 py-2 rounded-lg font-semibold transition-colors border-2 border-amber-400 text-amber-400 hover:bg-amber-400 hover:text-slate-900">Visit Site</a>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Revo Uninstaller Card -->
+                        <div class="card rounded-xl p-6 flex flex-col tag-recommended relative overflow-hidden">
+                            <div class="card-main-content flex flex-col h-full">
+                                <div class="flex items-start justify-between">
+                                    <h3 class="text-lg font-semibold text-white">Revo Uninstaller</h3>
+                                    <div class="text-xs font-bold uppercase text-amber-400 tracking-wider">Recommended</div>
+                                </div>
+                                <p class="text-slate-400 mt-2 flex-grow">Powerful uninstaller with forced uninstall mode. Scans for leftovers and includes startup manager and junk cleaner.</p>
+                                <div class="mt-6">
+                                    <a href="https://www.revouninstaller.com/" target="_blank" class="block text-center px-4 py-2 rounded-lg font-semibold transition-colors border-2 border-amber-400 text-amber-400 hover:bg-amber-400 hover:text-slate-900">Visit Site</a>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- MKVToolNix Card -->
+                        <div class="card rounded-xl p-6 flex flex-col tag-recommended relative overflow-hidden">
+                            <div class="card-main-content flex flex-col h-full">
+                                <div class="flex items-start justify-between">
+                                    <h3 class="text-lg font-semibold text-white">MKVToolNix</h3>
+                                    <div class="text-xs font-bold uppercase text-amber-400 tracking-wider">Recommended</div>
+                                </div>
+                                <p class="text-slate-400 mt-2 flex-grow">MKV file creation and editing toolkit. Merge, split, and edit Matroska files with subtitle and audio track management.</p>
+                                <div class="mt-6">
+                                    <a href="https://mkvtoolnix.download/" target="_blank" class="block text-center px-4 py-2 rounded-lg font-semibold transition-colors border-2 border-amber-400 text-amber-400 hover:bg-amber-400 hover:text-slate-900">Visit Site</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Development Panel -->
+                <div id="development" class="tab-content">
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+                        <!-- VS Code Card -->
+                        <div class="card rounded-xl p-6 flex flex-col tag-goat relative overflow-hidden">
+                            <div class="card-main-content flex flex-col h-full">
+                                <div class="flex items-start justify-between">
+                                    <h3 class="text-lg font-semibold text-white">Visual Studio Code</h3>
+                                    <div class="text-xs font-bold uppercase text-cyan-400 tracking-wider">GOAT</div>
+                                </div>
+                                <p class="text-slate-400 mt-2 flex-grow">Powerful, extensible code editor from Microsoft. Huge extension marketplace, integrated terminal, and Git support.</p>
+                                <div class="mt-6">
+                                    <a href="https://code.visualstudio.com/" target="_blank" class="block text-center px-4 py-2 rounded-lg font-semibold transition-colors border-2 border-cyan-400 text-cyan-400 hover:bg-cyan-400 hover:text-slate-900">Visit Site</a>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- GitHub Desktop Card -->
+                        <div class="card rounded-xl p-6 flex flex-col tag-goat relative overflow-hidden">
+                            <div class="card-main-content flex flex-col h-full">
+                                <div class="flex items-start justify-between">
+                                    <h3 class="text-lg font-semibold text-white">GitHub Desktop</h3>
+                                    <div class="text-xs font-bold uppercase text-cyan-400 tracking-wider">GOAT</div>
+                                </div>
+                                <p class="text-slate-400 mt-2 flex-grow">User-friendly Git client for managing repositories. Visual interface for commits, branches, and pull requests.</p>
+                                <div class="mt-6">
+                                    <a href="https://desktop.github.com/" target="_blank" class="block text-center px-4 py-2 rounded-lg font-semibold transition-colors border-2 border-cyan-400 text-cyan-400 hover:bg-cyan-400 hover:text-slate-900">Visit Site</a>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Postman Card -->
+                        <div class="card rounded-xl p-6 flex flex-col tag-goat relative overflow-hidden">
+                            <div class="card-main-content flex flex-col h-full">
+                                <div class="flex items-start justify-between">
+                                    <h3 class="text-lg font-semibold text-white">Postman</h3>
+                                    <div class="text-xs font-bold uppercase text-cyan-400 tracking-wider">GOAT</div>
+                                </div>
+                                <p class="text-slate-400 mt-2 flex-grow">API development and testing platform. Create, test, and document APIs with collections and automated testing.</p>
+                                <div class="mt-6">
+                                    <a href="https://www.postman.com/" target="_blank" class="block text-center px-4 py-2 rounded-lg font-semibold transition-colors border-2 border-cyan-400 text-cyan-400 hover:bg-cyan-400 hover:text-slate-900">Visit Site</a>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Windows Terminal Card -->
+                        <div class="card rounded-xl p-6 flex flex-col tag-goat relative overflow-hidden">
+                            <div class="card-main-content flex flex-col h-full">
+                                <div class="flex items-start justify-between">
+                                    <h3 class="text-lg font-semibold text-white">Windows Terminal</h3>
+                                    <div class="text-xs font-bold uppercase text-cyan-400 tracking-wider">GOAT</div>
+                                </div>
+                                <p class="text-slate-400 mt-2 flex-grow">Modern terminal application for Windows. Supports multiple tabs, Unicode, GPU acceleration, and custom themes.</p>
+                                <div class="mt-6">
+                                    <a href="https://aka.ms/terminal" target="_blank" class="block text-center px-4 py-2 rounded-lg font-semibold transition-colors border-2 border-cyan-400 text-cyan-400 hover:bg-cyan-400 hover:text-slate-900">Visit Site</a>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Sublime Text Card -->
+                        <div class="card rounded-xl p-6 flex flex-col tag-recommended relative overflow-hidden">
+                            <div class="card-main-content flex flex-col h-full">
+                                <div class="flex items-start justify-between">
+                                    <h3 class="text-lg font-semibold text-white">Sublime Text</h3>
+                                    <div class="text-xs font-bold uppercase text-amber-400 tracking-wider">Recommended</div>
+                                </div>
+                                <p class="text-slate-400 mt-2 flex-grow">Fast, lightweight text editor with powerful features. Multiple selections, command palette, and extensive plugin ecosystem.</p>
+                                <div class="mt-6">
+                                    <a href="https://www.sublimetext.com/" target="_blank" class="block text-center px-4 py-2 rounded-lg font-semibold transition-colors border-2 border-amber-400 text-amber-400 hover:bg-amber-400 hover:text-slate-900">Visit Site</a>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- GitKraken Card -->
+                        <div class="card rounded-xl p-6 flex flex-col tag-recommended relative overflow-hidden">
+                            <div class="card-main-content flex flex-col h-full">
+                                <div class="flex items-start justify-between">
+                                    <h3 class="text-lg font-semibold text-white">GitKraken</h3>
+                                    <div class="text-xs font-bold uppercase text-amber-400 tracking-wider">Recommended</div>
+                                </div>
+                                <p class="text-slate-400 mt-2 flex-grow">Visual Git client with intuitive interface. Built-in code editor, merge conflict tool, and GitHub/GitLab integration.</p>
+                                <div class="mt-6">
+                                    <a href="https://www.gitkraken.com/" target="_blank" class="block text-center px-4 py-2 rounded-lg font-semibold transition-colors border-2 border-amber-400 text-amber-400 hover:bg-amber-400 hover:text-slate-900">Visit Site</a>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Insomnia Card -->
+                        <div class="card rounded-xl p-6 flex flex-col tag-recommended relative overflow-hidden">
+                            <div class="card-main-content flex flex-col h-full">
+                                <div class="flex items-start justify-between">
+                                    <h3 class="text-lg font-semibold text-white">Insomnia</h3>
+                                    <div class="text-xs font-bold uppercase text-amber-400 tracking-wider">Recommended</div>
+                                </div>
+                                <p class="text-slate-400 mt-2 flex-grow">REST and GraphQL API client. Clean interface with environment variables, code generation, and plugin support.</p>
+                                <div class="mt-6">
+                                    <a href="https://insomnia.rest/" target="_blank" class="block text-center px-4 py-2 rounded-lg font-semibold transition-colors border-2 border-amber-400 text-amber-400 hover:bg-amber-400 hover:text-slate-900">Visit Site</a>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Cmder Card -->
+                        <div class="card rounded-xl p-6 flex flex-col tag-recommended relative overflow-hidden">
+                            <div class="card-main-content flex flex-col h-full">
+                                <div class="flex items-start justify-between">
+                                    <h3 class="text-lg font-semibold text-white">Cmder</h3>
+                                    <div class="text-xs font-bold uppercase text-amber-400 tracking-wider">Recommended</div>
+                                </div>
+                                <p class="text-slate-400 mt-2 flex-grow">Console emulator for Windows with Unix tools. Portable, customizable, and includes Git for Windows integration.</p>
+                                <div class="mt-6">
+                                    <a href="https://cmder.app/" target="_blank" class="block text-center px-4 py-2 rounded-lg font-semibold transition-colors border-2 border-amber-400 text-amber-400 hover:bg-amber-400 hover:text-slate-900">Visit Site</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Cloud Storage Panel -->
+                <div id="cloud-storage" class="tab-content">
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+                        <!-- Mega Card -->
+                        <div class="card rounded-xl p-6 flex flex-col tag-goat relative overflow-hidden">
+                            <div class="card-main-content flex flex-col h-full">
+                                <div class="flex items-start justify-between">
+                                    <h3 class="text-lg font-semibold text-white">Mega</h3>
+                                    <div class="text-xs font-bold uppercase text-cyan-400 tracking-wider">GOAT</div>
+                                </div>
+                                <p class="text-slate-400 mt-2 flex-grow">20GB free cloud storage with end-to-end encryption. Fast transfers, generous bandwidth, and strong privacy focus.</p>
+                                <div class="mt-6">
+                                    <a href="https://mega.nz/" target="_blank" class="block text-center px-4 py-2 rounded-lg font-semibold transition-colors border-2 border-cyan-400 text-cyan-400 hover:bg-cyan-400 hover:text-slate-900">Visit Site</a>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Proton Drive Card -->
+                        <div class="card rounded-xl p-6 flex flex-col tag-goat relative overflow-hidden">
+                            <div class="card-main-content flex flex-col h-full">
+                                <div class="flex items-start justify-between">
+                                    <h3 class="text-lg font-semibold text-white">Proton Drive</h3>
+                                    <div class="text-xs font-bold uppercase text-cyan-400 tracking-wider">GOAT</div>
+                                </div>
+                                <p class="text-slate-400 mt-2 flex-grow">End-to-end encrypted cloud storage from Proton. Swiss privacy laws, zero-access encryption, and seamless Proton integration.</p>
+                                <div class="mt-6">
+                                    <a href="https://proton.me/drive" target="_blank" class="block text-center px-4 py-2 rounded-lg font-semibold transition-colors border-2 border-cyan-400 text-cyan-400 hover:bg-cyan-400 hover:text-slate-900">Visit Site</a>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Filen Card -->
+                        <div class="card rounded-xl p-6 flex flex-col tag-recommended relative overflow-hidden">
+                            <div class="card-main-content flex flex-col h-full">
+                                <div class="flex items-start justify-between">
+                                    <h3 class="text-lg font-semibold text-white">Filen</h3>
+                                    <div class="text-xs font-bold uppercase text-amber-400 tracking-wider">Recommended</div>
+                                </div>
+                                <p class="text-slate-400 mt-2 flex-grow">Zero-knowledge encrypted cloud storage. 10GB free, open-source clients, and strong focus on privacy and security.</p>
+                                <div class="mt-6">
+                                    <a href="https://filen.io/" target="_blank" class="block text-center px-4 py-2 rounded-lg font-semibold transition-colors border-2 border-amber-400 text-amber-400 hover:bg-amber-400 hover:text-slate-900">Visit Site</a>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Sync.com Card -->
+                        <div class="card rounded-xl p-6 flex flex-col tag-recommended relative overflow-hidden">
+                            <div class="card-main-content flex flex-col h-full">
+                                <div class="flex items-start justify-between">
+                                    <h3 class="text-lg font-semibold text-white">Sync.com</h3>
+                                    <div class="text-xs font-bold uppercase text-amber-400 tracking-wider">Recommended</div>
+                                </div>
+                                <p class="text-slate-400 mt-2 flex-grow">Secure cloud storage with zero-knowledge encryption. 5GB free, Canadian privacy laws, and automatic file versioning.</p>
+                                <div class="mt-6">
+                                    <a href="https://www.sync.com/" target="_blank" class="block text-center px-4 py-2 rounded-lg font-semibold transition-colors border-2 border-amber-400 text-amber-400 hover:bg-amber-400 hover:text-slate-900">Visit Site</a>
                                 </div>
                             </div>
                         </div>
