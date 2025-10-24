@@ -896,15 +896,17 @@ img[loading="lazy"]:not(.loaded) {
     /* Larger touch targets for buttons */
     .tab-button {
         min-height: 44px;
-        padding: 0.75rem 0.5rem !important;
-        flex-direction: column;
-        gap: 0.25rem !important;
-        font-size: 0.7rem;
+        padding: 0.75rem 0.75rem !important;
+        flex-direction: row;
+        gap: 0.5rem !important;
+        font-size: 0.8rem;
+        white-space: nowrap;
     }
     
     .tab-button svg {
-        width: 1.25rem;
-        height: 1.25rem;
+        width: 1.125rem;
+        height: 1.125rem;
+        flex-shrink: 0;
     }
     
     .sub-tab-button {
@@ -917,9 +919,39 @@ img[loading="lazy"]:not(.loaded) {
         gap: 0.5rem;
     }
     
+    header {
+        overflow-x: hidden;
+        max-width: 100vw;
+    }
+    
+    /* Keep logo and TMTY visible on mobile */
+    header .flex.items-center.gap-4 > a {
+        flex-shrink: 0;
+        display: flex !important;
+        align-items: center;
+        gap: 0.5rem;
+    }
+    
+    header .flex.items-center.gap-4 > a svg {
+        width: 2rem !important;
+        height: 2rem !important;
+    }
+    
+    header .flex.items-center.gap-4 > a .text-2xl {
+        font-size: 1.125rem !important;
+        display: inline-block !important;
+    }
+    
+    /* Show TMTY text on mobile */
+    header .flex.items-center.gap-4 > a > span {
+        display: inline-block !important;
+    }
+    
     /* Adjust search bar for mobile */
     #search-bar-container {
         padding: 0.5rem 0.25rem;
+        flex: 1;
+        min-width: 0;
     }
     
     #search-bar-container .relative.max-w-lg {
@@ -927,8 +959,28 @@ img[loading="lazy"]:not(.loaded) {
     }
     
     /* Make search input more compact */
+    #global-filter {
+        font-size: 0.875rem;
+        padding: 0.5rem 0.5rem 0.5rem 2.5rem;
+    }
+    
     #global-filter::placeholder {
         font-size: 0.875rem;
+    }
+    
+    /* Ensure navigation doesn't overflow */
+    nav {
+        overflow-x: hidden;
+        max-width: 100vw;
+    }
+    
+    .tabs-nav > div {
+        max-width: 100vw;
+    }
+    
+    /* Make settings button more compact */
+    #settings-dropdown-btn {
+        padding: 0.5rem !important;
     }
     
     /* Improve card spacing on mobile */
@@ -974,11 +1026,23 @@ img[loading="lazy"]:not(.loaded) {
     .sub-tabs-nav {
         padding: 0.5rem !important;
         gap: 0.25rem !important;
+        overflow-x: auto !important;
+        -webkit-overflow-scrolling: touch;
+        scrollbar-width: none;
+        -ms-overflow-style: none;
+        flex-wrap: nowrap !important;
+        justify-content: flex-start !important;
+    }
+    
+    .sub-tabs-nav::-webkit-scrollbar {
+        display: none;
     }
     
     .sub-tabs-nav .sub-tab-button {
         font-size: 0.75rem;
         padding: 0.5rem 0.75rem !important;
+        white-space: nowrap;
+        flex-shrink: 0;
     }
 }
 
@@ -999,24 +1063,34 @@ img[loading="lazy"]:not(.loaded) {
     
     /* Compact header */
     header .h-16 {
-        height: 3.5rem;
+        height: auto;
+        min-height: 3.5rem;
+        padding-top: 0.5rem;
+        padding-bottom: 0.5rem;
     }
     
     /* Smaller logo and title */
     header svg {
-        height: 1.5rem;
-        width: 1.5rem;
+        height: 1.75rem;
+        width: 1.75rem;
     }
     
     header .text-2xl {
-        font-size: 1.25rem;
+        font-size: 1.125rem;
     }
     
-    /* Hide subtitle and full title on very small screens */
+    /* Ensure header content wraps if needed */
+    header .flex.items-center.justify-between {
+        flex-wrap: wrap;
+        gap: 0.5rem;
+    }
+    
+    /* Keep subtitle visible but smaller */
     header .text-xs {
-        display: none;
+        font-size: 0.65rem;
     }
     
+    /* Hide full title on very small screens but keep TMTY */
     header .hidden.md\:block {
         display: none !important;
     }
@@ -1041,21 +1115,15 @@ img[loading="lazy"]:not(.loaded) {
         font-size: 0.75rem;
     }
     
-    /* Make tab buttons icon-only on very small screens */
+    /* Keep tab buttons readable on very small screens */
     .tab-button {
-        font-size: 0 !important;
-        padding: 0.5rem !important;
+        font-size: 0.7rem !important;
+        padding: 0.625rem 0.5rem !important;
     }
     
     .tab-button svg {
-        width: 1.5rem;
-        height: 1.5rem;
-        margin: 0;
-    }
-    
-    /* Ensure title attribute shows on hover for accessibility */
-    .tab-button[title] {
-        cursor: pointer;
+        width: 1rem;
+        height: 1rem;
     }
 }
 
@@ -1115,6 +1183,47 @@ img[loading="lazy"]:not(.loaded) {
 /* Prevent horizontal scroll on body */
 body {
     overflow-x: hidden;
+    max-width: 100vw;
+}
+
+html {
+    overflow-x: hidden;
+    max-width: 100vw;
+}
+
+/* Prevent any element from causing horizontal scroll */
+@media (max-width: 768px) {
+    * {
+        box-sizing: border-box;
+    }
+    
+    /* Constrain all containers */
+    div, section, article, aside, nav, header, footer, main {
+        max-width: 100vw;
+    }
+    
+    /* Allow specific elements to use full viewport */
+    .max-w-screen-2xl {
+        max-width: 100vw !important;
+        padding-left: 1rem !important;
+        padding-right: 1rem !important;
+    }
+    
+    .w-full {
+        max-width: 100% !important;
+    }
+    
+    /* Fix flex containers that might overflow */
+    .flex {
+        flex-wrap: wrap;
+        max-width: 100%;
+    }
+    
+    /* Specific fix for sub-tabs that were causing overflow */
+    .sub-tabs-nav.flex {
+        flex-wrap: nowrap !important;
+        overflow-x: auto !important;
+    }
 }
 
 /* Ensure images don't overflow on mobile */
@@ -1140,6 +1249,18 @@ img {
     
     .grid-cols-2.md\:grid-cols-4 {
         grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    }
+    
+    /* Ensure main content doesn't overflow */
+    main {
+        overflow-x: hidden;
+        max-width: 100vw;
+    }
+    
+    /* Fix any wide containers */
+    .max-w-screen-2xl {
+        padding-left: 1rem;
+        padding-right: 1rem;
     }
 }
 
@@ -1258,5 +1379,35 @@ img {
     
     [data-theme="light"] .category-card:hover {
         box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+}
+
+/* Mobile header layout improvements */
+@media (max-width: 640px) {
+    /* Stack header elements vertically if needed */
+    header > div > div.flex.items-center.justify-between {
+        flex-direction: column;
+        align-items: stretch !important;
+        gap: 0.75rem;
+    }
+    
+    /* Logo row */
+    header .flex.items-center.gap-4 {
+        width: 100%;
+        justify-content: space-between;
+    }
+    
+    /* Search row */
+    #search-bar-container {
+        width: 100%;
+        max-width: 100% !important;
+        order: 2;
+    }
+    
+    /* Settings button stays with logo */
+    #search-bar-container > div:last-child {
+        position: absolute;
+        right: 1rem;
+        top: 1rem;
     }
 }
