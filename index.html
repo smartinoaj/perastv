@@ -976,8 +976,19 @@
                                        <div class="mt-auto">
                                            <a href="https://pcsx2.net/" target="_blank" class="block text-center px-4 py-2 rounded-lg font-semibold transition-colors border-2 border-amber-400 text-amber-400 hover:bg-amber-400 hover:text-slate-900 mb-2">Visit Site</a>
                                            <div class="flex justify-center gap-4 mt-2 mb-[-1rem]">
-                                               <button onclick="window.open('https://archive.org/download/ps2-bios-megadump/PS2_BIOS.zip', '_blank')" class="text-xs text-slate-400 hover:text-amber-400 transition-colors cursor-pointer">Bios</button>
-                                               <button onclick="openImageGuide('pcsx2')" class="text-xs text-slate-400 hover:text-amber-400 transition-colors cursor-pointer">Settings</button>
+                                               <button onclick="window.open('https://archive.org/download/ps2-bios-megadump/PS2_BIOS.zip', '_blank')" class="text-xs text-slate-400 hover:text-amber-400 transition-colors cursor-pointer flex items-center gap-1">
+                                                   <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                       <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+                                                   </svg>
+                                                   Bios
+                                               </button>
+                                               <button onclick="openImageGuide('pcsx2')" class="text-xs text-slate-400 hover:text-amber-400 transition-colors cursor-pointer flex items-center gap-1">
+                                                   <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                       <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
+                                                       <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                                                   </svg>
+                                                   Settings
+                                               </button>
                                            </div>
                                        </div>
                                    </div>
@@ -1009,7 +1020,13 @@
                                        </div>
                                        <div class="mt-auto">
                                            <a href="https://dolphin-emu.org/" target="_blank" class="block text-center px-4 py-2 rounded-lg font-semibold transition-colors border-2 border-amber-400 text-amber-400 hover:bg-amber-400 hover:text-slate-900 mb-2">Visit Site</a>
-                                           <button onclick="openImageGuide('dolphin')" class="block w-full text-center text-xs text-slate-400 hover:text-amber-400 transition-colors cursor-pointer mt-2 mb-[-1rem]">Settings</button>
+                                           <button onclick="openImageGuide('dolphin')" class="flex items-center justify-center gap-1 w-full text-center text-xs text-slate-400 hover:text-amber-400 transition-colors cursor-pointer mt-2 mb-[-1rem]">
+                                               <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
+                                                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                                               </svg>
+                                               Settings
+                                           </button>
                                        </div>
                                    </div>
                                </div>
@@ -1040,7 +1057,13 @@
                                        </div>
                                        <div class="mt-auto">
                                            <a href="https://www.ppsspp.org/" target="_blank" class="block text-center px-4 py-2 rounded-lg font-semibold transition-colors border-2 border-amber-400 text-amber-400 hover:bg-amber-400 hover:text-slate-900 mb-2">Visit Site</a>
-                                           <button onclick="openImageGuide('ppsspp')" class="block w-full text-center text-xs text-slate-400 hover:text-amber-400 transition-colors cursor-pointer mt-2 mb-[-1rem]">Settings</button>
+                                           <button onclick="openImageGuide('ppsspp')" class="flex items-center justify-center gap-1 w-full text-center text-xs text-slate-400 hover:text-amber-400 transition-colors cursor-pointer mt-2 mb-[-1rem]">
+                                               <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
+                                                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                                               </svg>
+                                               Settings
+                                           </button>
                                        </div>
                                    </div>
                                </div>
@@ -1071,8 +1094,19 @@
                                        <div class="mt-auto">
                                            <a href="https://www.duckstation.org/" target="_blank" class="block text-center px-4 py-2 rounded-lg font-semibold transition-colors border-2 border-amber-400 text-amber-400 hover:bg-amber-400 hover:text-slate-900 mb-2">Visit Site</a>
                                            <div class="flex justify-center gap-4 mt-2 mb-[-1rem]">
-                                               <button onclick="window.open('https://download2444.mediafire.com/c1vo0p06cy4gzJK9ijR5bkWho39vd7xhXBVveNJRkSvwlnF8n-E60pZTS_u4Ahtat82U77loJZgeAIS4ld1VAoVpcZGsXf2uIJnmkQdiT-F4_0PuacLlWdT35RH6PZoGuDcY3DVGTSwDBivE4sLRG8N710fO4u995Gsjzf4Cb6Ji8uE/s11dvh2snfrmy29/PS1_BIOS.zip', '_blank')" class="text-xs text-slate-400 hover:text-amber-400 transition-colors cursor-pointer">Bios</button>
-                                               <button onclick="openImageGuide('duckstation')" class="text-xs text-slate-400 hover:text-amber-400 transition-colors cursor-pointer">Settings</button>
+                                               <button onclick="window.open('https://download2444.mediafire.com/c1vo0p06cy4gzJK9ijR5bkWho39vd7xhXBVveNJRkSvwlnF8n-E60pZTS_u4Ahtat82U77loJZgeAIS4ld1VAoVpcZGsXf2uIJnmkQdiT-F4_0PuacLlWdT35RH6PZoGuDcY3DVGTSwDBivE4sLRG8N710fO4u995Gsjzf4Cb6Ji8uE/s11dvh2snfrmy29/PS1_BIOS.zip', '_blank')" class="text-xs text-slate-400 hover:text-amber-400 transition-colors cursor-pointer flex items-center gap-1">
+                                                   <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                       <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+                                                   </svg>
+                                                   Bios
+                                               </button>
+                                               <button onclick="openImageGuide('duckstation')" class="text-xs text-slate-400 hover:text-amber-400 transition-colors cursor-pointer flex items-center gap-1">
+                                                   <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                       <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
+                                                       <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                                                   </svg>
+                                                   Settings
+                                               </button>
                                            </div>
                                        </div>
                                    </div>
@@ -1170,8 +1204,19 @@
                                        <div class="mt-auto">
                                            <a href="https://rpcs3.net/" target="_blank" class="block text-center px-4 py-2 rounded-lg font-semibold transition-colors border-2 border-amber-400 text-amber-400 hover:bg-amber-400 hover:text-slate-900 mb-2">Visit Site</a>
                                            <div class="flex justify-center gap-4 mt-2 mb-[-1rem]">
-                                               <button onclick="window.open('http://dus01.ps3.update.playstation.net/update/ps3/image/us/2025_0305_c179ad173bbc08b55431d30947725a4b/PS3UPDAT.PUP', '_blank')" class="text-xs text-slate-400 hover:text-amber-400 transition-colors cursor-pointer">Bios</button>
-                                               <button onclick="openImageGuide('rpcs3')" class="text-xs text-slate-400 hover:text-amber-400 transition-colors cursor-pointer">Settings</button>
+                                               <button onclick="window.open('http://dus01.ps3.update.playstation.net/update/ps3/image/us/2025_0305_c179ad173bbc08b55431d30947725a4b/PS3UPDAT.PUP', '_blank')" class="text-xs text-slate-400 hover:text-amber-400 transition-colors cursor-pointer flex items-center gap-1">
+                                                   <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                       <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+                                                   </svg>
+                                                   Bios
+                                               </button>
+                                               <button onclick="openImageGuide('rpcs3')" class="text-xs text-slate-400 hover:text-amber-400 transition-colors cursor-pointer flex items-center gap-1">
+                                                   <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                       <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
+                                                       <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                                                   </svg>
+                                                   Settings
+                                               </button>
                                            </div>
                                        </div>
                                    </div>
