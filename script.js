@@ -6,61 +6,44 @@ document.addEventListener('DOMContentLoaded', () => {
         pcsx2: {
             title: "PCSX2 Graphic Settings",
             categories: {
-                "High End PC": [
+                "Settings": [
                     'img/guides/pcsx2_display.png',
                     'img/guides/pcsx2_rendering.png'
-                ],
-                "Low End PC": [
-                    // Add low-end PC images here
                 ]
             }
         },
         dolphin: {
             title: "Dolphin Graphic Settings",
             categories: {
-                "High End PC": [
+                "Settings": [
                     'img/guides/dolphin_general.png',
                     'img/guides/dolphin_enhancements.png',
                     'img/guides/dolphin_advanced.png'
-                ],
-                "Low End PC": [
-                    // Add low-end PC images here
                 ]
             }
         },
         ppsspp: {
             title: "PPSSPP Graphic Settings",
             categories: {
-                "High End PC": [
+                "Settings": [
                     'img/guides/ppsspp_rendering.png',
                     'img/guides/ppsspp_texture.png'
-                ],
-                "Low End PC": [
-                    // Add low-end PC images here
                 ]
             }
         },
         duckstation: {
-            title: "DuckStation Settings",
+            title: "DuckStation Graphic Settings",
             categories: {
                 "Settings": [
-                    'img/guides/pcsx2_display.png' // Placeholder - replace with actual duckstation images
-                ]
-            }
-        },
-        retroarch: {
-            title: "RetroArch Settings",
-            categories: {
-                "Settings": [
-                    'img/guides/dolphin_general.png' // Placeholder - replace with actual retroarch images
+                    'img/guides/duckstation_rendering.png'
                 ]
             }
         },
         rpcs3: {
-            title: "RPCS3 Settings",
+            title: "RPCS3 Graphic Settings",
             categories: {
                 "Settings": [
-                    'img/guides/ppsspp_rendering.png' // Placeholder - replace with actual rpcs3 images
+                    'img/guides/rpcs3_gpu.png'
                 ]
             }
         }
