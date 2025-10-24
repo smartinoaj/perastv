@@ -39,6 +39,30 @@ document.addEventListener('DOMContentLoaded', () => {
                     // Add low-end PC images here
                 ]
             }
+        },
+        duckstation: {
+            title: "DuckStation Settings",
+            categories: {
+                "Settings": [
+                    'img/guides/pcsx2_display.png' // Placeholder - replace with actual duckstation images
+                ]
+            }
+        },
+        retroarch: {
+            title: "RetroArch Settings",
+            categories: {
+                "Settings": [
+                    'img/guides/dolphin_general.png' // Placeholder - replace with actual retroarch images
+                ]
+            }
+        },
+        rpcs3: {
+            title: "RPCS3 Settings",
+            categories: {
+                "Settings": [
+                    'img/guides/ppsspp_rendering.png' // Placeholder - replace with actual rpcs3 images
+                ]
+            }
         }
         // You can add more guides here by following the same format
     };
@@ -203,7 +227,11 @@ document.addEventListener('DOMContentLoaded', () => {
         if (!guideData) return;
 
         currentGuide = guideData;
-        currentCategory = "High End PC"; // Default to High End PC
+        // Default to first available category
+        const availableCategories = Object.keys(currentGuide.categories).filter(cat => 
+            currentGuide.categories[cat] && currentGuide.categories[cat].length > 0
+        );
+        currentCategory = availableCategories[0] || "High End PC";
         currentImageIndex = 0;
         
         imageGuideTitle.textContent = currentGuide.title;
@@ -1395,6 +1423,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Update stats on page load
     updateStats();
+
+    // Expose openImageGuide globally for inline onclick handlers
+    window.openImageGuide = openImageGuide;
 
 });
 
